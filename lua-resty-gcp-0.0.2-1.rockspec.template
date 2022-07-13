@@ -1,0 +1,28 @@
+package = "lua-resty-gcp"
+version = "0.0.1-1"
+source = {
+   url = "git+https://github.com/Kong/lua-resty-gcp"
+}
+description = {
+  summary = "GCP SDK for OpenResty",
+  detailed = [[
+    GCP SDK generated from the GCP Discovery API.
+  ]],
+  license = "Apache 2.0",
+}
+dependencies = {
+   "lua-resty-jwt == 0.2.3"
+}
+build = {
+   type = "builtin",
+   modules = {
+      ["resty.gcp.init"]                                = "src/resty/gcp/init.lua",
+      ["resty.gcp.request.http.http"]                   = "src/resty/gcp/request/http/http.lua",
+      ["resty.gcp.request.http.socket"]                 = "src/resty/gcp/request/http/socket.lua",
+      ["resty.gcp.request.credentials.accesstoken"]     = "src/resty/gcp/request/credentials/accesstoken.lua",
+	  ["resty.gcp.request.discovery"]     				= "src/resty/gcp/request/discovery.lua",
+--START-MARKER--
+--AUTOGEN--
+--END-MARKER--
+   }
+}
