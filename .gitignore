@@ -3,3 +3,4 @@
 /lua_modules
 /.luarocks
 /src/resty/gcp/api/*
+*.rock
