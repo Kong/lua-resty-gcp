@@ -36,4 +36,8 @@ cp lua-resty-gcp-0.0.2-1.rockspec lua-resty-gcp-0.0.2-1.rockspec
 
 echo $ROCKSPEC_ADD
 
+# For non mac
+# sed -i 's#--AUTOGEN--#'$ROCKSPEC_ADD'#g' lua-resty-gcp-0.0.2-1.rockspec
+
+# For mac
 sed -i '' 's#--AUTOGEN--#'$ROCKSPEC_ADD'#g' lua-resty-gcp-0.0.2-1.rockspec
