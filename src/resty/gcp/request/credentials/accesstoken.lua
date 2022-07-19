@@ -107,8 +107,10 @@ function AccessToken:new()
 
     local gcpServiceAccount = os.getenv("GCP_SERVICE_ACCOUNT")
 
-    local accessToken, authMetod =
-        GetAccessTokenBySA(gcpServiceAccount) or GetAccessTokenByWI()
+    -- First try via Workload Identity and then via Service Account
+
+    local accessToken, authMetod = GetAccessTokenByWI() or GetAccessTokenBySA(gcpServiceAccount)
+    
     if (accessToken) then
         self.token = accessToken.access_token
         self.expireTime = ngx.now() + accessToken.expires_in
