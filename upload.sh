@@ -30,14 +30,14 @@ return assert(decode([===[' > "$TARGET/api/${API_NAMES[$i]}.lua"
 
 done
 
-mv lua-resty-gcp-0.0.2-1.rockspec lua-resty-gcp-0.0.2-1.rockspec.original
+mv lua-resty-gcp-0.0.3-1.rockspec lua-resty-gcp-0.0.3-1.rockspec.original
 
-cp lua-resty-gcp-0.0.2-1.rockspec lua-resty-gcp-0.0.2-1.rockspec
+cp lua-resty-gcp-0.0.3-1.rockspec lua-resty-gcp-0.0.3-1.rockspec
 
 echo $ROCKSPEC_ADD
 
 # For non mac
-# sed -i 's#--AUTOGEN--#'$ROCKSPEC_ADD'#g' lua-resty-gcp-0.0.2-1.rockspec
+# sed -i 's#--AUTOGEN--#'$ROCKSPEC_ADD'#g' lua-resty-gcp-0.0.3-1.rockspec
 
 # For mac
-sed -i '' 's#--AUTOGEN--#'$ROCKSPEC_ADD'#g' lua-resty-gcp-0.0.2-1.rockspec
+sed -i '' 's#--AUTOGEN--#'$ROCKSPEC_ADD'#g' lua-resty-gcp-0.0.3-1.rockspec

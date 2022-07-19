@@ -23,7 +23,7 @@ upload:
 	if [ ! -d "src/resty/gcp/api" ]; then \
 		bash ./upload.sh; \
 	fi
-	luarocks upload --api-key=tr77oOyYHQvbaMbBmtLiMHZhoiGUoSJh6xN5qtCP lua-resty-gcp-0.0.1-1.rockspec
+	luarocks upload --api-key=tr77oOyYHQvbaMbBmtLiMHZhoiGUoSJh6xN5qtCP lua-resty-gcp-0.0.3-1.rockspec
 
 
 
