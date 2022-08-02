@@ -1,15 +1,20 @@
-local http = require "resty.gcp.request.http.http"
+local http = require "resty.gcp.request.http"
 local jwt = require "resty.jwt"
-local cjson = require("cjson.safe").new()
+local cjson = require "cjson.safe"
 
 
 local os = os
 local ngx = ngx
 local type = type
 local tostring = tostring
+local getenv = os.getenv
+local ngx_log = ngx.log
+local DEBUG = ngx.DEBUG
 
 local cjson_decode = cjson.decode
 local cjson_encode = cjson.encode
+local send_request = http.send_request
+
 
 local JWT_AUD        = "https://www.googleapis.com/oauth2/v4/token"
 local JWT_AUTH_URL   = "https://www.googleapis.com/oauth2/v4/token"
@@ -19,109 +24,136 @@ local JWT_SCOPE      = "https://www.googleapis.com/auth/cloud-platform"
 local WI_AUTH_URL = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
 
 
-local function GetJwtToken(serviceAccount)
-    local saDecode, err = cjson_decode(serviceAccount)
-    if type(saDecode) ~= "table" then
-        ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, expect JSON: ", tostring(err))
-        error("Invalid format for GCP Service Account")
-        return
+local function log(lvl, ...)
+    ngx_log(lvl, "[access_token] ", ...)
+end
+
+
+local function validate_and_store_token(self, token, method)
+    method = method or self.authMethod
+
+    local typ = type(token)
+
+    if typ ~= "table" then
+        return nil, "invalid token data type: " .. typ
+
+    elseif not token.access_token then
+        return nil, "token data is missing `access_token`"
+
+    elseif not token.expires_in then
+        return nil, "token data is missing `expires_in`"
     end
 
-    local timeNow = os.time(os.date("!*t"))
-    if (not (saDecode.client_email and saDecode.private_key and saDecode.private_key_id)) then
-        ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, missing required field")
-        error("Invalid GCP Service Account")
-        return
+    self.token = token.access_token
+    self.expireTime = ngx.now() + token.expires_in
+    self.authMethod = method
+
+    return true
+end
+
+
+local function get_service_account(self)
+    if self._service_account then
+        return self._service_account
     end
 
-    local payload = {
-        iss = saDecode.client_email,
-        sub = saDecode.client_email,
+    local env = getenv("GCP_SERVICE_ACCOUNT")
+    if not env or env == "" then
+        return nil, "GCP_SERVICE_ACCOUNT env var is unset or empty"
+    end
+
+    local decoded, err = cjson_decode(env)
+    local typ = type(decoded)
+
+    if decoded == nil then
+        return nil, "GCP_SERVICE_ACCOUNT contains invalid JSON: " .. tostring(err)
+
+    elseif typ ~= "table" then
+        return nil, "GCP_SERVICE_ACCOUNT contains unexpected JSON type: " .. typ
+
+    elseif not decoded.client_email or
+           not decoded.private_key or
+           not decoded.private_key_id
+    then
+        return nil, "GCP_SERVICE_ACCOUNT data is missing required field " ..
+                    "(`client_email` or `private_key` or `private_key_id`)"
+    end
+
+    self._service_account = decoded
+
+    return decoded
+end
+
+
+local function GetAccessTokenByJwt(self)
+    local sa, err = get_service_account(self)
+    if not sa then
+        return nil, "missing service account: " .. err
+    end
+
+    local time = os.time(os.date("!*t"))
+
+    local payload = cjson_encode({
+        iss = sa.client_email,
+        sub = sa.client_email,
         aud = JWT_AUD,
-        iat = timeNow,
-        exp = timeNow + 3600,
+        iat = time,
+        exp = time + 3600,
         scope = JWT_SCOPE,
-    }
+    })
 
-    local payloadJson = cjson_encode(payload)
-    local jwt_token = jwt:sign(
-        saDecode.private_key,
-        {
-            header = {kid = saDecode.private_key_id, typ = "JWT", alg = "RS256"},
-            payload = payloadJson
+    local jwt_token = jwt:sign(sa.private_key, {
+        header = {
+            kid = sa.private_key_id,
+            typ = "JWT",
+            alg = "RS256",
+        },
+        payload = payload,
+    })
+
+    local res
+    res, err = send_request(JWT_AUTH_URL, {
+        method = "POST",
+        body = {
+            grant_type = JWT_GRANT_TYPE,
+            assertion = jwt_token,
         }
-    )
-
-    return jwt_token
-end
-
-
-local function GetAccessTokenByJwt(jwtToken)
-    local client = http.new()
-    local params = {
-        grant_type = JWT_GRANT_TYPE,
-        assertion = jwtToken
-    }
-
-    local res, err = client:request_uri(
-        JWT_AUTH_URL,
-        {
-            method = "POST",
-            body = cjson_encode(params),
-            ssl_verify = false
-        }
-    )
-    if not res then
-        ngx.log(ngx.ERR, "[accesstoken] Unable to get access token")
-        error(err)
-        return
-    end
-
-    client:close()
-    local accessToken = cjson_decode(res.body)
-    return accessToken
-end
-
-
-local function GetAccessTokenBySA(serviceAccount)
-    ngx.log(ngx.DEBUG, "[accesstoken] Using Envrionment Service Account to get Access Token")
-
-    if not serviceAccount then
-        -- Note: nginx workers do not have access to env vars. initialize in init phase
-        -- or by the 'config' module.
-        ngx.log(ngx.ERR, "[accesstoken] Couldn't find GCP_SERVICE_ACCOUNT env variable")
-        error("Couldn't find GCP_SERVICE_ACCOUNT env variable")
-        return
-    end
-
-    local jwtToken = GetJwtToken(serviceAccount)
-    return GetAccessTokenByJwt(jwtToken), "SA"
-end
-
-
-local function GetAccessTokenByWI()
-    ngx.log(ngx.DEBUG, "[accesstoken] Using Workload Identity to get Access Token")
-
-    local client = http.new()
-    local res, err = client:request_uri(
-        WI_AUTH_URL,
-        {
-            headers = {
-                ["Metadata-Flavor"] = "Google"
-            },
-            ssl_verify = false
-        }
-    )
+    })
 
     if not res then
-        ngx.log(ngx.DEBUG, "[accesstoken] failed to Access Token ", tostring(err))
-        return
+        return nil, "JWT request failed: " .. err
     end
 
-    client:close()
+    return res
+end
 
-    local accessToken = cjson_decode(res.body)
-    return accessToken, "WI"
+
+local function GetAccessTokenBySA(self)
+    log(DEBUG, "Using Envrionment Service Account to get Access Token")
+
+    local res, err = GetAccessTokenByJwt(self)
+    if not res then
+        return nil, err
+    end
+
+    return validate_and_store_token(self, res.json, "SA")
+end
+
+
+local function GetAccessTokenByWI(self)
+    log(DEBUG, "Using Workload Identity to get Access Token")
+
+    local res, err = send_request(WI_AUTH_URL, {
+        headers = {
+            ["Metadata-Flavor"] = "Google"
+        },
+    })
+
+    if not res then
+        return nil, "Workload Identity token request failed: " .. err
+    end
+
+    return validate_and_store_token(self, res.json, "WI")
 end
 
 
@@ -133,27 +165,24 @@ function AccessToken.new()
     local self = {}
     setmetatable(self, AccessToken)
 
-    local gcpServiceAccount = os.getenv("GCP_SERVICE_ACCOUNT")
+    -- Note: nginx workers do not have access to env vars. initialize in init phase
+    -- or by the 'config' module.
+    get_service_account(self)
+
+    local ok, wi_err, sa_err
 
     -- First try via Workload Identity and then via Service Account
-
-    local accessToken, authMethod = GetAccessTokenByWI()
-    if not accessToken then
-        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+    ok, wi_err = GetAccessTokenByWI(self)
+    if ok then
+        return true
     end
 
-    if accessToken then
-        self.token = accessToken.access_token
-        self.expireTime = ngx.now() + accessToken.expires_in
-        self.authMethod = authMethod
-
-    else
-        ngx.log(ngx.ERR, "[accesstoken] Unable to get accesstoken")
-        error("Failed to authenticate")
-        return
+    ok, sa_err = GetAccessTokenBySA(self)
+    if ok then
+        return true
     end
 
-    return self
+    return nil, "failed to authenticate", { wi_err, sa_err }
 end
 
 
@@ -163,23 +192,16 @@ end
 
 
 function AccessToken:refresh()
-    local accessToken
+    local method = self.authMethod
+    assert(method == "SA" or method == "WI",
+           "invalid AccessToken.authMethod '" .. tostring(method) .. "'")
 
-    if self.authMethod == "SA" then
-        local gcpServiceAccount = os.getenv("GCP_SERVICE_ACCOUNT")
-        accessToken = GetAccessTokenBySA(gcpServiceAccount)
+    if method == "SA" then
+        return GetAccessTokenBySA(self)
 
-    elseif self.authMethod == "WI" then
-        accessToken = GetAccessTokenByWI()
+    elseif method == "WI" then
+        return GetAccessTokenByWI()
     end
-
-    if accessToken then
-        self.token = accessToken.access_token
-        self.expireTime = ngx.now() + accessToken.expires_in
-        return true
-    end
-
-    return false
 end
 
 
