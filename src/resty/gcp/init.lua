@@ -107,8 +107,7 @@ local BuildMethods = function(methods)
                     local res, err = client:request_uri(baseUrl .. path, req)
 
                     if not res then
-                        error(err)
-                        return
+                        return nil, fmt("request to %q failed: %s", path, err)
                     end
 
                     client:close()
