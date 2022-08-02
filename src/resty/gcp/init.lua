@@ -22,17 +22,30 @@ local lookup_helper = function(self, key) -- signature to match __index meta-met
 end
 
 
-local ApiDiscovery = function()
-    local apis = require "resty.gcp.request.discovery"
-    local apiList = {}
-    local n = 0
-    for _, v in pairs(apis.items) do
-        local id = gsub(v.id, ":", "_")
-        id = gsub(id, "%.", "p")
-        n = n + 1
-        apiList[n] = id
+local ApiDiscovery
+do
+    local apis
+
+    function ApiDiscovery()
+        if apis then
+            return apis
+        end
+
+        local discovery = require "resty.gcp.request.discovery"
+
+        apis = {}
+        local n = 0
+
+        for _, v in pairs(discovery.items) do
+            local id = gsub(v.id, ":", "_")
+            -- TODO: not sure what we need `s/./p/` for
+            id = gsub(id, "%.", "p")
+            n = n + 1
+            apis[n] = id
+        end
+
+        return apis
     end
-    return apiList
 end
 
 
