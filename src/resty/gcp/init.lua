@@ -1,7 +1,5 @@
-local cjson = require("cjson.safe").new()
-local http = require "resty.gcp.request.http.http"
+local http = require "resty.gcp.request.http"
 
-local cjson_decode = cjson.decode
 local fmt = string.format
 local gsub = string.gsub
 local ipairs = ipairs
@@ -9,6 +7,8 @@ local pairs = pairs
 local setmetatable = setmetatable
 local type = type
 local rawget = rawget
+
+local send_request = http.send_request
 
 
 local lookup_helper = function(self, key) -- signature to match __index meta-method
@@ -94,24 +94,27 @@ local BuildMethods = function(methods)
                         end
                     )
 
-                    local req = {
+                    local res, err = send_request(baseUrl .. path, {
                         method = apiDetail.httpMethod,
                         headers = {
                             ["Authorization"] = "Bearer " .. accesstoken.token
                         },
                         body = requestBody,
-                        ssl_verify = false
-                    }
-
-                    local client = http.new()
-                    local res, err = client:request_uri(baseUrl .. path, req)
+                    })
 
                     if not res then
                         return nil, fmt("request to %q failed: %s", path, err)
                     end
 
-                    client:close()
-                    return cjson_decode(res.body)
+
+                    if res.json ~= nil then
+                        return res.json
+
+                    elseif res.has_body then
+                        return res.body
+                    end
+
+                    return true
                 end
             end
         end
