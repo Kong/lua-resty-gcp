@@ -25,10 +25,12 @@ end
 local ApiDiscovery = function()
     local apis = require "resty.gcp.request.discovery"
     local apiList = {}
+    local n = 0
     for _, v in pairs(apis.items) do
         local id = gsub(v.id, ":", "_")
         id = gsub(id, "%.", "p")
-        apiList[#apiList + 1] = id
+        n = n + 1
+        apiList[n] = id
     end
     return apiList
 end
