@@ -42,19 +42,21 @@ FindApis = function(apiClass, methods, curr)
         for k, v in pairs(apiClass) do
             if k == "baseUrl" then
                 methods[k] = v
-            end
-            if k == "methods" then
+
+            elseif k == "methods" then
                 if curr then
                     methods[curr] = v
                 else
                     methods = v
                 end
             end
+
             if type(v) == "table" then
                 FindApis(v, methods, k)
             end
         end
     end
+
     return methods
 end
 
