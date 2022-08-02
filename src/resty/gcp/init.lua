@@ -77,12 +77,13 @@ local BuildMethods = function(methods)
                         "{(.-)}",
                         function(p)
                             for paramK, paramV in pairs(params) do
-                                if (paramK == p) then
+                                if paramK == p then
                                     return paramV
                                 end
                             end
                         end
                     )
+
                     local req = {
                         method = apiDetail.httpMethod,
                         headers = {
@@ -91,19 +92,22 @@ local BuildMethods = function(methods)
                         body = requestBody,
                         ssl_verify = false
                     }
+
                     local client = http.new()
                     local res, err = client:request_uri(baseUrl .. path, req)
+
                     if not res then
                         error(err)
                         return
                     end
+
                     client:close()
                     return cjson_decode(res.body)
                 end
             end
         end
     end
-    return setmetatable(services, {__index = lookup_helper})
+    return setmetatable(services, { __index = lookup_helper })
 end
 
 
