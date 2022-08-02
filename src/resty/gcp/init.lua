@@ -1,17 +1,24 @@
 local cjson = require("cjson.safe").new()
 local http = require "resty.gcp.request.http.http"
 
+local cjson_decode = cjson.decode
+local fmt = string.format
+local gsub = string.gsub
+local pairs = pairs
+local setmetatable = setmetatable
+local type = type
+
 
 local lookup_helper = function(self, key) -- signature to match __index meta-method
     if type(key) == "string" then
         local lckey = key:lower()
         for k in pairs(self) do
             if type(k) == "string" and k:lower() == lckey then
-                error(("key '%s' not found, did you mean '%s'?"):format(key, k), 2)
+                error(fmt("key %q not found, did you mean %q?", key, k), 2)
             end
         end
     end
-    error(("key '%s' not found"):format(tostring(key)), 2)
+    error(fmt("key '%s' not found", key), 2)
 end
 
 
@@ -19,8 +26,8 @@ local ApiDiscovery = function()
     local apis = require "resty.gcp.request.discovery"
     local apiList = {}
     for _, v in pairs(apis.items) do
-        local id, _ = string.gsub(v.id, ":", "_")
-        id, _ = string.gsub(id, "%.", "p")
+        local id = gsub(v.id, ":", "_")
+        id = gsub(id, "%.", "p")
         apiList[#apiList + 1] = id
     end
     return apiList
@@ -61,9 +68,8 @@ local BuildMethods = function(methods)
                     if not params then
                         return
                     end
-                    local path =
-                        string.gsub(
-                        apiDetail.flatPath,
+
+                    local path = gsub(apiDetail.flatPath,
                         "{(.-)}",
                         function(p)
                             for paramK, paramV in pairs(params) do
@@ -88,7 +94,7 @@ local BuildMethods = function(methods)
                         return
                     end
                     client:close()
-                    return cjson.decode(res.body)
+                    return cjson_decode(res.body)
                 end
             end
         end

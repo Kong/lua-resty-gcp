@@ -3,8 +3,17 @@ local jwt = require "resty.jwt"
 local cjson = require("cjson.safe").new()
 
 
+local os = os
+local ngx = ngx
+local type = type
+local tostring = tostring
+
+local cjson_decode = cjson.decode
+local cjson_encode = cjson.encode
+
+
 local function GetJwtToken(serviceAccount)
-    local saDecode, err = cjson.decode(serviceAccount)
+    local saDecode, err = cjson_decode(serviceAccount)
     if type(saDecode) ~= "table" then
         ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, expect JSON: ", tostring(err))
         error("Invalid format for GCP Service Account")
@@ -27,7 +36,7 @@ local function GetJwtToken(serviceAccount)
         scope = "https://www.googleapis.com/auth/cloud-platform",
     }
 
-    local payloadJson = cjson.encode(payload)
+    local payloadJson = cjson_encode(payload)
     local jwt_token = jwt:sign(
         saDecode.private_key,
         {
@@ -52,7 +61,7 @@ local function GetAccessTokenByJwt(jwtToken)
         auth_url,
         {
             method = "POST",
-            body = cjson.encode(params),
+            body = cjson_encode(params),
             ssl_verify = false
         }
     )
@@ -63,7 +72,7 @@ local function GetAccessTokenByJwt(jwtToken)
     end
 
     client:close()
-    local accessToken = cjson.decode(res.body)
+    local accessToken = cjson_decode(res.body)
     return accessToken
 end
 
@@ -106,7 +115,7 @@ local function GetAccessTokenByWI()
 
     client:close()
 
-    local accessToken = cjson.decode(res.body)
+    local accessToken = cjson_decode(res.body)
     return accessToken, "WI"
 end
 
