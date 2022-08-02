@@ -130,14 +130,15 @@ GCP.__index = lookup_helper
 
 function GCP.new()
     local apis = ApiDiscovery()
-    local servicesInstance = {}
+    local self = setmetatable({}, GCP)
+
     for _, service in pairs(apis) do
         local rawAPI = require("resty.gcp.api." .. service)
         local methods = FindApis(rawAPI, {})
-        servicesInstance[service] = BuildMethods(methods)
+        self[service] = BuildMethods(methods)
     end
-    local gcp_instance = setmetatable(servicesInstance, GCP)
-    return gcp_instance
+
+    return self
 end
 
 
