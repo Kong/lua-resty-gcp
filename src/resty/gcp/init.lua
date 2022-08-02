@@ -14,6 +14,7 @@ local lookup_helper = function(self, key) -- signature to match __index meta-met
     error(("key '%s' not found"):format(tostring(key)), 2)
 end
 
+
 local ApiDiscovery = function()
     local apis = require "resty.gcp.request.discovery"
     local apiList = {}
@@ -24,6 +25,7 @@ local ApiDiscovery = function()
     end
     return apiList
 end
+
 
 local FindApis
 FindApis = function(apiClass, methods, curr)
@@ -47,6 +49,7 @@ FindApis = function(apiClass, methods, curr)
     return methods
 end
 
+
 local BuildMethods = function(methods)
     local baseUrl = methods.baseUrl
     local services = {}
@@ -55,7 +58,7 @@ local BuildMethods = function(methods)
             services[k] = {}
             for serviceName, apiDetail in pairs(v) do
                 services[k][serviceName] = function(accesstoken, params, requestBody)
-                    if (not params) then
+                    if not params then
                         return
                     end
                     local path =
@@ -93,8 +96,10 @@ local BuildMethods = function(methods)
     return setmetatable(services, {__index = lookup_helper})
 end
 
+
 local GCP = {}
 GCP.__index = lookup_helper
+
 
 function GCP.new()
     local apis = ApiDiscovery()
@@ -107,6 +112,7 @@ function GCP.new()
     local gcp_instance = setmetatable(servicesInstance, GCP)
     return gcp_instance
 end
+
 
 return setmetatable(
     GCP,
