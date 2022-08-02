@@ -102,7 +102,7 @@ end
 
 local AccessToken = {}
 AccessToken.__index = AccessToken
-function AccessToken:new()
+function AccessToken.new()
     local self = {}
     setmetatable(self, AccessToken)
 

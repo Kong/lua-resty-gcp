@@ -5,7 +5,7 @@ local http = require "resty.gcp.request.http.http"
 local lookup_helper = function(self, key) -- signature to match __index meta-method
     if type(key) == "string" then
         local lckey = key:lower()
-        for k, v in pairs(self) do
+        for k in pairs(self) do
             if type(k) == "string" and k:lower() == lckey then
                 error(("key '%s' not found, did you mean '%s'?"):format(key, k), 2)
             end
@@ -14,25 +14,10 @@ local lookup_helper = function(self, key) -- signature to match __index meta-met
     error(("key '%s' not found"):format(tostring(key)), 2)
 end
 
-local ApiDiscovery = function(apis)
-    -- local req = {
-    --     method = "GET",
-    --     ssl_verify = false
-    -- }
-    -- local client = http.new()
-    -- res, err = client:request_uri(url, req)
-    -- if not res then
-    --     error(err)
-    --     return
-    -- end
-    -- client:close()
-    -- local apis = cjson.decode(res.body).items
-    -- if (not apis) then
-    --     error("Failed to get Discovery API")
-    -- end
+local ApiDiscovery = function()
     local apis = require "resty.gcp.request.discovery"
     local apiList = {}
-    for k, v in pairs(apis.items) do
+    for _, v in pairs(apis.items) do
         local id, _ = string.gsub(v.id, ":", "_")
         id, _ = string.gsub(id, "%.", "p")
         apiList[#apiList + 1] = id
@@ -73,7 +58,7 @@ local BuildMethods = function(methods)
                     if (not params) then
                         return
                     end
-                    local path, _ =
+                    local path =
                         string.gsub(
                         apiDetail.flatPath,
                         "{(.-)}",
@@ -111,8 +96,7 @@ end
 local GCP = {}
 GCP.__index = lookup_helper
 
-function GCP:new()
-    -- local discoveryUrl = "https://discovery.googleapis.com/discovery/v1/apis"
+function GCP.new()
     local apis = ApiDiscovery()
     local servicesInstance = {}
     for _, service in pairs(apis) do
@@ -127,8 +111,8 @@ end
 return setmetatable(
     GCP,
     {
-        __call = function(self, ...)
-            return self:new(...)
+        __call = function()
+            return GCP.new()
         end
     }
 )
