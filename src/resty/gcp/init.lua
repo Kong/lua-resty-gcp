@@ -7,15 +7,14 @@ local gsub = string.gsub
 local pairs = pairs
 local setmetatable = setmetatable
 local type = type
+local rawget = rawget
 
 
 local lookup_helper = function(self, key) -- signature to match __index meta-method
     if type(key) == "string" then
         local lckey = key:lower()
-        for k in pairs(self) do
-            if type(k) == "string" and k:lower() == lckey then
-                error(fmt("key %q not found, did you mean %q?", key, k), 2)
-            end
+        if rawget(self, lckey) ~= nil then
+            error(fmt("key %q not found, did you mean %q?", key, lckey), 2)
         end
     end
     error(fmt("key '%s' not found", key), 2)
