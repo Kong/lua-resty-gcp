@@ -4,6 +4,7 @@ local http = require "resty.gcp.request.http.http"
 local cjson_decode = cjson.decode
 local fmt = string.format
 local gsub = string.gsub
+local ipairs = ipairs
 local pairs = pairs
 local setmetatable = setmetatable
 local type = type
@@ -31,16 +32,13 @@ do
         end
 
         local discovery = require "resty.gcp.request.discovery"
-
         apis = {}
-        local n = 0
 
-        for _, v in pairs(discovery.items) do
+        for i, v in ipairs(discovery.items) do
             local id = gsub(v.id, ":", "_")
             -- TODO: not sure what we need `s/./p/` for
             id = gsub(id, "%.", "p")
-            n = n + 1
-            apis[n] = id
+            apis[i] = id
         end
 
         return apis
@@ -131,7 +129,7 @@ function GCP.new()
     local apis = ApiDiscovery()
     local self = setmetatable({}, GCP)
 
-    for _, service in pairs(apis) do
+    for _, service in ipairs(apis) do
         local rawAPI = require("resty.gcp.api." .. service)
         local methods = FindApis(rawAPI, {})
         self[service] = BuildMethods(methods)
