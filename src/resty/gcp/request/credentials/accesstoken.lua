@@ -11,6 +11,13 @@ local tostring = tostring
 local cjson_decode = cjson.decode
 local cjson_encode = cjson.encode
 
+local JWT_AUD        = "https://www.googleapis.com/oauth2/v4/token"
+local JWT_AUTH_URL   = "https://www.googleapis.com/oauth2/v4/token"
+local JWT_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:jwt-bearer"
+local JWT_SCOPE      = "https://www.googleapis.com/auth/cloud-platform"
+
+local WI_AUTH_URL = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+
 
 local function GetJwtToken(serviceAccount)
     local saDecode, err = cjson_decode(serviceAccount)
@@ -30,10 +37,10 @@ local function GetJwtToken(serviceAccount)
     local payload = {
         iss = saDecode.client_email,
         sub = saDecode.client_email,
-        aud = "https://www.googleapis.com/oauth2/v4/token",
+        aud = JWT_AUD,
         iat = timeNow,
         exp = timeNow + 3600,
-        scope = "https://www.googleapis.com/auth/cloud-platform",
+        scope = JWT_SCOPE,
     }
 
     local payloadJson = cjson_encode(payload)
@@ -51,14 +58,13 @@ end
 
 local function GetAccessTokenByJwt(jwtToken)
     local client = http.new()
-    local auth_url = "https://www.googleapis.com/oauth2/v4/token"
     local params = {
-        grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
+        grant_type = JWT_GRANT_TYPE,
         assertion = jwtToken
     }
 
     local res, err = client:request_uri(
-        auth_url,
+        JWT_AUTH_URL,
         {
             method = "POST",
             body = cjson_encode(params),
@@ -97,9 +103,8 @@ local function GetAccessTokenByWI()
     ngx.log(ngx.DEBUG, "[accesstoken] Using Workload Identity to get Access Token")
 
     local client = http.new()
-    local auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
     local res, err = client:request_uri(
-        auth_url,
+        WI_AUTH_URL,
         {
             headers = {
                 ["Metadata-Flavor"] = "Google"
