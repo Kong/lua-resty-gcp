@@ -3,7 +3,6 @@ local jwt = require "resty.jwt"
 local cjson = require "cjson.safe"
 
 
-local os = os
 local ngx = ngx
 local type = type
 local tostring = tostring
@@ -11,6 +10,7 @@ local getenv = os.getenv
 local ngx_log = ngx.log
 local DEBUG = ngx.DEBUG
 local pcall = pcall
+local now = ngx.now
 
 local cjson_decode = cjson.decode
 local cjson_encode = cjson.encode
@@ -46,7 +46,7 @@ local function validate_and_store_token(self, token, method)
     end
 
     self.token = token.access_token
-    self.expireTime = ngx.now() + token.expires_in
+    self.expireTime = now() + token.expires_in
     self.authMethod = method
 
     return true
@@ -92,7 +92,7 @@ local function GetAccessTokenByJwt(self)
         return nil, "missing service account: " .. err
     end
 
-    local time = os.time(os.date("!*t"))
+    local time = now()
 
     local payload = cjson_encode({
         iss = sa.client_email,
