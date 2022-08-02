@@ -5,7 +5,7 @@ local cjson = require("cjson.safe").new()
 local function GetJwtToken(serviceAccount)
     local saDecode, err = cjson.decode(serviceAccount)
     if type(saDecode) ~= "table" then
-        ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, expect JSON")
+        ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, expect JSON: ", tostring(err))
         error("Invalid format for GCP Service Account")
         return
     end
@@ -81,7 +81,7 @@ local function GetAccessTokenByWI()
     ngx.log(ngx.DEBUG, "[accesstoken] Using Workload Identity to get Access Token")
     local client = http.new()
     local auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
-    res, err =
+    local res, err =
         client:request_uri(
         auth_url,
         {
@@ -92,6 +92,7 @@ local function GetAccessTokenByWI()
         }
     )
     if not res then
+        ngx.log(ngx.DEBUG, "[accesstoken] failed to Access Token ", tostring(err))
         return
     end
     client:close()
@@ -109,7 +110,10 @@ function AccessToken:new()
 
     -- First try via Workload Identity and then via Service Account
 
-    local accessToken, authMetod = GetAccessTokenByWI() or GetAccessTokenBySA(gcpServiceAccount)
+    local accessToken, authMethod = GetAccessTokenByWI()
+    if not accessToken then
+        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+    end
     
     if (accessToken) then
         self.token = accessToken.access_token
