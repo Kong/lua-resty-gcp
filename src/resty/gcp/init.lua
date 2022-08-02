@@ -31,7 +31,7 @@ local ApiDiscovery = function(apis)
     --     error("Failed to get Discovery API")
     -- end
     local apis = require "resty.gcp.request.discovery"
-    apiList = {}
+    local apiList = {}
     for k, v in pairs(apis.items) do
         local id, _ = string.gsub(v.id, ":", "_")
         id, _ = string.gsub(id, "%.", "p")
@@ -40,6 +40,7 @@ local ApiDiscovery = function(apis)
     return apiList
 end
 
+local FindApis
 FindApis = function(apiClass, methods, curr)
     if type(apiClass) == "table" then
         for k, v in pairs(apiClass) do
@@ -72,7 +73,7 @@ local BuildMethods = function(methods)
                     if (not params) then
                         return
                     end
-                    local path, paramLen =
+                    local path, _ =
                         string.gsub(
                         apiDetail.flatPath,
                         "{(.-)}",
@@ -93,7 +94,7 @@ local BuildMethods = function(methods)
                         ssl_verify = false
                     }
                     local client = http.new()
-                    res, err = client:request_uri(baseUrl .. path, req)
+                    local res, err = client:request_uri(baseUrl .. path, req)
                     if not res then
                         error(err)
                         return
