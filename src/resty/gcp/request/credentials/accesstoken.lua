@@ -10,6 +10,7 @@ local tostring = tostring
 local getenv = os.getenv
 local ngx_log = ngx.log
 local DEBUG = ngx.DEBUG
+local pcall = pcall
 
 local cjson_decode = cjson.decode
 local cjson_encode = cjson.encode
@@ -102,7 +103,11 @@ local function GetAccessTokenByJwt(self)
         scope = JWT_SCOPE,
     })
 
-    local jwt_token = jwt:sign(sa.private_key, {
+    -- lua-resty-jwt throws an error() on any problem it encounters, so this
+    -- needs to be wrapped in pcall()
+    --
+    -- https://github.com/cdbattags/lua-resty-jwt/blob/b8b1f6e00be74565111e0cbbc40bc7d26367a646/lib/resty/jwt.lua#L542-L600
+    local ok, token = pcall(jwt.sign, jwt, sa.private_key, {
         header = {
             kid = sa.private_key_id,
             typ = "JWT",
@@ -111,12 +116,17 @@ local function GetAccessTokenByJwt(self)
         payload = payload,
     })
 
+    if not ok then
+        err = tostring(token or "unknown error")
+        return nil, "failed signing JWT: " .. err
+    end
+
     local res
     res, err = send_request(JWT_AUTH_URL, {
         method = "POST",
         body = {
             grant_type = JWT_GRANT_TYPE,
-            assertion = jwt_token,
+            assertion = token,
         }
     })
 
