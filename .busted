@@ -1,8 +1,22 @@
 return {
-  default = {
+  _all = {
     lua = "spec/resty-runner.lua",
-    verbose = true,
-    coverage = false,
+    helper = "./spec/busted-init.lua",
     output = "gtest",
+    coverage = false,
+    verbose = true,
   },
+
+  default = {
+    ["exclude-tags"] = {
+      "live", -- tests tagged as 'live' must run against a real GCP account
+    },
+  },
+
+  -- tests which must run against a real GCP account
+  live = {
+    tags = {
+      "live",
+    },
+  }
 }

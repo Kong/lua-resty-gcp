@@ -58,6 +58,8 @@ local function get_service_account(self)
         return self._service_account
     end
 
+    -- Note: nginx workers do not have access to env vars. initialize in init phase
+    -- or by the 'config' module.
     local env = getenv("GCP_SERVICE_ACCOUNT")
     if not env or env == "" then
         return nil, "GCP_SERVICE_ACCOUNT env var is unset or empty"
@@ -116,8 +118,13 @@ local function GetAccessTokenByJwt(self)
         payload = payload,
     })
 
-    if not ok then
-        err = tostring(token or "unknown error")
+    if not ok or not token then
+        -- lua-resty-jwt usually reports a failure by calling
+        -- `error({ reason = "..." })`, so we'll attempt to
+        -- unpack that here
+        err = (type(token) == "table" and token.reason) or
+              token or "unknown error"
+
         return nil, "failed signing JWT: " .. err
     end
 
@@ -175,21 +182,17 @@ function AccessToken.new()
     local self = {}
     setmetatable(self, AccessToken)
 
-    -- Note: nginx workers do not have access to env vars. initialize in init phase
-    -- or by the 'config' module.
-    get_service_account(self)
-
     local ok, wi_err, sa_err
 
     -- First try via Workload Identity and then via Service Account
     ok, wi_err = GetAccessTokenByWI(self)
     if ok then
-        return true
+        return self
     end
 
     ok, sa_err = GetAccessTokenBySA(self)
     if ok then
-        return true
+        return self
     end
 
     return nil, "failed to authenticate", { wi_err, sa_err }
@@ -206,13 +209,21 @@ function AccessToken:refresh()
     assert(method == "SA" or method == "WI",
            "invalid AccessToken.authMethod '" .. tostring(method) .. "'")
 
-    if method == "SA" then
-        return GetAccessTokenBySA(self)
+    if method == "WI" then
+        return GetAccessTokenByWI(self)
 
-    elseif method == "WI" then
-        return GetAccessTokenByWI()
+    elseif method == "SA" then
+        return GetAccessTokenBySA(self)
     end
 end
+
+
+-- exposing these for tests
+AccessToken.JWT_AUD        = JWT_AUD
+AccessToken.JWT_AUTH_URL   = JWT_AUTH_URL
+AccessToken.JWT_GRANT_TYPE = JWT_GRANT_TYPE
+AccessToken.JWT_SCOPE      = JWT_SCOPE
+AccessToken.WI_AUTH_URL    = WI_AUTH_URL
 
 
 return setmetatable(
