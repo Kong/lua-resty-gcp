@@ -58,7 +58,7 @@ local _M = {}
 --
 -- Accepts the same arguments as `resty.http:request_uri()`
 --
--- Both `path` and `params` are required. An exception will be thrown if they
+-- Both `uri` and `params` are required. An exception will be thrown if they
 -- are not provided by the caller.
 --
 -- If `params.body` is a table, it will be JSON-encoded before sending.
@@ -68,15 +68,15 @@ local _M = {}
 --
 -- On success, returns the response object
 -- On failure, returns `nil` and an error string
-function _M.send_request(path, params)
-    local tpath = type(path)
-    if tpath ~= "string" then
-        error("request path must be a string (got '" .. tpath .. "')", 2)
+function _M.send_request(uri, params)
+    local typ = type(uri)
+    if typ ~= "string" then
+        error("request uri must be a string (got '" .. typ .. "')", 2)
     end
 
-    local tparams = type(params)
-    if tparams ~= "table" then
-        error("request params must be a table (got '" .. tparams .. "')", 2)
+    typ = type(params)
+    if typ ~= "table" then
+        error("request params must be a table (got '" .. typ .. "')", 2)
     end
 
     local client, err = http.new()
@@ -108,13 +108,13 @@ function _M.send_request(path, params)
     end
 
     local res
-    res, err = client:request_uri(path, params)
+    res, err = client:request_uri(uri, params)
 
     if not res then
         return nil, "sending http request failed: " .. tostring(err)
 
     elseif res.status >= 400 then
-        log(DEBUG, "GCP request to '", path, "' returned HTTP ", res.status)
+        log(DEBUG, "GCP request to '", uri, "' returned HTTP ", res.status)
     end
 
 
