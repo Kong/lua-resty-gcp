@@ -1,4 +1,233 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "mtlsRootUrl": "https://verifiedaccess.mtls.googleapis.com/", "version": "v2", "title": "Chrome Verified Access API", "batchPath": "batch", "version_module": true, "parameters": { "$.xgafv": { "enum": [ "1", "2" ], "enumDescriptions": [ "v1 error format", "v2 error format" ], "description": "V1 error format.", "type": "string", "location": "query" }, "callback": { "description": "JSONP", "location": "query", "type": "string" }, "fields": { "description": "Selector specifying which fields to include in a partial response.", "location": "query", "type": "string" }, "upload_protocol": { "location": "query", "type": "string", "description": "Upload protocol for media (e.g. \"raw\", \"multipart\")." }, "key": { "type": "string", "location": "query", "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token." }, "uploadType": { "type": "string", "location": "query", "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\")." }, "alt": { "enum": [ "json", "media", "proto" ], "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "location": "query", "default": "json", "description": "Data format for response.", "type": "string" }, "quotaUser": { "location": "query", "type": "string", "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters." }, "access_token": { "description": "OAuth access token.", "location": "query", "type": "string" }, "prettyPrint": { "location": "query", "type": "boolean", "description": "Returns response with indentations and line breaks.", "default": "true" }, "oauth_token": { "location": "query", "type": "string", "description": "OAuth 2.0 token for the current user." } }, "canonicalName": "verifiedaccess", "ownerDomain": "google.com", "rootUrl": "https://verifiedaccess.googleapis.com/", "protocol": "rest", "fullyEncodeReservedExpansion": true, "icons": { "x16": "http://www.google.com/images/icons/product/search-16.gif", "x32": "http://www.google.com/images/icons/product/search-32.gif" }, "basePath": "", "name": "verifiedaccess", "servicePath": "", "id": "verifiedaccess:v2", "revision": "20220519", "baseUrl": "https://verifiedaccess.googleapis.com/", "description": "API for Verified Access chrome extension to provide credential verification for chrome devices connecting to an enterprise network", "resources": { "challenge": { "methods": { "verify": { "parameters": {}, "request": { "$ref": "VerifyChallengeResponseRequest" }, "scopes": [ "https://www.googleapis.com/auth/verifiedaccess" ], "path": "v2/challenge:verify", "id": "verifiedaccess.challenge.verify", "flatPath": "v2/challenge:verify", "response": { "$ref": "VerifyChallengeResponseResult" }, "description": "Verifies the challenge response.", "parameterOrder": [], "httpMethod": "POST" }, "generate": { "httpMethod": "POST", "request": { "$ref": "Empty" }, "id": "verifiedaccess.challenge.generate", "parameters": {}, "flatPath": "v2/challenge:generate", "description": "Generates a new challenge.", "path": "v2/challenge:generate", "response": { "$ref": "Challenge" }, "scopes": [ "https://www.googleapis.com/auth/verifiedaccess" ], "parameterOrder": [] } } } }, "ownerName": "Google", "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/verifiedaccess": { "description": "Verify your enterprise credentials" } } } }, "discoveryVersion": "v1", "documentationLink": "https://developers.google.com/chrome/verified-access", "kind": "discovery#restDescription", "schemas": { "Empty": { "id": "Empty", "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }", "properties": {}, "type": "object" }, "VerifyChallengeResponseRequest": { "type": "object", "id": "VerifyChallengeResponseRequest", "description": "Signed ChallengeResponse.", "properties": { "expectedIdentity": { "type": "string", "description": "Optional. Service can optionally provide identity information about the device or user associated with the key. For an EMK, this value is the enrolled domain. For an EUK, this value is the user's email address. If present, this value will be checked against contents of the response, and verification will fail if there is no match." }, "challengeResponse": { "type": "string", "description": "Required. The generated response to the challenge, the bytes representation of SignedData.", "format": "byte" } } }, "VerifyChallengeResponseResult": { "id": "VerifyChallengeResponseResult", "type": "object", "properties": { "deviceSignal": { "description": "Device signal in json string representation.", "type": "string" }, "devicePermanentId": { "description": "Device permanent id is returned in this field (for the machine response only).", "type": "string" }, "keyTrustLevel": { "enum": [ "KEY_TRUST_LEVEL_UNSPECIFIED", "CHROME_OS_VERIFIED_MODE", "CHROME_OS_DEVELOPER_MODE", "CHROME_BROWSER_TPM_KEY", "CHROME_BROWSER_OS_KEY" ], "description": "Device attested key trust level.", "enumDescriptions": [ "UNSPECIFIED.", "ChromeOS device in verified mode.", "ChromeOS device in developer mode.", "Chrome Browser with the key stored in TPM.", "Chrome Browser with the key stored at OS level." ], "type": "string" }, "signedPublicKeyAndChallenge": { "description": "Certificate Signing Request (in the SPKAC format, base64 encoded) is returned in this field. This field will be set only if device has included CSR in its challenge response. (the option to include CSR is now available for both user and machine responses)", "type": "string" } }, "description": "Result message for VerifiedAccess.VerifyChallengeResponse." }, "Challenge": { "description": "Result message for VerifiedAccess.CreateChallenge.", "type": "object", "id": "Challenge", "properties": { "alternativeChallenge": { "type": "string", "description": "Challenge generated with the old signing key, the bytes representation of SignedData (this will only be present during key rotation).", "format": "byte" }, "challenge": { "description": "Generated challenge, the bytes representation of SignedData.", "format": "byte", "type": "string" } } } } }
-]===]))
+return {
+  ["auth"] = {
+    ["oauth2"] = {
+      ["scopes"] = {
+        ["https://www.googleapis.com/auth/verifiedaccess"] = {
+          ["description"] = "Verify your enterprise credentials",
+        },
+      },
+    },
+  },
+  ["basePath"] = "",
+  ["baseUrl"] = "https://verifiedaccess.googleapis.com/",
+  ["batchPath"] = "batch",
+  ["canonicalName"] = "verifiedaccess",
+  ["description"] = "API for Verified Access chrome extension to provide credential verification for chrome devices connecting to an enterprise network",
+  ["discoveryVersion"] = "v1",
+  ["documentationLink"] = "https://developers.google.com/chrome/verified-access",
+  ["fullyEncodeReservedExpansion"] = true,
+  ["icons"] = {
+    ["x16"] = "http://www.google.com/images/icons/product/search-16.gif",
+    ["x32"] = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  ["id"] = "verifiedaccess:v2",
+  ["kind"] = "discovery#restDescription",
+  ["mtlsRootUrl"] = "https://verifiedaccess.mtls.googleapis.com/",
+  ["name"] = "verifiedaccess",
+  ["ownerDomain"] = "google.com",
+  ["ownerName"] = "Google",
+  ["parameters"] = {
+    ["$.xgafv"] = {
+      ["description"] = "V1 error format.",
+      ["enum"] = {
+        "1",
+        "2",
+      },
+      ["enumDescriptions"] = {
+        "v1 error format",
+        "v2 error format",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["access_token"] = {
+      ["description"] = "OAuth access token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["alt"] = {
+      ["default"] = "json",
+      ["description"] = "Data format for response.",
+      ["enum"] = {
+        "json",
+        "media",
+        "proto",
+      },
+      ["enumDescriptions"] = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["callback"] = {
+      ["description"] = "JSONP",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["fields"] = {
+      ["description"] = "Selector specifying which fields to include in a partial response.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["key"] = {
+      ["description"] = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["oauth_token"] = {
+      ["description"] = "OAuth 2.0 token for the current user.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["prettyPrint"] = {
+      ["default"] = "true",
+      ["description"] = "Returns response with indentations and line breaks.",
+      ["location"] = "query",
+      ["type"] = "boolean",
+    },
+    ["quotaUser"] = {
+      ["description"] = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["uploadType"] = {
+      ["description"] = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["upload_protocol"] = {
+      ["description"] = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+  },
+  ["protocol"] = "rest",
+  ["resources"] = {
+    ["challenge"] = {
+      ["methods"] = {
+        ["generate"] = {
+          ["description"] = "Generates a new challenge.",
+          ["flatPath"] = "v2/challenge:generate",
+          ["httpMethod"] = "POST",
+          ["id"] = "verifiedaccess.challenge.generate",
+          ["parameterOrder"] = {},
+          ["parameters"] = {},
+          ["path"] = "v2/challenge:generate",
+          ["request"] = {
+            ["$ref"] = "Empty",
+          },
+          ["response"] = {
+            ["$ref"] = "Challenge",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/verifiedaccess",
+          },
+        },
+        ["verify"] = {
+          ["description"] = "Verifies the challenge response.",
+          ["flatPath"] = "v2/challenge:verify",
+          ["httpMethod"] = "POST",
+          ["id"] = "verifiedaccess.challenge.verify",
+          ["parameterOrder"] = {},
+          ["parameters"] = {},
+          ["path"] = "v2/challenge:verify",
+          ["request"] = {
+            ["$ref"] = "VerifyChallengeResponseRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "VerifyChallengeResponseResult",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/verifiedaccess",
+          },
+        },
+      },
+    },
+  },
+  ["revision"] = "20220519",
+  ["rootUrl"] = "https://verifiedaccess.googleapis.com/",
+  ["schemas"] = {
+    ["Challenge"] = {
+      ["description"] = "Result message for VerifiedAccess.CreateChallenge.",
+      ["id"] = "Challenge",
+      ["properties"] = {
+        ["alternativeChallenge"] = {
+          ["description"] = "Challenge generated with the old signing key, the bytes representation of SignedData (this will only be present during key rotation).",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["challenge"] = {
+          ["description"] = "Generated challenge, the bytes representation of SignedData.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Empty"] = {
+      ["description"] = "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+      ["id"] = "Empty",
+      ["properties"] = {},
+      ["type"] = "object",
+    },
+    ["VerifyChallengeResponseRequest"] = {
+      ["description"] = "Signed ChallengeResponse.",
+      ["id"] = "VerifyChallengeResponseRequest",
+      ["properties"] = {
+        ["challengeResponse"] = {
+          ["description"] = "Required. The generated response to the challenge, the bytes representation of SignedData.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["expectedIdentity"] = {
+          ["description"] = "Optional. Service can optionally provide identity information about the device or user associated with the key. For an EMK, this value is the enrolled domain. For an EUK, this value is the user's email address. If present, this value will be checked against contents of the response, and verification will fail if there is no match.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["VerifyChallengeResponseResult"] = {
+      ["description"] = "Result message for VerifiedAccess.VerifyChallengeResponse.",
+      ["id"] = "VerifyChallengeResponseResult",
+      ["properties"] = {
+        ["devicePermanentId"] = {
+          ["description"] = "Device permanent id is returned in this field (for the machine response only).",
+          ["type"] = "string",
+        },
+        ["deviceSignal"] = {
+          ["description"] = "Device signal in json string representation.",
+          ["type"] = "string",
+        },
+        ["keyTrustLevel"] = {
+          ["description"] = "Device attested key trust level.",
+          ["enum"] = {
+            "KEY_TRUST_LEVEL_UNSPECIFIED",
+            "CHROME_OS_VERIFIED_MODE",
+            "CHROME_OS_DEVELOPER_MODE",
+            "CHROME_BROWSER_TPM_KEY",
+            "CHROME_BROWSER_OS_KEY",
+          },
+          ["enumDescriptions"] = {
+            "UNSPECIFIED.",
+            "ChromeOS device in verified mode.",
+            "ChromeOS device in developer mode.",
+            "Chrome Browser with the key stored in TPM.",
+            "Chrome Browser with the key stored at OS level.",
+          },
+          ["type"] = "string",
+        },
+        ["signedPublicKeyAndChallenge"] = {
+          ["description"] = "Certificate Signing Request (in the SPKAC format, base64 encoded) is returned in this field. This field will be set only if device has included CSR in its challenge response. (the option to include CSR is now available for both user and machine responses)",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+  },
+  ["servicePath"] = "",
+  ["title"] = "Chrome Verified Access API",
+  ["version"] = "v2",
+  ["version_module"] = true,
+}

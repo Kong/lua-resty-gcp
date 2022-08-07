@@ -1,4 +1,2133 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "resources": { "projects": { "resources": { "services": { "methods": { "patch": { "description": "Updates the specified Service configuration.", "parameterOrder": [ "name" ], "parameters": { "name": { "required": true, "type": "string", "description": "Required. The relative resource name of the service configuration object, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasestorage.googleapis.com` (Cloud Storage for Firebase) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasedatabase.googleapis.com` (Firebase Realtime Database) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firestore.googleapis.com` (Cloud Firestore)", "pattern": "^projects/[^/]+/services/[^/]+$", "location": "path" }, "updateMask": { "description": "Required. A comma-separated list of names of fields in the Service to update. Example: `enforcement_mode`.", "location": "query", "format": "google-fieldmask", "type": "string" } }, "id": "firebaseappcheck.projects.services.patch", "path": "v1beta/{+name}", "request": { "$ref": "GoogleFirebaseAppcheckV1betaService" }, "response": { "$ref": "GoogleFirebaseAppcheckV1betaService" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "flatPath": "v1beta/projects/{projectsId}/services/{servicesId}", "httpMethod": "PATCH" }, "list": { "path": "v1beta/{+parent}/services", "parameterOrder": [ "parent" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaListServicesResponse" }, "parameters": { "parent": { "description": "Required. The relative resource name of the parent project for which to list each associated Service, in the format: ``` projects/{project_number} ```", "type": "string", "required": true, "location": "path", "pattern": "^projects/[^/]+$" }, "pageSize": { "description": "The maximum number of Services to return in the response. Only explicitly configured services are returned. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.", "format": "int32", "location": "query", "type": "integer" }, "pageToken": { "description": "Token returned from a previous call to ListServices indicating where in the set of Services to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListServices must match the call that provided the page token; if they do not match, the result is undefined.", "type": "string", "location": "query" } }, "description": "Lists all Service configurations for the specified project. Only Services which were explicitly configured using UpdateService or BatchUpdateServices will be returned.", "httpMethod": "GET", "id": "firebaseappcheck.projects.services.list", "flatPath": "v1beta/projects/{projectsId}/services", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ] }, "get": { "httpMethod": "GET", "response": { "$ref": "GoogleFirebaseAppcheckV1betaService" }, "parameters": { "name": { "pattern": "^projects/[^/]+/services/[^/]+$", "description": "Required. The relative resource name of the Service to retrieve, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasestorage.googleapis.com` (Cloud Storage for Firebase) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasedatabase.googleapis.com` (Firebase Realtime Database) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firestore.googleapis.com` (Cloud Firestore)", "type": "string", "location": "path", "required": true } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "flatPath": "v1beta/projects/{projectsId}/services/{servicesId}", "path": "v1beta/{+name}", "parameterOrder": [ "name" ], "id": "firebaseappcheck.projects.services.get", "description": "Gets the Service configuration for the specified service name." }, "batchUpdate": { "httpMethod": "POST", "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchUpdateServicesResponse" }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest" }, "path": "v1beta/{+parent}/services:batchUpdate", "parameters": { "parent": { "description": "Required. The parent project name shared by all Service configurations being updated, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being updated must match this field, or the entire batch fails.", "pattern": "^projects/[^/]+$", "type": "string", "location": "path", "required": true } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameterOrder": [ "parent" ], "description": "Atomically updates the specified Service configurations.", "id": "firebaseappcheck.projects.services.batchUpdate", "flatPath": "v1beta/projects/{projectsId}/services:batchUpdate" } } }, "apps": { "resources": { "recaptchaEnterpriseConfig": { "methods": { "get": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "description": "Gets the RecaptchaEnterpriseConfig for the specified app.", "path": "v1beta/{+name}", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig", "parameters": { "name": { "required": true, "description": "Required. The relative resource name of the RecaptchaEnterpriseConfig, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```", "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaEnterpriseConfig$", "location": "path", "type": "string" } }, "parameterOrder": [ "name" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig" }, "id": "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.get", "httpMethod": "GET" }, "patch": { "description": "Updates the RecaptchaEnterpriseConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA Enterprise tokens for App Check tokens.", "request": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig" }, "response": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig" }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "httpMethod": "PATCH", "path": "v1beta/{+name}", "id": "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.patch", "parameters": { "name": { "location": "path", "description": "Required. The relative resource name of the reCAPTCHA Enterprise configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```", "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaEnterpriseConfig$", "required": true, "type": "string" }, "updateMask": { "description": "Required. A comma-separated list of names of fields in the RecaptchaEnterpriseConfig to update. Example: `site_key`.", "location": "query", "type": "string", "format": "google-fieldmask" } }, "parameterOrder": [ "name" ] }, "batchGet": { "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse" }, "parameterOrder": [ "parent" ], "path": "v1beta/{+parent}/apps/-/recaptchaEnterpriseConfig:batchGet", "id": "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.batchGet", "description": "Atomically gets the RecaptchaEnterpriseConfigs for the specified list of apps.", "parameters": { "names": { "type": "string", "location": "query", "description": "Required. The relative resource names of the RecaptchaEnterpriseConfigs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ``` A maximum of 100 objects can be retrieved in a batch.", "repeated": true }, "parent": { "description": "Required. The parent project name shared by all RecaptchaEnterpriseConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.", "pattern": "^projects/[^/]+$", "required": true, "location": "path", "type": "string" } }, "flatPath": "v1beta/projects/{projectsId}/apps/-/recaptchaEnterpriseConfig:batchGet", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "httpMethod": "GET" } } }, "playIntegrityConfig": { "methods": { "batchGet": { "description": "Atomically gets the PlayIntegrityConfigs for the specified list of apps.", "httpMethod": "GET", "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse" }, "parameters": { "parent": { "pattern": "^projects/[^/]+$", "location": "path", "required": true, "type": "string", "description": "Required. The parent project name shared by all PlayIntegrityConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails." }, "names": { "location": "query", "type": "string", "repeated": true, "description": "Required. The relative resource names of the PlayIntegrityConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ``` A maximum of 100 objects can be retrieved in a batch." } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "flatPath": "v1beta/projects/{projectsId}/apps/-/playIntegrityConfig:batchGet", "parameterOrder": [ "parent" ], "id": "firebaseappcheck.projects.apps.playIntegrityConfig.batchGet", "path": "v1beta/{+parent}/apps/-/playIntegrityConfig:batchGet" }, "get": { "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/playIntegrityConfig", "path": "v1beta/{+name}", "response": { "$ref": "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameterOrder": [ "name" ], "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/playIntegrityConfig$", "type": "string", "required": true, "location": "path", "description": "Required. The relative resource name of the PlayIntegrityConfig, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```" } }, "id": "firebaseappcheck.projects.apps.playIntegrityConfig.get", "description": "Gets the PlayIntegrityConfig for the specified app.", "httpMethod": "GET" }, "patch": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "id": "firebaseappcheck.projects.apps.playIntegrityConfig.patch", "description": "Updates the PlayIntegrityConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange Play Integrity tokens for App Check tokens.", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/playIntegrityConfig", "request": { "$ref": "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig" }, "parameters": { "updateMask": { "type": "string", "description": "Required. A comma-separated list of names of fields in the PlayIntegrityConfig Gets to update. Example: `token_ttl`.", "location": "query", "format": "google-fieldmask" }, "name": { "location": "path", "type": "string", "pattern": "^projects/[^/]+/apps/[^/]+/playIntegrityConfig$", "description": "Required. The relative resource name of the Play Integrity configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```", "required": true } }, "path": "v1beta/{+name}", "response": { "$ref": "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig" }, "parameterOrder": [ "name" ], "httpMethod": "PATCH" } } }, "deviceCheckConfig": { "methods": { "get": { "id": "firebaseappcheck.projects.apps.deviceCheckConfig.get", "path": "v1beta/{+name}", "description": "Gets the DeviceCheckConfig for the specified app. For security reasons, the `private_key` field is never populated in the response.", "response": { "$ref": "GoogleFirebaseAppcheckV1betaDeviceCheckConfig" }, "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameters": { "name": { "description": "Required. The relative resource name of the DeviceCheckConfig, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```", "location": "path", "type": "string", "pattern": "^projects/[^/]+/apps/[^/]+/deviceCheckConfig$", "required": true } }, "parameterOrder": [ "name" ], "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/deviceCheckConfig" }, "batchGet": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameters": { "names": { "repeated": true, "description": "Required. The relative resource names of the DeviceCheckConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ``` A maximum of 100 objects can be retrieved in a batch.", "location": "query", "type": "string" }, "parent": { "type": "string", "description": "Required. The parent project name shared by all DeviceCheckConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.", "pattern": "^projects/[^/]+$", "location": "path", "required": true } }, "path": "v1beta/{+parent}/apps/-/deviceCheckConfig:batchGet", "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchGetDeviceCheckConfigsResponse" }, "flatPath": "v1beta/projects/{projectsId}/apps/-/deviceCheckConfig:batchGet", "httpMethod": "GET", "description": "Atomically gets the DeviceCheckConfigs for the specified list of apps. For security reasons, the `private_key` field is never populated in the response.", "id": "firebaseappcheck.projects.apps.deviceCheckConfig.batchGet", "parameterOrder": [ "parent" ] }, "patch": { "description": "Updates the DeviceCheckConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange DeviceCheck tokens for App Check tokens. For security reasons, the `private_key` field is never populated in the response.", "parameterOrder": [ "name" ], "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/deviceCheckConfig$", "required": true, "description": "Required. The relative resource name of the DeviceCheck configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```", "type": "string", "location": "path" }, "updateMask": { "format": "google-fieldmask", "description": "Required. A comma-separated list of names of fields in the DeviceCheckConfig Gets to update. Example: `key_id,private_key`.", "type": "string", "location": "query" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaDeviceCheckConfig" }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaDeviceCheckConfig" }, "path": "v1beta/{+name}", "httpMethod": "PATCH", "id": "firebaseappcheck.projects.apps.deviceCheckConfig.patch", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/deviceCheckConfig" } } }, "debugTokens": { "methods": { "patch": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "httpMethod": "PATCH", "id": "firebaseappcheck.projects.apps.debugTokens.patch", "request": { "$ref": "GoogleFirebaseAppcheckV1betaDebugToken" }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}", "parameterOrder": [ "name" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaDebugToken" }, "description": "Updates the specified DebugToken. For security reasons, the `token` field cannot be updated, nor will it be populated in the response, but you can revoke the debug token using DeleteDebugToken.", "parameters": { "updateMask": { "location": "query", "type": "string", "format": "google-fieldmask", "description": "Required. A comma-separated list of names of fields in the DebugToken to update. Example: `display_name`." }, "name": { "description": "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```", "required": true, "location": "path", "pattern": "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$", "type": "string" } }, "path": "v1beta/{+name}" }, "get": { "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$", "location": "path", "description": "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```", "type": "string", "required": true } }, "id": "firebaseappcheck.projects.apps.debugTokens.get", "response": { "$ref": "GoogleFirebaseAppcheckV1betaDebugToken" }, "description": "Gets the specified DebugToken. For security reasons, the `token` field is never populated in the response.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}", "parameterOrder": [ "name" ], "httpMethod": "GET", "path": "v1beta/{+name}" }, "create": { "request": { "$ref": "GoogleFirebaseAppcheckV1betaDebugToken" }, "description": "Creates a new DebugToken for the specified app. For security reasons, after the creation operation completes, the `token` field cannot be updated or retrieved, but you can revoke the debug token using DeleteDebugToken. Each app can have a maximum of 20 debug tokens.", "response": { "$ref": "GoogleFirebaseAppcheckV1betaDebugToken" }, "path": "v1beta/{+parent}/debugTokens", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameters": { "parent": { "description": "Required. The relative resource name of the parent app in which the specified DebugToken will be created, in the format: ``` projects/{project_number}/apps/{app_id} ```", "location": "path", "type": "string", "required": true, "pattern": "^projects/[^/]+/apps/[^/]+$" } }, "httpMethod": "POST", "parameterOrder": [ "parent" ], "id": "firebaseappcheck.projects.apps.debugTokens.create", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens" }, "list": { "response": { "$ref": "GoogleFirebaseAppcheckV1betaListDebugTokensResponse" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "path": "v1beta/{+parent}/debugTokens", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens", "parameterOrder": [ "parent" ], "description": "Lists all DebugTokens for the specified app. For security reasons, the `token` field is never populated in the response.", "parameters": { "pageSize": { "type": "integer", "format": "int32", "location": "query", "description": "The maximum number of DebugTokens to return in the response. Note that an app can have at most 20 debug tokens. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit." }, "parent": { "required": true, "pattern": "^projects/[^/]+/apps/[^/]+$", "type": "string", "location": "path", "description": "Required. The relative resource name of the parent app for which to list each associated DebugToken, in the format: ``` projects/{project_number}/apps/{app_id} ```" }, "pageToken": { "description": "Token returned from a previous call to ListDebugTokens indicating where in the set of DebugTokens to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListDebugTokens must match the call that provided the page token; if they do not match, the result is undefined.", "location": "query", "type": "string" } }, "httpMethod": "GET", "id": "firebaseappcheck.projects.apps.debugTokens.list" }, "delete": { "id": "firebaseappcheck.projects.apps.debugTokens.delete", "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$", "location": "path", "description": "Required. The relative resource name of the DebugToken to delete, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```", "type": "string", "required": true } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "response": { "$ref": "GoogleProtobufEmpty" }, "description": "Deletes the specified DebugToken. A deleted debug token cannot be used to exchange for an App Check token. Use this method when you suspect the secret `token` has been compromised or when you no longer need the debug token.", "parameterOrder": [ "name" ], "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}", "path": "v1beta/{+name}", "httpMethod": "DELETE" } } }, "recaptchaConfig": { "methods": { "patch": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "httpMethod": "PATCH", "parameterOrder": [ "name" ], "request": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaConfig" }, "description": "Updates the RecaptchaConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig", "id": "firebaseappcheck.projects.apps.recaptchaConfig.patch", "parameters": { "name": { "required": true, "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaConfig$", "description": "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ```", "location": "path", "type": "string" }, "updateMask": { "description": "Required. A comma-separated list of names of fields in the RecaptchaConfig to update. Example: `site_secret`.", "format": "google-fieldmask", "location": "query", "type": "string" } }, "response": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaConfig" }, "path": "v1beta/{+name}" }, "batchGet": { "parameterOrder": [ "parent" ], "id": "firebaseappcheck.projects.apps.recaptchaConfig.batchGet", "description": "Atomically gets the RecaptchaConfigs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.", "parameters": { "names": { "repeated": true, "description": "Required. The relative resource names of the RecaptchaConfigs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ``` A maximum of 100 objects can be retrieved in a batch.", "type": "string", "location": "query" }, "parent": { "location": "path", "description": "Required. The parent project name shared by all RecaptchaConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.", "type": "string", "required": true, "pattern": "^projects/[^/]+$" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "path": "v1beta/{+parent}/apps/-/recaptchaConfig:batchGet", "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse" }, "flatPath": "v1beta/projects/{projectsId}/apps/-/recaptchaConfig:batchGet", "httpMethod": "GET" }, "get": { "path": "v1beta/{+name}", "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaConfig$", "description": "Required. The relative resource name of the RecaptchaConfig, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ```", "required": true, "location": "path", "type": "string" } }, "id": "firebaseappcheck.projects.apps.recaptchaConfig.get", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "httpMethod": "GET", "description": "Gets the RecaptchaConfig for the specified app. For security reasons, the `site_secret` field is never populated in the response.", "parameterOrder": [ "name" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaConfig" } } } }, "safetyNetConfig": { "methods": { "batchGet": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameterOrder": [ "parent" ], "description": "Atomically gets the SafetyNetConfigs for the specified list of apps.", "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse" }, "httpMethod": "GET", "id": "firebaseappcheck.projects.apps.safetyNetConfig.batchGet", "parameters": { "names": { "type": "string", "description": "Required. The relative resource names of the SafetyNetConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ``` A maximum of 100 objects can be retrieved in a batch.", "location": "query", "repeated": true }, "parent": { "required": true, "description": "Required. The parent project name shared by all SafetyNetConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.", "location": "path", "pattern": "^projects/[^/]+$", "type": "string" } }, "flatPath": "v1beta/projects/{projectsId}/apps/-/safetyNetConfig:batchGet", "path": "v1beta/{+parent}/apps/-/safetyNetConfig:batchGet" }, "get": { "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/safetyNetConfig$", "description": "Required. The relative resource name of the SafetyNetConfig, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```", "type": "string", "location": "path", "required": true } }, "httpMethod": "GET", "response": { "$ref": "GoogleFirebaseAppcheckV1betaSafetyNetConfig" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "path": "v1beta/{+name}", "parameterOrder": [ "name" ], "id": "firebaseappcheck.projects.apps.safetyNetConfig.get", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig", "description": "Gets the SafetyNetConfig for the specified app." }, "patch": { "parameterOrder": [ "name" ], "id": "firebaseappcheck.projects.apps.safetyNetConfig.patch", "request": { "$ref": "GoogleFirebaseAppcheckV1betaSafetyNetConfig" }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig", "httpMethod": "PATCH", "parameters": { "name": { "description": "Required. The relative resource name of the SafetyNet configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```", "required": true, "type": "string", "location": "path", "pattern": "^projects/[^/]+/apps/[^/]+/safetyNetConfig$" }, "updateMask": { "type": "string", "description": "Required. A comma-separated list of names of fields in the SafetyNetConfig Gets to update. Example: `token_ttl`.", "location": "query", "format": "google-fieldmask" } }, "path": "v1beta/{+name}", "description": "Updates the SafetyNetConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange SafetyNet tokens for App Check tokens.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaSafetyNetConfig" } } } }, "recaptchaV3Config": { "methods": { "batchGet": { "parameterOrder": [ "parent" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse" }, "description": "Atomically gets the RecaptchaV3Configs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.", "flatPath": "v1beta/projects/{projectsId}/apps/-/recaptchaV3Config:batchGet", "path": "v1beta/{+parent}/apps/-/recaptchaV3Config:batchGet", "parameters": { "parent": { "required": true, "location": "path", "pattern": "^projects/[^/]+$", "description": "Required. The parent project name shared by all RecaptchaV3Configs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.", "type": "string" }, "names": { "location": "query", "description": "Required. The relative resource names of the RecaptchaV3Configs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ``` A maximum of 100 objects can be retrieved in a batch.", "type": "string", "repeated": true } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "httpMethod": "GET", "id": "firebaseappcheck.projects.apps.recaptchaV3Config.batchGet" }, "get": { "description": "Gets the RecaptchaV3Config for the specified app. For security reasons, the `site_secret` field is never populated in the response.", "response": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaV3Config" }, "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaV3Config$", "description": "Required. The relative resource name of the RecaptchaV3Config, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```", "type": "string", "location": "path", "required": true } }, "id": "firebaseappcheck.projects.apps.recaptchaV3Config.get", "httpMethod": "GET", "path": "v1beta/{+name}", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaV3Config", "parameterOrder": [ "name" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ] }, "patch": { "id": "firebaseappcheck.projects.apps.recaptchaV3Config.patch", "parameters": { "name": { "pattern": "^projects/[^/]+/apps/[^/]+/recaptchaV3Config$", "required": true, "location": "path", "description": "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```", "type": "string" }, "updateMask": { "format": "google-fieldmask", "location": "query", "type": "string", "description": "Required. A comma-separated list of names of fields in the RecaptchaV3Config to update. Example: `site_secret`." } }, "path": "v1beta/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameterOrder": [ "name" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaV3Config" }, "httpMethod": "PATCH", "description": "Updates the RecaptchaV3Config for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA V3 tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.", "request": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaV3Config" }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaV3Config" } } }, "appAttestConfig": { "methods": { "get": { "parameters": { "name": { "description": "Required. The relative resource name of the AppAttestConfig, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```", "required": true, "type": "string", "location": "path", "pattern": "^projects/[^/]+/apps/[^/]+/appAttestConfig$" } }, "httpMethod": "GET", "description": "Gets the AppAttestConfig for the specified app.", "parameterOrder": [ "name" ], "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/appAttestConfig", "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppAttestConfig" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "id": "firebaseappcheck.projects.apps.appAttestConfig.get", "path": "v1beta/{+name}" }, "patch": { "parameterOrder": [ "name" ], "description": "Updates the AppAttestConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange AppAttest tokens for App Check tokens.", "path": "v1beta/{+name}", "id": "firebaseappcheck.projects.apps.appAttestConfig.patch", "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppAttestConfig" }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaAppAttestConfig" }, "httpMethod": "PATCH", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}/appAttestConfig", "parameters": { "name": { "required": true, "location": "path", "type": "string", "description": "Required. The relative resource name of the App Attest configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```", "pattern": "^projects/[^/]+/apps/[^/]+/appAttestConfig$" }, "updateMask": { "description": "Required. A comma-separated list of names of fields in the AppAttestConfig Gets to update. Example: `token_ttl`.", "format": "google-fieldmask", "type": "string", "location": "query" } } }, "batchGet": { "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "path": "v1beta/{+parent}/apps/-/appAttestConfig:batchGet", "id": "firebaseappcheck.projects.apps.appAttestConfig.batchGet", "flatPath": "v1beta/projects/{projectsId}/apps/-/appAttestConfig:batchGet", "parameterOrder": [ "parent" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaBatchGetAppAttestConfigsResponse" }, "description": "Atomically gets the AppAttestConfigs for the specified list of apps.", "parameters": { "parent": { "location": "path", "description": "Required. The parent project name shared by all AppAttestConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.", "required": true, "pattern": "^projects/[^/]+$", "type": "string" }, "names": { "repeated": true, "location": "query", "description": "Required. The relative resource names of the AppAttestConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/appAttestConfig ``` A maximum of 100 objects can be retrieved in a batch.", "type": "string" } } } } } }, "methods": { "exchangePlayIntegrityToken": { "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangePlayIntegrityToken", "path": "v1beta/{+app}:exchangePlayIntegrityToken", "id": "firebaseappcheck.projects.apps.exchangePlayIntegrityToken", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest" }, "parameters": { "app": { "location": "path", "required": true, "pattern": "^projects/[^/]+/apps/[^/]+$", "description": "Required. The relative resource name of the Android app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "type": "string" } }, "httpMethod": "POST", "parameterOrder": [ "app" ], "description": "Validates an [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify). If valid, returns an AppCheckToken." }, "exchangeRecaptchaToken": { "httpMethod": "POST", "description": "Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.", "parameterOrder": [ "app" ], "path": "v1beta/{+app}:exchangeRecaptchaToken", "parameters": { "app": { "pattern": "^projects/[^/]+/apps/[^/]+$", "required": true, "description": "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "location": "path", "type": "string" } }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest" }, "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaToken", "id": "firebaseappcheck.projects.apps.exchangeRecaptchaToken", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ] }, "exchangeAppAttestAttestation": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "id": "firebaseappcheck.projects.apps.exchangeAppAttestAttestation", "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest" }, "description": "Accepts an App Attest CBOR attestation and verifies it with Apple using your preconfigured team and bundle IDs. If valid, returns an attestation artifact that can later be exchanged for an AppCheckToken using ExchangeAppAttestAssertion. For convenience and performance, this method's response object will also contain an AppCheckToken (if the verification is successful).", "httpMethod": "POST", "path": "v1beta/{+app}:exchangeAppAttestAttestation", "parameterOrder": [ "app" ], "parameters": { "app": { "type": "string", "location": "path", "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "required": true, "pattern": "^projects/[^/]+/apps/[^/]+$" } }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAttestation", "response": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse" } }, "exchangeDebugToken": { "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameterOrder": [ "app" ], "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest" }, "description": "Validates a debug token secret that you have previously created using CreateDebugToken. If valid, returns an AppCheckToken. Note that a restrictive quota is enforced on this method to prevent accidental exposure of the app to abuse.", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeDebugToken", "path": "v1beta/{+app}:exchangeDebugToken", "parameters": { "app": { "location": "path", "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "type": "string", "required": true, "pattern": "^projects/[^/]+/apps/[^/]+$" } }, "httpMethod": "POST", "id": "firebaseappcheck.projects.apps.exchangeDebugToken" }, "generatePlayIntegrityChallenge": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameterOrder": [ "app" ], "parameters": { "app": { "required": true, "location": "path", "type": "string", "pattern": "^projects/[^/]+/apps/[^/]+$", "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard." } }, "path": "v1beta/{+app}:generatePlayIntegrityChallenge", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:generatePlayIntegrityChallenge", "request": { "$ref": "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest" }, "description": "Generates a challenge that protects the integrity of an immediately following integrity verdict request to the Play Integrity API. The next call to ExchangePlayIntegrityToken using the resulting integrity token will verify the presence and validity of the challenge. A challenge should not be reused for multiple calls.", "id": "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge", "response": { "$ref": "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse" }, "httpMethod": "POST" }, "exchangeAppAttestAssertion": { "path": "v1beta/{+app}:exchangeAppAttestAssertion", "parameters": { "app": { "type": "string", "pattern": "^projects/[^/]+/apps/[^/]+$", "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "location": "path", "required": true } }, "parameterOrder": [ "app" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest" }, "id": "firebaseappcheck.projects.apps.exchangeAppAttestAssertion", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAssertion", "httpMethod": "POST", "description": "Accepts an App Attest assertion and an artifact previously obtained from ExchangeAppAttestAttestation and verifies those with Apple. If valid, returns an AppCheckToken." }, "exchangeCustomToken": { "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeCustomToken", "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "description": "Validates a custom token signed using your project's Admin SDK service account credentials. If valid, returns an AppCheckToken.", "id": "firebaseappcheck.projects.apps.exchangeCustomToken", "path": "v1beta/{+app}:exchangeCustomToken", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameters": { "app": { "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "type": "string", "required": true, "location": "path", "pattern": "^projects/[^/]+/apps/[^/]+$" } }, "httpMethod": "POST", "parameterOrder": [ "app" ], "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest" } }, "generateAppAttestChallenge": { "path": "v1beta/{+app}:generateAppAttestChallenge", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:generateAppAttestChallenge", "description": "Generates a challenge that protects the integrity of an immediately following call to ExchangeAppAttestAttestation or ExchangeAppAttestAssertion. A challenge should not be reused for multiple calls.", "httpMethod": "POST", "parameterOrder": [ "app" ], "id": "firebaseappcheck.projects.apps.generateAppAttestChallenge", "parameters": { "app": { "type": "string", "required": true, "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "pattern": "^projects/[^/]+/apps/[^/]+$", "location": "path" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "response": { "$ref": "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse" }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest" } }, "exchangeSafetyNetToken": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "path": "v1beta/{+app}:exchangeSafetyNetToken", "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "httpMethod": "POST", "parameterOrder": [ "app" ], "description": "Validates a [SafetyNet token](https://developer.android.com/training/safetynet/attestation#request-attestation-step). If valid, returns an AppCheckToken.", "parameters": { "app": { "type": "string", "required": true, "description": "Required. The relative resource name of the Android app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "location": "path", "pattern": "^projects/[^/]+/apps/[^/]+$" } }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeSafetyNetToken", "id": "firebaseappcheck.projects.apps.exchangeSafetyNetToken", "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest" } }, "exchangeRecaptchaV3Token": { "description": "Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.", "httpMethod": "POST", "parameterOrder": [ "app" ], "parameters": { "app": { "description": "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "required": true, "location": "path", "pattern": "^projects/[^/]+/apps/[^/]+$", "type": "string" } }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaV3Token", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "path": "v1beta/{+app}:exchangeRecaptchaV3Token", "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest" }, "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "id": "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token" }, "exchangeDeviceCheckToken": { "parameters": { "app": { "pattern": "^projects/[^/]+/apps/[^/]+$", "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.", "type": "string", "location": "path", "required": true } }, "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest" }, "httpMethod": "POST", "path": "v1beta/{+app}:exchangeDeviceCheckToken", "description": "Accepts a [`device_token`](https://developer.apple.com/documentation/devicecheck/dcdevice) issued by DeviceCheck, and attempts to validate it with Apple. If valid, returns an AppCheckToken.", "id": "firebaseappcheck.projects.apps.exchangeDeviceCheckToken", "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeDeviceCheckToken", "parameterOrder": [ "app" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ] }, "exchangeRecaptchaEnterpriseToken": { "parameters": { "app": { "required": true, "type": "string", "location": "path", "pattern": "^projects/[^/]+/apps/[^/]+$", "description": "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard." } }, "id": "firebaseappcheck.projects.apps.exchangeRecaptchaEnterpriseToken", "httpMethod": "POST", "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaEnterpriseToken", "request": { "$ref": "GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest" }, "response": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "parameterOrder": [ "app" ], "path": "v1beta/{+app}:exchangeRecaptchaEnterpriseToken", "description": "Validates a [reCAPTCHA Enterprise response token](https://cloud.google.com/recaptcha-enterprise/docs/create-assessment#retrieve_token). If valid, returns an App Check token AppCheckToken." } } } } }, "jwks": { "methods": { "get": { "response": { "$ref": "GoogleFirebaseAppcheckV1betaPublicJwkSet" }, "path": "v1beta/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/firebase" ], "httpMethod": "GET", "flatPath": "v1beta/jwks", "id": "firebaseappcheck.jwks.get", "parameters": { "name": { "description": "Required. The relative resource name to the public JWK set. Must always be exactly the string `jwks`.", "location": "path", "required": true, "type": "string", "pattern": "^jwks$" } }, "parameterOrder": [ "name" ], "description": "Returns a public JWK set as specified by [RFC 7517](https://tools.ietf.org/html/rfc7517) that can be used to verify App Check tokens. Exactly one of the public keys in the returned set will successfully validate any App Check token that is currently valid." } } } }, "discoveryVersion": "v1", "baseUrl": "https://firebaseappcheck.googleapis.com/", "version_module": true, "kind": "discovery#restDescription", "fullyEncodeReservedExpansion": true, "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/cloud-platform": { "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account." }, "https://www.googleapis.com/auth/firebase": { "description": "View and administer all your Firebase data and settings" } } } }, "title": "Firebase App Check API", "name": "firebaseappcheck", "protocol": "rest", "icons": { "x16": "http://www.google.com/images/icons/product/search-16.gif", "x32": "http://www.google.com/images/icons/product/search-32.gif" }, "batchPath": "batch", "ownerName": "Google", "canonicalName": "Firebaseappcheck", "servicePath": "", "version": "v1beta", "documentationLink": "https://firebase.google.com/docs/app-check", "parameters": { "alt": { "description": "Data format for response.", "default": "json", "type": "string", "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "enum": [ "json", "media", "proto" ], "location": "query" }, "oauth_token": { "type": "string", "description": "OAuth 2.0 token for the current user.", "location": "query" }, "uploadType": { "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").", "location": "query", "type": "string" }, "fields": { "type": "string", "description": "Selector specifying which fields to include in a partial response.", "location": "query" }, "$.xgafv": { "description": "V1 error format.", "type": "string", "location": "query", "enum": [ "1", "2" ], "enumDescriptions": [ "v1 error format", "v2 error format" ] }, "access_token": { "type": "string", "location": "query", "description": "OAuth access token." }, "quotaUser": { "location": "query", "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.", "type": "string" }, "upload_protocol": { "location": "query", "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").", "type": "string" }, "callback": { "description": "JSONP", "type": "string", "location": "query" }, "key": { "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.", "location": "query", "type": "string" }, "prettyPrint": { "location": "query", "description": "Returns response with indentations and line breaks.", "default": "true", "type": "boolean" } }, "rootUrl": "https://firebaseappcheck.googleapis.com/", "revision": "20220625", "description": "Firebase App Check works alongside other Firebase services to help protect your backend resources from abuse, such as billing fraud or phishing.", "basePath": "", "schemas": { "GoogleFirebaseAppcheckV1betaService": { "type": "object", "properties": { "name": { "type": "string", "description": "Required. The relative resource name of the service configuration object, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasestorage.googleapis.com` (Cloud Storage for Firebase) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasedatabase.googleapis.com` (Firebase Realtime Database) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firestore.googleapis.com` (Cloud Firestore)" }, "enforcementMode": { "enumDescriptions": [ "Firebase App Check is not enforced for the service, nor are App Check metrics collected. Though the service is not protected by App Check in this mode, other applicable protections, such as user authorization, are still enforced. An unconfigured service is in this mode by default.", "Firebase App Check is not enforced for the service. App Check metrics are collected to help you decide when to turn on enforcement for the service. Though the service is not protected by App Check in this mode, other applicable protections, such as user authorization, are still enforced.", "Firebase App Check is enforced for the service. The service will reject any request that attempts to access your project's resources if it does not have valid App Check token attached, with some exceptions depending on the service; for example, some services will still allow requests bearing the developer's privileged service account credentials without an App Check token. App Check metrics continue to be collected to help you detect issues with your App Check integration and monitor the composition of your callers. While the service is protected by App Check, other applicable protections, such as user authorization, continue to be enforced at the same time. Use caution when choosing to enforce App Check on a Firebase service. If your users have not updated to an App Check capable version of your app, their apps will no longer be able to use your Firebase services that are enforcing App Check. App Check metrics can help you decide whether to enforce App Check on your Firebase services. If your app has not launched yet, you should enable enforcement immediately, since there are no outdated clients in use." ], "type": "string", "description": "Required. The App Check enforcement mode for this service.", "enum": [ "OFF", "UNENFORCED", "ENFORCED" ] } }, "id": "GoogleFirebaseAppcheckV1betaService", "description": "The enforcement configuration for a Firebase service supported by App Check." }, "GoogleFirebaseAppcheckV1betaAppAttestConfig": { "id": "GoogleFirebaseAppcheckV1betaAppAttestConfig", "properties": { "name": { "type": "string", "description": "Required. The relative resource name of the App Attest configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```" }, "tokenTtl": { "format": "google-duration", "description": "Specifies the duration for which App Check tokens exchanged from App Attest artifacts will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.", "type": "string" } }, "type": "object", "description": "An app's App Attest configuration object. This configuration controls certain properties of the `AppCheckToken` returned by ExchangeAppAttestAttestation and ExchangeAppAttestAssertion, such as its ttl. Note that the Team ID registered with your app is used as part of the validation process. Please register it via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.iosApps/patch)." }, "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse": { "properties": { "configs": { "items": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig" }, "description": "RecaptchaEnterpriseConfigs retrieved.", "type": "array" } }, "description": "Response message for the BatchGetRecaptchaEnterpriseConfigs method.", "type": "object", "id": "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse" }, "GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest": { "properties": { "recaptchaV3Token": { "description": "Required. The reCAPTCHA token as returned by the [reCAPTCHA v3 JavaScript API](https://developers.google.com/recaptcha/docs/v3).", "type": "string" } }, "description": "Request message for the ExchangeRecaptchaV3Token method.", "type": "object", "id": "GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest" }, "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig": { "description": "An app's Play Integrity configuration object. This configuration controls certain properties of the `AppCheckToken` returned by ExchangePlayIntegrityToken, such as its ttl. Note that your registered SHA-256 certificate fingerprints are used to validate tokens issued by the Play Integrity API; please register them via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.androidApps.sha/create).", "properties": { "tokenTtl": { "format": "google-duration", "description": "Specifies the duration for which App Check tokens exchanged from Play Integrity tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.", "type": "string" }, "name": { "type": "string", "description": "Required. The relative resource name of the Play Integrity configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```" } }, "id": "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig", "type": "object" }, "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse": { "type": "object", "description": "Response message for the GenerateAppAttestChallenge method.", "properties": { "challenge": { "format": "byte", "type": "string", "description": "A one-time use challenge for the client to pass to the App Attest API." }, "ttl": { "format": "google-duration", "description": "The duration from the time this challenge is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.", "type": "string" } }, "id": "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse" }, "GoogleFirebaseAppcheckV1betaListDebugTokensResponse": { "type": "object", "description": "Response message for the ListDebugTokens method.", "properties": { "debugTokens": { "items": { "$ref": "GoogleFirebaseAppcheckV1betaDebugToken" }, "description": "The DebugTokens retrieved.", "type": "array" }, "nextPageToken": { "type": "string", "description": "If the result list is too large to fit in a single response, then a token is returned. If the string is empty or omitted, then this response is the last page of results. This token can be used in a subsequent call to ListDebugTokens to find the next group of DebugTokens. Page tokens are short-lived and should not be persisted." } }, "id": "GoogleFirebaseAppcheckV1betaListDebugTokensResponse" }, "GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest": { "type": "object", "description": "Request message for the ExchangePlayIntegrityToken method.", "id": "GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest", "properties": { "playIntegrityToken": { "description": "Required. The [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify) issued to your app.", "type": "string" } } }, "GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest": { "properties": { "debugToken": { "description": "Required. A debug token secret. This string must match a debug token secret previously created using CreateDebugToken.", "type": "string" } }, "description": "Request message for the ExchangeDebugToken method.", "id": "GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest", "type": "object" }, "GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse": { "properties": { "configs": { "items": { "$ref": "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig" }, "type": "array", "description": "PlayIntegrityConfigs retrieved." } }, "id": "GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse", "type": "object", "description": "Response message for the BatchGetPlayIntegrityConfigs method." }, "GoogleFirebaseAppcheckV1betaPublicJwk": { "properties": { "n": { "description": "See [section 6.3.1.1 of RFC 7518](https://tools.ietf.org/html/rfc7518#section-6.3.1.1).", "type": "string" }, "e": { "type": "string", "description": "See [section 6.3.1.2 of RFC 7518](https://tools.ietf.org/html/rfc7518#section-6.3.1.2)." }, "kid": { "type": "string", "description": "See [section 4.5 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.5)." }, "use": { "description": "See [section 4.2 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.2).", "type": "string" }, "alg": { "description": "See [section 4.4 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.4).", "type": "string" }, "kty": { "description": "See [section 4.1 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.1).", "type": "string" } }, "type": "object", "id": "GoogleFirebaseAppcheckV1betaPublicJwk", "description": "A JWK as specified by [section 4 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4) and [section 6.3.1 of RFC 7518](https://tools.ietf.org/html/rfc7518#section-6.3.1)." }, "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse": { "properties": { "attestationToken": { "$ref": "GoogleFirebaseAppcheckV1betaAttestationTokenResponse", "description": "Encapsulates an App Check token." }, "artifact": { "format": "byte", "description": "An artifact that can be used in future calls to ExchangeAppAttestAssertion.", "type": "string" }, "appCheckToken": { "$ref": "GoogleFirebaseAppcheckV1betaAppCheckToken", "description": "Encapsulates an App Check token." } }, "description": "Response message for the ExchangeAppAttestAttestation method.", "type": "object", "id": "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse" }, "GoogleFirebaseAppcheckV1betaDebugToken": { "type": "object", "properties": { "displayName": { "description": "Required. A human readable display name used to identify this debug token.", "type": "string" }, "name": { "description": "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```", "type": "string" }, "token": { "description": "Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during an UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.", "type": "string" } }, "description": "A *debug token* is a secret used during the development or integration testing of an app. It essentially allows the development or integration testing to bypass app attestation while still allowing App Check to enforce protection on supported production Firebase services.", "id": "GoogleFirebaseAppcheckV1betaDebugToken" }, "GoogleFirebaseAppcheckV1betaBatchGetAppAttestConfigsResponse": { "id": "GoogleFirebaseAppcheckV1betaBatchGetAppAttestConfigsResponse", "description": "Response message for the BatchGetAppAttestConfigs method.", "properties": { "configs": { "items": { "$ref": "GoogleFirebaseAppcheckV1betaAppAttestConfig" }, "type": "array", "description": "AppAttestConfigs retrieved." } }, "type": "object" }, "GoogleFirebaseAppcheckV1betaListServicesResponse": { "type": "object", "properties": { "nextPageToken": { "description": "If the result list is too large to fit in a single response, then a token is returned. If the string is empty or omitted, then this response is the last page of results. This token can be used in a subsequent call to ListServices to find the next group of Services. Page tokens are short-lived and should not be persisted.", "type": "string" }, "services": { "items": { "$ref": "GoogleFirebaseAppcheckV1betaService" }, "type": "array", "description": "The Services retrieved." } }, "id": "GoogleFirebaseAppcheckV1betaListServicesResponse", "description": "Response message for the ListServices method." }, "GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest": { "properties": { "recaptchaEnterpriseToken": { "description": "Required. The reCAPTCHA token as returned by the [reCAPTCHA Enterprise JavaScript API](https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-pages).", "type": "string" } }, "description": "Request message for the ExchangeRecaptchaEnterpriseToken method.", "type": "object", "id": "GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest" }, "GoogleFirebaseAppcheckV1betaPublicJwkSet": { "description": "The currently active set of public keys that can be used to verify App Check tokens. This object is a JWK set as specified by [section 5 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-5). For security, the response **must not** be cached for longer than six hours.", "type": "object", "id": "GoogleFirebaseAppcheckV1betaPublicJwkSet", "properties": { "keys": { "description": "The set of public keys. See [section 5.1 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-5).", "type": "array", "items": { "$ref": "GoogleFirebaseAppcheckV1betaPublicJwk" } } } }, "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig": { "description": "An app's reCAPTCHA Enterprise configuration object. This configuration is used by ExchangeRecaptchaEnterpriseToken to validate reCAPTCHA tokens issued to apps by reCAPTCHA Enterprise. It also controls certain properties of the returned `AppCheckToken`, such as its ttl.", "type": "object", "id": "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig", "properties": { "siteKey": { "type": "string", "description": "The score-based site key [created in reCAPTCHA Enterprise](https://cloud.google.com/recaptcha-enterprise/docs/create-key#creating_a_site_key) used to [invoke reCAPTCHA and generate the reCAPTCHA tokens](https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-pages) for your application. Important: This is *not* the `site_secret` (as it is in reCAPTCHA v3), but rather your score-based reCAPTCHA Enterprise site key." }, "tokenTtl": { "description": "Specifies the duration for which App Check tokens exchanged from reCAPTCHA Enterprise tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.", "format": "google-duration", "type": "string" }, "name": { "description": "Required. The relative resource name of the reCAPTCHA Enterprise configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```", "type": "string" } } }, "GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest": { "type": "object", "description": "Request message for the ExchangeSafetyNetToken method.", "properties": { "safetyNetToken": { "type": "string", "description": "Required. The [SafetyNet attestation response](https://developer.android.com/training/safetynet/attestation#request-attestation-step) issued to your app." } }, "id": "GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest" }, "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse": { "id": "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse", "type": "object", "properties": { "configs": { "items": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaV3Config" }, "description": "RecaptchaV3Configs retrieved.", "type": "array" } }, "description": "Response message for the BatchGetRecaptchaV3Configs method." }, "GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest": { "type": "object", "id": "GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest", "description": "Request message for the BatchUpdateServices method.", "properties": { "updateMask": { "format": "google-fieldmask", "description": "Optional. A comma-separated list of names of fields in the Services to update. Example: `display_name`. If this field is present, the `update_mask` field in the UpdateServiceRequest messages must all match this field, or the entire batch fails and no updates will be committed.", "type": "string" }, "requests": { "type": "array", "items": { "$ref": "GoogleFirebaseAppcheckV1betaUpdateServiceRequest" }, "description": "Required. The request messages specifying the Services to update. A maximum of 100 objects can be updated in a batch." } } }, "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest": { "properties": {}, "id": "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest", "type": "object", "description": "Request message for the GenerateAppAttestChallenge method." }, "GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest": { "type": "object", "description": "Request message for the ExchangeAppAttestAssertion method.", "id": "GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest", "properties": { "artifact": { "type": "string", "description": "Required. The artifact returned by a previous call to ExchangeAppAttestAttestation.", "format": "byte" }, "challenge": { "description": "Required. A one-time challenge returned by an immediately prior call to GenerateAppAttestChallenge.", "format": "byte", "type": "string" }, "assertion": { "format": "byte", "type": "string", "description": "Required. The CBOR-encoded assertion returned by the client-side App Attest API." } } }, "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse": { "type": "object", "description": "Response message for the BatchGetRecaptchaConfigs method.", "properties": { "configs": { "type": "array", "description": "RecaptchaConfigs retrieved.", "items": { "$ref": "GoogleFirebaseAppcheckV1betaRecaptchaConfig" } } }, "id": "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse" }, "GoogleFirebaseAppcheckV1betaBatchUpdateServicesResponse": { "description": "Response message for the BatchUpdateServices method.", "properties": { "services": { "description": "Service objects after the updates have been applied.", "type": "array", "items": { "$ref": "GoogleFirebaseAppcheckV1betaService" } } }, "id": "GoogleFirebaseAppcheckV1betaBatchUpdateServicesResponse", "type": "object" }, "GoogleFirebaseAppcheckV1betaUpdateServiceRequest": { "properties": { "updateMask": { "format": "google-fieldmask", "description": "Required. A comma-separated list of names of fields in the Service to update. Example: `enforcement_mode`.", "type": "string" }, "service": { "$ref": "GoogleFirebaseAppcheckV1betaService", "description": "Required. The Service to update. The Service's `name` field is used to identify the Service to be updated, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasestorage.googleapis.com` (Cloud Storage for Firebase) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firebasedatabase.googleapis.com` (Firebase Realtime Database) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `firestore.googleapis.com` (Cloud Firestore)" } }, "id": "GoogleFirebaseAppcheckV1betaUpdateServiceRequest", "description": "Request message for the UpdateService method as well as an individual update message for the BatchUpdateServices method.", "type": "object" }, "GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest": { "type": "object", "properties": { "customToken": { "description": "Required. A custom token signed using your project's Admin SDK service account credentials.", "type": "string" } }, "description": "Request message for the ExchangeCustomToken method.", "id": "GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest" }, "GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest": { "type": "object", "id": "GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest", "description": "Request message for the ExchangeDeviceCheckToken method.", "properties": { "deviceToken": { "type": "string", "description": "Required. The `device_token` as returned by Apple's client-side [DeviceCheck API](https://developer.apple.com/documentation/devicecheck/dcdevice). This is the base64 encoded `Data` (Swift) or `NSData` (ObjC) object." } } }, "GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest": { "type": "object", "id": "GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest", "description": "Request message for the ExchangeRecaptchaToken method.", "properties": { "recaptchaToken": { "description": "Required. The reCAPTCHA token as returned by the [reCAPTCHA v3 JavaScript API](https://developers.google.com/recaptcha/docs/v3).", "type": "string" } } }, "GoogleFirebaseAppcheckV1betaAppCheckToken": { "description": "Encapsulates an *App Check token*, which are used to access Firebase services protected by App Check.", "properties": { "ttl": { "type": "string", "description": "The duration from the time this token is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.", "format": "google-duration" }, "token": { "type": "string", "description": "An App Check token. App Check tokens are signed [JWTs](https://tools.ietf.org/html/rfc7519) containing claims that identify the attested app and Firebase project. This token is used to access Firebase services protected by App Check." }, "attestationToken": { "description": "An App Check token. App Check tokens are signed [JWTs](https://tools.ietf.org/html/rfc7519) containing claims that identify the attested app and Firebase project. This token is used to access Firebase services protected by App Check.", "type": "string" } }, "type": "object", "id": "GoogleFirebaseAppcheckV1betaAppCheckToken" }, "GoogleFirebaseAppcheckV1betaRecaptchaV3Config": { "properties": { "siteSecret": { "description": "Required. Input only. The site secret used to identify your service for reCAPTCHA v3 verification. For security reasons, this field will never be populated in any response.", "type": "string" }, "siteSecretSet": { "readOnly": true, "description": "Output only. Whether the `site_secret` field was previously set. Since we will never return the `site_secret` field, this field is the only way to find out whether it was previously set.", "type": "boolean" }, "tokenTtl": { "description": "Specifies the duration for which App Check tokens exchanged from reCAPTCHA tokens will be valid. If unset, a default value of 1 day is assumed. Must be between 30 minutes and 7 days, inclusive.", "type": "string", "format": "google-duration" }, "name": { "description": "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```", "type": "string" } }, "description": "An app's reCAPTCHA v3 configuration object. This configuration is used by ExchangeRecaptchaV3Token to validate reCAPTCHA tokens issued to apps by reCAPTCHA v3. It also controls certain properties of the returned `AppCheckToken`, such as its ttl.", "id": "GoogleFirebaseAppcheckV1betaRecaptchaV3Config", "type": "object" }, "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest": { "description": "Request message for the ExchangeAppAttestAttestation method.", "id": "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest", "properties": { "challenge": { "type": "string", "format": "byte", "description": "Required. A one-time challenge returned by an immediately prior call to GenerateAppAttestChallenge." }, "keyId": { "type": "string", "description": "Required. The key ID generated by App Attest for the client app.", "format": "byte" }, "attestationStatement": { "type": "string", "format": "byte", "description": "Required. The App Attest statement returned by the client-side App Attest API. This is a base64url encoded CBOR object in the JSON response." } }, "type": "object" }, "GoogleFirebaseAppcheckV1betaSafetyNetConfig": { "description": "An app's SafetyNet configuration object. This configuration controls certain properties of the `AppCheckToken` returned by ExchangeSafetyNetToken, such as its ttl. Note that your registered SHA-256 certificate fingerprints are used to validate tokens issued by SafetyNet; please register them via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.androidApps.sha/create).", "type": "object", "properties": { "tokenTtl": { "description": "Specifies the duration for which App Check tokens exchanged from SafetyNet tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.", "type": "string", "format": "google-duration" }, "name": { "type": "string", "description": "Required. The relative resource name of the SafetyNet configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```" } }, "id": "GoogleFirebaseAppcheckV1betaSafetyNetConfig" }, "GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse": { "description": "Response message for the BatchGetSafetyNetConfigs method.", "id": "GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse", "type": "object", "properties": { "configs": { "type": "array", "description": "SafetyNetConfigs retrieved.", "items": { "$ref": "GoogleFirebaseAppcheckV1betaSafetyNetConfig" } } } }, "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest": { "description": "Request message for the GeneratePlayIntegrityChallenge method.", "id": "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest", "properties": {}, "type": "object" }, "GoogleFirebaseAppcheckV1betaRecaptchaConfig": { "id": "GoogleFirebaseAppcheckV1betaRecaptchaConfig", "description": "An app's reCAPTCHA v3 configuration object. This configuration is used by ExchangeRecaptchaToken to validate reCAPTCHA tokens issued to apps by reCAPTCHA v3. It also controls certain properties of the returned `AppCheckToken`, such as its ttl.", "type": "object", "properties": { "name": { "description": "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ```", "type": "string" }, "siteSecret": { "type": "string", "description": "Required. Input only. The site secret used to identify your service for reCAPTCHA v3 verification. For security reasons, this field will never be populated in any response." }, "siteSecretSet": { "readOnly": true, "description": "Output only. Whether the `site_secret` field was previously set. Since we will never return the `site_secret` field, this field is the only way to find out whether it was previously set.", "type": "boolean" }, "tokenTtl": { "format": "google-duration", "description": "Specifies the duration for which App Check tokens exchanged from reCAPTCHA tokens will be valid. If unset, a default value of 1 day is assumed. Must be between 30 minutes and 7 days, inclusive.", "type": "string" } } }, "GoogleFirebaseAppcheckV1betaDeviceCheckConfig": { "properties": { "privateKey": { "description": "Required. Input only. The contents of the private key (`.p8`) file associated with the key specified by `key_id`. For security reasons, this field will never be populated in any response.", "type": "string" }, "keyId": { "type": "string", "description": "Required. The key identifier of a private key enabled with DeviceCheck, created in your Apple Developer account." }, "name": { "description": "Required. The relative resource name of the DeviceCheck configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```", "type": "string" }, "tokenTtl": { "type": "string", "description": "Specifies the duration for which App Check tokens exchanged from DeviceCheck tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.", "format": "google-duration" }, "privateKeySet": { "readOnly": true, "type": "boolean", "description": "Output only. Whether the `private_key` field was previously set. Since we will never return the `private_key` field, this field is the only way to find out whether it was previously set." } }, "id": "GoogleFirebaseAppcheckV1betaDeviceCheckConfig", "type": "object", "description": "An app's DeviceCheck configuration object. This configuration is used by ExchangeDeviceCheckToken to validate device tokens issued to apps by DeviceCheck. It also controls certain properties of the returned `AppCheckToken`, such as its ttl. Note that the Team ID registered with your app is used as part of the validation process. Please register it via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.iosApps/patch)." }, "GoogleFirebaseAppcheckV1betaBatchGetDeviceCheckConfigsResponse": { "type": "object", "id": "GoogleFirebaseAppcheckV1betaBatchGetDeviceCheckConfigsResponse", "properties": { "configs": { "items": { "$ref": "GoogleFirebaseAppcheckV1betaDeviceCheckConfig" }, "description": "DeviceCheckConfigs retrieved.", "type": "array" } }, "description": "Response message for the BatchGetDeviceCheckConfigs method." }, "GoogleFirebaseAppcheckV1betaAttestationTokenResponse": { "description": "Encapsulates an *App Check token*, which are used to access Firebase services protected by App Check.", "properties": { "ttl": { "type": "string", "description": "The duration from the time this token is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.", "format": "google-duration" }, "attestationToken": { "type": "string", "description": "An App Check token. App Check tokens are signed [JWTs](https://tools.ietf.org/html/rfc7519) containing claims that identify the attested app and Firebase project. This token is used to access Firebase services protected by App Check." } }, "id": "GoogleFirebaseAppcheckV1betaAttestationTokenResponse", "type": "object" }, "GoogleProtobufEmpty": { "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }", "id": "GoogleProtobufEmpty", "properties": {}, "type": "object" }, "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse": { "description": "Response message for the GeneratePlayIntegrityChallenge method.", "id": "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse", "properties": { "ttl": { "type": "string", "description": "The duration from the time this challenge is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.", "format": "google-duration" }, "challenge": { "type": "string", "description": "A one-time use [challenge](https://developer.android.com/google/play/integrity/verdict#protect-against-replay-attacks) for the client to pass to the Play Integrity API." } }, "type": "object" } }, "id": "firebaseappcheck:v1beta", "mtlsRootUrl": "https://firebaseappcheck.mtls.googleapis.com/", "ownerDomain": "google.com" }
-]===]))
+return {
+  ["auth"] = {
+    ["oauth2"] = {
+      ["scopes"] = {
+        ["https://www.googleapis.com/auth/cloud-platform"] = {
+          ["description"] = "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.",
+        },
+        ["https://www.googleapis.com/auth/firebase"] = {
+          ["description"] = "View and administer all your Firebase data and settings",
+        },
+      },
+    },
+  },
+  ["basePath"] = "",
+  ["baseUrl"] = "https://firebaseappcheck.googleapis.com/",
+  ["batchPath"] = "batch",
+  ["canonicalName"] = "Firebaseappcheck",
+  ["description"] = "Firebase App Check works alongside other Firebase services to help protect your backend resources from abuse, such as billing fraud or phishing.",
+  ["discoveryVersion"] = "v1",
+  ["documentationLink"] = "https://firebase.google.com/docs/app-check",
+  ["fullyEncodeReservedExpansion"] = true,
+  ["icons"] = {
+    ["x16"] = "http://www.google.com/images/icons/product/search-16.gif",
+    ["x32"] = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  ["id"] = "firebaseappcheck:v1beta",
+  ["kind"] = "discovery#restDescription",
+  ["mtlsRootUrl"] = "https://firebaseappcheck.mtls.googleapis.com/",
+  ["name"] = "firebaseappcheck",
+  ["ownerDomain"] = "google.com",
+  ["ownerName"] = "Google",
+  ["parameters"] = {
+    ["$.xgafv"] = {
+      ["description"] = "V1 error format.",
+      ["enum"] = {
+        "1",
+        "2",
+      },
+      ["enumDescriptions"] = {
+        "v1 error format",
+        "v2 error format",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["access_token"] = {
+      ["description"] = "OAuth access token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["alt"] = {
+      ["default"] = "json",
+      ["description"] = "Data format for response.",
+      ["enum"] = {
+        "json",
+        "media",
+        "proto",
+      },
+      ["enumDescriptions"] = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["callback"] = {
+      ["description"] = "JSONP",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["fields"] = {
+      ["description"] = "Selector specifying which fields to include in a partial response.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["key"] = {
+      ["description"] = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["oauth_token"] = {
+      ["description"] = "OAuth 2.0 token for the current user.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["prettyPrint"] = {
+      ["default"] = "true",
+      ["description"] = "Returns response with indentations and line breaks.",
+      ["location"] = "query",
+      ["type"] = "boolean",
+    },
+    ["quotaUser"] = {
+      ["description"] = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["uploadType"] = {
+      ["description"] = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["upload_protocol"] = {
+      ["description"] = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+  },
+  ["protocol"] = "rest",
+  ["resources"] = {
+    ["jwks"] = {
+      ["methods"] = {
+        ["get"] = {
+          ["description"] = "Returns a public JWK set as specified by [RFC 7517](https://tools.ietf.org/html/rfc7517) that can be used to verify App Check tokens. Exactly one of the public keys in the returned set will successfully validate any App Check token that is currently valid.",
+          ["flatPath"] = "v1beta/jwks",
+          ["httpMethod"] = "GET",
+          ["id"] = "firebaseappcheck.jwks.get",
+          ["parameterOrder"] = {
+            "name",
+          },
+          ["parameters"] = {
+            ["name"] = {
+              ["description"] = "Required. The relative resource name to the public JWK set. Must always be exactly the string `jwks`.",
+              ["location"] = "path",
+              ["pattern"] = "^jwks$",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "v1beta/{+name}",
+          ["response"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaPublicJwkSet",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/firebase",
+          },
+        },
+      },
+    },
+    ["projects"] = {
+      ["resources"] = {
+        ["apps"] = {
+          ["methods"] = {
+            ["exchangeAppAttestAssertion"] = {
+              ["description"] = "Accepts an App Attest assertion and an artifact previously obtained from ExchangeAppAttestAttestation and verifies those with Apple. If valid, returns an AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAssertion",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeAppAttestAssertion",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeAppAttestAssertion",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeAppAttestAttestation"] = {
+              ["description"] = "Accepts an App Attest CBOR attestation and verifies it with Apple using your preconfigured team and bundle IDs. If valid, returns an attestation artifact that can later be exchanged for an AppCheckToken using ExchangeAppAttestAssertion. For convenience and performance, this method's response object will also contain an AppCheckToken (if the verification is successful).",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAttestation",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeAppAttestAttestation",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeAppAttestAttestation",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeCustomToken"] = {
+              ["description"] = "Validates a custom token signed using your project's Admin SDK service account credentials. If valid, returns an AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeCustomToken",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeCustomToken",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeCustomToken",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeDebugToken"] = {
+              ["description"] = "Validates a debug token secret that you have previously created using CreateDebugToken. If valid, returns an AppCheckToken. Note that a restrictive quota is enforced on this method to prevent accidental exposure of the app to abuse.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeDebugToken",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeDebugToken",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeDebugToken",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeDeviceCheckToken"] = {
+              ["description"] = "Accepts a [`device_token`](https://developer.apple.com/documentation/devicecheck/dcdevice) issued by DeviceCheck, and attempts to validate it with Apple. If valid, returns an AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeDeviceCheckToken",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeDeviceCheckToken",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeDeviceCheckToken",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangePlayIntegrityToken"] = {
+              ["description"] = "Validates an [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify). If valid, returns an AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangePlayIntegrityToken",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangePlayIntegrityToken",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the Android app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangePlayIntegrityToken",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeRecaptchaEnterpriseToken"] = {
+              ["description"] = "Validates a [reCAPTCHA Enterprise response token](https://cloud.google.com/recaptcha-enterprise/docs/create-assessment#retrieve_token). If valid, returns an App Check token AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaEnterpriseToken",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeRecaptchaEnterpriseToken",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeRecaptchaEnterpriseToken",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeRecaptchaToken"] = {
+              ["description"] = "Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaToken",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeRecaptchaToken",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeRecaptchaToken",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeRecaptchaV3Token"] = {
+              ["description"] = "Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeRecaptchaV3Token",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeRecaptchaV3Token",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeRecaptchaV3Token",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["exchangeSafetyNetToken"] = {
+              ["description"] = "Validates a [SafetyNet token](https://developer.android.com/training/safetynet/attestation#request-attestation-step). If valid, returns an AppCheckToken.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:exchangeSafetyNetToken",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.exchangeSafetyNetToken",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the Android app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:exchangeSafetyNetToken",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["generateAppAttestChallenge"] = {
+              ["description"] = "Generates a challenge that protects the integrity of an immediately following call to ExchangeAppAttestAttestation or ExchangeAppAttestAssertion. A challenge should not be reused for multiple calls.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:generateAppAttestChallenge",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.generateAppAttestChallenge",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:generateAppAttestChallenge",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["generatePlayIntegrityChallenge"] = {
+              ["description"] = "Generates a challenge that protects the integrity of an immediately following integrity verdict request to the Play Integrity API. The next call to ExchangePlayIntegrityToken using the resulting integrity token will verify the presence and validity of the challenge. A challenge should not be reused for multiple calls.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}:generatePlayIntegrityChallenge",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge",
+              ["parameterOrder"] = {
+                "app",
+              },
+              ["parameters"] = {
+                ["app"] = {
+                  ["description"] = "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+app}:generatePlayIntegrityChallenge",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+          },
+          ["resources"] = {
+            ["appAttestConfig"] = {
+              ["methods"] = {
+                ["batchGet"] = {
+                  ["description"] = "Atomically gets the AppAttestConfigs for the specified list of apps.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/-/appAttestConfig:batchGet",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.appAttestConfig.batchGet",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["names"] = {
+                      ["description"] = "Required. The relative resource names of the AppAttestConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/appAttestConfig ``` A maximum of 100 objects can be retrieved in a batch.",
+                      ["location"] = "query",
+                      ["repeated"] = true,
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent project name shared by all AppAttestConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/apps/-/appAttestConfig:batchGet",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchGetAppAttestConfigsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the AppAttestConfig for the specified app.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/appAttestConfig",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.appAttestConfig.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the AppAttestConfig, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/appAttestConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaAppAttestConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the AppAttestConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange AppAttest tokens for App Check tokens.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/appAttestConfig",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.appAttestConfig.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the App Attest configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/appAttestConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the AppAttestConfig Gets to update. Example: `token_ttl`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaAppAttestConfig",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaAppAttestConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+            ["debugTokens"] = {
+              ["methods"] = {
+                ["create"] = {
+                  ["description"] = "Creates a new DebugToken for the specified app. For security reasons, after the creation operation completes, the `token` field cannot be updated or retrieved, but you can revoke the debug token using DeleteDebugToken. Each app can have a maximum of 20 debug tokens.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "firebaseappcheck.projects.apps.debugTokens.create",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["parent"] = {
+                      ["description"] = "Required. The relative resource name of the parent app in which the specified DebugToken will be created, in the format: ``` projects/{project_number}/apps/{app_id} ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/debugTokens",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDebugToken",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDebugToken",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["delete"] = {
+                  ["description"] = "Deletes the specified DebugToken. A deleted debug token cannot be used to exchange for an App Check token. Use this method when you suspect the secret `token` has been compromised or when you no longer need the debug token.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}",
+                  ["httpMethod"] = "DELETE",
+                  ["id"] = "firebaseappcheck.projects.apps.debugTokens.delete",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the DebugToken to delete, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleProtobufEmpty",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the specified DebugToken. For security reasons, the `token` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.debugTokens.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDebugToken",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["list"] = {
+                  ["description"] = "Lists all DebugTokens for the specified app. For security reasons, the `token` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.debugTokens.list",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["pageSize"] = {
+                      ["description"] = "The maximum number of DebugTokens to return in the response. Note that an app can have at most 20 debug tokens. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["pageToken"] = {
+                      ["description"] = "Token returned from a previous call to ListDebugTokens indicating where in the set of DebugTokens to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListDebugTokens must match the call that provided the page token; if they do not match, the result is undefined.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The relative resource name of the parent app for which to list each associated DebugToken, in the format: ``` projects/{project_number}/apps/{app_id} ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/debugTokens",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaListDebugTokensResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the specified DebugToken. For security reasons, the `token` field cannot be updated, nor will it be populated in the response, but you can revoke the debug token using DeleteDebugToken.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/debugTokens/{debugTokensId}",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.debugTokens.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the DebugToken to update. Example: `display_name`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDebugToken",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDebugToken",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+            ["deviceCheckConfig"] = {
+              ["methods"] = {
+                ["batchGet"] = {
+                  ["description"] = "Atomically gets the DeviceCheckConfigs for the specified list of apps. For security reasons, the `private_key` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/-/deviceCheckConfig:batchGet",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.deviceCheckConfig.batchGet",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["names"] = {
+                      ["description"] = "Required. The relative resource names of the DeviceCheckConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ``` A maximum of 100 objects can be retrieved in a batch.",
+                      ["location"] = "query",
+                      ["repeated"] = true,
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent project name shared by all DeviceCheckConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/apps/-/deviceCheckConfig:batchGet",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchGetDeviceCheckConfigsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the DeviceCheckConfig for the specified app. For security reasons, the `private_key` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/deviceCheckConfig",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.deviceCheckConfig.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the DeviceCheckConfig, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/deviceCheckConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDeviceCheckConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the DeviceCheckConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange DeviceCheck tokens for App Check tokens. For security reasons, the `private_key` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/deviceCheckConfig",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.deviceCheckConfig.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the DeviceCheck configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/deviceCheckConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the DeviceCheckConfig Gets to update. Example: `key_id,private_key`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDeviceCheckConfig",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaDeviceCheckConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+            ["playIntegrityConfig"] = {
+              ["methods"] = {
+                ["batchGet"] = {
+                  ["description"] = "Atomically gets the PlayIntegrityConfigs for the specified list of apps.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/-/playIntegrityConfig:batchGet",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.playIntegrityConfig.batchGet",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["names"] = {
+                      ["description"] = "Required. The relative resource names of the PlayIntegrityConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ``` A maximum of 100 objects can be retrieved in a batch.",
+                      ["location"] = "query",
+                      ["repeated"] = true,
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent project name shared by all PlayIntegrityConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/apps/-/playIntegrityConfig:batchGet",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the PlayIntegrityConfig for the specified app.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/playIntegrityConfig",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.playIntegrityConfig.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the PlayIntegrityConfig, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/playIntegrityConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the PlayIntegrityConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange Play Integrity tokens for App Check tokens.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/playIntegrityConfig",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.playIntegrityConfig.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the Play Integrity configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/playIntegrityConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the PlayIntegrityConfig Gets to update. Example: `token_ttl`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+            ["recaptchaConfig"] = {
+              ["methods"] = {
+                ["batchGet"] = {
+                  ["description"] = "Atomically gets the RecaptchaConfigs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/-/recaptchaConfig:batchGet",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaConfig.batchGet",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["names"] = {
+                      ["description"] = "Required. The relative resource names of the RecaptchaConfigs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ``` A maximum of 100 objects can be retrieved in a batch.",
+                      ["location"] = "query",
+                      ["repeated"] = true,
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent project name shared by all RecaptchaConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/apps/-/recaptchaConfig:batchGet",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the RecaptchaConfig for the specified app. For security reasons, the `site_secret` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaConfig.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the RecaptchaConfig, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/recaptchaConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the RecaptchaConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaConfig",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaConfig.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/recaptchaConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the RecaptchaConfig to update. Example: `site_secret`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaConfig",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+            ["recaptchaEnterpriseConfig"] = {
+              ["methods"] = {
+                ["batchGet"] = {
+                  ["description"] = "Atomically gets the RecaptchaEnterpriseConfigs for the specified list of apps.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/-/recaptchaEnterpriseConfig:batchGet",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.batchGet",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["names"] = {
+                      ["description"] = "Required. The relative resource names of the RecaptchaEnterpriseConfigs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ``` A maximum of 100 objects can be retrieved in a batch.",
+                      ["location"] = "query",
+                      ["repeated"] = true,
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent project name shared by all RecaptchaEnterpriseConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/apps/-/recaptchaEnterpriseConfig:batchGet",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the RecaptchaEnterpriseConfig for the specified app.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the RecaptchaEnterpriseConfig, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/recaptchaEnterpriseConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the RecaptchaEnterpriseConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA Enterprise tokens for App Check tokens.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaEnterpriseConfig",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaEnterpriseConfig.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the reCAPTCHA Enterprise configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/recaptchaEnterpriseConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the RecaptchaEnterpriseConfig to update. Example: `site_key`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+            ["recaptchaV3Config"] = {
+              ["methods"] = {
+                ["batchGet"] = {
+                  ["description"] = "Atomically gets the RecaptchaV3Configs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/-/recaptchaV3Config:batchGet",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaV3Config.batchGet",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["names"] = {
+                      ["description"] = "Required. The relative resource names of the RecaptchaV3Configs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ``` A maximum of 100 objects can be retrieved in a batch.",
+                      ["location"] = "query",
+                      ["repeated"] = true,
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent project name shared by all RecaptchaV3Configs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/apps/-/recaptchaV3Config:batchGet",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the RecaptchaV3Config for the specified app. For security reasons, the `site_secret` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaV3Config",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaV3Config.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the RecaptchaV3Config, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/recaptchaV3Config$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaV3Config",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the RecaptchaV3Config for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA V3 tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/recaptchaV3Config",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.recaptchaV3Config.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/recaptchaV3Config$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the RecaptchaV3Config to update. Example: `site_secret`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaV3Config",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaV3Config",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+            ["safetyNetConfig"] = {
+              ["methods"] = {
+                ["batchGet"] = {
+                  ["description"] = "Atomically gets the SafetyNetConfigs for the specified list of apps.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/-/safetyNetConfig:batchGet",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.safetyNetConfig.batchGet",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["names"] = {
+                      ["description"] = "Required. The relative resource names of the SafetyNetConfigs to retrieve, in the format ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ``` A maximum of 100 objects can be retrieved in a batch.",
+                      ["location"] = "query",
+                      ["repeated"] = true,
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent project name shared by all SafetyNetConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+parent}/apps/-/safetyNetConfig:batchGet",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the SafetyNetConfig for the specified app.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "firebaseappcheck.projects.apps.safetyNetConfig.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the SafetyNetConfig, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/safetyNetConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaSafetyNetConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "Updates the SafetyNetConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange SafetyNet tokens for App Check tokens.",
+                  ["flatPath"] = "v1beta/projects/{projectsId}/apps/{appsId}/safetyNetConfig",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "firebaseappcheck.projects.apps.safetyNetConfig.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The relative resource name of the SafetyNet configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/apps/[^/]+/safetyNetConfig$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "Required. A comma-separated list of names of fields in the SafetyNetConfig Gets to update. Example: `token_ttl`.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1beta/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaSafetyNetConfig",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "GoogleFirebaseAppcheckV1betaSafetyNetConfig",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/firebase",
+                  },
+                },
+              },
+            },
+          },
+        },
+        ["services"] = {
+          ["methods"] = {
+            ["batchUpdate"] = {
+              ["description"] = "Atomically updates the specified Service configurations.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/services:batchUpdate",
+              ["httpMethod"] = "POST",
+              ["id"] = "firebaseappcheck.projects.services.batchUpdate",
+              ["parameterOrder"] = {
+                "parent",
+              },
+              ["parameters"] = {
+                ["parent"] = {
+                  ["description"] = "Required. The parent project name shared by all Service configurations being updated, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being updated must match this field, or the entire batch fails.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+parent}/services:batchUpdate",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaBatchUpdateServicesResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["get"] = {
+              ["description"] = "Gets the Service configuration for the specified service name.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/services/{servicesId}",
+              ["httpMethod"] = "GET",
+              ["id"] = "firebaseappcheck.projects.services.get",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["name"] = {
+                  ["description"] = "Required. The relative resource name of the Service to retrieve, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/services/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+name}",
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaService",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["list"] = {
+              ["description"] = "Lists all Service configurations for the specified project. Only Services which were explicitly configured using UpdateService or BatchUpdateServices will be returned.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/services",
+              ["httpMethod"] = "GET",
+              ["id"] = "firebaseappcheck.projects.services.list",
+              ["parameterOrder"] = {
+                "parent",
+              },
+              ["parameters"] = {
+                ["pageSize"] = {
+                  ["description"] = "The maximum number of Services to return in the response. Only explicitly configured services are returned. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.",
+                  ["format"] = "int32",
+                  ["location"] = "query",
+                  ["type"] = "integer",
+                },
+                ["pageToken"] = {
+                  ["description"] = "Token returned from a previous call to ListServices indicating where in the set of Services to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListServices must match the call that provided the page token; if they do not match, the result is undefined.",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+                ["parent"] = {
+                  ["description"] = "Required. The relative resource name of the parent project for which to list each associated Service, in the format: ``` projects/{project_number} ```",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+parent}/services",
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaListServicesResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+            ["patch"] = {
+              ["description"] = "Updates the specified Service configuration.",
+              ["flatPath"] = "v1beta/projects/{projectsId}/services/{servicesId}",
+              ["httpMethod"] = "PATCH",
+              ["id"] = "firebaseappcheck.projects.services.patch",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["name"] = {
+                  ["description"] = "Required. The relative resource name of the service configuration object, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/services/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+                ["updateMask"] = {
+                  ["description"] = "Required. A comma-separated list of names of fields in the Service to update. Example: `enforcement_mode`.",
+                  ["format"] = "google-fieldmask",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1beta/{+name}",
+              ["request"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaService",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleFirebaseAppcheckV1betaService",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ["revision"] = "20220730",
+  ["rootUrl"] = "https://firebaseappcheck.googleapis.com/",
+  ["schemas"] = {
+    ["GoogleFirebaseAppcheckV1betaAppAttestConfig"] = {
+      ["description"] = "An app's App Attest configuration object. This configuration controls certain properties of the `AppCheckToken` returned by ExchangeAppAttestAttestation and ExchangeAppAttestAssertion, such as its ttl. Note that the Team ID registered with your app is used as part of the validation process. Please register it via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.iosApps/patch).",
+      ["id"] = "GoogleFirebaseAppcheckV1betaAppAttestConfig",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the App Attest configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/appAttestConfig ```",
+          ["type"] = "string",
+        },
+        ["tokenTtl"] = {
+          ["description"] = "Specifies the duration for which App Check tokens exchanged from App Attest artifacts will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaAppCheckToken"] = {
+      ["description"] = "Encapsulates an *App Check token*, which are used to access Firebase services protected by App Check.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+      ["properties"] = {
+        ["attestationToken"] = {
+          ["description"] = "An App Check token. App Check tokens are signed [JWTs](https://tools.ietf.org/html/rfc7519) containing claims that identify the attested app and Firebase project. This token is used to access Firebase services protected by App Check.",
+          ["type"] = "string",
+        },
+        ["token"] = {
+          ["description"] = "An App Check token. App Check tokens are signed [JWTs](https://tools.ietf.org/html/rfc7519) containing claims that identify the attested app and Firebase project. This token is used to access Firebase services protected by App Check.",
+          ["type"] = "string",
+        },
+        ["ttl"] = {
+          ["description"] = "The duration from the time this token is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaAttestationTokenResponse"] = {
+      ["description"] = "Encapsulates an *App Check token*, which are used to access Firebase services protected by App Check.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaAttestationTokenResponse",
+      ["properties"] = {
+        ["attestationToken"] = {
+          ["description"] = "An App Check token. App Check tokens are signed [JWTs](https://tools.ietf.org/html/rfc7519) containing claims that identify the attested app and Firebase project. This token is used to access Firebase services protected by App Check.",
+          ["type"] = "string",
+        },
+        ["ttl"] = {
+          ["description"] = "The duration from the time this token is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchGetAppAttestConfigsResponse"] = {
+      ["description"] = "Response message for the BatchGetAppAttestConfigs method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchGetAppAttestConfigsResponse",
+      ["properties"] = {
+        ["configs"] = {
+          ["description"] = "AppAttestConfigs retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaAppAttestConfig",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchGetDeviceCheckConfigsResponse"] = {
+      ["description"] = "Response message for the BatchGetDeviceCheckConfigs method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchGetDeviceCheckConfigsResponse",
+      ["properties"] = {
+        ["configs"] = {
+          ["description"] = "DeviceCheckConfigs retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaDeviceCheckConfig",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse"] = {
+      ["description"] = "Response message for the BatchGetPlayIntegrityConfigs method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse",
+      ["properties"] = {
+        ["configs"] = {
+          ["description"] = "PlayIntegrityConfigs retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse"] = {
+      ["description"] = "Response message for the BatchGetRecaptchaConfigs method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse",
+      ["properties"] = {
+        ["configs"] = {
+          ["description"] = "RecaptchaConfigs retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaConfig",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse"] = {
+      ["description"] = "Response message for the BatchGetRecaptchaEnterpriseConfigs method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse",
+      ["properties"] = {
+        ["configs"] = {
+          ["description"] = "RecaptchaEnterpriseConfigs retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse"] = {
+      ["description"] = "Response message for the BatchGetRecaptchaV3Configs method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse",
+      ["properties"] = {
+        ["configs"] = {
+          ["description"] = "RecaptchaV3Configs retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaRecaptchaV3Config",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse"] = {
+      ["description"] = "Response message for the BatchGetSafetyNetConfigs method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse",
+      ["properties"] = {
+        ["configs"] = {
+          ["description"] = "SafetyNetConfigs retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaSafetyNetConfig",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest"] = {
+      ["description"] = "Request message for the BatchUpdateServices method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchUpdateServicesRequest",
+      ["properties"] = {
+        ["requests"] = {
+          ["description"] = "Required. The request messages specifying the Services to update. A maximum of 100 objects can be updated in a batch.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaUpdateServiceRequest",
+          },
+          ["type"] = "array",
+        },
+        ["updateMask"] = {
+          ["description"] = "Optional. A comma-separated list of names of fields in the Services to update. Example: `display_name`. If this field is present, the `update_mask` field in the UpdateServiceRequest messages must all match this field, or the entire batch fails and no updates will be committed.",
+          ["format"] = "google-fieldmask",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaBatchUpdateServicesResponse"] = {
+      ["description"] = "Response message for the BatchUpdateServices method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaBatchUpdateServicesResponse",
+      ["properties"] = {
+        ["services"] = {
+          ["description"] = "Service objects after the updates have been applied.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaService",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaDebugToken"] = {
+      ["description"] = "A *debug token* is a secret used during the development or integration testing of an app. It essentially allows the development or integration testing to bypass app attestation while still allowing App Check to enforce protection on supported production Firebase services.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaDebugToken",
+      ["properties"] = {
+        ["displayName"] = {
+          ["description"] = "Required. A human readable display name used to identify this debug token.",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
+          ["type"] = "string",
+        },
+        ["token"] = {
+          ["description"] = "Required. Input only. Immutable. The secret token itself. Must be provided during creation, and must be a UUID4, case insensitive. This field is immutable once set, and cannot be provided during an UpdateDebugToken request. You can, however, delete this debug token using DeleteDebugToken to revoke it. For security reasons, this field will never be populated in any response.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaDeviceCheckConfig"] = {
+      ["description"] = "An app's DeviceCheck configuration object. This configuration is used by ExchangeDeviceCheckToken to validate device tokens issued to apps by DeviceCheck. It also controls certain properties of the returned `AppCheckToken`, such as its ttl. Note that the Team ID registered with your app is used as part of the validation process. Please register it via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.iosApps/patch).",
+      ["id"] = "GoogleFirebaseAppcheckV1betaDeviceCheckConfig",
+      ["properties"] = {
+        ["keyId"] = {
+          ["description"] = "Required. The key identifier of a private key enabled with DeviceCheck, created in your Apple Developer account.",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the DeviceCheck configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/deviceCheckConfig ```",
+          ["type"] = "string",
+        },
+        ["privateKey"] = {
+          ["description"] = "Required. Input only. The contents of the private key (`.p8`) file associated with the key specified by `key_id`. For security reasons, this field will never be populated in any response.",
+          ["type"] = "string",
+        },
+        ["privateKeySet"] = {
+          ["description"] = "Output only. Whether the `private_key` field was previously set. Since we will never return the `private_key` field, this field is the only way to find out whether it was previously set.",
+          ["readOnly"] = true,
+          ["type"] = "boolean",
+        },
+        ["tokenTtl"] = {
+          ["description"] = "Specifies the duration for which App Check tokens exchanged from DeviceCheck tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest"] = {
+      ["description"] = "Request message for the ExchangeAppAttestAssertion method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest",
+      ["properties"] = {
+        ["artifact"] = {
+          ["description"] = "Required. The artifact returned by a previous call to ExchangeAppAttestAttestation.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["assertion"] = {
+          ["description"] = "Required. The CBOR-encoded assertion returned by the client-side App Attest API.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["challenge"] = {
+          ["description"] = "Required. A one-time challenge returned by an immediately prior call to GenerateAppAttestChallenge.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest"] = {
+      ["description"] = "Request message for the ExchangeAppAttestAttestation method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest",
+      ["properties"] = {
+        ["attestationStatement"] = {
+          ["description"] = "Required. The App Attest statement returned by the client-side App Attest API. This is a base64url encoded CBOR object in the JSON response.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["challenge"] = {
+          ["description"] = "Required. A one-time challenge returned by an immediately prior call to GenerateAppAttestChallenge.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["keyId"] = {
+          ["description"] = "Required. The key ID generated by App Attest for the client app.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse"] = {
+      ["description"] = "Response message for the ExchangeAppAttestAttestation method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse",
+      ["properties"] = {
+        ["appCheckToken"] = {
+          ["$ref"] = "GoogleFirebaseAppcheckV1betaAppCheckToken",
+          ["description"] = "Encapsulates an App Check token.",
+        },
+        ["artifact"] = {
+          ["description"] = "An artifact that can be used in future calls to ExchangeAppAttestAssertion.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["attestationToken"] = {
+          ["$ref"] = "GoogleFirebaseAppcheckV1betaAttestationTokenResponse",
+          ["description"] = "Encapsulates an App Check token.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest"] = {
+      ["description"] = "Request message for the ExchangeCustomToken method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest",
+      ["properties"] = {
+        ["customToken"] = {
+          ["description"] = "Required. A custom token signed using your project's Admin SDK service account credentials.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest"] = {
+      ["description"] = "Request message for the ExchangeDebugToken method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest",
+      ["properties"] = {
+        ["debugToken"] = {
+          ["description"] = "Required. A debug token secret. This string must match a debug token secret previously created using CreateDebugToken.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest"] = {
+      ["description"] = "Request message for the ExchangeDeviceCheckToken method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest",
+      ["properties"] = {
+        ["deviceToken"] = {
+          ["description"] = "Required. The `device_token` as returned by Apple's client-side [DeviceCheck API](https://developer.apple.com/documentation/devicecheck/dcdevice). This is the base64 encoded `Data` (Swift) or `NSData` (ObjC) object.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest"] = {
+      ["description"] = "Request message for the ExchangePlayIntegrityToken method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest",
+      ["properties"] = {
+        ["playIntegrityToken"] = {
+          ["description"] = "Required. The [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify) issued to your app.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest"] = {
+      ["description"] = "Request message for the ExchangeRecaptchaEnterpriseToken method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest",
+      ["properties"] = {
+        ["recaptchaEnterpriseToken"] = {
+          ["description"] = "Required. The reCAPTCHA token as returned by the [reCAPTCHA Enterprise JavaScript API](https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-pages).",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest"] = {
+      ["description"] = "Request message for the ExchangeRecaptchaToken method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest",
+      ["properties"] = {
+        ["recaptchaToken"] = {
+          ["description"] = "Required. The reCAPTCHA token as returned by the [reCAPTCHA v3 JavaScript API](https://developers.google.com/recaptcha/docs/v3).",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest"] = {
+      ["description"] = "Request message for the ExchangeRecaptchaV3Token method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest",
+      ["properties"] = {
+        ["recaptchaV3Token"] = {
+          ["description"] = "Required. The reCAPTCHA token as returned by the [reCAPTCHA v3 JavaScript API](https://developers.google.com/recaptcha/docs/v3).",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest"] = {
+      ["description"] = "Request message for the ExchangeSafetyNetToken method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest",
+      ["properties"] = {
+        ["safetyNetToken"] = {
+          ["description"] = "Required. The [SafetyNet attestation response](https://developer.android.com/training/safetynet/attestation#request-attestation-step) issued to your app.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest"] = {
+      ["description"] = "Request message for the GenerateAppAttestChallenge method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest",
+      ["properties"] = {},
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse"] = {
+      ["description"] = "Response message for the GenerateAppAttestChallenge method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse",
+      ["properties"] = {
+        ["challenge"] = {
+          ["description"] = "A one-time use challenge for the client to pass to the App Attest API.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["ttl"] = {
+          ["description"] = "The duration from the time this challenge is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest"] = {
+      ["description"] = "Request message for the GeneratePlayIntegrityChallenge method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest",
+      ["properties"] = {},
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse"] = {
+      ["description"] = "Response message for the GeneratePlayIntegrityChallenge method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse",
+      ["properties"] = {
+        ["challenge"] = {
+          ["description"] = "A one-time use [challenge](https://developer.android.com/google/play/integrity/verdict#protect-against-replay-attacks) for the client to pass to the Play Integrity API.",
+          ["type"] = "string",
+        },
+        ["ttl"] = {
+          ["description"] = "The duration from the time this challenge is minted until its expiration. This field is intended to ease client-side token management, since the client may have clock skew, but is still able to accurately measure a duration.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaListDebugTokensResponse"] = {
+      ["description"] = "Response message for the ListDebugTokens method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaListDebugTokensResponse",
+      ["properties"] = {
+        ["debugTokens"] = {
+          ["description"] = "The DebugTokens retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaDebugToken",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "If the result list is too large to fit in a single response, then a token is returned. If the string is empty or omitted, then this response is the last page of results. This token can be used in a subsequent call to ListDebugTokens to find the next group of DebugTokens. Page tokens are short-lived and should not be persisted.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaListServicesResponse"] = {
+      ["description"] = "Response message for the ListServices method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaListServicesResponse",
+      ["properties"] = {
+        ["nextPageToken"] = {
+          ["description"] = "If the result list is too large to fit in a single response, then a token is returned. If the string is empty or omitted, then this response is the last page of results. This token can be used in a subsequent call to ListServices to find the next group of Services. Page tokens are short-lived and should not be persisted.",
+          ["type"] = "string",
+        },
+        ["services"] = {
+          ["description"] = "The Services retrieved.",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaService",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaPlayIntegrityConfig"] = {
+      ["description"] = "An app's Play Integrity configuration object. This configuration controls certain properties of the `AppCheckToken` returned by ExchangePlayIntegrityToken, such as its ttl. Note that your registered SHA-256 certificate fingerprints are used to validate tokens issued by the Play Integrity API; please register them via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.androidApps.sha/create).",
+      ["id"] = "GoogleFirebaseAppcheckV1betaPlayIntegrityConfig",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the Play Integrity configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/playIntegrityConfig ```",
+          ["type"] = "string",
+        },
+        ["tokenTtl"] = {
+          ["description"] = "Specifies the duration for which App Check tokens exchanged from Play Integrity tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaPublicJwk"] = {
+      ["description"] = "A JWK as specified by [section 4 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4) and [section 6.3.1 of RFC 7518](https://tools.ietf.org/html/rfc7518#section-6.3.1).",
+      ["id"] = "GoogleFirebaseAppcheckV1betaPublicJwk",
+      ["properties"] = {
+        ["alg"] = {
+          ["description"] = "See [section 4.4 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.4).",
+          ["type"] = "string",
+        },
+        ["e"] = {
+          ["description"] = "See [section 6.3.1.2 of RFC 7518](https://tools.ietf.org/html/rfc7518#section-6.3.1.2).",
+          ["type"] = "string",
+        },
+        ["kid"] = {
+          ["description"] = "See [section 4.5 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.5).",
+          ["type"] = "string",
+        },
+        ["kty"] = {
+          ["description"] = "See [section 4.1 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.1).",
+          ["type"] = "string",
+        },
+        ["n"] = {
+          ["description"] = "See [section 6.3.1.1 of RFC 7518](https://tools.ietf.org/html/rfc7518#section-6.3.1.1).",
+          ["type"] = "string",
+        },
+        ["use"] = {
+          ["description"] = "See [section 4.2 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-4.2).",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaPublicJwkSet"] = {
+      ["description"] = "The currently active set of public keys that can be used to verify App Check tokens. This object is a JWK set as specified by [section 5 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-5). For security, the response **must not** be cached for longer than six hours.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaPublicJwkSet",
+      ["properties"] = {
+        ["keys"] = {
+          ["description"] = "The set of public keys. See [section 5.1 of RFC 7517](https://tools.ietf.org/html/rfc7517#section-5).",
+          ["items"] = {
+            ["$ref"] = "GoogleFirebaseAppcheckV1betaPublicJwk",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaRecaptchaConfig"] = {
+      ["description"] = "An app's reCAPTCHA v3 configuration object. This configuration is used by ExchangeRecaptchaToken to validate reCAPTCHA tokens issued to apps by reCAPTCHA v3. It also controls certain properties of the returned `AppCheckToken`, such as its ttl.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaRecaptchaConfig",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ```",
+          ["type"] = "string",
+        },
+        ["siteSecret"] = {
+          ["description"] = "Required. Input only. The site secret used to identify your service for reCAPTCHA v3 verification. For security reasons, this field will never be populated in any response.",
+          ["type"] = "string",
+        },
+        ["siteSecretSet"] = {
+          ["description"] = "Output only. Whether the `site_secret` field was previously set. Since we will never return the `site_secret` field, this field is the only way to find out whether it was previously set.",
+          ["readOnly"] = true,
+          ["type"] = "boolean",
+        },
+        ["tokenTtl"] = {
+          ["description"] = "Specifies the duration for which App Check tokens exchanged from reCAPTCHA tokens will be valid. If unset, a default value of 1 day is assumed. Must be between 30 minutes and 7 days, inclusive.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig"] = {
+      ["description"] = "An app's reCAPTCHA Enterprise configuration object. This configuration is used by ExchangeRecaptchaEnterpriseToken to validate reCAPTCHA tokens issued to apps by reCAPTCHA Enterprise. It also controls certain properties of the returned `AppCheckToken`, such as its ttl.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the reCAPTCHA Enterprise configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaEnterpriseConfig ```",
+          ["type"] = "string",
+        },
+        ["siteKey"] = {
+          ["description"] = "The score-based site key [created in reCAPTCHA Enterprise](https://cloud.google.com/recaptcha-enterprise/docs/create-key#creating_a_site_key) used to [invoke reCAPTCHA and generate the reCAPTCHA tokens](https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-pages) for your application. Important: This is *not* the `site_secret` (as it is in reCAPTCHA v3), but rather your score-based reCAPTCHA Enterprise site key.",
+          ["type"] = "string",
+        },
+        ["tokenTtl"] = {
+          ["description"] = "Specifies the duration for which App Check tokens exchanged from reCAPTCHA Enterprise tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaRecaptchaV3Config"] = {
+      ["description"] = "An app's reCAPTCHA v3 configuration object. This configuration is used by ExchangeRecaptchaV3Token to validate reCAPTCHA tokens issued to apps by reCAPTCHA v3. It also controls certain properties of the returned `AppCheckToken`, such as its ttl.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaRecaptchaV3Config",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaV3Config ```",
+          ["type"] = "string",
+        },
+        ["siteSecret"] = {
+          ["description"] = "Required. Input only. The site secret used to identify your service for reCAPTCHA v3 verification. For security reasons, this field will never be populated in any response.",
+          ["type"] = "string",
+        },
+        ["siteSecretSet"] = {
+          ["description"] = "Output only. Whether the `site_secret` field was previously set. Since we will never return the `site_secret` field, this field is the only way to find out whether it was previously set.",
+          ["readOnly"] = true,
+          ["type"] = "boolean",
+        },
+        ["tokenTtl"] = {
+          ["description"] = "Specifies the duration for which App Check tokens exchanged from reCAPTCHA tokens will be valid. If unset, a default value of 1 day is assumed. Must be between 30 minutes and 7 days, inclusive.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaSafetyNetConfig"] = {
+      ["description"] = "An app's SafetyNet configuration object. This configuration controls certain properties of the `AppCheckToken` returned by ExchangeSafetyNetToken, such as its ttl. Note that your registered SHA-256 certificate fingerprints are used to validate tokens issued by SafetyNet; please register them via the Firebase Console or programmatically via the [Firebase Management Service](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.androidApps.sha/create).",
+      ["id"] = "GoogleFirebaseAppcheckV1betaSafetyNetConfig",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the SafetyNet configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/safetyNetConfig ```",
+          ["type"] = "string",
+        },
+        ["tokenTtl"] = {
+          ["description"] = "Specifies the duration for which App Check tokens exchanged from SafetyNet tokens will be valid. If unset, a default value of 1 hour is assumed. Must be between 30 minutes and 7 days, inclusive.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaService"] = {
+      ["description"] = "The enforcement configuration for a Firebase service supported by App Check.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaService",
+      ["properties"] = {
+        ["enforcementMode"] = {
+          ["description"] = "Required. The App Check enforcement mode for this service.",
+          ["enum"] = {
+            "OFF",
+            "UNENFORCED",
+            "ENFORCED",
+          },
+          ["enumDescriptions"] = {
+            "Firebase App Check is not enforced for the service, nor are App Check metrics collected. Though the service is not protected by App Check in this mode, other applicable protections, such as user authorization, are still enforced. An unconfigured service is in this mode by default.",
+            "Firebase App Check is not enforced for the service. App Check metrics are collected to help you decide when to turn on enforcement for the service. Though the service is not protected by App Check in this mode, other applicable protections, such as user authorization, are still enforced.",
+            "Firebase App Check is enforced for the service. The service will reject any request that attempts to access your project's resources if it does not have valid App Check token attached, with some exceptions depending on the service; for example, some services will still allow requests bearing the developer's privileged service account credentials without an App Check token. App Check metrics continue to be collected to help you detect issues with your App Check integration and monitor the composition of your callers. While the service is protected by App Check, other applicable protections, such as user authorization, continue to be enforced at the same time. Use caution when choosing to enforce App Check on a Firebase service. If your users have not updated to an App Check capable version of your app, their apps will no longer be able to use your Firebase services that are enforcing App Check. App Check metrics can help you decide whether to enforce App Check on your Firebase services. If your app has not launched yet, you should enable enforcement immediately, since there are no outdated clients in use.",
+          },
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Required. The relative resource name of the service configuration object, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleFirebaseAppcheckV1betaUpdateServiceRequest"] = {
+      ["description"] = "Request message for the UpdateService method as well as an individual update message for the BatchUpdateServices method.",
+      ["id"] = "GoogleFirebaseAppcheckV1betaUpdateServiceRequest",
+      ["properties"] = {
+        ["service"] = {
+          ["$ref"] = "GoogleFirebaseAppcheckV1betaService",
+          ["description"] = "Required. The Service to update. The Service's `name` field is used to identify the Service to be updated, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `firebasestorage.googleapis.com` (Cloud Storage for Firebase) * `firebasedatabase.googleapis.com` (Firebase Realtime Database) * `firestore.googleapis.com` (Cloud Firestore)",
+        },
+        ["updateMask"] = {
+          ["description"] = "Required. A comma-separated list of names of fields in the Service to update. Example: `enforcement_mode`.",
+          ["format"] = "google-fieldmask",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleProtobufEmpty"] = {
+      ["description"] = "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+      ["id"] = "GoogleProtobufEmpty",
+      ["properties"] = {},
+      ["type"] = "object",
+    },
+  },
+  ["servicePath"] = "",
+  ["title"] = "Firebase App Check API",
+  ["version"] = "v1beta",
+  ["version_module"] = true,
+}

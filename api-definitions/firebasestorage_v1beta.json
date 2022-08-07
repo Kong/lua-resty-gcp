@@ -1,0 +1,404 @@
+{
+  "kind": "discovery#restDescription",
+  "auth": {
+    "oauth2": {
+      "scopes": {
+        "https://www.googleapis.com/auth/firebase": {
+          "description": "View and administer all your Firebase data and settings"
+        },
+        "https://www.googleapis.com/auth/cloud-platform": {
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
+        }
+      }
+    }
+  },
+  "documentationLink": "https://firebase.google.com/docs/storage",
+  "baseUrl": "https://firebasestorage.googleapis.com/",
+  "revision": "20220729",
+  "discoveryVersion": "v1",
+  "canonicalName": "Firebasestorage",
+  "id": "firebasestorage:v1beta",
+  "ownerName": "Google",
+  "servicePath": "",
+  "version_module": true,
+  "resources": {
+    "projects": {
+      "resources": {
+        "buckets": {
+          "methods": {
+            "removeFirebase": {
+              "description": "Unlinks a linked Google Cloud Storage bucket from a Firebase project.",
+              "parameterOrder": [
+                "bucket"
+              ],
+              "response": {
+                "$ref": "Empty"
+              },
+              "httpMethod": "POST",
+              "id": "firebasestorage.projects.buckets.removeFirebase",
+              "flatPath": "v1beta/projects/{projectsId}/buckets/{bucketsId}:removeFirebase",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
+              ],
+              "path": "v1beta/{+bucket}:removeFirebase",
+              "parameters": {
+                "bucket": {
+                  "type": "string",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/buckets/[^/]+$",
+                  "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+                  "required": true
+                }
+              },
+              "request": {
+                "$ref": "RemoveFirebaseRequest"
+              }
+            },
+            "list": {
+              "id": "firebasestorage.projects.buckets.list",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
+              ],
+              "description": "Lists the linked storage buckets for a project.",
+              "httpMethod": "GET",
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of buckets to return. If not set, the server will use a reasonable default.",
+                  "format": "int32",
+                  "type": "integer",
+                  "location": "query"
+                },
+                "parent": {
+                  "required": true,
+                  "type": "string",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "description": "Required. Resource name of the parent Firebase project, `projects/{project_number}`."
+                },
+                "pageToken": {
+                  "description": "A page token, received from a previous `ListBuckets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBuckets` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "response": {
+                "$ref": "ListBucketsResponse"
+              },
+              "path": "v1beta/{+parent}/buckets",
+              "flatPath": "v1beta/projects/{projectsId}/buckets",
+              "parameterOrder": [
+                "parent"
+              ]
+            },
+            "addFirebase": {
+              "httpMethod": "POST",
+              "description": "Links a Google Cloud Storage bucket to a Firebase project.",
+              "response": {
+                "$ref": "Bucket"
+              },
+              "parameterOrder": [
+                "bucket"
+              ],
+              "flatPath": "v1beta/projects/{projectsId}/buckets/{bucketsId}:addFirebase",
+              "path": "v1beta/{+bucket}:addFirebase",
+              "id": "firebasestorage.projects.buckets.addFirebase",
+              "request": {
+                "$ref": "AddFirebaseRequest"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
+              ],
+              "parameters": {
+                "bucket": {
+                  "pattern": "^projects/[^/]+/buckets/[^/]+$",
+                  "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+                  "type": "string",
+                  "required": true,
+                  "location": "path"
+                }
+              }
+            },
+            "get": {
+              "path": "v1beta/{+name}",
+              "parameters": {
+                "name": {
+                  "pattern": "^projects/[^/]+/buckets/[^/]+$",
+                  "type": "string",
+                  "required": true,
+                  "description": "Required. Resource name of the bucket, mirrors the ID of the underlying Google Cloud Storage bucket, `projects/{project_number}/buckets/{bucket_id}`.",
+                  "location": "path"
+                }
+              },
+              "description": "Gets a single linked storage bucket.",
+              "response": {
+                "$ref": "Bucket"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
+              ],
+              "flatPath": "v1beta/projects/{projectsId}/buckets/{bucketsId}",
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "GET",
+              "id": "firebasestorage.projects.buckets.get"
+            }
+          }
+        }
+      }
+    }
+  },
+  "rootUrl": "https://firebasestorage.googleapis.com/",
+  "ownerDomain": "google.com",
+  "title": "Cloud Storage for Firebase API",
+  "fullyEncodeReservedExpansion": true,
+  "basePath": "",
+  "name": "firebasestorage",
+  "protocol": "rest",
+  "icons": {
+    "x32": "http://www.google.com/images/icons/product/search-32.gif",
+    "x16": "http://www.google.com/images/icons/product/search-16.gif"
+  },
+  "batchPath": "batch",
+  "version": "v1beta",
+  "description": "The Cloud Storage for Firebase API enables programmatic management of Cloud Storage buckets for use in Firebase projects",
+  "schemas": {
+    "Empty": {
+      "id": "Empty",
+      "properties": {},
+      "type": "object",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }"
+    },
+    "GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "description": "The time the LRO was created.",
+          "type": "string",
+          "format": "google-datetime"
+        },
+        "lastUpdateTime": {
+          "format": "google-datetime",
+          "type": "string",
+          "description": "The time the LRO was last updated."
+        },
+        "state": {
+          "enumDescriptions": [
+            "Unspecified state. Should not be used.",
+            "The MigrateLocationDestructively request has passed precondition checks and the bucket migration will begin soon.",
+            "Generating a unique bucket name, storing the source -\u003e temp mapping in Spanner, and actually creating the temporary bucket via Bigstore.",
+            "The first STS transfer to move all objects from the source bucket to the temp bucket is underway.",
+            "The source bucket is being emptied and deleted.",
+            "The source bucket is being recreated in the new location.",
+            "The second STS transfer to move all objects from the temp bucket to the final bucket is underway.",
+            "The temp bucket is being emptied and deleted.",
+            "All stages of the migration have completed and the operation has been marked done and updated with a response.",
+            "The migration failed at some stage and it is not possible to continue retrying that stage. Manual recovery may be needed. Rollback is either impossible at this stage, or has been attempted and failed.",
+            "The migration has encountered a permanent failure and is now being rolled back so that the source bucket is restored to its original state.",
+            "The migration has been successfully rolled back."
+          ],
+          "description": "The current state of the migration.",
+          "type": "string",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "CREATING_TEMP_BUCKET",
+            "TRANSFERRING_TO_TEMP",
+            "DELETING_SOURCE_BUCKET",
+            "CREATING_DESTINATION_BUCKET",
+            "TRANSFERRING_TO_DESTINATION",
+            "DELETING_TEMP_BUCKET",
+            "SUCCEEDED",
+            "FAILED",
+            "ROLLING_BACK",
+            "ROLLED_BACK"
+          ]
+        }
+      },
+      "description": "Metadata for MigrateLocationDestructively LRO.",
+      "id": "GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadata"
+    },
+    "ListBucketsResponse": {
+      "type": "object",
+      "id": "ListBucketsResponse",
+      "description": "The response returned by `ListBuckets`.",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "description": "A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages."
+        },
+        "buckets": {
+          "type": "array",
+          "items": {
+            "$ref": "Bucket"
+          },
+          "description": "The list of linked buckets."
+        }
+      }
+    },
+    "AddFirebaseRequest": {
+      "id": "AddFirebaseRequest",
+      "type": "object",
+      "properties": {},
+      "description": "The request used to link a Google Cloud Storage bucket to a Firebase project."
+    },
+    "Bucket": {
+      "description": "A storage bucket and its relation to a parent Firebase project.",
+      "properties": {
+        "reconciling": {
+          "readOnly": true,
+          "type": "boolean",
+          "description": "Output only. Represents whether a bucket is being moved to a new location, in which case reconciling is set to true."
+        },
+        "name": {
+          "description": "Resource name of the bucket.",
+          "type": "string"
+        },
+        "location": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Output only. Location of the storage bucket."
+        }
+      },
+      "id": "Bucket",
+      "type": "object"
+    },
+    "RemoveFirebaseRequest": {
+      "properties": {},
+      "id": "RemoveFirebaseRequest",
+      "type": "object",
+      "description": "The request used to unlink a Google Cloud Storage bucket from a Firebase project."
+    },
+    "GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata": {
+      "description": "Metadata for MigrateLocationDestructively LRO.",
+      "id": "GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "The current state of the migration.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "CREATING_TEMP_BUCKET",
+            "TRANSFERRING_TO_TEMP",
+            "DELETING_SOURCE_BUCKET",
+            "CREATING_DESTINATION_BUCKET",
+            "TRANSFERRING_TO_DESTINATION",
+            "DELETING_TEMP_BUCKET",
+            "SUCCEEDED",
+            "FAILED",
+            "ROLLING_BACK",
+            "ROLLED_BACK"
+          ],
+          "enumDescriptions": [
+            "Unspecified state. Should not be used.",
+            "The MigrateLocationDestructively request has passed precondition checks and the bucket migration will begin soon.",
+            "Generating a unique bucket name, storing the source -\u003e temp mapping in Spanner, and actually creating the temporary bucket via Bigstore.",
+            "The first STS transfer to move all objects from the source bucket to the temp bucket is underway.",
+            "The source bucket is being emptied and deleted.",
+            "The source bucket is being recreated in the new location.",
+            "The second STS transfer to move all objects from the temp bucket to the final bucket is underway.",
+            "The temp bucket is being emptied and deleted.",
+            "All stages of the migration have completed and the operation has been marked done and updated with a response.",
+            "The migration failed at some stage and it is not possible to continue retrying that stage. Manual recovery may be needed. Rollback is either impossible at this stage, or has been attempted and failed.",
+            "The migration has encountered a permanent failure and is now being rolled back so that the source bucket is restored to its original state.",
+            "The migration has been successfully rolled back."
+          ]
+        },
+        "lastUpdateTime": {
+          "description": "The time the LRO was last updated.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "format": "google-datetime",
+          "type": "string",
+          "description": "The time the LRO was created."
+        }
+      }
+    }
+  },
+  "parameters": {
+    "upload_protocol": {
+      "type": "string",
+      "location": "query",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\")."
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
+      "location": "query",
+      "type": "string"
+    },
+    "access_token": {
+      "type": "string",
+      "description": "OAuth access token.",
+      "location": "query"
+    },
+    "prettyPrint": {
+      "location": "query",
+      "description": "Returns response with indentations and line breaks.",
+      "type": "boolean",
+      "default": "true"
+    },
+    "quotaUser": {
+      "type": "string",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "location": "query"
+    },
+    "callback": {
+      "type": "string",
+      "location": "query",
+      "description": "JSONP"
+    },
+    "alt": {
+      "description": "Data format for response.",
+      "default": "json",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "type": "string",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ]
+    },
+    "key": {
+      "type": "string",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "location": "query"
+    },
+    "fields": {
+      "type": "string",
+      "description": "Selector specifying which fields to include in a partial response.",
+      "location": "query"
+    },
+    "uploadType": {
+      "type": "string",
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\")."
+    },
+    "$.xgafv": {
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "description": "V1 error format."
+    }
+  },
+  "mtlsRootUrl": "https://firebasestorage.mtls.googleapis.com/"
+}

@@ -1,4 +1,543 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "mtlsRootUrl": "https://smartdevicemanagement.mtls.googleapis.com/", "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/sdm.service": { "description": "See and/or control the devices that you selected" }, "https://www.googleapis.com/auth/sdm.thermostat.service": { "description": "See and control the Nest thermostats that you select" } } } }, "schemas": { "GoogleHomeEnterpriseSdmV1Structure": { "type": "object", "properties": { "name": { "type": "string", "readOnly": true, "description": "Output only. The resource name of the structure. For example: \"enterprises/XYZ/structures/ABC\"." }, "traits": { "description": "Structure traits.", "type": "object", "additionalProperties": { "type": "any", "description": "Properties of the object." } } }, "description": "Structure resource represents an instance of enterprise managed home or hotel room.", "id": "GoogleHomeEnterpriseSdmV1Structure" }, "GoogleHomeEnterpriseSdmV1Room": { "id": "GoogleHomeEnterpriseSdmV1Room", "description": "Room resource represents an instance of sub-space within a structure such as rooms in a hotel suite or rental apartment.", "type": "object", "properties": { "traits": { "additionalProperties": { "description": "Properties of the object.", "type": "any" }, "description": "Room traits.", "type": "object" }, "name": { "description": "Output only. The resource name of the room. For example: \"enterprises/XYZ/structures/ABC/rooms/123\".", "readOnly": true, "type": "string" } } }, "GoogleHomeEnterpriseSdmV1ListRoomsResponse": { "description": "Response message for SmartDeviceManagementService.ListRooms", "id": "GoogleHomeEnterpriseSdmV1ListRoomsResponse", "properties": { "nextPageToken": { "type": "string", "description": "The pagination token to retrieve the next page of results. If this field is omitted, there are no subsequent pages." }, "rooms": { "description": "The list of rooms.", "items": { "$ref": "GoogleHomeEnterpriseSdmV1Room" }, "type": "array" } }, "type": "object" }, "GoogleHomeEnterpriseSdmV1ListStructuresResponse": { "id": "GoogleHomeEnterpriseSdmV1ListStructuresResponse", "description": "Response message for SmartDeviceManagementService.ListStructures", "properties": { "nextPageToken": { "type": "string", "description": "The pagination token to retrieve the next page of results. If this field is omitted, there are no subsequent pages." }, "structures": { "items": { "$ref": "GoogleHomeEnterpriseSdmV1Structure" }, "description": "The list of structures.", "type": "array" } }, "type": "object" }, "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest": { "description": "Request message for SmartDeviceManagementService.ExecuteDeviceCommand", "properties": { "command": { "type": "string", "description": "The command name to execute, represented by the fully qualified protobuf message name." }, "params": { "description": "The command message to execute, represented as a Struct.", "additionalProperties": { "type": "any", "description": "Properties of the object." }, "type": "object" } }, "type": "object", "id": "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest" }, "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse": { "properties": { "results": { "description": "The results of executing the command.", "additionalProperties": { "type": "any", "description": "Properties of the object." }, "type": "object" } }, "description": "Response message for SmartDeviceManagementService.ExecuteDeviceCommand", "id": "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse", "type": "object" }, "GoogleHomeEnterpriseSdmV1ParentRelation": { "properties": { "displayName": { "type": "string", "readOnly": true, "description": "Output only. The custom name of the relation -- e.g., structure/room where the device is assigned to." }, "parent": { "type": "string", "description": "Output only. The name of the relation -- e.g., structure/room where the device is assigned to. For example: \"enterprises/XYZ/structures/ABC\" or \"enterprises/XYZ/structures/ABC/rooms/123\"", "readOnly": true } }, "id": "GoogleHomeEnterpriseSdmV1ParentRelation", "type": "object", "description": "Represents device relationships, for instance, structure/room to which the device is assigned to." }, "GoogleHomeEnterpriseSdmV1ListDevicesResponse": { "type": "object", "id": "GoogleHomeEnterpriseSdmV1ListDevicesResponse", "properties": { "nextPageToken": { "description": "The pagination token to retrieve the next page of results.", "type": "string" }, "devices": { "type": "array", "items": { "$ref": "GoogleHomeEnterpriseSdmV1Device" }, "description": "The list of devices." } }, "description": "Response message for SmartDeviceManagementService.ListDevices" }, "GoogleHomeEnterpriseSdmV1Device": { "description": "Device resource represents an instance of enterprise managed device in the property.", "id": "GoogleHomeEnterpriseSdmV1Device", "properties": { "type": { "readOnly": true, "description": "Output only. Type of the device for general display purposes. For example: \"THERMOSTAT\". The device type should not be used to deduce or infer functionality of the actual device it is assigned to. Instead, use the returned traits for the device.", "type": "string" }, "traits": { "readOnly": true, "type": "object", "description": "Output only. Device traits.", "additionalProperties": { "description": "Properties of the object.", "type": "any" } }, "name": { "type": "string", "description": "Required. The resource name of the device. For example: \"enterprises/XYZ/devices/123\"." }, "parentRelations": { "items": { "$ref": "GoogleHomeEnterpriseSdmV1ParentRelation" }, "type": "array", "description": "Assignee details of the device." } }, "type": "object" } }, "version": "v1", "baseUrl": "https://smartdevicemanagement.googleapis.com/", "canonicalName": "Smart Device Management", "discoveryVersion": "v1", "name": "smartdevicemanagement", "version_module": true, "icons": { "x32": "http://www.google.com/images/icons/product/search-32.gif", "x16": "http://www.google.com/images/icons/product/search-16.gif" }, "documentationLink": "https://developers.google.com/nest/device-access", "id": "smartdevicemanagement:v1", "ownerDomain": "google.com", "fullyEncodeReservedExpansion": true, "resources": { "enterprises": { "resources": { "structures": { "methods": { "get": { "scopes": [ "https://www.googleapis.com/auth/sdm.service", "https://www.googleapis.com/auth/sdm.thermostat.service" ], "description": "Gets a structure managed by the enterprise.", "path": "v1/{+name}", "httpMethod": "GET", "flatPath": "v1/enterprises/{enterprisesId}/structures/{structuresId}", "response": { "$ref": "GoogleHomeEnterpriseSdmV1Structure" }, "parameterOrder": [ "name" ], "id": "smartdevicemanagement.enterprises.structures.get", "parameters": { "name": { "location": "path", "required": true, "pattern": "^enterprises/[^/]+/structures/[^/]+$", "description": "The name of the structure requested. For example: \"enterprises/XYZ/structures/ABC\".", "type": "string" } } }, "list": { "description": "Lists structures managed by the enterprise.", "id": "smartdevicemanagement.enterprises.structures.list", "response": { "$ref": "GoogleHomeEnterpriseSdmV1ListStructuresResponse" }, "parameters": { "parent": { "location": "path", "pattern": "^enterprises/[^/]+$", "required": true, "type": "string", "description": "The parent enterprise to list structures under. E.g. \"enterprises/XYZ\"." }, "pageToken": { "description": "The token of the page to retrieve.", "type": "string", "location": "query" }, "pageSize": { "type": "integer", "location": "query", "description": "Requested page size. Server may return fewer structures than requested. If unspecified, server will pick an appropriate default.", "format": "int32" }, "filter": { "location": "query", "description": "Optional filter to list structures.", "type": "string" } }, "httpMethod": "GET", "parameterOrder": [ "parent" ], "scopes": [ "https://www.googleapis.com/auth/sdm.service", "https://www.googleapis.com/auth/sdm.thermostat.service" ], "flatPath": "v1/enterprises/{enterprisesId}/structures", "path": "v1/{+parent}/structures" } }, "resources": { "rooms": { "methods": { "list": { "description": "Lists rooms managed by the enterprise.", "scopes": [ "https://www.googleapis.com/auth/sdm.service", "https://www.googleapis.com/auth/sdm.thermostat.service" ], "parameterOrder": [ "parent" ], "httpMethod": "GET", "id": "smartdevicemanagement.enterprises.structures.rooms.list", "flatPath": "v1/enterprises/{enterprisesId}/structures/{structuresId}/rooms", "path": "v1/{+parent}/rooms", "response": { "$ref": "GoogleHomeEnterpriseSdmV1ListRoomsResponse" }, "parameters": { "pageSize": { "format": "int32", "type": "integer", "description": "Requested page size. Server may return fewer rooms than requested. If unspecified, server will pick an appropriate default.", "location": "query" }, "parent": { "required": true, "type": "string", "location": "path", "description": "The parent resource name of the rooms requested. For example: \"enterprises/XYZ/structures/ABC\".", "pattern": "^enterprises/[^/]+/structures/[^/]+$" }, "pageToken": { "location": "query", "type": "string", "description": "The token of the page to retrieve." } } }, "get": { "parameters": { "name": { "description": "The name of the room requested. For example: \"enterprises/XYZ/structures/ABC/rooms/123\".", "pattern": "^enterprises/[^/]+/structures/[^/]+/rooms/[^/]+$", "type": "string", "location": "path", "required": true } }, "scopes": [ "https://www.googleapis.com/auth/sdm.service", "https://www.googleapis.com/auth/sdm.thermostat.service" ], "id": "smartdevicemanagement.enterprises.structures.rooms.get", "description": "Gets a room managed by the enterprise.", "path": "v1/{+name}", "response": { "$ref": "GoogleHomeEnterpriseSdmV1Room" }, "httpMethod": "GET", "flatPath": "v1/enterprises/{enterprisesId}/structures/{structuresId}/rooms/{roomsId}", "parameterOrder": [ "name" ] } } } } }, "devices": { "methods": { "list": { "path": "v1/{+parent}/devices", "parameters": { "pageSize": { "location": "query", "type": "integer", "description": "Optional requested page size. Server may return fewer devices than requested. If unspecified, server will pick an appropriate default.", "format": "int32" }, "parent": { "location": "path", "pattern": "^enterprises/[^/]+$", "required": true, "type": "string", "description": "The parent enterprise to list devices under. E.g. \"enterprises/XYZ\"." }, "pageToken": { "type": "string", "description": "Optional token of the page to retrieve.", "location": "query" }, "filter": { "description": "Optional filter to list devices. Filters can be done on: Device custom name (substring match): 'customName=wing'", "location": "query", "type": "string" } }, "id": "smartdevicemanagement.enterprises.devices.list", "scopes": [ "https://www.googleapis.com/auth/sdm.service", "https://www.googleapis.com/auth/sdm.thermostat.service" ], "response": { "$ref": "GoogleHomeEnterpriseSdmV1ListDevicesResponse" }, "description": "Lists devices managed by the enterprise.", "flatPath": "v1/enterprises/{enterprisesId}/devices", "parameterOrder": [ "parent" ], "httpMethod": "GET" }, "get": { "id": "smartdevicemanagement.enterprises.devices.get", "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}", "parameters": { "name": { "required": true, "pattern": "^enterprises/[^/]+/devices/[^/]+$", "description": "The name of the device requested. For example: \"enterprises/XYZ/devices/123\"", "location": "path", "type": "string" } }, "description": "Gets a device managed by the enterprise.", "path": "v1/{+name}", "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/sdm.service", "https://www.googleapis.com/auth/sdm.thermostat.service" ], "response": { "$ref": "GoogleHomeEnterpriseSdmV1Device" }, "parameterOrder": [ "name" ] }, "executeCommand": { "id": "smartdevicemanagement.enterprises.devices.executeCommand", "response": { "$ref": "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse" }, "request": { "$ref": "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest" }, "parameterOrder": [ "name" ], "path": "v1/{+name}:executeCommand", "parameters": { "name": { "type": "string", "required": true, "location": "path", "description": "The name of the device requested. For example: \"enterprises/XYZ/devices/123\"", "pattern": "^enterprises/[^/]+/devices/[^/]+$" } }, "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}:executeCommand", "scopes": [ "https://www.googleapis.com/auth/sdm.service", "https://www.googleapis.com/auth/sdm.thermostat.service" ], "httpMethod": "POST", "description": "Executes a command to device managed by the enterprise." } } } } } }, "servicePath": "", "title": "Smart Device Management API", "batchPath": "batch", "ownerName": "Google", "basePath": "", "description": "Allow select enterprise partners to access, control, and manage Google and Nest devices programmatically.", "rootUrl": "https://smartdevicemanagement.googleapis.com/", "revision": "20220703", "parameters": { "key": { "location": "query", "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.", "type": "string" }, "access_token": { "description": "OAuth access token.", "location": "query", "type": "string" }, "quotaUser": { "type": "string", "location": "query", "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters." }, "alt": { "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "enum": [ "json", "media", "proto" ], "type": "string", "description": "Data format for response.", "location": "query", "default": "json" }, "fields": { "description": "Selector specifying which fields to include in a partial response.", "location": "query", "type": "string" }, "upload_protocol": { "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").", "type": "string", "location": "query" }, "uploadType": { "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").", "type": "string", "location": "query" }, "oauth_token": { "description": "OAuth 2.0 token for the current user.", "location": "query", "type": "string" }, "callback": { "location": "query", "type": "string", "description": "JSONP" }, "prettyPrint": { "default": "true", "description": "Returns response with indentations and line breaks.", "type": "boolean", "location": "query" }, "$.xgafv": { "description": "V1 error format.", "type": "string", "location": "query", "enumDescriptions": [ "v1 error format", "v2 error format" ], "enum": [ "1", "2" ] } }, "kind": "discovery#restDescription", "protocol": "rest" }
-]===]))
+return {
+  ["auth"] = {
+    ["oauth2"] = {
+      ["scopes"] = {
+        ["https://www.googleapis.com/auth/sdm.service"] = {
+          ["description"] = "See and/or control the devices that you selected",
+        },
+        ["https://www.googleapis.com/auth/sdm.thermostat.service"] = {
+          ["description"] = "See and control the Nest thermostats that you select",
+        },
+      },
+    },
+  },
+  ["basePath"] = "",
+  ["baseUrl"] = "https://smartdevicemanagement.googleapis.com/",
+  ["batchPath"] = "batch",
+  ["canonicalName"] = "Smart Device Management",
+  ["description"] = "Allow select enterprise partners to access, control, and manage Google and Nest devices programmatically.",
+  ["discoveryVersion"] = "v1",
+  ["documentationLink"] = "https://developers.google.com/nest/device-access",
+  ["fullyEncodeReservedExpansion"] = true,
+  ["icons"] = {
+    ["x16"] = "http://www.google.com/images/icons/product/search-16.gif",
+    ["x32"] = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  ["id"] = "smartdevicemanagement:v1",
+  ["kind"] = "discovery#restDescription",
+  ["mtlsRootUrl"] = "https://smartdevicemanagement.mtls.googleapis.com/",
+  ["name"] = "smartdevicemanagement",
+  ["ownerDomain"] = "google.com",
+  ["ownerName"] = "Google",
+  ["parameters"] = {
+    ["$.xgafv"] = {
+      ["description"] = "V1 error format.",
+      ["enum"] = {
+        "1",
+        "2",
+      },
+      ["enumDescriptions"] = {
+        "v1 error format",
+        "v2 error format",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["access_token"] = {
+      ["description"] = "OAuth access token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["alt"] = {
+      ["default"] = "json",
+      ["description"] = "Data format for response.",
+      ["enum"] = {
+        "json",
+        "media",
+        "proto",
+      },
+      ["enumDescriptions"] = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["callback"] = {
+      ["description"] = "JSONP",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["fields"] = {
+      ["description"] = "Selector specifying which fields to include in a partial response.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["key"] = {
+      ["description"] = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["oauth_token"] = {
+      ["description"] = "OAuth 2.0 token for the current user.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["prettyPrint"] = {
+      ["default"] = "true",
+      ["description"] = "Returns response with indentations and line breaks.",
+      ["location"] = "query",
+      ["type"] = "boolean",
+    },
+    ["quotaUser"] = {
+      ["description"] = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["uploadType"] = {
+      ["description"] = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["upload_protocol"] = {
+      ["description"] = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+  },
+  ["protocol"] = "rest",
+  ["resources"] = {
+    ["enterprises"] = {
+      ["resources"] = {
+        ["devices"] = {
+          ["methods"] = {
+            ["executeCommand"] = {
+              ["description"] = "Executes a command to device managed by the enterprise.",
+              ["flatPath"] = "v1/enterprises/{enterprisesId}/devices/{devicesId}:executeCommand",
+              ["httpMethod"] = "POST",
+              ["id"] = "smartdevicemanagement.enterprises.devices.executeCommand",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["name"] = {
+                  ["description"] = "The name of the device requested. For example: \"enterprises/XYZ/devices/123\"",
+                  ["location"] = "path",
+                  ["pattern"] = "^enterprises/[^/]+/devices/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1/{+name}:executeCommand",
+              ["request"] = {
+                ["$ref"] = "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/sdm.service",
+                "https://www.googleapis.com/auth/sdm.thermostat.service",
+              },
+            },
+            ["get"] = {
+              ["description"] = "Gets a device managed by the enterprise.",
+              ["flatPath"] = "v1/enterprises/{enterprisesId}/devices/{devicesId}",
+              ["httpMethod"] = "GET",
+              ["id"] = "smartdevicemanagement.enterprises.devices.get",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["name"] = {
+                  ["description"] = "The name of the device requested. For example: \"enterprises/XYZ/devices/123\"",
+                  ["location"] = "path",
+                  ["pattern"] = "^enterprises/[^/]+/devices/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1/{+name}",
+              ["response"] = {
+                ["$ref"] = "GoogleHomeEnterpriseSdmV1Device",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/sdm.service",
+                "https://www.googleapis.com/auth/sdm.thermostat.service",
+              },
+            },
+            ["list"] = {
+              ["description"] = "Lists devices managed by the enterprise.",
+              ["flatPath"] = "v1/enterprises/{enterprisesId}/devices",
+              ["httpMethod"] = "GET",
+              ["id"] = "smartdevicemanagement.enterprises.devices.list",
+              ["parameterOrder"] = {
+                "parent",
+              },
+              ["parameters"] = {
+                ["filter"] = {
+                  ["description"] = "Optional filter to list devices. Filters can be done on: Device custom name (substring match): 'customName=wing'",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+                ["pageSize"] = {
+                  ["description"] = "Optional requested page size. Server may return fewer devices than requested. If unspecified, server will pick an appropriate default.",
+                  ["format"] = "int32",
+                  ["location"] = "query",
+                  ["type"] = "integer",
+                },
+                ["pageToken"] = {
+                  ["description"] = "Optional token of the page to retrieve.",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+                ["parent"] = {
+                  ["description"] = "The parent enterprise to list devices under. E.g. \"enterprises/XYZ\".",
+                  ["location"] = "path",
+                  ["pattern"] = "^enterprises/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1/{+parent}/devices",
+              ["response"] = {
+                ["$ref"] = "GoogleHomeEnterpriseSdmV1ListDevicesResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/sdm.service",
+                "https://www.googleapis.com/auth/sdm.thermostat.service",
+              },
+            },
+          },
+        },
+        ["structures"] = {
+          ["methods"] = {
+            ["get"] = {
+              ["description"] = "Gets a structure managed by the enterprise.",
+              ["flatPath"] = "v1/enterprises/{enterprisesId}/structures/{structuresId}",
+              ["httpMethod"] = "GET",
+              ["id"] = "smartdevicemanagement.enterprises.structures.get",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["name"] = {
+                  ["description"] = "The name of the structure requested. For example: \"enterprises/XYZ/structures/ABC\".",
+                  ["location"] = "path",
+                  ["pattern"] = "^enterprises/[^/]+/structures/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1/{+name}",
+              ["response"] = {
+                ["$ref"] = "GoogleHomeEnterpriseSdmV1Structure",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/sdm.service",
+                "https://www.googleapis.com/auth/sdm.thermostat.service",
+              },
+            },
+            ["list"] = {
+              ["description"] = "Lists structures managed by the enterprise.",
+              ["flatPath"] = "v1/enterprises/{enterprisesId}/structures",
+              ["httpMethod"] = "GET",
+              ["id"] = "smartdevicemanagement.enterprises.structures.list",
+              ["parameterOrder"] = {
+                "parent",
+              },
+              ["parameters"] = {
+                ["filter"] = {
+                  ["description"] = "Optional filter to list structures.",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+                ["pageSize"] = {
+                  ["description"] = "Requested page size. Server may return fewer structures than requested. If unspecified, server will pick an appropriate default.",
+                  ["format"] = "int32",
+                  ["location"] = "query",
+                  ["type"] = "integer",
+                },
+                ["pageToken"] = {
+                  ["description"] = "The token of the page to retrieve.",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+                ["parent"] = {
+                  ["description"] = "The parent enterprise to list structures under. E.g. \"enterprises/XYZ\".",
+                  ["location"] = "path",
+                  ["pattern"] = "^enterprises/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1/{+parent}/structures",
+              ["response"] = {
+                ["$ref"] = "GoogleHomeEnterpriseSdmV1ListStructuresResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/sdm.service",
+                "https://www.googleapis.com/auth/sdm.thermostat.service",
+              },
+            },
+          },
+          ["resources"] = {
+            ["rooms"] = {
+              ["methods"] = {
+                ["get"] = {
+                  ["description"] = "Gets a room managed by the enterprise.",
+                  ["flatPath"] = "v1/enterprises/{enterprisesId}/structures/{structuresId}/rooms/{roomsId}",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "smartdevicemanagement.enterprises.structures.rooms.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "The name of the room requested. For example: \"enterprises/XYZ/structures/ABC/rooms/123\".",
+                      ["location"] = "path",
+                      ["pattern"] = "^enterprises/[^/]+/structures/[^/]+/rooms/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "GoogleHomeEnterpriseSdmV1Room",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/sdm.service",
+                    "https://www.googleapis.com/auth/sdm.thermostat.service",
+                  },
+                },
+                ["list"] = {
+                  ["description"] = "Lists rooms managed by the enterprise.",
+                  ["flatPath"] = "v1/enterprises/{enterprisesId}/structures/{structuresId}/rooms",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "smartdevicemanagement.enterprises.structures.rooms.list",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["pageSize"] = {
+                      ["description"] = "Requested page size. Server may return fewer rooms than requested. If unspecified, server will pick an appropriate default.",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["pageToken"] = {
+                      ["description"] = "The token of the page to retrieve.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "The parent resource name of the rooms requested. For example: \"enterprises/XYZ/structures/ABC\".",
+                      ["location"] = "path",
+                      ["pattern"] = "^enterprises/[^/]+/structures/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+parent}/rooms",
+                  ["response"] = {
+                    ["$ref"] = "GoogleHomeEnterpriseSdmV1ListRoomsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/sdm.service",
+                    "https://www.googleapis.com/auth/sdm.thermostat.service",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ["revision"] = "20220722",
+  ["rootUrl"] = "https://smartdevicemanagement.googleapis.com/",
+  ["schemas"] = {
+    ["GoogleHomeEnterpriseSdmV1Device"] = {
+      ["description"] = "Device resource represents an instance of enterprise managed device in the property.",
+      ["id"] = "GoogleHomeEnterpriseSdmV1Device",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Required. The resource name of the device. For example: \"enterprises/XYZ/devices/123\".",
+          ["type"] = "string",
+        },
+        ["parentRelations"] = {
+          ["description"] = "Assignee details of the device.",
+          ["items"] = {
+            ["$ref"] = "GoogleHomeEnterpriseSdmV1ParentRelation",
+          },
+          ["type"] = "array",
+        },
+        ["traits"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object.",
+            ["type"] = "any",
+          },
+          ["description"] = "Output only. Device traits.",
+          ["readOnly"] = true,
+          ["type"] = "object",
+        },
+        ["type"] = {
+          ["description"] = "Output only. Type of the device for general display purposes. For example: \"THERMOSTAT\". The device type should not be used to deduce or infer functionality of the actual device it is assigned to. Instead, use the returned traits for the device.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest"] = {
+      ["description"] = "Request message for SmartDeviceManagementService.ExecuteDeviceCommand",
+      ["id"] = "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest",
+      ["properties"] = {
+        ["command"] = {
+          ["description"] = "The command name to execute, represented by the fully qualified protobuf message name.",
+          ["type"] = "string",
+        },
+        ["params"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object.",
+            ["type"] = "any",
+          },
+          ["description"] = "The command message to execute, represented as a Struct.",
+          ["type"] = "object",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse"] = {
+      ["description"] = "Response message for SmartDeviceManagementService.ExecuteDeviceCommand",
+      ["id"] = "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse",
+      ["properties"] = {
+        ["results"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object.",
+            ["type"] = "any",
+          },
+          ["description"] = "The results of executing the command.",
+          ["type"] = "object",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1ListDevicesResponse"] = {
+      ["description"] = "Response message for SmartDeviceManagementService.ListDevices",
+      ["id"] = "GoogleHomeEnterpriseSdmV1ListDevicesResponse",
+      ["properties"] = {
+        ["devices"] = {
+          ["description"] = "The list of devices.",
+          ["items"] = {
+            ["$ref"] = "GoogleHomeEnterpriseSdmV1Device",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "The pagination token to retrieve the next page of results.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1ListRoomsResponse"] = {
+      ["description"] = "Response message for SmartDeviceManagementService.ListRooms",
+      ["id"] = "GoogleHomeEnterpriseSdmV1ListRoomsResponse",
+      ["properties"] = {
+        ["nextPageToken"] = {
+          ["description"] = "The pagination token to retrieve the next page of results. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+        ["rooms"] = {
+          ["description"] = "The list of rooms.",
+          ["items"] = {
+            ["$ref"] = "GoogleHomeEnterpriseSdmV1Room",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1ListStructuresResponse"] = {
+      ["description"] = "Response message for SmartDeviceManagementService.ListStructures",
+      ["id"] = "GoogleHomeEnterpriseSdmV1ListStructuresResponse",
+      ["properties"] = {
+        ["nextPageToken"] = {
+          ["description"] = "The pagination token to retrieve the next page of results. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+        ["structures"] = {
+          ["description"] = "The list of structures.",
+          ["items"] = {
+            ["$ref"] = "GoogleHomeEnterpriseSdmV1Structure",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1ParentRelation"] = {
+      ["description"] = "Represents device relationships, for instance, structure/room to which the device is assigned to.",
+      ["id"] = "GoogleHomeEnterpriseSdmV1ParentRelation",
+      ["properties"] = {
+        ["displayName"] = {
+          ["description"] = "Output only. The custom name of the relation -- e.g., structure/room where the device is assigned to.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["parent"] = {
+          ["description"] = "Output only. The name of the relation -- e.g., structure/room where the device is assigned to. For example: \"enterprises/XYZ/structures/ABC\" or \"enterprises/XYZ/structures/ABC/rooms/123\"",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1Room"] = {
+      ["description"] = "Room resource represents an instance of sub-space within a structure such as rooms in a hotel suite or rental apartment.",
+      ["id"] = "GoogleHomeEnterpriseSdmV1Room",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Output only. The resource name of the room. For example: \"enterprises/XYZ/structures/ABC/rooms/123\".",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["traits"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object.",
+            ["type"] = "any",
+          },
+          ["description"] = "Room traits.",
+          ["type"] = "object",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleHomeEnterpriseSdmV1Structure"] = {
+      ["description"] = "Structure resource represents an instance of enterprise managed home or hotel room.",
+      ["id"] = "GoogleHomeEnterpriseSdmV1Structure",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "Output only. The resource name of the structure. For example: \"enterprises/XYZ/structures/ABC\".",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["traits"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object.",
+            ["type"] = "any",
+          },
+          ["description"] = "Structure traits.",
+          ["type"] = "object",
+        },
+      },
+      ["type"] = "object",
+    },
+  },
+  ["servicePath"] = "",
+  ["title"] = "Smart Device Management API",
+  ["version"] = "v1",
+  ["version_module"] = true,
+}

@@ -1,4 +1,3999 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "name": "apigeeregistry", "canonicalName": "Apigee Registry", "icons": { "x16": "http://www.google.com/images/icons/product/search-16.gif", "x32": "http://www.google.com/images/icons/product/search-32.gif" }, "rootUrl": "https://apigeeregistry.googleapis.com/", "batchPath": "batch", "ownerName": "Google", "id": "apigeeregistry:v1", "version": "v1", "description": "", "ownerDomain": "google.com", "kind": "discovery#restDescription", "protocol": "rest", "basePath": "", "mtlsRootUrl": "https://apigeeregistry.mtls.googleapis.com/", "title": "Apigee Registry API", "fullyEncodeReservedExpansion": true, "version_module": true, "baseUrl": "https://apigeeregistry.googleapis.com/", "revision": "20220706", "parameters": { "prettyPrint": { "description": "Returns response with indentations and line breaks.", "location": "query", "default": "true", "type": "boolean" }, "alt": { "type": "string", "description": "Data format for response.", "enum": [ "json", "media", "proto" ], "default": "json", "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "location": "query" }, "$.xgafv": { "description": "V1 error format.", "enum": [ "1", "2" ], "location": "query", "type": "string", "enumDescriptions": [ "v1 error format", "v2 error format" ] }, "oauth_token": { "type": "string", "location": "query", "description": "OAuth 2.0 token for the current user." }, "fields": { "description": "Selector specifying which fields to include in a partial response.", "type": "string", "location": "query" }, "upload_protocol": { "location": "query", "type": "string", "description": "Upload protocol for media (e.g. \"raw\", \"multipart\")." }, "callback": { "location": "query", "type": "string", "description": "JSONP" }, "access_token": { "description": "OAuth access token.", "type": "string", "location": "query" }, "uploadType": { "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").", "location": "query", "type": "string" }, "key": { "location": "query", "type": "string", "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token." }, "quotaUser": { "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.", "type": "string", "location": "query" } }, "schemas": { "TagApiSpecRevisionRequest": { "id": "TagApiSpecRevisionRequest", "description": "Request message for TagApiSpecRevision.", "type": "object", "properties": { "tag": { "description": "Required. The tag to apply. The tag should be at most 40 characters, and match `a-z{3,39}`.", "type": "string" } } }, "Empty": { "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }", "type": "object", "id": "Empty", "properties": {} }, "RollbackApiSpecRequest": { "description": "Request message for RollbackApiSpec.", "type": "object", "id": "RollbackApiSpecRequest", "properties": { "revisionId": { "description": "Required. The revision ID to roll back to. It must be a revision of the same spec. Example: c7cfa2a8", "type": "string" } } }, "Api": { "type": "object", "description": "An Api is a top-level description of an API. Apis are produced by producers and are commitments to provide services.", "properties": { "recommendedDeployment": { "type": "string", "description": "The recommended deployment of the API. Format: apis/{api}/deployments/{deployment}" }, "recommendedVersion": { "type": "string", "description": "The recommended version of the API. Format: apis/{api}/versions/{version}" }, "labels": { "type": "object", "description": "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed.", "additionalProperties": { "type": "string" } }, "updateTime": { "description": "Output only. Last update timestamp.", "format": "google-datetime", "type": "string", "readOnly": true }, "name": { "description": "Resource name.", "type": "string" }, "availability": { "description": "A user-definable description of the availability of this service. Format: free-form, but we expect single words that describe availability, e.g. \"NONE\", \"TESTING\", \"PREVIEW\", \"GENERAL\", \"DEPRECATED\", \"SHUTDOWN\".", "type": "string" }, "annotations": { "description": "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.", "type": "object", "additionalProperties": { "type": "string" } }, "displayName": { "type": "string", "description": "Human-meaningful name." }, "description": { "description": "A detailed description.", "type": "string" }, "createTime": { "type": "string", "format": "google-datetime", "description": "Output only. Creation timestamp.", "readOnly": true } }, "id": "Api" }, "ListApiSpecsResponse": { "properties": { "apiSpecs": { "items": { "$ref": "ApiSpec" }, "type": "array", "description": "The specs from the specified publisher." }, "nextPageToken": { "type": "string", "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages." } }, "type": "object", "description": "Response message for ListApiSpecs.", "id": "ListApiSpecsResponse" }, "CancelOperationRequest": { "type": "object", "id": "CancelOperationRequest", "description": "The request message for Operations.CancelOperation.", "properties": {} }, "ListApiSpecRevisionsResponse": { "description": "Response message for ListApiSpecRevisionsResponse.", "type": "object", "properties": { "nextPageToken": { "type": "string", "description": "A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages." }, "apiSpecs": { "description": "The revisions of the spec.", "type": "array", "items": { "$ref": "ApiSpec" } } }, "id": "ListApiSpecRevisionsResponse" }, "ApiVersion": { "type": "object", "id": "ApiVersion", "description": "An ApiVersion describes a particular version of an API. ApiVersions are what consumers actually use.", "properties": { "createTime": { "readOnly": true, "description": "Output only. Creation timestamp.", "format": "google-datetime", "type": "string" }, "annotations": { "additionalProperties": { "type": "string" }, "type": "object", "description": "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts." }, "updateTime": { "description": "Output only. Last update timestamp.", "type": "string", "format": "google-datetime", "readOnly": true }, "description": { "type": "string", "description": "A detailed description." }, "name": { "type": "string", "description": "Resource name." }, "state": { "type": "string", "description": "A user-definable description of the lifecycle phase of this API version. Format: free-form, but we expect single words that describe API maturity, e.g. \"CONCEPT\", \"DESIGN\", \"DEVELOPMENT\", \"STAGING\", \"PRODUCTION\", \"DEPRECATED\", \"RETIRED\"." }, "labels": { "description": "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed.", "type": "object", "additionalProperties": { "type": "string" } }, "displayName": { "type": "string", "description": "Human-meaningful name." } } }, "ApiDeployment": { "type": "object", "properties": { "externalChannelUri": { "description": "The address of the external channel of the API (e.g. the Developer Portal). Changes to this value will not affect the revision.", "type": "string" }, "endpointUri": { "description": "The address where the deployment is serving. Changes to this value will update the revision.", "type": "string" }, "displayName": { "description": "Human-meaningful name.", "type": "string" }, "labels": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed." }, "revisionUpdateTime": { "description": "Output only. Last update timestamp: when the represented revision was last modified.", "format": "google-datetime", "type": "string", "readOnly": true }, "apiSpecRevision": { "description": "The full resource name (including revision id) of the spec of the API being served by the deployment. Changes to this value will update the revision. Format: apis/{api}/deployments/{deployment}", "type": "string" }, "revisionCreateTime": { "format": "google-datetime", "readOnly": true, "description": "Output only. Revision creation timestamp; when the represented revision was created.", "type": "string" }, "createTime": { "readOnly": true, "type": "string", "description": "Output only. Creation timestamp; when the deployment resource was created.", "format": "google-datetime" }, "accessGuidance": { "type": "string", "description": "Text briefly describing how to access the endpoint. Changes to this value will not affect the revision." }, "revisionId": { "type": "string", "readOnly": true, "description": "Output only. Immutable. The revision ID of the deployment. A new revision is committed whenever the deployment contents are changed. The format is an 8-character hexadecimal string." }, "name": { "type": "string", "description": "Resource name." }, "intendedAudience": { "type": "string", "description": "Text briefly identifying the intended audience of the API. Changes to this value will not affect the revision." }, "description": { "description": "A detailed description.", "type": "string" }, "annotations": { "description": "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.", "additionalProperties": { "type": "string" }, "type": "object" } }, "description": "An ApiDeployment describes a service running at particular address that provides a particular version of an API. ApiDeployments have revisions which correspond to different configurations of a single deployment in time. Revision identifiers should be updated whenever the served API spec or endpoint address changes.", "id": "ApiDeployment" }, "Location": { "properties": { "displayName": { "type": "string", "description": "The friendly name for this location, typically a nearby city name. For example, \"Tokyo\"." }, "metadata": { "description": "Service-specific metadata. For example the available capacity at the given location.", "type": "object", "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." } }, "labels": { "description": "Cross-service attributes for the location. For example {\"cloud.googleapis.com/region\": \"us-east1\"}", "additionalProperties": { "type": "string" }, "type": "object" }, "locationId": { "description": "The canonical id for this location. For example: `\"us-east1\"`.", "type": "string" }, "name": { "type": "string", "description": "Resource name for the location, which may vary between implementations. For example: `\"projects/example-project/locations/us-east1\"`" } }, "type": "object", "id": "Location", "description": "A resource that represents Google Cloud Platform location." }, "RollbackApiDeploymentRequest": { "type": "object", "id": "RollbackApiDeploymentRequest", "properties": { "revisionId": { "description": "Required. The revision ID to roll back to. It must be a revision of the same deployment. Example: c7cfa2a8", "type": "string" } }, "description": "Request message for RollbackApiDeployment." }, "ListArtifactsResponse": { "type": "object", "description": "Response message for ListArtifacts.", "properties": { "nextPageToken": { "type": "string", "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages." }, "artifacts": { "type": "array", "description": "The artifacts from the specified publisher.", "items": { "$ref": "Artifact" } } }, "id": "ListArtifactsResponse" }, "HttpBody": { "type": "object", "description": "Message that represents an arbitrary HTTP body. It should only be used for payload formats that can't be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged.", "properties": { "contentType": { "description": "The HTTP Content-Type header value specifying the content type of the body.", "type": "string" }, "data": { "format": "byte", "description": "The HTTP request/response body as raw binary.", "type": "string" }, "extensions": { "items": { "type": "object", "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." } }, "description": "Application specific response metadata. Must be set in the first response for streaming APIs.", "type": "array" } }, "id": "HttpBody" }, "Binding": { "type": "object", "properties": { "members": { "type": "array", "items": { "type": "string" }, "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. " }, "condition": { "$ref": "Expr", "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)." }, "role": { "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.", "type": "string" } }, "description": "Associates `members`, or principals, with a `role`.", "id": "Binding" }, "Config": { "id": "Config", "type": "object", "properties": { "location": { "description": "Output only. The GCP location where the Instance resides.", "type": "string", "readOnly": true }, "cmekKeyName": { "type": "string", "description": "Required. The Customer Managed Encryption Key (CMEK) used for data encryption. The CMEK name should follow the format of `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`, where the `location` must match InstanceConfig.location." } }, "description": "Available configurations to provision an Instance." }, "Artifact": { "description": "Artifacts of resources. Artifacts are unique (single-value) per resource and are used to store metadata that is too large or numerous to be stored directly on the resource. Since artifacts are stored separately from parent resources, they should generally be used for metadata that is needed infrequently, i.e. not for display in primary views of the resource but perhaps displayed or downloaded upon request. The ListArtifacts method allows artifacts to be quickly enumerated and checked for presence without downloading their (potentially-large) contents.", "properties": { "mimeType": { "description": "A content type specifier for the artifact. Content type specifiers are Media Types (https://en.wikipedia.org/wiki/Media_type) with a possible \"schema\" parameter that specifies a schema for the stored information. Content types can specify compression. Currently only GZip compression is supported (indicated with \"+gzip\").", "type": "string" }, "hash": { "type": "string", "description": "Output only. A SHA-256 hash of the artifact's contents. If the artifact is gzipped, this is the hash of the uncompressed artifact.", "readOnly": true }, "contents": { "description": "Input only. The contents of the artifact. Provided by API callers when artifacts are created or replaced. To access the contents of an artifact, use GetArtifactContents.", "type": "string", "format": "byte" }, "name": { "type": "string", "description": "Resource name." }, "createTime": { "readOnly": true, "description": "Output only. Creation timestamp.", "type": "string", "format": "google-datetime" }, "sizeBytes": { "type": "integer", "description": "Output only. The size of the artifact in bytes. If the artifact is gzipped, this is the size of the uncompressed artifact.", "readOnly": true, "format": "int32" }, "updateTime": { "format": "google-datetime", "type": "string", "description": "Output only. Last update timestamp.", "readOnly": true } }, "id": "Artifact", "type": "object" }, "TagApiDeploymentRevisionRequest": { "type": "object", "description": "Request message for TagApiDeploymentRevision.", "properties": { "tag": { "type": "string", "description": "Required. The tag to apply. The tag should be at most 40 characters, and match `a-z{3,39}`." } }, "id": "TagApiDeploymentRevisionRequest" }, "Status": { "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).", "id": "Status", "properties": { "details": { "type": "array", "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.", "items": { "type": "object", "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." } } }, "code": { "format": "int32", "type": "integer", "description": "The status code, which should be an enum value of google.rpc.Code." }, "message": { "type": "string", "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client." } }, "type": "object" }, "SetIamPolicyRequest": { "description": "Request message for `SetIamPolicy` method.", "properties": { "policy": { "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Google Cloud services (such as Projects) might reject them.", "$ref": "Policy" } }, "id": "SetIamPolicyRequest", "type": "object" }, "Policy": { "properties": { "bindings": { "items": { "$ref": "Binding" }, "description": "Associates a list of `members`, or principals, with a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one principal. The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250 of these principals can be Google groups. Each occurrence of a principal counts towards these limits. For example, if the `bindings` grant 50 different roles to `user:alice@example.com`, and not to any other principal, then you can add another 1,450 principals to the `bindings` in the `Policy`.", "type": "array" }, "version": { "format": "int32", "type": "integer", "description": "Specifies the format of the policy. Valid values are `0`, `1`, and `3`. Requests that specify an invalid value are rejected. Any operation that affects conditional role bindings must specify version `3`. This requirement applies to the following operations: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Getting a policy that includes a conditional role binding LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Adding a conditional role binding to a policy LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Changing a conditional role binding in a policy LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Removing any role binding, with or without a condition, from a policy that includes conditions **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost. If a policy does not include any conditions, operations on that policy may specify any valid version or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)." }, "etag": { "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy. **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost.", "format": "byte", "type": "string" } }, "type": "object", "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).", "id": "Policy" }, "TestIamPermissionsResponse": { "id": "TestIamPermissionsResponse", "properties": { "permissions": { "items": { "type": "string" }, "description": "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.", "type": "array" } }, "type": "object", "description": "Response message for `TestIamPermissions` method." }, "ListOperationsResponse": { "description": "The response message for Operations.ListOperations.", "id": "ListOperationsResponse", "properties": { "operations": { "type": "array", "items": { "$ref": "Operation" }, "description": "A list of operations that matches the specified filter in the request." }, "nextPageToken": { "description": "The standard List next-page token.", "type": "string" } }, "type": "object" }, "Operation": { "properties": { "name": { "type": "string", "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`." }, "done": { "type": "boolean", "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available." }, "metadata": { "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." }, "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.", "type": "object" }, "response": { "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.", "type": "object", "additionalProperties": { "description": "Properties of the object. Contains field @type with type URL.", "type": "any" } }, "error": { "$ref": "Status", "description": "The error result of the operation in case of failure or cancellation." } }, "description": "This resource represents a long-running operation that is the result of a network API call.", "id": "Operation", "type": "object" }, "TestIamPermissionsRequest": { "properties": { "permissions": { "type": "array", "items": { "type": "string" }, "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions)." } }, "id": "TestIamPermissionsRequest", "type": "object", "description": "Request message for `TestIamPermissions` method." }, "ListApisResponse": { "description": "Response message for ListApis.", "type": "object", "properties": { "apis": { "items": { "$ref": "Api" }, "type": "array", "description": "The APIs from the specified publisher." }, "nextPageToken": { "type": "string", "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages." } }, "id": "ListApisResponse" }, "ListLocationsResponse": { "properties": { "locations": { "description": "A list of locations that matches the specified filter in the request.", "type": "array", "items": { "$ref": "Location" } }, "nextPageToken": { "type": "string", "description": "The standard List next-page token." } }, "id": "ListLocationsResponse", "description": "The response message for Locations.ListLocations.", "type": "object" }, "ListApiVersionsResponse": { "properties": { "nextPageToken": { "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.", "type": "string" }, "apiVersions": { "description": "The versions from the specified publisher.", "items": { "$ref": "ApiVersion" }, "type": "array" } }, "type": "object", "id": "ListApiVersionsResponse", "description": "Response message for ListApiVersions." }, "Expr": { "description": "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() \u003c 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' && document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.", "type": "object", "id": "Expr", "properties": { "location": { "description": "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.", "type": "string" }, "title": { "type": "string", "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression." }, "expression": { "description": "Textual representation of an expression in Common Expression Language syntax.", "type": "string" }, "description": { "description": "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.", "type": "string" } } }, "OperationMetadata": { "description": "Represents the metadata of the long-running operation.", "properties": { "statusMessage": { "type": "string", "description": "Human-readable status of the operation, if any." }, "verb": { "description": "Name of the verb executed by the operation.", "type": "string" }, "target": { "description": "Server-defined resource path for the target of the operation.", "type": "string" }, "cancellationRequested": { "type": "boolean", "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`." }, "createTime": { "format": "google-datetime", "description": "The time the operation was created.", "type": "string" }, "endTime": { "type": "string", "description": "The time the operation finished running.", "format": "google-datetime" }, "apiVersion": { "description": "API version used to start the operation.", "type": "string" } }, "type": "object", "id": "OperationMetadata" }, "ListApiDeploymentsResponse": { "id": "ListApiDeploymentsResponse", "type": "object", "description": "Response message for ListApiDeployments.", "properties": { "nextPageToken": { "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.", "type": "string" }, "apiDeployments": { "type": "array", "items": { "$ref": "ApiDeployment" }, "description": "The deployments from the specified publisher." } } }, "ListApiDeploymentRevisionsResponse": { "id": "ListApiDeploymentRevisionsResponse", "description": "Response message for ListApiDeploymentRevisionsResponse.", "properties": { "nextPageToken": { "type": "string", "description": "A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages." }, "apiDeployments": { "description": "The revisions of the deployment.", "items": { "$ref": "ApiDeployment" }, "type": "array" } }, "type": "object" }, "ApiSpec": { "description": "An ApiSpec describes a version of an API in a structured way. ApiSpecs provide formal descriptions that consumers can use to use a version. ApiSpec resources are intended to be fully-resolved descriptions of an ApiVersion. When specs consist of multiple files, these should be bundled together (e.g. in a zip archive) and stored as a unit. Multiple specs can exist to provide representations in different API description formats. Synchronization of these representations would be provided by tooling and background services.", "id": "ApiSpec", "properties": { "createTime": { "description": "Output only. Creation timestamp; when the spec resource was created.", "readOnly": true, "type": "string", "format": "google-datetime" }, "revisionUpdateTime": { "format": "google-datetime", "description": "Output only. Last update timestamp: when the represented revision was last modified.", "type": "string", "readOnly": true }, "filename": { "description": "A possibly-hierarchical name used to refer to the spec from other specs.", "type": "string" }, "sourceUri": { "description": "The original source URI of the spec (if one exists). This is an external location that can be used for reference purposes but which may not be authoritative since this external resource may change after the spec is retrieved.", "type": "string" }, "mimeType": { "description": "A style (format) descriptor for this spec that is specified as a Media Type (https://en.wikipedia.org/wiki/Media_type). Possible values include \"application/vnd.apigee.proto\", \"application/vnd.apigee.openapi\", and \"application/vnd.apigee.graphql\", with possible suffixes representing compression types. These hypothetical names are defined in the vendor tree defined in RFC6838 (https://tools.ietf.org/html/rfc6838) and are not final. Content types can specify compression. Currently only GZip compression is supported (indicated with \"+gzip\").", "type": "string" }, "description": { "type": "string", "description": "A detailed description." }, "revisionCreateTime": { "type": "string", "readOnly": true, "description": "Output only. Revision creation timestamp; when the represented revision was created.", "format": "google-datetime" }, "contents": { "description": "Input only. The contents of the spec. Provided by API callers when specs are created or updated. To access the contents of a spec, use GetApiSpecContents.", "type": "string", "format": "byte" }, "annotations": { "additionalProperties": { "type": "string" }, "type": "object", "description": "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts." }, "labels": { "additionalProperties": { "type": "string" }, "description": "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed.", "type": "object" }, "sizeBytes": { "type": "integer", "format": "int32", "readOnly": true, "description": "Output only. The size of the spec file in bytes. If the spec is gzipped, this is the size of the uncompressed spec." }, "revisionId": { "readOnly": true, "description": "Output only. Immutable. The revision ID of the spec. A new revision is committed whenever the spec contents are changed. The format is an 8-character hexadecimal string.", "type": "string" }, "name": { "description": "Resource name.", "type": "string" }, "hash": { "readOnly": true, "description": "Output only. A SHA-256 hash of the spec's contents. If the spec is gzipped, this is the hash of the uncompressed spec.", "type": "string" } }, "type": "object" }, "Instance": { "type": "object", "description": "An Instance represents the instance resources of the Registry. Currently, only one instance is allowed for each project.", "properties": { "updateTime": { "description": "Output only. Last update timestamp.", "format": "google-datetime", "readOnly": true, "type": "string" }, "stateMessage": { "type": "string", "description": "Output only. Extra information of Instance.State if the state is `FAILED`.", "readOnly": true }, "state": { "type": "string", "enumDescriptions": [ "The default value. This value is used if the state is omitted.", "The Instance has not been initialized or has been deleted.", "The Instance is being created.", "The Instance has been created and is ready for use.", "The Instance is being updated.", "The Instance is being deleted.", "The Instance encountered an error during a state change." ], "readOnly": true, "description": "Output only. The current state of the Instance.", "enum": [ "STATE_UNSPECIFIED", "INACTIVE", "CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED" ] }, "name": { "description": "Format: `projects/*/locations/*/instance`. Currently only locations/global is supported.", "type": "string" }, "config": { "description": "Required. Config of the Instance.", "$ref": "Config" }, "createTime": { "type": "string", "description": "Output only. Creation timestamp.", "format": "google-datetime", "readOnly": true } }, "id": "Instance" } }, "discoveryVersion": "v1", "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/cloud-platform": { "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account." } } } }, "documentationLink": "https://cloud.google.com/apigee/docs/api-hub/what-is-api-hub", "servicePath": "", "resources": { "projects": { "resources": { "locations": { "methods": { "list": { "description": "Lists information about the supported locations for this service.", "response": { "$ref": "ListLocationsResponse" }, "flatPath": "v1/projects/{projectsId}/locations", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "name" ], "id": "apigeeregistry.projects.locations.list", "parameters": { "name": { "type": "string", "pattern": "^projects/[^/]+$", "description": "The resource that owns the locations collection, if applicable.", "location": "path", "required": true }, "pageToken": { "location": "query", "type": "string", "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page." }, "filter": { "type": "string", "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).", "location": "query" }, "pageSize": { "location": "query", "format": "int32", "type": "integer", "description": "The maximum number of results to return. If not set, the service selects a default." } }, "path": "v1/{+name}/locations", "httpMethod": "GET" }, "get": { "parameters": { "name": { "required": true, "location": "path", "type": "string", "description": "Resource name for the location.", "pattern": "^projects/[^/]+/locations/[^/]+$" } }, "parameterOrder": [ "name" ], "id": "apigeeregistry.projects.locations.get", "httpMethod": "GET", "path": "v1/{+name}", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}", "description": "Gets information about a location.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Location" } } }, "resources": { "operations": { "methods": { "get": { "path": "v1/{+name}", "httpMethod": "GET", "parameterOrder": [ "name" ], "id": "apigeeregistry.projects.locations.operations.get", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.", "response": { "$ref": "Operation" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}", "parameters": { "name": { "required": true, "description": "The name of the operation resource.", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$", "location": "path" } } }, "delete": { "parameterOrder": [ "name" ], "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$", "location": "path", "type": "string", "required": true, "description": "The name of the operation resource to be deleted." } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+name}", "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.", "httpMethod": "DELETE", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}", "response": { "$ref": "Empty" }, "id": "apigeeregistry.projects.locations.operations.delete" }, "list": { "path": "v1/{+name}/operations", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations", "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "name" ], "httpMethod": "GET", "id": "apigeeregistry.projects.locations.operations.list", "parameters": { "name": { "location": "path", "description": "The name of the operation's parent resource.", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+$", "required": true }, "pageSize": { "format": "int32", "description": "The standard list page size.", "location": "query", "type": "integer" }, "filter": { "description": "The standard list filter.", "location": "query", "type": "string" }, "pageToken": { "location": "query", "type": "string", "description": "The standard list page token." } }, "response": { "$ref": "ListOperationsResponse" } }, "cancel": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel", "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.", "request": { "$ref": "CancelOperationRequest" }, "parameterOrder": [ "name" ], "path": "v1/{+name}:cancel", "response": { "$ref": "Empty" }, "httpMethod": "POST", "id": "apigeeregistry.projects.locations.operations.cancel", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$", "location": "path", "description": "The name of the operation resource to be cancelled.", "required": true, "type": "string" } } } } }, "instances": { "methods": { "testIamPermissions": { "response": { "$ref": "TestIamPermissionsResponse" }, "parameterOrder": [ "resource" ], "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.", "id": "apigeeregistry.projects.locations.instances.testIamPermissions", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "resource": { "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$", "required": true, "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "location": "path" } }, "path": "v1/{+resource}:testIamPermissions", "httpMethod": "POST", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:testIamPermissions", "request": { "$ref": "TestIamPermissionsRequest" } }, "delete": { "path": "v1/{+name}", "response": { "$ref": "Operation" }, "description": "Deletes the Registry instance.", "parameterOrder": [ "name" ], "id": "apigeeregistry.projects.locations.instances.delete", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}", "parameters": { "name": { "required": true, "description": "Required. The name of the Instance to delete. Format: `projects/*/locations/*/instances/*`.", "location": "path", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$" } }, "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "setIamPolicy": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Policy" }, "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "parameterOrder": [ "resource" ], "id": "apigeeregistry.projects.locations.instances.setIamPolicy", "httpMethod": "POST", "parameters": { "resource": { "required": true, "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$", "location": "path", "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "path": "v1/{+resource}:setIamPolicy", "request": { "$ref": "SetIamPolicyRequest" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:setIamPolicy" }, "getIamPolicy": { "parameters": { "resource": { "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$", "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "location": "path", "required": true, "type": "string" }, "options.requestedPolicyVersion": { "type": "integer", "location": "query", "format": "int32", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)." } }, "parameterOrder": [ "resource" ], "response": { "$ref": "Policy" }, "httpMethod": "GET", "id": "apigeeregistry.projects.locations.instances.getIamPolicy", "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:getIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+resource}:getIamPolicy" }, "get": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}", "httpMethod": "GET", "id": "apigeeregistry.projects.locations.instances.get", "description": "Gets details of a single Instance.", "path": "v1/{+name}", "response": { "$ref": "Instance" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "name" ], "parameters": { "name": { "location": "path", "type": "string", "description": "Required. The name of the Instance to retrieve. Format: `projects/*/locations/*/instances/*`.", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$" } } }, "create": { "parameterOrder": [ "parent" ], "response": { "$ref": "Operation" }, "id": "apigeeregistry.projects.locations.instances.create", "request": { "$ref": "Instance" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "POST", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances", "parameters": { "parent": { "required": true, "pattern": "^projects/[^/]+/locations/[^/]+$", "description": "Required. Parent resource of the Instance, of the form: `projects/*/locations/*`", "location": "path", "type": "string" }, "instanceId": { "description": "Required. Identifier to assign to the Instance. Must be unique within scope of the parent resource.", "type": "string", "location": "query" } }, "description": "Provisions instance resources for the Registry.", "path": "v1/{+parent}/instances" } } }, "apis": { "resources": { "deployments": { "resources": { "artifacts": { "methods": { "getContents": { "response": { "$ref": "HttpBody" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}:getContents", "parameterOrder": [ "name" ], "path": "v1/{+name}:getContents", "description": "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).", "id": "apigeeregistry.projects.locations.apis.deployments.artifacts.getContents", "httpMethod": "GET", "parameters": { "name": { "description": "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*", "required": true, "location": "path", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "list": { "response": { "$ref": "ListArtifactsResponse" }, "id": "apigeeregistry.projects.locations.apis.deployments.artifacts.list", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts", "httpMethod": "GET", "path": "v1/{+parent}/artifacts", "description": "ListArtifacts returns matching artifacts.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "parent": { "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$", "location": "path", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "required": true }, "pageSize": { "description": "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "location": "query", "type": "integer", "format": "int32" }, "filter": { "location": "query", "type": "string", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents." }, "pageToken": { "description": "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token.", "location": "query", "type": "string" } }, "parameterOrder": [ "parent" ] }, "create": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "Artifact" }, "parameters": { "artifactId": { "location": "query", "type": "string", "description": "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID." }, "parent": { "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "location": "path", "required": true, "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$" } }, "response": { "$ref": "Artifact" }, "httpMethod": "POST", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts", "id": "apigeeregistry.projects.locations.apis.deployments.artifacts.create", "path": "v1/{+parent}/artifacts", "parameterOrder": [ "parent" ], "description": "CreateArtifact creates a specified artifact." }, "get": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}", "description": "GetArtifact returns a specified artifact.", "parameterOrder": [ "name" ], "path": "v1/{+name}", "parameters": { "name": { "type": "string", "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$", "description": "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*", "required": true } }, "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "id": "apigeeregistry.projects.locations.apis.deployments.artifacts.get", "response": { "$ref": "Artifact" } }, "replaceArtifact": { "description": "ReplaceArtifact can be used to replace a specified artifact.", "id": "apigeeregistry.projects.locations.apis.deployments.artifacts.replaceArtifact", "parameters": { "name": { "description": "Resource name.", "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$", "required": true, "type": "string" } }, "response": { "$ref": "Artifact" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "Artifact" }, "httpMethod": "PUT", "path": "v1/{+name}", "parameterOrder": [ "name" ] }, "delete": { "description": "DeleteArtifact removes a specified artifact.", "id": "apigeeregistry.projects.locations.apis.deployments.artifacts.delete", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}", "response": { "$ref": "Empty" }, "parameterOrder": [ "name" ], "path": "v1/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "DELETE", "parameters": { "name": { "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$", "description": "Required. The name of the artifact to delete. Format: {parent}/artifacts/*", "location": "path", "required": true } } } } } }, "methods": { "patch": { "response": { "$ref": "ApiDeployment" }, "parameterOrder": [ "name" ], "path": "v1/{+name}", "httpMethod": "PATCH", "parameters": { "allowMissing": { "description": "If set to true, and the deployment is not found, a new deployment will be created. In this situation, `update_mask` is ignored.", "type": "boolean", "location": "query" }, "name": { "location": "path", "description": "Resource name.", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$", "type": "string", "required": true }, "updateMask": { "location": "query", "type": "string", "description": "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request.", "format": "google-fieldmask" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}", "request": { "$ref": "ApiDeployment" }, "description": "UpdateApiDeployment can be used to modify a specified deployment.", "id": "apigeeregistry.projects.locations.apis.deployments.patch", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "listRevisions": { "httpMethod": "GET", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:listRevisions", "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$", "required": true, "location": "path", "type": "string", "description": "Required. The name of the deployment to list revisions for." }, "pageToken": { "type": "string", "location": "query", "description": "The page token, received from a previous ListApiDeploymentRevisions call. Provide this to retrieve the subsequent page." }, "pageSize": { "description": "The maximum number of revisions to return per page.", "format": "int32", "location": "query", "type": "integer" } }, "parameterOrder": [ "name" ], "response": { "$ref": "ListApiDeploymentRevisionsResponse" }, "description": "ListApiDeploymentRevisions lists all revisions of a deployment. Revisions are returned in descending order of revision creation time.", "id": "apigeeregistry.projects.locations.apis.deployments.listRevisions", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+name}:listRevisions" }, "rollback": { "httpMethod": "POST", "request": { "$ref": "RollbackApiDeploymentRequest" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:rollback", "parameters": { "name": { "type": "string", "description": "Required. The deployment being rolled back.", "location": "path", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$" } }, "id": "apigeeregistry.projects.locations.apis.deployments.rollback", "description": "RollbackApiDeployment sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.", "path": "v1/{+name}:rollback", "response": { "$ref": "ApiDeployment" }, "parameterOrder": [ "name" ] }, "get": { "response": { "$ref": "ApiDeployment" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "GET", "path": "v1/{+name}", "parameterOrder": [ "name" ], "parameters": { "name": { "required": true, "type": "string", "description": "Required. The name of the deployment to retrieve. Format: projects/*/locations/*/apis/*/deployments/*", "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$" } }, "description": "GetApiDeployment returns a specified deployment.", "id": "apigeeregistry.projects.locations.apis.deployments.get" }, "create": { "httpMethod": "POST", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+parent}/deployments", "request": { "$ref": "ApiDeployment" }, "response": { "$ref": "ApiDeployment" }, "parameterOrder": [ "parent" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments", "id": "apigeeregistry.projects.locations.apis.deployments.create", "parameters": { "apiDeploymentId": { "location": "query", "description": "Required. The ID to use for the deployment, which will become the final component of the deployment's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.", "type": "string" }, "parent": { "required": true, "type": "string", "description": "Required. The parent, which owns this collection of deployments. Format: projects/*/locations/*/apis/*", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "location": "path" } }, "description": "CreateApiDeployment creates a specified deployment." }, "testIamPermissions": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "resource" ], "response": { "$ref": "TestIamPermissionsResponse" }, "path": "v1/{+resource}:testIamPermissions", "id": "apigeeregistry.projects.locations.apis.deployments.testIamPermissions", "httpMethod": "POST", "parameters": { "resource": { "required": true, "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$", "location": "path", "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:testIamPermissions", "request": { "$ref": "TestIamPermissionsRequest" }, "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning." }, "list": { "path": "v1/{+parent}/deployments", "id": "apigeeregistry.projects.locations.apis.deployments.list", "description": "ListApiDeployments returns matching deployments.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments", "parameters": { "pageToken": { "type": "string", "location": "query", "description": "A page token, received from a previous `ListApiDeployments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiDeployments` must match the call that provided the page token." }, "pageSize": { "location": "query", "format": "int32", "description": "The maximum number of deployments to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "type": "integer" }, "filter": { "type": "string", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.", "location": "query" }, "parent": { "location": "path", "description": "Required. The parent, which owns this collection of deployments. Format: projects/*/locations/*/apis/*", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "required": true } }, "parameterOrder": [ "parent" ], "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "ListApiDeploymentsResponse" } }, "setIamPolicy": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+resource}:setIamPolicy", "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "parameters": { "resource": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$", "type": "string", "required": true, "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "parameterOrder": [ "resource" ], "httpMethod": "POST", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:setIamPolicy", "request": { "$ref": "SetIamPolicyRequest" }, "id": "apigeeregistry.projects.locations.apis.deployments.setIamPolicy", "response": { "$ref": "Policy" } }, "getIamPolicy": { "path": "v1/{+resource}:getIamPolicy", "id": "apigeeregistry.projects.locations.apis.deployments.getIamPolicy", "httpMethod": "GET", "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "parameterOrder": [ "resource" ], "parameters": { "options.requestedPolicyVersion": { "format": "int32", "location": "query", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "type": "integer" }, "resource": { "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "location": "path", "required": true, "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$" } }, "response": { "$ref": "Policy" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:getIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "tagRevision": { "httpMethod": "POST", "parameters": { "name": { "description": "Required. The name of the deployment to be tagged, including the revision ID.", "required": true, "type": "string", "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$" } }, "description": "TagApiDeploymentRevision adds a tag to a specified revision of a deployment.", "parameterOrder": [ "name" ], "id": "apigeeregistry.projects.locations.apis.deployments.tagRevision", "path": "v1/{+name}:tagRevision", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:tagRevision", "request": { "$ref": "TagApiDeploymentRevisionRequest" }, "response": { "$ref": "ApiDeployment" } }, "delete": { "parameters": { "name": { "description": "Required. The name of the deployment to delete. Format: projects/*/locations/*/apis/*/deployments/*", "type": "string", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$", "location": "path" }, "force": { "description": "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)", "location": "query", "type": "boolean" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}", "id": "apigeeregistry.projects.locations.apis.deployments.delete", "httpMethod": "DELETE", "path": "v1/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "name" ], "description": "DeleteApiDeployment removes a specified deployment, all revisions, and all child resources (e.g. artifacts).", "response": { "$ref": "Empty" } }, "deleteRevision": { "parameterOrder": [ "name" ], "response": { "$ref": "ApiDeployment" }, "parameters": { "name": { "required": true, "type": "string", "description": "Required. The name of the deployment revision to be deleted, with a revision ID explicitly included. Example: projects/sample/locations/global/apis/petstore/deployments/prod@c7cfa2a8", "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$" } }, "httpMethod": "DELETE", "id": "apigeeregistry.projects.locations.apis.deployments.deleteRevision", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:deleteRevision", "description": "DeleteApiDeploymentRevision deletes a revision of a deployment.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+name}:deleteRevision" } } }, "versions": { "resources": { "specs": { "methods": { "getIamPolicy": { "id": "apigeeregistry.projects.locations.apis.versions.specs.getIamPolicy", "response": { "$ref": "Policy" }, "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "parameters": { "resource": { "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "required": true, "location": "path" }, "options.requestedPolicyVersion": { "location": "query", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "type": "integer", "format": "int32" } }, "parameterOrder": [ "resource" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:getIamPolicy", "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+resource}:getIamPolicy" }, "testIamPermissions": { "parameters": { "resource": { "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "type": "string", "required": true, "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$" } }, "response": { "$ref": "TestIamPermissionsResponse" }, "httpMethod": "POST", "request": { "$ref": "TestIamPermissionsRequest" }, "path": "v1/{+resource}:testIamPermissions", "id": "apigeeregistry.projects.locations.apis.versions.specs.testIamPermissions", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "resource" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:testIamPermissions", "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning." }, "setIamPolicy": { "response": { "$ref": "Policy" }, "parameterOrder": [ "resource" ], "request": { "$ref": "SetIamPolicyRequest" }, "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "httpMethod": "POST", "parameters": { "resource": { "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "required": true, "type": "string", "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$" } }, "path": "v1/{+resource}:setIamPolicy", "id": "apigeeregistry.projects.locations.apis.versions.specs.setIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:setIamPolicy" }, "tagRevision": { "description": "TagApiSpecRevision adds a tag to a specified revision of a spec.", "request": { "$ref": "TagApiSpecRevisionRequest" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:tagRevision", "response": { "$ref": "ApiSpec" }, "httpMethod": "POST", "id": "apigeeregistry.projects.locations.apis.versions.specs.tagRevision", "parameterOrder": [ "name" ], "parameters": { "name": { "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "type": "string", "description": "Required. The name of the spec to be tagged, including the revision ID.", "location": "path" } }, "path": "v1/{+name}:tagRevision", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "getContents": { "parameters": { "name": { "location": "path", "description": "Required. The name of the spec whose contents should be retrieved. Format: projects/*/locations/*/apis/*/versions/*/specs/*", "required": true, "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:getContents", "description": "GetApiSpecContents returns the contents of a specified spec. If specs are stored with GZip compression, the default behavior is to return the spec uncompressed (the mime_type response field indicates the exact format returned).", "parameterOrder": [ "name" ], "path": "v1/{+name}:getContents", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "GET", "id": "apigeeregistry.projects.locations.apis.versions.specs.getContents", "response": { "$ref": "HttpBody" } }, "delete": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "DELETE", "description": "DeleteApiSpec removes a specified spec, all revisions, and all child resources (e.g. artifacts).", "response": { "$ref": "Empty" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}", "path": "v1/{+name}", "parameterOrder": [ "name" ], "parameters": { "force": { "description": "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)", "type": "boolean", "location": "query" }, "name": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "location": "path", "required": true, "description": "Required. The name of the spec to delete. Format: projects/*/locations/*/apis/*/versions/*/specs/*", "type": "string" } }, "id": "apigeeregistry.projects.locations.apis.versions.specs.delete" }, "get": { "parameters": { "name": { "type": "string", "location": "path", "required": true, "description": "Required. The name of the spec to retrieve. Format: projects/*/locations/*/apis/*/versions/*/specs/*", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}", "description": "GetApiSpec returns a specified spec.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+name}", "response": { "$ref": "ApiSpec" }, "id": "apigeeregistry.projects.locations.apis.versions.specs.get", "parameterOrder": [ "name" ], "httpMethod": "GET" }, "list": { "path": "v1/{+parent}/specs", "id": "apigeeregistry.projects.locations.apis.versions.specs.list", "parameters": { "pageSize": { "description": "The maximum number of specs to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "format": "int32", "type": "integer", "location": "query" }, "pageToken": { "description": "A page token, received from a previous `ListApiSpecs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiSpecs` must match the call that provided the page token.", "type": "string", "location": "query" }, "parent": { "description": "Required. The parent, which owns this collection of specs. Format: projects/*/locations/*/apis/*/versions/*", "type": "string", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "location": "path" }, "filter": { "type": "string", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.", "location": "query" } }, "response": { "$ref": "ListApiSpecsResponse" }, "parameterOrder": [ "parent" ], "description": "ListApiSpecs returns matching specs.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "GET", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs" }, "listRevisions": { "parameterOrder": [ "name" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:listRevisions", "id": "apigeeregistry.projects.locations.apis.versions.specs.listRevisions", "httpMethod": "GET", "parameters": { "pageToken": { "location": "query", "type": "string", "description": "The page token, received from a previous ListApiSpecRevisions call. Provide this to retrieve the subsequent page." }, "pageSize": { "location": "query", "type": "integer", "description": "The maximum number of revisions to return per page.", "format": "int32" }, "name": { "required": true, "location": "path", "description": "Required. The name of the spec to list revisions for.", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "type": "string" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "ListApiSpecRevisionsResponse" }, "path": "v1/{+name}:listRevisions", "description": "ListApiSpecRevisions lists all revisions of a spec. Revisions are returned in descending order of revision creation time." }, "patch": { "request": { "$ref": "ApiSpec" }, "description": "UpdateApiSpec can be used to modify a specified spec.", "id": "apigeeregistry.projects.locations.apis.versions.specs.patch", "parameterOrder": [ "name" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}", "parameters": { "allowMissing": { "location": "query", "type": "boolean", "description": "If set to true, and the spec is not found, a new spec will be created. In this situation, `update_mask` is ignored." }, "updateMask": { "format": "google-fieldmask", "description": "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request.", "type": "string", "location": "query" }, "name": { "description": "Resource name.", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "location": "path", "type": "string", "required": true } }, "path": "v1/{+name}", "response": { "$ref": "ApiSpec" }, "httpMethod": "PATCH" }, "create": { "path": "v1/{+parent}/specs", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs", "httpMethod": "POST", "id": "apigeeregistry.projects.locations.apis.versions.specs.create", "description": "CreateApiSpec creates a specified spec.", "parameters": { "parent": { "description": "Required. The parent, which owns this collection of specs. Format: projects/*/locations/*/apis/*/versions/*", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "type": "string", "location": "path", "required": true }, "apiSpecId": { "type": "string", "location": "query", "description": "Required. The ID to use for the spec, which will become the final component of the spec's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID." } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "parent" ], "response": { "$ref": "ApiSpec" }, "request": { "$ref": "ApiSpec" } }, "rollback": { "path": "v1/{+name}:rollback", "request": { "$ref": "RollbackApiSpecRequest" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "POST", "parameters": { "name": { "description": "Required. The spec being rolled back.", "type": "string", "required": true, "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$" } }, "id": "apigeeregistry.projects.locations.apis.versions.specs.rollback", "parameterOrder": [ "name" ], "response": { "$ref": "ApiSpec" }, "description": "RollbackApiSpec sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:rollback" }, "deleteRevision": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "ApiSpec" }, "id": "apigeeregistry.projects.locations.apis.versions.specs.deleteRevision", "parameterOrder": [ "name" ], "description": "DeleteApiSpecRevision deletes a revision of a spec.", "path": "v1/{+name}:deleteRevision", "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "required": true, "location": "path", "description": "Required. The name of the spec revision to be deleted, with a revision ID explicitly included. Example: projects/sample/locations/global/apis/petstore/versions/1.0.0/specs/openapi.yaml@c7cfa2a8", "type": "string" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:deleteRevision", "httpMethod": "DELETE" } }, "resources": { "artifacts": { "methods": { "list": { "description": "ListArtifacts returns matching artifacts.", "httpMethod": "GET", "response": { "$ref": "ListArtifactsResponse" }, "parameters": { "pageToken": { "type": "string", "location": "query", "description": "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token." }, "parent": { "required": true, "type": "string", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "location": "path" }, "pageSize": { "format": "int32", "description": "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "location": "query", "type": "integer" }, "filter": { "location": "query", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.", "type": "string" } }, "parameterOrder": [ "parent" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.list", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts", "path": "v1/{+parent}/artifacts" }, "getIamPolicy": { "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.getIamPolicy", "parameters": { "options.requestedPolicyVersion": { "format": "int32", "location": "query", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "type": "integer" }, "resource": { "location": "path", "type": "string", "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$" } }, "path": "v1/{+resource}:getIamPolicy", "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "httpMethod": "GET", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:getIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "resource" ], "response": { "$ref": "Policy" } }, "get": { "description": "GetArtifact returns a specified artifact.", "path": "v1/{+name}", "parameterOrder": [ "name" ], "response": { "$ref": "Artifact" }, "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$", "description": "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*", "type": "string", "location": "path", "required": true } }, "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.get", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "GET", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}" }, "replaceArtifact": { "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.replaceArtifact", "parameterOrder": [ "name" ], "path": "v1/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}", "request": { "$ref": "Artifact" }, "description": "ReplaceArtifact can be used to replace a specified artifact.", "httpMethod": "PUT", "response": { "$ref": "Artifact" }, "parameters": { "name": { "location": "path", "type": "string", "required": true, "description": "Resource name.", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$" } } }, "create": { "parameters": { "artifactId": { "description": "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.", "location": "query", "type": "string" }, "parent": { "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$", "location": "path", "type": "string", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}" } }, "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.create", "description": "CreateArtifact creates a specified artifact.", "httpMethod": "POST", "response": { "$ref": "Artifact" }, "path": "v1/{+parent}/artifacts", "parameterOrder": [ "parent" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "Artifact" } }, "getContents": { "parameters": { "name": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$", "type": "string", "description": "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*", "required": true } }, "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.getContents", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:getContents", "response": { "$ref": "HttpBody" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "GET", "description": "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).", "path": "v1/{+name}:getContents", "parameterOrder": [ "name" ] }, "setIamPolicy": { "parameterOrder": [ "resource" ], "request": { "$ref": "SetIamPolicyRequest" }, "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "response": { "$ref": "Policy" }, "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.setIamPolicy", "httpMethod": "POST", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "resource": { "location": "path", "type": "string", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$", "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "path": "v1/{+resource}:setIamPolicy", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:setIamPolicy" }, "delete": { "description": "DeleteArtifact removes a specified artifact.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}", "parameterOrder": [ "name" ], "path": "v1/{+name}", "response": { "$ref": "Empty" }, "parameters": { "name": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$", "description": "Required. The name of the artifact to delete. Format: {parent}/artifacts/*", "required": true, "type": "string" } }, "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.delete", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "DELETE" }, "testIamPermissions": { "response": { "$ref": "TestIamPermissionsResponse" }, "httpMethod": "POST", "parameters": { "resource": { "required": true, "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$", "location": "path", "type": "string" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:testIamPermissions", "parameterOrder": [ "resource" ], "request": { "$ref": "TestIamPermissionsRequest" }, "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.", "path": "v1/{+resource}:testIamPermissions", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "id": "apigeeregistry.projects.locations.apis.versions.specs.artifacts.testIamPermissions" } } } } }, "artifacts": { "methods": { "list": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts", "response": { "$ref": "ListArtifactsResponse" }, "parameters": { "pageSize": { "format": "int32", "type": "integer", "description": "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "location": "query" }, "filter": { "location": "query", "type": "string", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents." }, "parent": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "required": true, "location": "path", "type": "string" }, "pageToken": { "description": "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token.", "location": "query", "type": "string" } }, "id": "apigeeregistry.projects.locations.apis.versions.artifacts.list", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "GET", "parameterOrder": [ "parent" ], "description": "ListArtifacts returns matching artifacts.", "path": "v1/{+parent}/artifacts" }, "getIamPolicy": { "path": "v1/{+resource}:getIamPolicy", "httpMethod": "GET", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:getIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "parameters": { "resource": { "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$", "location": "path", "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "required": true }, "options.requestedPolicyVersion": { "location": "query", "format": "int32", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "type": "integer" } }, "response": { "$ref": "Policy" }, "parameterOrder": [ "resource" ], "id": "apigeeregistry.projects.locations.apis.versions.artifacts.getIamPolicy" }, "getContents": { "description": "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "name": { "location": "path", "type": "string", "description": "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$", "required": true } }, "parameterOrder": [ "name" ], "response": { "$ref": "HttpBody" }, "path": "v1/{+name}:getContents", "id": "apigeeregistry.projects.locations.apis.versions.artifacts.getContents", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:getContents", "httpMethod": "GET" }, "create": { "response": { "$ref": "Artifact" }, "description": "CreateArtifact creates a specified artifact.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts", "httpMethod": "POST", "parameters": { "artifactId": { "description": "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.", "type": "string", "location": "query" }, "parent": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "required": true, "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "type": "string" } }, "path": "v1/{+parent}/artifacts", "request": { "$ref": "Artifact" }, "id": "apigeeregistry.projects.locations.apis.versions.artifacts.create", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "parent" ] }, "testIamPermissions": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "TestIamPermissionsRequest" }, "path": "v1/{+resource}:testIamPermissions", "parameters": { "resource": { "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$", "required": true, "type": "string" } }, "parameterOrder": [ "resource" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:testIamPermissions", "httpMethod": "POST", "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.", "response": { "$ref": "TestIamPermissionsResponse" }, "id": "apigeeregistry.projects.locations.apis.versions.artifacts.testIamPermissions" }, "replaceArtifact": { "parameterOrder": [ "name" ], "id": "apigeeregistry.projects.locations.apis.versions.artifacts.replaceArtifact", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}", "description": "ReplaceArtifact can be used to replace a specified artifact.", "request": { "$ref": "Artifact" }, "path": "v1/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Artifact" }, "httpMethod": "PUT", "parameters": { "name": { "description": "Resource name.", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$", "location": "path", "type": "string" } } }, "delete": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}", "parameterOrder": [ "name" ], "response": { "$ref": "Empty" }, "id": "apigeeregistry.projects.locations.apis.versions.artifacts.delete", "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "DeleteArtifact removes a specified artifact.", "parameters": { "name": { "description": "Required. The name of the artifact to delete. Format: {parent}/artifacts/*", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$", "required": true, "location": "path", "type": "string" } }, "path": "v1/{+name}" }, "get": { "id": "apigeeregistry.projects.locations.apis.versions.artifacts.get", "httpMethod": "GET", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}", "parameters": { "name": { "description": "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$", "required": true, "type": "string", "location": "path" } }, "description": "GetArtifact returns a specified artifact.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "name" ], "response": { "$ref": "Artifact" }, "path": "v1/{+name}" }, "setIamPolicy": { "path": "v1/{+resource}:setIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "resource": { "type": "string", "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$", "location": "path" } }, "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:setIamPolicy", "response": { "$ref": "Policy" }, "id": "apigeeregistry.projects.locations.apis.versions.artifacts.setIamPolicy", "parameterOrder": [ "resource" ], "request": { "$ref": "SetIamPolicyRequest" }, "httpMethod": "POST" } } } }, "methods": { "get": { "description": "GetApiVersion returns a specified version.", "parameterOrder": [ "name" ], "httpMethod": "GET", "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "location": "path", "required": true, "type": "string", "description": "Required. The name of the version to retrieve. Format: projects/*/locations/*/apis/*/versions/*" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "ApiVersion" }, "id": "apigeeregistry.projects.locations.apis.versions.get", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}", "path": "v1/{+name}" }, "list": { "path": "v1/{+parent}/versions", "httpMethod": "GET", "parameterOrder": [ "parent" ], "parameters": { "pageSize": { "format": "int32", "description": "The maximum number of versions to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "type": "integer", "location": "query" }, "filter": { "location": "query", "type": "string", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields." }, "parent": { "location": "path", "description": "Required. The parent, which owns this collection of versions. Format: projects/*/locations/*/apis/*", "type": "string", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$" }, "pageToken": { "description": "A page token, received from a previous `ListApiVersions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiVersions` must match the call that provided the page token.", "type": "string", "location": "query" } }, "description": "ListApiVersions returns matching versions.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "ListApiVersionsResponse" }, "id": "apigeeregistry.projects.locations.apis.versions.list" }, "create": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "parent": { "type": "string", "location": "path", "description": "Required. The parent, which owns this collection of versions. Format: projects/*/locations/*/apis/*", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$" }, "apiVersionId": { "location": "query", "type": "string", "description": "Required. The ID to use for the version, which will become the final component of the version's resource name. This value should be 1-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID." } }, "response": { "$ref": "ApiVersion" }, "path": "v1/{+parent}/versions", "httpMethod": "POST", "parameterOrder": [ "parent" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions", "id": "apigeeregistry.projects.locations.apis.versions.create", "description": "CreateApiVersion creates a specified version.", "request": { "$ref": "ApiVersion" } }, "delete": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}", "parameterOrder": [ "name" ], "parameters": { "name": { "required": true, "location": "path", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "description": "Required. The name of the version to delete. Format: projects/*/locations/*/apis/*/versions/*" }, "force": { "location": "query", "type": "boolean", "description": "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)" } }, "description": "DeleteApiVersion removes a specified version and all of the resources that it owns.", "path": "v1/{+name}", "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Empty" }, "id": "apigeeregistry.projects.locations.apis.versions.delete" }, "patch": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}", "id": "apigeeregistry.projects.locations.apis.versions.patch", "response": { "$ref": "ApiVersion" }, "parameterOrder": [ "name" ], "request": { "$ref": "ApiVersion" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "PATCH", "path": "v1/{+name}", "parameters": { "name": { "description": "Resource name.", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "location": "path", "required": true, "type": "string" }, "allowMissing": { "location": "query", "type": "boolean", "description": "If set to true, and the version is not found, a new version will be created. In this situation, `update_mask` is ignored." }, "updateMask": { "type": "string", "location": "query", "format": "google-fieldmask", "description": "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request." } }, "description": "UpdateApiVersion can be used to modify a specified version." }, "setIamPolicy": { "parameters": { "resource": { "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "location": "path", "required": true } }, "path": "v1/{+resource}:setIamPolicy", "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "request": { "$ref": "SetIamPolicyRequest" }, "response": { "$ref": "Policy" }, "parameterOrder": [ "resource" ], "id": "apigeeregistry.projects.locations.apis.versions.setIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}:setIamPolicy", "httpMethod": "POST" }, "testIamPermissions": { "httpMethod": "POST", "parameterOrder": [ "resource" ], "path": "v1/{+resource}:testIamPermissions", "parameters": { "resource": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "required": true, "type": "string", "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "TestIamPermissionsResponse" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}:testIamPermissions", "id": "apigeeregistry.projects.locations.apis.versions.testIamPermissions", "request": { "$ref": "TestIamPermissionsRequest" }, "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning." }, "getIamPolicy": { "httpMethod": "GET", "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "id": "apigeeregistry.projects.locations.apis.versions.getIamPolicy", "path": "v1/{+resource}:getIamPolicy", "parameters": { "options.requestedPolicyVersion": { "format": "int32", "location": "query", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "type": "integer" }, "resource": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$", "required": true, "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "type": "string" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "resource" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}:getIamPolicy", "response": { "$ref": "Policy" } } } }, "artifacts": { "methods": { "setIamPolicy": { "response": { "$ref": "Policy" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+resource}:setIamPolicy", "request": { "$ref": "SetIamPolicyRequest" }, "id": "apigeeregistry.projects.locations.apis.artifacts.setIamPolicy", "httpMethod": "POST", "parameters": { "resource": { "location": "path", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$", "type": "string", "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:setIamPolicy", "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "parameterOrder": [ "resource" ] }, "create": { "parameterOrder": [ "parent" ], "description": "CreateArtifact creates a specified artifact.", "request": { "$ref": "Artifact" }, "path": "v1/{+parent}/artifacts", "httpMethod": "POST", "id": "apigeeregistry.projects.locations.apis.artifacts.create", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Artifact" }, "parameters": { "artifactId": { "location": "query", "description": "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.", "type": "string" }, "parent": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "required": true, "location": "path", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "type": "string" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts" }, "get": { "response": { "$ref": "Artifact" }, "parameterOrder": [ "name" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}", "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$", "type": "string", "description": "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*", "required": true, "location": "path" } }, "description": "GetArtifact returns a specified artifact.", "id": "apigeeregistry.projects.locations.apis.artifacts.get", "httpMethod": "GET", "path": "v1/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "list": { "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts", "response": { "$ref": "ListArtifactsResponse" }, "id": "apigeeregistry.projects.locations.apis.artifacts.list", "httpMethod": "GET", "path": "v1/{+parent}/artifacts", "parameterOrder": [ "parent" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "ListArtifacts returns matching artifacts.", "parameters": { "pageToken": { "location": "query", "type": "string", "description": "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token." }, "parent": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "location": "path", "required": true, "type": "string", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}" }, "filter": { "type": "string", "location": "query", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents." }, "pageSize": { "type": "integer", "location": "query", "description": "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "format": "int32" } } }, "delete": { "id": "apigeeregistry.projects.locations.apis.artifacts.delete", "parameters": { "name": { "type": "string", "required": true, "location": "path", "description": "Required. The name of the artifact to delete. Format: {parent}/artifacts/*", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$" } }, "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "DeleteArtifact removes a specified artifact.", "parameterOrder": [ "name" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}", "response": { "$ref": "Empty" }, "path": "v1/{+name}" }, "replaceArtifact": { "path": "v1/{+name}", "request": { "$ref": "Artifact" }, "response": { "$ref": "Artifact" }, "parameters": { "name": { "location": "path", "description": "Resource name.", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$", "type": "string" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}", "parameterOrder": [ "name" ], "httpMethod": "PUT", "id": "apigeeregistry.projects.locations.apis.artifacts.replaceArtifact", "description": "ReplaceArtifact can be used to replace a specified artifact." }, "testIamPermissions": { "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "id": "apigeeregistry.projects.locations.apis.artifacts.testIamPermissions", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:testIamPermissions", "httpMethod": "POST", "response": { "$ref": "TestIamPermissionsResponse" }, "request": { "$ref": "TestIamPermissionsRequest" }, "path": "v1/{+resource}:testIamPermissions", "parameters": { "resource": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$", "required": true, "type": "string", "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "location": "path" } }, "parameterOrder": [ "resource" ] }, "getIamPolicy": { "parameterOrder": [ "resource" ], "response": { "$ref": "Policy" }, "parameters": { "options.requestedPolicyVersion": { "format": "int32", "location": "query", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "type": "integer" }, "resource": { "location": "path", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$", "required": true, "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "path": "v1/{+resource}:getIamPolicy", "id": "apigeeregistry.projects.locations.apis.artifacts.getIamPolicy", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:getIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "GET", "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set." }, "getContents": { "description": "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:getContents", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "HttpBody" }, "parameterOrder": [ "name" ], "httpMethod": "GET", "parameters": { "name": { "type": "string", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$", "description": "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*", "location": "path" } }, "path": "v1/{+name}:getContents", "id": "apigeeregistry.projects.locations.apis.artifacts.getContents" } } } }, "methods": { "patch": { "description": "UpdateApi can be used to modify a specified API.", "id": "apigeeregistry.projects.locations.apis.patch", "path": "v1/{+name}", "response": { "$ref": "Api" }, "parameterOrder": [ "name" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}", "request": { "$ref": "Api" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "PATCH", "parameters": { "updateMask": { "location": "query", "type": "string", "description": "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request.", "format": "google-fieldmask" }, "allowMissing": { "type": "boolean", "description": "If set to true, and the api is not found, a new api will be created. In this situation, `update_mask` is ignored.", "location": "query" }, "name": { "description": "Resource name.", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "required": true, "location": "path", "type": "string" } } }, "getIamPolicy": { "httpMethod": "GET", "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}:getIamPolicy", "id": "apigeeregistry.projects.locations.apis.getIamPolicy", "path": "v1/{+resource}:getIamPolicy", "parameters": { "options.requestedPolicyVersion": { "type": "integer", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "location": "query", "format": "int32" }, "resource": { "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "location": "path", "type": "string", "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "resource" ], "response": { "$ref": "Policy" } }, "create": { "request": { "$ref": "Api" }, "httpMethod": "POST", "path": "v1/{+parent}/apis", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis", "id": "apigeeregistry.projects.locations.apis.create", "parameters": { "apiId": { "description": "Required. The ID to use for the api, which will become the final component of the api's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.", "type": "string", "location": "query" }, "parent": { "pattern": "^projects/[^/]+/locations/[^/]+$", "type": "string", "description": "Required. The parent, which owns this collection of APIs. Format: projects/*/locations/*", "location": "path", "required": true } }, "parameterOrder": [ "parent" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "CreateApi creates a specified API.", "response": { "$ref": "Api" } }, "setIamPolicy": { "id": "apigeeregistry.projects.locations.apis.setIamPolicy", "parameters": { "resource": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "type": "string", "location": "path", "required": true, "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "parameterOrder": [ "resource" ], "path": "v1/{+resource}:setIamPolicy", "httpMethod": "POST", "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "response": { "$ref": "Policy" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}:setIamPolicy", "request": { "$ref": "SetIamPolicyRequest" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "testIamPermissions": { "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.", "id": "apigeeregistry.projects.locations.apis.testIamPermissions", "path": "v1/{+resource}:testIamPermissions", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "resource": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "required": true, "type": "string", "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field." } }, "request": { "$ref": "TestIamPermissionsRequest" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}:testIamPermissions", "parameterOrder": [ "resource" ], "response": { "$ref": "TestIamPermissionsResponse" }, "httpMethod": "POST" }, "delete": { "parameterOrder": [ "name" ], "description": "DeleteApi removes a specified API and all of the resources that it owns.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}", "httpMethod": "DELETE", "parameters": { "force": { "type": "boolean", "location": "query", "description": "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)" }, "name": { "required": true, "description": "Required. The name of the API to delete. Format: projects/*/locations/*/apis/*", "location": "path", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$" } }, "path": "v1/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Empty" }, "id": "apigeeregistry.projects.locations.apis.delete" }, "list": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "filter": { "location": "query", "type": "string", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields." }, "pageToken": { "type": "string", "description": "A page token, received from a previous `ListApis` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApis` must match the call that provided the page token.", "location": "query" }, "parent": { "location": "path", "required": true, "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+$", "description": "Required. The parent, which owns this collection of APIs. Format: projects/*/locations/*" }, "pageSize": { "format": "int32", "description": "The maximum number of APIs to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "type": "integer", "location": "query" } }, "description": "ListApis returns matching APIs.", "id": "apigeeregistry.projects.locations.apis.list", "path": "v1/{+parent}/apis", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis", "parameterOrder": [ "parent" ], "response": { "$ref": "ListApisResponse" }, "httpMethod": "GET" }, "get": { "parameters": { "name": { "pattern": "^projects/[^/]+/locations/[^/]+/apis/[^/]+$", "required": true, "description": "Required. The name of the API to retrieve. Format: projects/*/locations/*/apis/*", "type": "string", "location": "path" } }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}", "id": "apigeeregistry.projects.locations.apis.get", "path": "v1/{+name}", "response": { "$ref": "Api" }, "httpMethod": "GET", "parameterOrder": [ "name" ], "description": "GetApi returns a specified API.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] } } }, "artifacts": { "methods": { "setIamPolicy": { "id": "apigeeregistry.projects.locations.artifacts.setIamPolicy", "parameters": { "resource": { "required": true, "type": "string", "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "pattern": "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$", "location": "path" } }, "httpMethod": "POST", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+resource}:setIamPolicy", "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:setIamPolicy", "parameterOrder": [ "resource" ], "response": { "$ref": "Policy" }, "request": { "$ref": "SetIamPolicyRequest" } }, "getIamPolicy": { "path": "v1/{+resource}:getIamPolicy", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:getIamPolicy", "parameterOrder": [ "resource" ], "httpMethod": "GET", "response": { "$ref": "Policy" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "id": "apigeeregistry.projects.locations.artifacts.getIamPolicy", "parameters": { "options.requestedPolicyVersion": { "location": "query", "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "type": "integer", "format": "int32" }, "resource": { "type": "string", "location": "path", "required": true, "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "pattern": "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$" } } }, "create": { "parameterOrder": [ "parent" ], "description": "CreateArtifact creates a specified artifact.", "httpMethod": "POST", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v1/{+parent}/artifacts", "id": "apigeeregistry.projects.locations.artifacts.create", "parameters": { "artifactId": { "description": "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.", "type": "string", "location": "query" }, "parent": { "pattern": "^projects/[^/]+/locations/[^/]+$", "type": "string", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "location": "path", "required": true } }, "response": { "$ref": "Artifact" }, "request": { "$ref": "Artifact" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts" }, "testIamPermissions": { "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.", "parameterOrder": [ "resource" ], "request": { "$ref": "TestIamPermissionsRequest" }, "path": "v1/{+resource}:testIamPermissions", "parameters": { "resource": { "type": "string", "location": "path", "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:testIamPermissions", "id": "apigeeregistry.projects.locations.artifacts.testIamPermissions", "httpMethod": "POST", "response": { "$ref": "TestIamPermissionsResponse" } }, "getContents": { "response": { "$ref": "HttpBody" }, "path": "v1/{+name}:getContents", "id": "apigeeregistry.projects.locations.artifacts.getContents", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:getContents", "httpMethod": "GET", "description": "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).", "parameterOrder": [ "name" ], "parameters": { "name": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$", "description": "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*", "required": true, "type": "string" } } }, "list": { "description": "ListArtifacts returns matching artifacts.", "response": { "$ref": "ListArtifactsResponse" }, "parameterOrder": [ "parent" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts", "id": "apigeeregistry.projects.locations.artifacts.list", "parameters": { "parent": { "type": "string", "description": "Required. The parent, which owns this collection of artifacts. Format: {parent}", "pattern": "^projects/[^/]+/locations/[^/]+$", "required": true, "location": "path" }, "pageToken": { "type": "string", "location": "query", "description": "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token." }, "filter": { "location": "query", "type": "string", "description": "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents." }, "pageSize": { "description": "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.", "type": "integer", "location": "query", "format": "int32" } }, "path": "v1/{+parent}/artifacts", "httpMethod": "GET" }, "get": { "parameterOrder": [ "name" ], "path": "v1/{+name}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "id": "apigeeregistry.projects.locations.artifacts.get", "httpMethod": "GET", "description": "GetArtifact returns a specified artifact.", "response": { "$ref": "Artifact" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}", "parameters": { "name": { "description": "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$", "location": "path", "required": true } } }, "delete": { "httpMethod": "DELETE", "id": "apigeeregistry.projects.locations.artifacts.delete", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}", "response": { "$ref": "Empty" }, "description": "DeleteArtifact removes a specified artifact.", "path": "v1/{+name}", "parameterOrder": [ "name" ], "parameters": { "name": { "required": true, "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$", "description": "Required. The name of the artifact to delete. Format: {parent}/artifacts/*", "type": "string" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "replaceArtifact": { "description": "ReplaceArtifact can be used to replace a specified artifact.", "id": "apigeeregistry.projects.locations.artifacts.replaceArtifact", "request": { "$ref": "Artifact" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}", "parameters": { "name": { "location": "path", "pattern": "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$", "required": true, "type": "string", "description": "Resource name." } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "name" ], "path": "v1/{+name}", "httpMethod": "PUT", "response": { "$ref": "Artifact" } } } }, "runtime": { "methods": { "testIamPermissions": { "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.", "response": { "$ref": "TestIamPermissionsResponse" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtime:testIamPermissions", "httpMethod": "POST", "id": "apigeeregistry.projects.locations.runtime.testIamPermissions", "path": "v1/{+resource}:testIamPermissions", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "TestIamPermissionsRequest" }, "parameters": { "resource": { "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/runtime$", "location": "path", "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "required": true } }, "parameterOrder": [ "resource" ] }, "setIamPolicy": { "path": "v1/{+resource}:setIamPolicy", "response": { "$ref": "Policy" }, "httpMethod": "POST", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "SetIamPolicyRequest" }, "id": "apigeeregistry.projects.locations.runtime.setIamPolicy", "parameters": { "resource": { "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/runtime$", "location": "path", "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "type": "string" } }, "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.", "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtime:setIamPolicy", "parameterOrder": [ "resource" ] }, "getIamPolicy": { "parameterOrder": [ "resource" ], "parameters": { "resource": { "pattern": "^projects/[^/]+/locations/[^/]+/runtime$", "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.", "type": "string", "required": true, "location": "path" }, "options.requestedPolicyVersion": { "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).", "location": "query", "format": "int32", "type": "integer" } }, "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.", "path": "v1/{+resource}:getIamPolicy", "response": { "$ref": "Policy" }, "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/runtime:getIamPolicy", "httpMethod": "GET", "id": "apigeeregistry.projects.locations.runtime.getIamPolicy", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] } } } } } } } } }
-]===]))
+return {
+  ["auth"] = {
+    ["oauth2"] = {
+      ["scopes"] = {
+        ["https://www.googleapis.com/auth/cloud-platform"] = {
+          ["description"] = "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.",
+        },
+      },
+    },
+  },
+  ["basePath"] = "",
+  ["baseUrl"] = "https://apigeeregistry.googleapis.com/",
+  ["batchPath"] = "batch",
+  ["canonicalName"] = "Apigee Registry",
+  ["description"] = "",
+  ["discoveryVersion"] = "v1",
+  ["documentationLink"] = "https://cloud.google.com/apigee/docs/api-hub/what-is-api-hub",
+  ["fullyEncodeReservedExpansion"] = true,
+  ["icons"] = {
+    ["x16"] = "http://www.google.com/images/icons/product/search-16.gif",
+    ["x32"] = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  ["id"] = "apigeeregistry:v1",
+  ["kind"] = "discovery#restDescription",
+  ["mtlsRootUrl"] = "https://apigeeregistry.mtls.googleapis.com/",
+  ["name"] = "apigeeregistry",
+  ["ownerDomain"] = "google.com",
+  ["ownerName"] = "Google",
+  ["parameters"] = {
+    ["$.xgafv"] = {
+      ["description"] = "V1 error format.",
+      ["enum"] = {
+        "1",
+        "2",
+      },
+      ["enumDescriptions"] = {
+        "v1 error format",
+        "v2 error format",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["access_token"] = {
+      ["description"] = "OAuth access token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["alt"] = {
+      ["default"] = "json",
+      ["description"] = "Data format for response.",
+      ["enum"] = {
+        "json",
+        "media",
+        "proto",
+      },
+      ["enumDescriptions"] = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["callback"] = {
+      ["description"] = "JSONP",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["fields"] = {
+      ["description"] = "Selector specifying which fields to include in a partial response.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["key"] = {
+      ["description"] = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["oauth_token"] = {
+      ["description"] = "OAuth 2.0 token for the current user.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["prettyPrint"] = {
+      ["default"] = "true",
+      ["description"] = "Returns response with indentations and line breaks.",
+      ["location"] = "query",
+      ["type"] = "boolean",
+    },
+    ["quotaUser"] = {
+      ["description"] = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["uploadType"] = {
+      ["description"] = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["upload_protocol"] = {
+      ["description"] = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+  },
+  ["protocol"] = "rest",
+  ["resources"] = {
+    ["projects"] = {
+      ["resources"] = {
+        ["locations"] = {
+          ["methods"] = {
+            ["get"] = {
+              ["description"] = "Gets information about a location.",
+              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}",
+              ["httpMethod"] = "GET",
+              ["id"] = "apigeeregistry.projects.locations.get",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["name"] = {
+                  ["description"] = "Resource name for the location.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+/locations/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1/{+name}",
+              ["response"] = {
+                ["$ref"] = "Location",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+              },
+            },
+            ["list"] = {
+              ["description"] = "Lists information about the supported locations for this service.",
+              ["flatPath"] = "v1/projects/{projectsId}/locations",
+              ["httpMethod"] = "GET",
+              ["id"] = "apigeeregistry.projects.locations.list",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["filter"] = {
+                  ["description"] = "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+                ["name"] = {
+                  ["description"] = "The resource that owns the locations collection, if applicable.",
+                  ["location"] = "path",
+                  ["pattern"] = "^projects/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+                ["pageSize"] = {
+                  ["description"] = "The maximum number of results to return. If not set, the service selects a default.",
+                  ["format"] = "int32",
+                  ["location"] = "query",
+                  ["type"] = "integer",
+                },
+                ["pageToken"] = {
+                  ["description"] = "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
+                  ["location"] = "query",
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v1/{+name}/locations",
+              ["response"] = {
+                ["$ref"] = "ListLocationsResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+              },
+            },
+          },
+          ["resources"] = {
+            ["apis"] = {
+              ["methods"] = {
+                ["create"] = {
+                  ["description"] = "CreateApi creates a specified API.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.apis.create",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["apiId"] = {
+                      ["description"] = "Required. The ID to use for the api, which will become the final component of the api's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent, which owns this collection of APIs. Format: projects/*/locations/*",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+parent}/apis",
+                  ["request"] = {
+                    ["$ref"] = "Api",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Api",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["delete"] = {
+                  ["description"] = "DeleteApi removes a specified API and all of the resources that it owns.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}",
+                  ["httpMethod"] = "DELETE",
+                  ["id"] = "apigeeregistry.projects.locations.apis.delete",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["force"] = {
+                      ["description"] = "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)",
+                      ["location"] = "query",
+                      ["type"] = "boolean",
+                    },
+                    ["name"] = {
+                      ["description"] = "Required. The name of the API to delete. Format: projects/*/locations/*/apis/*",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Empty",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "GetApi returns a specified API.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.apis.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The name of the API to retrieve. Format: projects/*/locations/*/apis/*",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Api",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["getIamPolicy"] = {
+                  ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}:getIamPolicy",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.apis.getIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["options.requestedPolicyVersion"] = {
+                      ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:getIamPolicy",
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["list"] = {
+                  ["description"] = "ListApis returns matching APIs.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.apis.list",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["filter"] = {
+                      ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["pageSize"] = {
+                      ["description"] = "The maximum number of APIs to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["pageToken"] = {
+                      ["description"] = "A page token, received from a previous `ListApis` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApis` must match the call that provided the page token.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent, which owns this collection of APIs. Format: projects/*/locations/*",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+parent}/apis",
+                  ["response"] = {
+                    ["$ref"] = "ListApisResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["patch"] = {
+                  ["description"] = "UpdateApi can be used to modify a specified API.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}",
+                  ["httpMethod"] = "PATCH",
+                  ["id"] = "apigeeregistry.projects.locations.apis.patch",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["allowMissing"] = {
+                      ["description"] = "If set to true, and the api is not found, a new api will be created. In this situation, `update_mask` is ignored.",
+                      ["location"] = "query",
+                      ["type"] = "boolean",
+                    },
+                    ["name"] = {
+                      ["description"] = "Resource name.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["updateMask"] = {
+                      ["description"] = "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request.",
+                      ["format"] = "google-fieldmask",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "Api",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Api",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["setIamPolicy"] = {
+                  ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}:setIamPolicy",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.apis.setIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:setIamPolicy",
+                  ["request"] = {
+                    ["$ref"] = "SetIamPolicyRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["testIamPermissions"] = {
+                  ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}:testIamPermissions",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.apis.testIamPermissions",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:testIamPermissions",
+                  ["request"] = {
+                    ["$ref"] = "TestIamPermissionsRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "TestIamPermissionsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+              },
+              ["resources"] = {
+                ["artifacts"] = {
+                  ["methods"] = {
+                    ["create"] = {
+                      ["description"] = "CreateArtifact creates a specified artifact.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.create",
+                      ["parameterOrder"] = {
+                        "parent",
+                      },
+                      ["parameters"] = {
+                        ["artifactId"] = {
+                          ["description"] = "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["parent"] = {
+                          ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+parent}/artifacts",
+                      ["request"] = {
+                        ["$ref"] = "Artifact",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "Artifact",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["delete"] = {
+                      ["description"] = "DeleteArtifact removes a specified artifact.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}",
+                      ["httpMethod"] = "DELETE",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.delete",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the artifact to delete. Format: {parent}/artifacts/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["response"] = {
+                        ["$ref"] = "Empty",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["get"] = {
+                      ["description"] = "GetArtifact returns a specified artifact.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.get",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["response"] = {
+                        ["$ref"] = "Artifact",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["getContents"] = {
+                      ["description"] = "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:getContents",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.getContents",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}:getContents",
+                      ["response"] = {
+                        ["$ref"] = "HttpBody",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["getIamPolicy"] = {
+                      ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:getIamPolicy",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.getIamPolicy",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["options.requestedPolicyVersion"] = {
+                          ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                          ["format"] = "int32",
+                          ["location"] = "query",
+                          ["type"] = "integer",
+                        },
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:getIamPolicy",
+                      ["response"] = {
+                        ["$ref"] = "Policy",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["list"] = {
+                      ["description"] = "ListArtifacts returns matching artifacts.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.list",
+                      ["parameterOrder"] = {
+                        "parent",
+                      },
+                      ["parameters"] = {
+                        ["filter"] = {
+                          ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["pageSize"] = {
+                          ["description"] = "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                          ["format"] = "int32",
+                          ["location"] = "query",
+                          ["type"] = "integer",
+                        },
+                        ["pageToken"] = {
+                          ["description"] = "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["parent"] = {
+                          ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+parent}/artifacts",
+                      ["response"] = {
+                        ["$ref"] = "ListArtifactsResponse",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["replaceArtifact"] = {
+                      ["description"] = "ReplaceArtifact can be used to replace a specified artifact.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}",
+                      ["httpMethod"] = "PUT",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.replaceArtifact",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Resource name.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["request"] = {
+                        ["$ref"] = "Artifact",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "Artifact",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["setIamPolicy"] = {
+                      ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:setIamPolicy",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.setIamPolicy",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:setIamPolicy",
+                      ["request"] = {
+                        ["$ref"] = "SetIamPolicyRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "Policy",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["testIamPermissions"] = {
+                      ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/artifacts/{artifactsId}:testIamPermissions",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.artifacts.testIamPermissions",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/artifacts/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:testIamPermissions",
+                      ["request"] = {
+                        ["$ref"] = "TestIamPermissionsRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "TestIamPermissionsResponse",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                  },
+                },
+                ["deployments"] = {
+                  ["methods"] = {
+                    ["create"] = {
+                      ["description"] = "CreateApiDeployment creates a specified deployment.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.create",
+                      ["parameterOrder"] = {
+                        "parent",
+                      },
+                      ["parameters"] = {
+                        ["apiDeploymentId"] = {
+                          ["description"] = "Required. The ID to use for the deployment, which will become the final component of the deployment's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["parent"] = {
+                          ["description"] = "Required. The parent, which owns this collection of deployments. Format: projects/*/locations/*/apis/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+parent}/deployments",
+                      ["request"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["delete"] = {
+                      ["description"] = "DeleteApiDeployment removes a specified deployment, all revisions, and all child resources (e.g. artifacts).",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}",
+                      ["httpMethod"] = "DELETE",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.delete",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["force"] = {
+                          ["description"] = "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)",
+                          ["location"] = "query",
+                          ["type"] = "boolean",
+                        },
+                        ["name"] = {
+                          ["description"] = "Required. The name of the deployment to delete. Format: projects/*/locations/*/apis/*/deployments/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["response"] = {
+                        ["$ref"] = "Empty",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["deleteRevision"] = {
+                      ["description"] = "DeleteApiDeploymentRevision deletes a revision of a deployment.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:deleteRevision",
+                      ["httpMethod"] = "DELETE",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.deleteRevision",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the deployment revision to be deleted, with a revision ID explicitly included. Example: projects/sample/locations/global/apis/petstore/deployments/prod@c7cfa2a8",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}:deleteRevision",
+                      ["response"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["get"] = {
+                      ["description"] = "GetApiDeployment returns a specified deployment.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.get",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the deployment to retrieve. Format: projects/*/locations/*/apis/*/deployments/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["response"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["getIamPolicy"] = {
+                      ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:getIamPolicy",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.getIamPolicy",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["options.requestedPolicyVersion"] = {
+                          ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                          ["format"] = "int32",
+                          ["location"] = "query",
+                          ["type"] = "integer",
+                        },
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:getIamPolicy",
+                      ["response"] = {
+                        ["$ref"] = "Policy",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["list"] = {
+                      ["description"] = "ListApiDeployments returns matching deployments.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.list",
+                      ["parameterOrder"] = {
+                        "parent",
+                      },
+                      ["parameters"] = {
+                        ["filter"] = {
+                          ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["pageSize"] = {
+                          ["description"] = "The maximum number of deployments to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                          ["format"] = "int32",
+                          ["location"] = "query",
+                          ["type"] = "integer",
+                        },
+                        ["pageToken"] = {
+                          ["description"] = "A page token, received from a previous `ListApiDeployments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiDeployments` must match the call that provided the page token.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["parent"] = {
+                          ["description"] = "Required. The parent, which owns this collection of deployments. Format: projects/*/locations/*/apis/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+parent}/deployments",
+                      ["response"] = {
+                        ["$ref"] = "ListApiDeploymentsResponse",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["listRevisions"] = {
+                      ["description"] = "ListApiDeploymentRevisions lists all revisions of a deployment. Revisions are returned in descending order of revision creation time.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:listRevisions",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.listRevisions",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the deployment to list revisions for.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                        ["pageSize"] = {
+                          ["description"] = "The maximum number of revisions to return per page.",
+                          ["format"] = "int32",
+                          ["location"] = "query",
+                          ["type"] = "integer",
+                        },
+                        ["pageToken"] = {
+                          ["description"] = "The page token, received from a previous ListApiDeploymentRevisions call. Provide this to retrieve the subsequent page.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}:listRevisions",
+                      ["response"] = {
+                        ["$ref"] = "ListApiDeploymentRevisionsResponse",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["patch"] = {
+                      ["description"] = "UpdateApiDeployment can be used to modify a specified deployment.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}",
+                      ["httpMethod"] = "PATCH",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.patch",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["allowMissing"] = {
+                          ["description"] = "If set to true, and the deployment is not found, a new deployment will be created. In this situation, `update_mask` is ignored.",
+                          ["location"] = "query",
+                          ["type"] = "boolean",
+                        },
+                        ["name"] = {
+                          ["description"] = "Resource name.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                        ["updateMask"] = {
+                          ["description"] = "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request.",
+                          ["format"] = "google-fieldmask",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["request"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["rollback"] = {
+                      ["description"] = "RollbackApiDeployment sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:rollback",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.rollback",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The deployment being rolled back.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}:rollback",
+                      ["request"] = {
+                        ["$ref"] = "RollbackApiDeploymentRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["setIamPolicy"] = {
+                      ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:setIamPolicy",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.setIamPolicy",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:setIamPolicy",
+                      ["request"] = {
+                        ["$ref"] = "SetIamPolicyRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "Policy",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["tagRevision"] = {
+                      ["description"] = "TagApiDeploymentRevision adds a tag to a specified revision of a deployment.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:tagRevision",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.tagRevision",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the deployment to be tagged, including the revision ID.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}:tagRevision",
+                      ["request"] = {
+                        ["$ref"] = "TagApiDeploymentRevisionRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "ApiDeployment",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["testIamPermissions"] = {
+                      ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}:testIamPermissions",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.deployments.testIamPermissions",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:testIamPermissions",
+                      ["request"] = {
+                        ["$ref"] = "TestIamPermissionsRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "TestIamPermissionsResponse",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                  },
+                  ["resources"] = {
+                    ["artifacts"] = {
+                      ["methods"] = {
+                        ["create"] = {
+                          ["description"] = "CreateArtifact creates a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.deployments.artifacts.create",
+                          ["parameterOrder"] = {
+                            "parent",
+                          },
+                          ["parameters"] = {
+                            ["artifactId"] = {
+                              ["description"] = "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["parent"] = {
+                              ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+parent}/artifacts",
+                          ["request"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["delete"] = {
+                          ["description"] = "DeleteArtifact removes a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}",
+                          ["httpMethod"] = "DELETE",
+                          ["id"] = "apigeeregistry.projects.locations.apis.deployments.artifacts.delete",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the artifact to delete. Format: {parent}/artifacts/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["response"] = {
+                            ["$ref"] = "Empty",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["get"] = {
+                          ["description"] = "GetArtifact returns a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.deployments.artifacts.get",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["response"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["getContents"] = {
+                          ["description"] = "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}:getContents",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.deployments.artifacts.getContents",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}:getContents",
+                          ["response"] = {
+                            ["$ref"] = "HttpBody",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["list"] = {
+                          ["description"] = "ListArtifacts returns matching artifacts.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.deployments.artifacts.list",
+                          ["parameterOrder"] = {
+                            "parent",
+                          },
+                          ["parameters"] = {
+                            ["filter"] = {
+                              ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["pageSize"] = {
+                              ["description"] = "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                              ["format"] = "int32",
+                              ["location"] = "query",
+                              ["type"] = "integer",
+                            },
+                            ["pageToken"] = {
+                              ["description"] = "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["parent"] = {
+                              ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+parent}/artifacts",
+                          ["response"] = {
+                            ["$ref"] = "ListArtifactsResponse",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["replaceArtifact"] = {
+                          ["description"] = "ReplaceArtifact can be used to replace a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/deployments/{deploymentsId}/artifacts/{artifactsId}",
+                          ["httpMethod"] = "PUT",
+                          ["id"] = "apigeeregistry.projects.locations.apis.deployments.artifacts.replaceArtifact",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Resource name.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/deployments/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["request"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                ["versions"] = {
+                  ["methods"] = {
+                    ["create"] = {
+                      ["description"] = "CreateApiVersion creates a specified version.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.create",
+                      ["parameterOrder"] = {
+                        "parent",
+                      },
+                      ["parameters"] = {
+                        ["apiVersionId"] = {
+                          ["description"] = "Required. The ID to use for the version, which will become the final component of the version's resource name. This value should be 1-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["parent"] = {
+                          ["description"] = "Required. The parent, which owns this collection of versions. Format: projects/*/locations/*/apis/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+parent}/versions",
+                      ["request"] = {
+                        ["$ref"] = "ApiVersion",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "ApiVersion",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["delete"] = {
+                      ["description"] = "DeleteApiVersion removes a specified version and all of the resources that it owns.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}",
+                      ["httpMethod"] = "DELETE",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.delete",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["force"] = {
+                          ["description"] = "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)",
+                          ["location"] = "query",
+                          ["type"] = "boolean",
+                        },
+                        ["name"] = {
+                          ["description"] = "Required. The name of the version to delete. Format: projects/*/locations/*/apis/*/versions/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["response"] = {
+                        ["$ref"] = "Empty",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["get"] = {
+                      ["description"] = "GetApiVersion returns a specified version.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.get",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["name"] = {
+                          ["description"] = "Required. The name of the version to retrieve. Format: projects/*/locations/*/apis/*/versions/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["response"] = {
+                        ["$ref"] = "ApiVersion",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["getIamPolicy"] = {
+                      ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}:getIamPolicy",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.getIamPolicy",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["options.requestedPolicyVersion"] = {
+                          ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                          ["format"] = "int32",
+                          ["location"] = "query",
+                          ["type"] = "integer",
+                        },
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:getIamPolicy",
+                      ["response"] = {
+                        ["$ref"] = "Policy",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["list"] = {
+                      ["description"] = "ListApiVersions returns matching versions.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions",
+                      ["httpMethod"] = "GET",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.list",
+                      ["parameterOrder"] = {
+                        "parent",
+                      },
+                      ["parameters"] = {
+                        ["filter"] = {
+                          ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["pageSize"] = {
+                          ["description"] = "The maximum number of versions to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                          ["format"] = "int32",
+                          ["location"] = "query",
+                          ["type"] = "integer",
+                        },
+                        ["pageToken"] = {
+                          ["description"] = "A page token, received from a previous `ListApiVersions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiVersions` must match the call that provided the page token.",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                        ["parent"] = {
+                          ["description"] = "Required. The parent, which owns this collection of versions. Format: projects/*/locations/*/apis/*",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+parent}/versions",
+                      ["response"] = {
+                        ["$ref"] = "ListApiVersionsResponse",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["patch"] = {
+                      ["description"] = "UpdateApiVersion can be used to modify a specified version.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}",
+                      ["httpMethod"] = "PATCH",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.patch",
+                      ["parameterOrder"] = {
+                        "name",
+                      },
+                      ["parameters"] = {
+                        ["allowMissing"] = {
+                          ["description"] = "If set to true, and the version is not found, a new version will be created. In this situation, `update_mask` is ignored.",
+                          ["location"] = "query",
+                          ["type"] = "boolean",
+                        },
+                        ["name"] = {
+                          ["description"] = "Resource name.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                        ["updateMask"] = {
+                          ["description"] = "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request.",
+                          ["format"] = "google-fieldmask",
+                          ["location"] = "query",
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+name}",
+                      ["request"] = {
+                        ["$ref"] = "ApiVersion",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "ApiVersion",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["setIamPolicy"] = {
+                      ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}:setIamPolicy",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.setIamPolicy",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:setIamPolicy",
+                      ["request"] = {
+                        ["$ref"] = "SetIamPolicyRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "Policy",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                    ["testIamPermissions"] = {
+                      ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                      ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}:testIamPermissions",
+                      ["httpMethod"] = "POST",
+                      ["id"] = "apigeeregistry.projects.locations.apis.versions.testIamPermissions",
+                      ["parameterOrder"] = {
+                        "resource",
+                      },
+                      ["parameters"] = {
+                        ["resource"] = {
+                          ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          ["location"] = "path",
+                          ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                          ["required"] = true,
+                          ["type"] = "string",
+                        },
+                      },
+                      ["path"] = "v1/{+resource}:testIamPermissions",
+                      ["request"] = {
+                        ["$ref"] = "TestIamPermissionsRequest",
+                      },
+                      ["response"] = {
+                        ["$ref"] = "TestIamPermissionsResponse",
+                      },
+                      ["scopes"] = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                  },
+                  ["resources"] = {
+                    ["artifacts"] = {
+                      ["methods"] = {
+                        ["create"] = {
+                          ["description"] = "CreateArtifact creates a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.create",
+                          ["parameterOrder"] = {
+                            "parent",
+                          },
+                          ["parameters"] = {
+                            ["artifactId"] = {
+                              ["description"] = "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["parent"] = {
+                              ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+parent}/artifacts",
+                          ["request"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["delete"] = {
+                          ["description"] = "DeleteArtifact removes a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}",
+                          ["httpMethod"] = "DELETE",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.delete",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the artifact to delete. Format: {parent}/artifacts/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["response"] = {
+                            ["$ref"] = "Empty",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["get"] = {
+                          ["description"] = "GetArtifact returns a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.get",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["response"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["getContents"] = {
+                          ["description"] = "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:getContents",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.getContents",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}:getContents",
+                          ["response"] = {
+                            ["$ref"] = "HttpBody",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["getIamPolicy"] = {
+                          ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:getIamPolicy",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.getIamPolicy",
+                          ["parameterOrder"] = {
+                            "resource",
+                          },
+                          ["parameters"] = {
+                            ["options.requestedPolicyVersion"] = {
+                              ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                              ["format"] = "int32",
+                              ["location"] = "query",
+                              ["type"] = "integer",
+                            },
+                            ["resource"] = {
+                              ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+resource}:getIamPolicy",
+                          ["response"] = {
+                            ["$ref"] = "Policy",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["list"] = {
+                          ["description"] = "ListArtifacts returns matching artifacts.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.list",
+                          ["parameterOrder"] = {
+                            "parent",
+                          },
+                          ["parameters"] = {
+                            ["filter"] = {
+                              ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["pageSize"] = {
+                              ["description"] = "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                              ["format"] = "int32",
+                              ["location"] = "query",
+                              ["type"] = "integer",
+                            },
+                            ["pageToken"] = {
+                              ["description"] = "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["parent"] = {
+                              ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+parent}/artifacts",
+                          ["response"] = {
+                            ["$ref"] = "ListArtifactsResponse",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["replaceArtifact"] = {
+                          ["description"] = "ReplaceArtifact can be used to replace a specified artifact.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}",
+                          ["httpMethod"] = "PUT",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.replaceArtifact",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Resource name.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["request"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "Artifact",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["setIamPolicy"] = {
+                          ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:setIamPolicy",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.setIamPolicy",
+                          ["parameterOrder"] = {
+                            "resource",
+                          },
+                          ["parameters"] = {
+                            ["resource"] = {
+                              ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+resource}:setIamPolicy",
+                          ["request"] = {
+                            ["$ref"] = "SetIamPolicyRequest",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "Policy",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["testIamPermissions"] = {
+                          ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/artifacts/{artifactsId}:testIamPermissions",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.artifacts.testIamPermissions",
+                          ["parameterOrder"] = {
+                            "resource",
+                          },
+                          ["parameters"] = {
+                            ["resource"] = {
+                              ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/artifacts/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+resource}:testIamPermissions",
+                          ["request"] = {
+                            ["$ref"] = "TestIamPermissionsRequest",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "TestIamPermissionsResponse",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                      },
+                    },
+                    ["specs"] = {
+                      ["methods"] = {
+                        ["create"] = {
+                          ["description"] = "CreateApiSpec creates a specified spec.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.create",
+                          ["parameterOrder"] = {
+                            "parent",
+                          },
+                          ["parameters"] = {
+                            ["apiSpecId"] = {
+                              ["description"] = "Required. The ID to use for the spec, which will become the final component of the spec's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["parent"] = {
+                              ["description"] = "Required. The parent, which owns this collection of specs. Format: projects/*/locations/*/apis/*/versions/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+parent}/specs",
+                          ["request"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["delete"] = {
+                          ["description"] = "DeleteApiSpec removes a specified spec, all revisions, and all child resources (e.g. artifacts).",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}",
+                          ["httpMethod"] = "DELETE",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.delete",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["force"] = {
+                              ["description"] = "If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)",
+                              ["location"] = "query",
+                              ["type"] = "boolean",
+                            },
+                            ["name"] = {
+                              ["description"] = "Required. The name of the spec to delete. Format: projects/*/locations/*/apis/*/versions/*/specs/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["response"] = {
+                            ["$ref"] = "Empty",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["deleteRevision"] = {
+                          ["description"] = "DeleteApiSpecRevision deletes a revision of a spec.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:deleteRevision",
+                          ["httpMethod"] = "DELETE",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.deleteRevision",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the spec revision to be deleted, with a revision ID explicitly included. Example: projects/sample/locations/global/apis/petstore/versions/1.0.0/specs/openapi.yaml@c7cfa2a8",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}:deleteRevision",
+                          ["response"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["get"] = {
+                          ["description"] = "GetApiSpec returns a specified spec.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.get",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the spec to retrieve. Format: projects/*/locations/*/apis/*/versions/*/specs/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["response"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["getContents"] = {
+                          ["description"] = "GetApiSpecContents returns the contents of a specified spec. If specs are stored with GZip compression, the default behavior is to return the spec uncompressed (the mime_type response field indicates the exact format returned).",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:getContents",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.getContents",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the spec whose contents should be retrieved. Format: projects/*/locations/*/apis/*/versions/*/specs/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}:getContents",
+                          ["response"] = {
+                            ["$ref"] = "HttpBody",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["getIamPolicy"] = {
+                          ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:getIamPolicy",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.getIamPolicy",
+                          ["parameterOrder"] = {
+                            "resource",
+                          },
+                          ["parameters"] = {
+                            ["options.requestedPolicyVersion"] = {
+                              ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                              ["format"] = "int32",
+                              ["location"] = "query",
+                              ["type"] = "integer",
+                            },
+                            ["resource"] = {
+                              ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+resource}:getIamPolicy",
+                          ["response"] = {
+                            ["$ref"] = "Policy",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["list"] = {
+                          ["description"] = "ListApiSpecs returns matching specs.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.list",
+                          ["parameterOrder"] = {
+                            "parent",
+                          },
+                          ["parameters"] = {
+                            ["filter"] = {
+                              ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["pageSize"] = {
+                              ["description"] = "The maximum number of specs to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                              ["format"] = "int32",
+                              ["location"] = "query",
+                              ["type"] = "integer",
+                            },
+                            ["pageToken"] = {
+                              ["description"] = "A page token, received from a previous `ListApiSpecs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiSpecs` must match the call that provided the page token.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                            ["parent"] = {
+                              ["description"] = "Required. The parent, which owns this collection of specs. Format: projects/*/locations/*/apis/*/versions/*",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+parent}/specs",
+                          ["response"] = {
+                            ["$ref"] = "ListApiSpecsResponse",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["listRevisions"] = {
+                          ["description"] = "ListApiSpecRevisions lists all revisions of a spec. Revisions are returned in descending order of revision creation time.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:listRevisions",
+                          ["httpMethod"] = "GET",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.listRevisions",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the spec to list revisions for.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                            ["pageSize"] = {
+                              ["description"] = "The maximum number of revisions to return per page.",
+                              ["format"] = "int32",
+                              ["location"] = "query",
+                              ["type"] = "integer",
+                            },
+                            ["pageToken"] = {
+                              ["description"] = "The page token, received from a previous ListApiSpecRevisions call. Provide this to retrieve the subsequent page.",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}:listRevisions",
+                          ["response"] = {
+                            ["$ref"] = "ListApiSpecRevisionsResponse",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["patch"] = {
+                          ["description"] = "UpdateApiSpec can be used to modify a specified spec.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}",
+                          ["httpMethod"] = "PATCH",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.patch",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["allowMissing"] = {
+                              ["description"] = "If set to true, and the spec is not found, a new spec will be created. In this situation, `update_mask` is ignored.",
+                              ["location"] = "query",
+                              ["type"] = "boolean",
+                            },
+                            ["name"] = {
+                              ["description"] = "Resource name.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                            ["updateMask"] = {
+                              ["description"] = "The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If a \"*\" is specified, all fields are updated, including fields that are unspecified/default in the request.",
+                              ["format"] = "google-fieldmask",
+                              ["location"] = "query",
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}",
+                          ["request"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["rollback"] = {
+                          ["description"] = "RollbackApiSpec sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:rollback",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.rollback",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The spec being rolled back.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}:rollback",
+                          ["request"] = {
+                            ["$ref"] = "RollbackApiSpecRequest",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["setIamPolicy"] = {
+                          ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:setIamPolicy",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.setIamPolicy",
+                          ["parameterOrder"] = {
+                            "resource",
+                          },
+                          ["parameters"] = {
+                            ["resource"] = {
+                              ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+resource}:setIamPolicy",
+                          ["request"] = {
+                            ["$ref"] = "SetIamPolicyRequest",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "Policy",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["tagRevision"] = {
+                          ["description"] = "TagApiSpecRevision adds a tag to a specified revision of a spec.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:tagRevision",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.tagRevision",
+                          ["parameterOrder"] = {
+                            "name",
+                          },
+                          ["parameters"] = {
+                            ["name"] = {
+                              ["description"] = "Required. The name of the spec to be tagged, including the revision ID.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+name}:tagRevision",
+                          ["request"] = {
+                            ["$ref"] = "TagApiSpecRevisionRequest",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "ApiSpec",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                        ["testIamPermissions"] = {
+                          ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                          ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}:testIamPermissions",
+                          ["httpMethod"] = "POST",
+                          ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.testIamPermissions",
+                          ["parameterOrder"] = {
+                            "resource",
+                          },
+                          ["parameters"] = {
+                            ["resource"] = {
+                              ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                              ["location"] = "path",
+                              ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                              ["required"] = true,
+                              ["type"] = "string",
+                            },
+                          },
+                          ["path"] = "v1/{+resource}:testIamPermissions",
+                          ["request"] = {
+                            ["$ref"] = "TestIamPermissionsRequest",
+                          },
+                          ["response"] = {
+                            ["$ref"] = "TestIamPermissionsResponse",
+                          },
+                          ["scopes"] = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                          },
+                        },
+                      },
+                      ["resources"] = {
+                        ["artifacts"] = {
+                          ["methods"] = {
+                            ["create"] = {
+                              ["description"] = "CreateArtifact creates a specified artifact.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts",
+                              ["httpMethod"] = "POST",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.create",
+                              ["parameterOrder"] = {
+                                "parent",
+                              },
+                              ["parameters"] = {
+                                ["artifactId"] = {
+                                  ["description"] = "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                                  ["location"] = "query",
+                                  ["type"] = "string",
+                                },
+                                ["parent"] = {
+                                  ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+parent}/artifacts",
+                              ["request"] = {
+                                ["$ref"] = "Artifact",
+                              },
+                              ["response"] = {
+                                ["$ref"] = "Artifact",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["delete"] = {
+                              ["description"] = "DeleteArtifact removes a specified artifact.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}",
+                              ["httpMethod"] = "DELETE",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.delete",
+                              ["parameterOrder"] = {
+                                "name",
+                              },
+                              ["parameters"] = {
+                                ["name"] = {
+                                  ["description"] = "Required. The name of the artifact to delete. Format: {parent}/artifacts/*",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+name}",
+                              ["response"] = {
+                                ["$ref"] = "Empty",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["get"] = {
+                              ["description"] = "GetArtifact returns a specified artifact.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}",
+                              ["httpMethod"] = "GET",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.get",
+                              ["parameterOrder"] = {
+                                "name",
+                              },
+                              ["parameters"] = {
+                                ["name"] = {
+                                  ["description"] = "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+name}",
+                              ["response"] = {
+                                ["$ref"] = "Artifact",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["getContents"] = {
+                              ["description"] = "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:getContents",
+                              ["httpMethod"] = "GET",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.getContents",
+                              ["parameterOrder"] = {
+                                "name",
+                              },
+                              ["parameters"] = {
+                                ["name"] = {
+                                  ["description"] = "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+name}:getContents",
+                              ["response"] = {
+                                ["$ref"] = "HttpBody",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["getIamPolicy"] = {
+                              ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:getIamPolicy",
+                              ["httpMethod"] = "GET",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.getIamPolicy",
+                              ["parameterOrder"] = {
+                                "resource",
+                              },
+                              ["parameters"] = {
+                                ["options.requestedPolicyVersion"] = {
+                                  ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                                  ["format"] = "int32",
+                                  ["location"] = "query",
+                                  ["type"] = "integer",
+                                },
+                                ["resource"] = {
+                                  ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+resource}:getIamPolicy",
+                              ["response"] = {
+                                ["$ref"] = "Policy",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["list"] = {
+                              ["description"] = "ListArtifacts returns matching artifacts.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts",
+                              ["httpMethod"] = "GET",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.list",
+                              ["parameterOrder"] = {
+                                "parent",
+                              },
+                              ["parameters"] = {
+                                ["filter"] = {
+                                  ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.",
+                                  ["location"] = "query",
+                                  ["type"] = "string",
+                                },
+                                ["pageSize"] = {
+                                  ["description"] = "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                                  ["format"] = "int32",
+                                  ["location"] = "query",
+                                  ["type"] = "integer",
+                                },
+                                ["pageToken"] = {
+                                  ["description"] = "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token.",
+                                  ["location"] = "query",
+                                  ["type"] = "string",
+                                },
+                                ["parent"] = {
+                                  ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+parent}/artifacts",
+                              ["response"] = {
+                                ["$ref"] = "ListArtifactsResponse",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["replaceArtifact"] = {
+                              ["description"] = "ReplaceArtifact can be used to replace a specified artifact.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}",
+                              ["httpMethod"] = "PUT",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.replaceArtifact",
+                              ["parameterOrder"] = {
+                                "name",
+                              },
+                              ["parameters"] = {
+                                ["name"] = {
+                                  ["description"] = "Resource name.",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+name}",
+                              ["request"] = {
+                                ["$ref"] = "Artifact",
+                              },
+                              ["response"] = {
+                                ["$ref"] = "Artifact",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["setIamPolicy"] = {
+                              ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:setIamPolicy",
+                              ["httpMethod"] = "POST",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.setIamPolicy",
+                              ["parameterOrder"] = {
+                                "resource",
+                              },
+                              ["parameters"] = {
+                                ["resource"] = {
+                                  ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+resource}:setIamPolicy",
+                              ["request"] = {
+                                ["$ref"] = "SetIamPolicyRequest",
+                              },
+                              ["response"] = {
+                                ["$ref"] = "Policy",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                            ["testIamPermissions"] = {
+                              ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                              ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/apis/{apisId}/versions/{versionsId}/specs/{specsId}/artifacts/{artifactsId}:testIamPermissions",
+                              ["httpMethod"] = "POST",
+                              ["id"] = "apigeeregistry.projects.locations.apis.versions.specs.artifacts.testIamPermissions",
+                              ["parameterOrder"] = {
+                                "resource",
+                              },
+                              ["parameters"] = {
+                                ["resource"] = {
+                                  ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                                  ["location"] = "path",
+                                  ["pattern"] = "^projects/[^/]+/locations/[^/]+/apis/[^/]+/versions/[^/]+/specs/[^/]+/artifacts/[^/]+$",
+                                  ["required"] = true,
+                                  ["type"] = "string",
+                                },
+                              },
+                              ["path"] = "v1/{+resource}:testIamPermissions",
+                              ["request"] = {
+                                ["$ref"] = "TestIamPermissionsRequest",
+                              },
+                              ["response"] = {
+                                ["$ref"] = "TestIamPermissionsResponse",
+                              },
+                              ["scopes"] = {
+                                "https://www.googleapis.com/auth/cloud-platform",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            ["artifacts"] = {
+              ["methods"] = {
+                ["create"] = {
+                  ["description"] = "CreateArtifact creates a specified artifact.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.create",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["artifactId"] = {
+                      ["description"] = "Required. The ID to use for the artifact, which will become the final component of the artifact's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+parent}/artifacts",
+                  ["request"] = {
+                    ["$ref"] = "Artifact",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Artifact",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["delete"] = {
+                  ["description"] = "DeleteArtifact removes a specified artifact.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}",
+                  ["httpMethod"] = "DELETE",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.delete",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The name of the artifact to delete. Format: {parent}/artifacts/*",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Empty",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "GetArtifact returns a specified artifact.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The name of the artifact to retrieve. Format: {parent}/artifacts/*",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Artifact",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["getContents"] = {
+                  ["description"] = "GetArtifactContents returns the contents of a specified artifact. If artifacts are stored with GZip compression, the default behavior is to return the artifact uncompressed (the mime_type response field indicates the exact format returned).",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:getContents",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.getContents",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The name of the artifact whose contents should be retrieved. Format: {parent}/artifacts/*",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}:getContents",
+                  ["response"] = {
+                    ["$ref"] = "HttpBody",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["getIamPolicy"] = {
+                  ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:getIamPolicy",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.getIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["options.requestedPolicyVersion"] = {
+                      ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:getIamPolicy",
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["list"] = {
+                  ["description"] = "ListArtifacts returns matching artifacts.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.list",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["filter"] = {
+                      ["description"] = "An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields except contents.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["pageSize"] = {
+                      ["description"] = "The maximum number of artifacts to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["pageToken"] = {
+                      ["description"] = "A page token, received from a previous `ListArtifacts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListArtifacts` must match the call that provided the page token.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. The parent, which owns this collection of artifacts. Format: {parent}",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+parent}/artifacts",
+                  ["response"] = {
+                    ["$ref"] = "ListArtifactsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["replaceArtifact"] = {
+                  ["description"] = "ReplaceArtifact can be used to replace a specified artifact.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}",
+                  ["httpMethod"] = "PUT",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.replaceArtifact",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Resource name.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["request"] = {
+                    ["$ref"] = "Artifact",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Artifact",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["setIamPolicy"] = {
+                  ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:setIamPolicy",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.setIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:setIamPolicy",
+                  ["request"] = {
+                    ["$ref"] = "SetIamPolicyRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["testIamPermissions"] = {
+                  ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/artifacts/{artifactsId}:testIamPermissions",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.artifacts.testIamPermissions",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/artifacts/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:testIamPermissions",
+                  ["request"] = {
+                    ["$ref"] = "TestIamPermissionsRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "TestIamPermissionsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+              },
+            },
+            ["instances"] = {
+              ["methods"] = {
+                ["create"] = {
+                  ["description"] = "Provisions instance resources for the Registry.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/instances",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.instances.create",
+                  ["parameterOrder"] = {
+                    "parent",
+                  },
+                  ["parameters"] = {
+                    ["instanceId"] = {
+                      ["description"] = "Required. Identifier to assign to the Instance. Must be unique within scope of the parent resource.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["parent"] = {
+                      ["description"] = "Required. Parent resource of the Instance, of the form: `projects/*/locations/*`",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+parent}/instances",
+                  ["request"] = {
+                    ["$ref"] = "Instance",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Operation",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["delete"] = {
+                  ["description"] = "Deletes the Registry instance.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
+                  ["httpMethod"] = "DELETE",
+                  ["id"] = "apigeeregistry.projects.locations.instances.delete",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The name of the Instance to delete. Format: `projects/*/locations/*/instances/*`.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Operation",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets details of a single Instance.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.instances.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "Required. The name of the Instance to retrieve. Format: `projects/*/locations/*/instances/*`.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Instance",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["getIamPolicy"] = {
+                  ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:getIamPolicy",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.instances.getIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["options.requestedPolicyVersion"] = {
+                      ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:getIamPolicy",
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["setIamPolicy"] = {
+                  ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:setIamPolicy",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.instances.setIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:setIamPolicy",
+                  ["request"] = {
+                    ["$ref"] = "SetIamPolicyRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["testIamPermissions"] = {
+                  ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:testIamPermissions",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.instances.testIamPermissions",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:testIamPermissions",
+                  ["request"] = {
+                    ["$ref"] = "TestIamPermissionsRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "TestIamPermissionsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+              },
+            },
+            ["operations"] = {
+              ["methods"] = {
+                ["cancel"] = {
+                  ["description"] = "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.operations.cancel",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "The name of the operation resource to be cancelled.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}:cancel",
+                  ["request"] = {
+                    ["$ref"] = "CancelOperationRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Empty",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["delete"] = {
+                  ["description"] = "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+                  ["httpMethod"] = "DELETE",
+                  ["id"] = "apigeeregistry.projects.locations.operations.delete",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "The name of the operation resource to be deleted.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Empty",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["get"] = {
+                  ["description"] = "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.operations.get",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["name"] = {
+                      ["description"] = "The name of the operation resource.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}",
+                  ["response"] = {
+                    ["$ref"] = "Operation",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["list"] = {
+                  ["description"] = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/operations",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.operations.list",
+                  ["parameterOrder"] = {
+                    "name",
+                  },
+                  ["parameters"] = {
+                    ["filter"] = {
+                      ["description"] = "The standard list filter.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                    ["name"] = {
+                      ["description"] = "The name of the operation's parent resource.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                    ["pageSize"] = {
+                      ["description"] = "The standard list page size.",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["pageToken"] = {
+                      ["description"] = "The standard list page token.",
+                      ["location"] = "query",
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+name}/operations",
+                  ["response"] = {
+                    ["$ref"] = "ListOperationsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+              },
+            },
+            ["runtime"] = {
+              ["methods"] = {
+                ["getIamPolicy"] = {
+                  ["description"] = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/runtime:getIamPolicy",
+                  ["httpMethod"] = "GET",
+                  ["id"] = "apigeeregistry.projects.locations.runtime.getIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["options.requestedPolicyVersion"] = {
+                      ["description"] = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                      ["format"] = "int32",
+                      ["location"] = "query",
+                      ["type"] = "integer",
+                    },
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/runtime$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:getIamPolicy",
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["setIamPolicy"] = {
+                  ["description"] = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/runtime:setIamPolicy",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.runtime.setIamPolicy",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/runtime$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:setIamPolicy",
+                  ["request"] = {
+                    ["$ref"] = "SetIamPolicyRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "Policy",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                ["testIamPermissions"] = {
+                  ["description"] = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                  ["flatPath"] = "v1/projects/{projectsId}/locations/{locationsId}/runtime:testIamPermissions",
+                  ["httpMethod"] = "POST",
+                  ["id"] = "apigeeregistry.projects.locations.runtime.testIamPermissions",
+                  ["parameterOrder"] = {
+                    "resource",
+                  },
+                  ["parameters"] = {
+                    ["resource"] = {
+                      ["description"] = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      ["location"] = "path",
+                      ["pattern"] = "^projects/[^/]+/locations/[^/]+/runtime$",
+                      ["required"] = true,
+                      ["type"] = "string",
+                    },
+                  },
+                  ["path"] = "v1/{+resource}:testIamPermissions",
+                  ["request"] = {
+                    ["$ref"] = "TestIamPermissionsRequest",
+                  },
+                  ["response"] = {
+                    ["$ref"] = "TestIamPermissionsResponse",
+                  },
+                  ["scopes"] = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ["revision"] = "20220723",
+  ["rootUrl"] = "https://apigeeregistry.googleapis.com/",
+  ["schemas"] = {
+    ["Api"] = {
+      ["description"] = "An Api is a top-level description of an API. Apis are produced by producers and are commitments to provide services.",
+      ["id"] = "Api",
+      ["properties"] = {
+        ["annotations"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.",
+          ["type"] = "object",
+        },
+        ["availability"] = {
+          ["description"] = "A user-definable description of the availability of this service. Format: free-form, but we expect single words that describe availability, e.g. \"NONE\", \"TESTING\", \"PREVIEW\", \"GENERAL\", \"DEPRECATED\", \"SHUTDOWN\".",
+          ["type"] = "string",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. Creation timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["description"] = {
+          ["description"] = "A detailed description.",
+          ["type"] = "string",
+        },
+        ["displayName"] = {
+          ["description"] = "Human-meaningful name.",
+          ["type"] = "string",
+        },
+        ["labels"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed.",
+          ["type"] = "object",
+        },
+        ["name"] = {
+          ["description"] = "Resource name.",
+          ["type"] = "string",
+        },
+        ["recommendedDeployment"] = {
+          ["description"] = "The recommended deployment of the API. Format: apis/{api}/deployments/{deployment}",
+          ["type"] = "string",
+        },
+        ["recommendedVersion"] = {
+          ["description"] = "The recommended version of the API. Format: apis/{api}/versions/{version}",
+          ["type"] = "string",
+        },
+        ["updateTime"] = {
+          ["description"] = "Output only. Last update timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ApiDeployment"] = {
+      ["description"] = "An ApiDeployment describes a service running at particular address that provides a particular version of an API. ApiDeployments have revisions which correspond to different configurations of a single deployment in time. Revision identifiers should be updated whenever the served API spec or endpoint address changes.",
+      ["id"] = "ApiDeployment",
+      ["properties"] = {
+        ["accessGuidance"] = {
+          ["description"] = "Text briefly describing how to access the endpoint. Changes to this value will not affect the revision.",
+          ["type"] = "string",
+        },
+        ["annotations"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.",
+          ["type"] = "object",
+        },
+        ["apiSpecRevision"] = {
+          ["description"] = "The full resource name (including revision id) of the spec of the API being served by the deployment. Changes to this value will update the revision. Format: apis/{api}/deployments/{deployment}",
+          ["type"] = "string",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. Creation timestamp; when the deployment resource was created.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["description"] = {
+          ["description"] = "A detailed description.",
+          ["type"] = "string",
+        },
+        ["displayName"] = {
+          ["description"] = "Human-meaningful name.",
+          ["type"] = "string",
+        },
+        ["endpointUri"] = {
+          ["description"] = "The address where the deployment is serving. Changes to this value will update the revision.",
+          ["type"] = "string",
+        },
+        ["externalChannelUri"] = {
+          ["description"] = "The address of the external channel of the API (e.g. the Developer Portal). Changes to this value will not affect the revision.",
+          ["type"] = "string",
+        },
+        ["intendedAudience"] = {
+          ["description"] = "Text briefly identifying the intended audience of the API. Changes to this value will not affect the revision.",
+          ["type"] = "string",
+        },
+        ["labels"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed.",
+          ["type"] = "object",
+        },
+        ["name"] = {
+          ["description"] = "Resource name.",
+          ["type"] = "string",
+        },
+        ["revisionCreateTime"] = {
+          ["description"] = "Output only. Revision creation timestamp; when the represented revision was created.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["revisionId"] = {
+          ["description"] = "Output only. Immutable. The revision ID of the deployment. A new revision is committed whenever the deployment contents are changed. The format is an 8-character hexadecimal string.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["revisionUpdateTime"] = {
+          ["description"] = "Output only. Last update timestamp: when the represented revision was last modified.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ApiSpec"] = {
+      ["description"] = "An ApiSpec describes a version of an API in a structured way. ApiSpecs provide formal descriptions that consumers can use to use a version. ApiSpec resources are intended to be fully-resolved descriptions of an ApiVersion. When specs consist of multiple files, these should be bundled together (e.g. in a zip archive) and stored as a unit. Multiple specs can exist to provide representations in different API description formats. Synchronization of these representations would be provided by tooling and background services.",
+      ["id"] = "ApiSpec",
+      ["properties"] = {
+        ["annotations"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.",
+          ["type"] = "object",
+        },
+        ["contents"] = {
+          ["description"] = "Input only. The contents of the spec. Provided by API callers when specs are created or updated. To access the contents of a spec, use GetApiSpecContents.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. Creation timestamp; when the spec resource was created.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["description"] = {
+          ["description"] = "A detailed description.",
+          ["type"] = "string",
+        },
+        ["filename"] = {
+          ["description"] = "A possibly-hierarchical name used to refer to the spec from other specs.",
+          ["type"] = "string",
+        },
+        ["hash"] = {
+          ["description"] = "Output only. A SHA-256 hash of the spec's contents. If the spec is gzipped, this is the hash of the uncompressed spec.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["labels"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed.",
+          ["type"] = "object",
+        },
+        ["mimeType"] = {
+          ["description"] = "A style (format) descriptor for this spec that is specified as a Media Type (https://en.wikipedia.org/wiki/Media_type). Possible values include \"application/vnd.apigee.proto\", \"application/vnd.apigee.openapi\", and \"application/vnd.apigee.graphql\", with possible suffixes representing compression types. These hypothetical names are defined in the vendor tree defined in RFC6838 (https://tools.ietf.org/html/rfc6838) and are not final. Content types can specify compression. Currently only GZip compression is supported (indicated with \"+gzip\").",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Resource name.",
+          ["type"] = "string",
+        },
+        ["revisionCreateTime"] = {
+          ["description"] = "Output only. Revision creation timestamp; when the represented revision was created.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["revisionId"] = {
+          ["description"] = "Output only. Immutable. The revision ID of the spec. A new revision is committed whenever the spec contents are changed. The format is an 8-character hexadecimal string.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["revisionUpdateTime"] = {
+          ["description"] = "Output only. Last update timestamp: when the represented revision was last modified.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["sizeBytes"] = {
+          ["description"] = "Output only. The size of the spec file in bytes. If the spec is gzipped, this is the size of the uncompressed spec.",
+          ["format"] = "int32",
+          ["readOnly"] = true,
+          ["type"] = "integer",
+        },
+        ["sourceUri"] = {
+          ["description"] = "The original source URI of the spec (if one exists). This is an external location that can be used for reference purposes but which may not be authoritative since this external resource may change after the spec is retrieved.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ApiVersion"] = {
+      ["description"] = "An ApiVersion describes a particular version of an API. ApiVersions are what consumers actually use.",
+      ["id"] = "ApiVersion",
+      ["properties"] = {
+        ["annotations"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Annotations attach non-identifying metadata to resources. Annotation keys and values are less restricted than those of labels, but should be generally used for small values of broad interest. Larger, topic- specific metadata should be stored in Artifacts.",
+          ["type"] = "object",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. Creation timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["description"] = {
+          ["description"] = "A detailed description.",
+          ["type"] = "string",
+        },
+        ["displayName"] = {
+          ["description"] = "Human-meaningful name.",
+          ["type"] = "string",
+        },
+        ["labels"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with \"apigeeregistry.googleapis.com/\" and cannot be changed.",
+          ["type"] = "object",
+        },
+        ["name"] = {
+          ["description"] = "Resource name.",
+          ["type"] = "string",
+        },
+        ["state"] = {
+          ["description"] = "A user-definable description of the lifecycle phase of this API version. Format: free-form, but we expect single words that describe API maturity, e.g. \"CONCEPT\", \"DESIGN\", \"DEVELOPMENT\", \"STAGING\", \"PRODUCTION\", \"DEPRECATED\", \"RETIRED\".",
+          ["type"] = "string",
+        },
+        ["updateTime"] = {
+          ["description"] = "Output only. Last update timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Artifact"] = {
+      ["description"] = "Artifacts of resources. Artifacts are unique (single-value) per resource and are used to store metadata that is too large or numerous to be stored directly on the resource. Since artifacts are stored separately from parent resources, they should generally be used for metadata that is needed infrequently, i.e. not for display in primary views of the resource but perhaps displayed or downloaded upon request. The ListArtifacts method allows artifacts to be quickly enumerated and checked for presence without downloading their (potentially-large) contents.",
+      ["id"] = "Artifact",
+      ["properties"] = {
+        ["contents"] = {
+          ["description"] = "Input only. The contents of the artifact. Provided by API callers when artifacts are created or replaced. To access the contents of an artifact, use GetArtifactContents.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. Creation timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["hash"] = {
+          ["description"] = "Output only. A SHA-256 hash of the artifact's contents. If the artifact is gzipped, this is the hash of the uncompressed artifact.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["mimeType"] = {
+          ["description"] = "A content type specifier for the artifact. Content type specifiers are Media Types (https://en.wikipedia.org/wiki/Media_type) with a possible \"schema\" parameter that specifies a schema for the stored information. Content types can specify compression. Currently only GZip compression is supported (indicated with \"+gzip\").",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Resource name.",
+          ["type"] = "string",
+        },
+        ["sizeBytes"] = {
+          ["description"] = "Output only. The size of the artifact in bytes. If the artifact is gzipped, this is the size of the uncompressed artifact.",
+          ["format"] = "int32",
+          ["readOnly"] = true,
+          ["type"] = "integer",
+        },
+        ["updateTime"] = {
+          ["description"] = "Output only. Last update timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Binding"] = {
+      ["description"] = "Associates `members`, or principals, with a `role`.",
+      ["id"] = "Binding",
+      ["properties"] = {
+        ["condition"] = {
+          ["$ref"] = "Expr",
+          ["description"] = "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+        },
+        ["members"] = {
+          ["description"] = "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["role"] = {
+          ["description"] = "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["CancelOperationRequest"] = {
+      ["description"] = "The request message for Operations.CancelOperation.",
+      ["id"] = "CancelOperationRequest",
+      ["properties"] = {},
+      ["type"] = "object",
+    },
+    ["Config"] = {
+      ["description"] = "Available configurations to provision an Instance.",
+      ["id"] = "Config",
+      ["properties"] = {
+        ["cmekKeyName"] = {
+          ["description"] = "Required. The Customer Managed Encryption Key (CMEK) used for data encryption. The CMEK name should follow the format of `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`, where the `location` must match InstanceConfig.location.",
+          ["type"] = "string",
+        },
+        ["location"] = {
+          ["description"] = "Output only. The GCP location where the Instance resides.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Empty"] = {
+      ["description"] = "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+      ["id"] = "Empty",
+      ["properties"] = {},
+      ["type"] = "object",
+    },
+    ["Expr"] = {
+      ["description"] = "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() < 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' && document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
+      ["id"] = "Expr",
+      ["properties"] = {
+        ["description"] = {
+          ["description"] = "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
+          ["type"] = "string",
+        },
+        ["expression"] = {
+          ["description"] = "Textual representation of an expression in Common Expression Language syntax.",
+          ["type"] = "string",
+        },
+        ["location"] = {
+          ["description"] = "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
+          ["type"] = "string",
+        },
+        ["title"] = {
+          ["description"] = "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["HttpBody"] = {
+      ["description"] = "Message that represents an arbitrary HTTP body. It should only be used for payload formats that can't be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged.",
+      ["id"] = "HttpBody",
+      ["properties"] = {
+        ["contentType"] = {
+          ["description"] = "The HTTP Content-Type header value specifying the content type of the body.",
+          ["type"] = "string",
+        },
+        ["data"] = {
+          ["description"] = "The HTTP request/response body as raw binary.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["extensions"] = {
+          ["description"] = "Application specific response metadata. Must be set in the first response for streaming APIs.",
+          ["items"] = {
+            ["additionalProperties"] = {
+              ["description"] = "Properties of the object. Contains field @type with type URL.",
+              ["type"] = "any",
+            },
+            ["type"] = "object",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Instance"] = {
+      ["description"] = "An Instance represents the instance resources of the Registry. Currently, only one instance is allowed for each project.",
+      ["id"] = "Instance",
+      ["properties"] = {
+        ["config"] = {
+          ["$ref"] = "Config",
+          ["description"] = "Required. Config of the Instance.",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. Creation timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Format: `projects/*/locations/*/instance`. Currently only locations/global is supported.",
+          ["type"] = "string",
+        },
+        ["state"] = {
+          ["description"] = "Output only. The current state of the Instance.",
+          ["enum"] = {
+            "STATE_UNSPECIFIED",
+            "INACTIVE",
+            "CREATING",
+            "ACTIVE",
+            "UPDATING",
+            "DELETING",
+            "FAILED",
+          },
+          ["enumDescriptions"] = {
+            "The default value. This value is used if the state is omitted.",
+            "The Instance has not been initialized or has been deleted.",
+            "The Instance is being created.",
+            "The Instance has been created and is ready for use.",
+            "The Instance is being updated.",
+            "The Instance is being deleted.",
+            "The Instance encountered an error during a state change.",
+          },
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["stateMessage"] = {
+          ["description"] = "Output only. Extra information of Instance.State if the state is `FAILED`.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["updateTime"] = {
+          ["description"] = "Output only. Last update timestamp.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListApiDeploymentRevisionsResponse"] = {
+      ["description"] = "Response message for ListApiDeploymentRevisionsResponse.",
+      ["id"] = "ListApiDeploymentRevisionsResponse",
+      ["properties"] = {
+        ["apiDeployments"] = {
+          ["description"] = "The revisions of the deployment.",
+          ["items"] = {
+            ["$ref"] = "ApiDeployment",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListApiDeploymentsResponse"] = {
+      ["description"] = "Response message for ListApiDeployments.",
+      ["id"] = "ListApiDeploymentsResponse",
+      ["properties"] = {
+        ["apiDeployments"] = {
+          ["description"] = "The deployments from the specified publisher.",
+          ["items"] = {
+            ["$ref"] = "ApiDeployment",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListApiSpecRevisionsResponse"] = {
+      ["description"] = "Response message for ListApiSpecRevisionsResponse.",
+      ["id"] = "ListApiSpecRevisionsResponse",
+      ["properties"] = {
+        ["apiSpecs"] = {
+          ["description"] = "The revisions of the spec.",
+          ["items"] = {
+            ["$ref"] = "ApiSpec",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListApiSpecsResponse"] = {
+      ["description"] = "Response message for ListApiSpecs.",
+      ["id"] = "ListApiSpecsResponse",
+      ["properties"] = {
+        ["apiSpecs"] = {
+          ["description"] = "The specs from the specified publisher.",
+          ["items"] = {
+            ["$ref"] = "ApiSpec",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListApiVersionsResponse"] = {
+      ["description"] = "Response message for ListApiVersions.",
+      ["id"] = "ListApiVersionsResponse",
+      ["properties"] = {
+        ["apiVersions"] = {
+          ["description"] = "The versions from the specified publisher.",
+          ["items"] = {
+            ["$ref"] = "ApiVersion",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListApisResponse"] = {
+      ["description"] = "Response message for ListApis.",
+      ["id"] = "ListApisResponse",
+      ["properties"] = {
+        ["apis"] = {
+          ["description"] = "The APIs from the specified publisher.",
+          ["items"] = {
+            ["$ref"] = "Api",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListArtifactsResponse"] = {
+      ["description"] = "Response message for ListArtifacts.",
+      ["id"] = "ListArtifactsResponse",
+      ["properties"] = {
+        ["artifacts"] = {
+          ["description"] = "The artifacts from the specified publisher.",
+          ["items"] = {
+            ["$ref"] = "Artifact",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListLocationsResponse"] = {
+      ["description"] = "The response message for Locations.ListLocations.",
+      ["id"] = "ListLocationsResponse",
+      ["properties"] = {
+        ["locations"] = {
+          ["description"] = "A list of locations that matches the specified filter in the request.",
+          ["items"] = {
+            ["$ref"] = "Location",
+          },
+          ["type"] = "array",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "The standard List next-page token.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ListOperationsResponse"] = {
+      ["description"] = "The response message for Operations.ListOperations.",
+      ["id"] = "ListOperationsResponse",
+      ["properties"] = {
+        ["nextPageToken"] = {
+          ["description"] = "The standard List next-page token.",
+          ["type"] = "string",
+        },
+        ["operations"] = {
+          ["description"] = "A list of operations that matches the specified filter in the request.",
+          ["items"] = {
+            ["$ref"] = "Operation",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Location"] = {
+      ["description"] = "A resource that represents Google Cloud Platform location.",
+      ["id"] = "Location",
+      ["properties"] = {
+        ["displayName"] = {
+          ["description"] = "The friendly name for this location, typically a nearby city name. For example, \"Tokyo\".",
+          ["type"] = "string",
+        },
+        ["labels"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "Cross-service attributes for the location. For example {\"cloud.googleapis.com/region\": \"us-east1\"}",
+          ["type"] = "object",
+        },
+        ["locationId"] = {
+          ["description"] = "The canonical id for this location. For example: `\"us-east1\"`.",
+          ["type"] = "string",
+        },
+        ["metadata"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object. Contains field @type with type URL.",
+            ["type"] = "any",
+          },
+          ["description"] = "Service-specific metadata. For example the available capacity at the given location.",
+          ["type"] = "object",
+        },
+        ["name"] = {
+          ["description"] = "Resource name for the location, which may vary between implementations. For example: `\"projects/example-project/locations/us-east1\"`",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Operation"] = {
+      ["description"] = "This resource represents a long-running operation that is the result of a network API call.",
+      ["id"] = "Operation",
+      ["properties"] = {
+        ["done"] = {
+          ["description"] = "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
+          ["type"] = "boolean",
+        },
+        ["error"] = {
+          ["$ref"] = "Status",
+          ["description"] = "The error result of the operation in case of failure or cancellation.",
+        },
+        ["metadata"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object. Contains field @type with type URL.",
+            ["type"] = "any",
+          },
+          ["description"] = "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+          ["type"] = "object",
+        },
+        ["name"] = {
+          ["description"] = "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
+          ["type"] = "string",
+        },
+        ["response"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object. Contains field @type with type URL.",
+            ["type"] = "any",
+          },
+          ["description"] = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          ["type"] = "object",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["OperationMetadata"] = {
+      ["description"] = "Represents the metadata of the long-running operation.",
+      ["id"] = "OperationMetadata",
+      ["properties"] = {
+        ["apiVersion"] = {
+          ["description"] = "API version used to start the operation.",
+          ["type"] = "string",
+        },
+        ["cancellationRequested"] = {
+          ["description"] = "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          ["type"] = "boolean",
+        },
+        ["createTime"] = {
+          ["description"] = "The time the operation was created.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["endTime"] = {
+          ["description"] = "The time the operation finished running.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["statusMessage"] = {
+          ["description"] = "Human-readable status of the operation, if any.",
+          ["type"] = "string",
+        },
+        ["target"] = {
+          ["description"] = "Server-defined resource path for the target of the operation.",
+          ["type"] = "string",
+        },
+        ["verb"] = {
+          ["description"] = "Name of the verb executed by the operation.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Policy"] = {
+      ["description"] = "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time < timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      ["id"] = "Policy",
+      ["properties"] = {
+        ["bindings"] = {
+          ["description"] = "Associates a list of `members`, or principals, with a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one principal. The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250 of these principals can be Google groups. Each occurrence of a principal counts towards these limits. For example, if the `bindings` grant 50 different roles to `user:alice@example.com`, and not to any other principal, then you can add another 1,450 principals to the `bindings` in the `Policy`.",
+          ["items"] = {
+            ["$ref"] = "Binding",
+          },
+          ["type"] = "array",
+        },
+        ["etag"] = {
+          ["description"] = "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy. **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost.",
+          ["format"] = "byte",
+          ["type"] = "string",
+        },
+        ["version"] = {
+          ["description"] = "Specifies the format of the policy. Valid values are `0`, `1`, and `3`. Requests that specify an invalid value are rejected. Any operation that affects conditional role bindings must specify version `3`. This requirement applies to the following operations: * Getting a policy that includes a conditional role binding * Adding a conditional role binding to a policy * Changing a conditional role binding in a policy * Removing any role binding, with or without a condition, from a policy that includes conditions **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost. If a policy does not include any conditions, operations on that policy may specify any valid version or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["RollbackApiDeploymentRequest"] = {
+      ["description"] = "Request message for RollbackApiDeployment.",
+      ["id"] = "RollbackApiDeploymentRequest",
+      ["properties"] = {
+        ["revisionId"] = {
+          ["description"] = "Required. The revision ID to roll back to. It must be a revision of the same deployment. Example: c7cfa2a8",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["RollbackApiSpecRequest"] = {
+      ["description"] = "Request message for RollbackApiSpec.",
+      ["id"] = "RollbackApiSpecRequest",
+      ["properties"] = {
+        ["revisionId"] = {
+          ["description"] = "Required. The revision ID to roll back to. It must be a revision of the same spec. Example: c7cfa2a8",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SetIamPolicyRequest"] = {
+      ["description"] = "Request message for `SetIamPolicy` method.",
+      ["id"] = "SetIamPolicyRequest",
+      ["properties"] = {
+        ["policy"] = {
+          ["$ref"] = "Policy",
+          ["description"] = "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Google Cloud services (such as Projects) might reject them.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Status"] = {
+      ["description"] = "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      ["id"] = "Status",
+      ["properties"] = {
+        ["code"] = {
+          ["description"] = "The status code, which should be an enum value of google.rpc.Code.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["details"] = {
+          ["description"] = "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          ["items"] = {
+            ["additionalProperties"] = {
+              ["description"] = "Properties of the object. Contains field @type with type URL.",
+              ["type"] = "any",
+            },
+            ["type"] = "object",
+          },
+          ["type"] = "array",
+        },
+        ["message"] = {
+          ["description"] = "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["TagApiDeploymentRevisionRequest"] = {
+      ["description"] = "Request message for TagApiDeploymentRevision.",
+      ["id"] = "TagApiDeploymentRevisionRequest",
+      ["properties"] = {
+        ["tag"] = {
+          ["description"] = "Required. The tag to apply. The tag should be at most 40 characters, and match `a-z{3,39}`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["TagApiSpecRevisionRequest"] = {
+      ["description"] = "Request message for TagApiSpecRevision.",
+      ["id"] = "TagApiSpecRevisionRequest",
+      ["properties"] = {
+        ["tag"] = {
+          ["description"] = "Required. The tag to apply. The tag should be at most 40 characters, and match `a-z{3,39}`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["TestIamPermissionsRequest"] = {
+      ["description"] = "Request message for `TestIamPermissions` method.",
+      ["id"] = "TestIamPermissionsRequest",
+      ["properties"] = {
+        ["permissions"] = {
+          ["description"] = "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["TestIamPermissionsResponse"] = {
+      ["description"] = "Response message for `TestIamPermissions` method.",
+      ["id"] = "TestIamPermissionsResponse",
+      ["properties"] = {
+        ["permissions"] = {
+          ["description"] = "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+  },
+  ["servicePath"] = "",
+  ["title"] = "Apigee Registry API",
+  ["version"] = "v1",
+  ["version_module"] = true,
+}

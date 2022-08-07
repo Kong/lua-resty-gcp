@@ -1,4 +1,629 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "discoveryVersion": "v1", "id": "iam:v2beta", "documentationLink": "https://cloud.google.com/iam/", "baseUrl": "https://iam.googleapis.com/", "mtlsRootUrl": "https://iam.mtls.googleapis.com/", "ownerName": "Google", "fullyEncodeReservedExpansion": true, "protocol": "rest", "servicePath": "", "version_module": true, "rootUrl": "https://iam.googleapis.com/", "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls. ", "parameters": { "$.xgafv": { "description": "V1 error format.", "location": "query", "enum": [ "1", "2" ], "type": "string", "enumDescriptions": [ "v1 error format", "v2 error format" ] }, "quotaUser": { "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.", "type": "string", "location": "query" }, "oauth_token": { "description": "OAuth 2.0 token for the current user.", "location": "query", "type": "string" }, "prettyPrint": { "type": "boolean", "description": "Returns response with indentations and line breaks.", "location": "query", "default": "true" }, "upload_protocol": { "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").", "location": "query", "type": "string" }, "alt": { "enum": [ "json", "media", "proto" ], "default": "json", "type": "string", "description": "Data format for response.", "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "location": "query" }, "fields": { "location": "query", "type": "string", "description": "Selector specifying which fields to include in a partial response." }, "access_token": { "type": "string", "location": "query", "description": "OAuth access token." }, "callback": { "description": "JSONP", "location": "query", "type": "string" }, "uploadType": { "type": "string", "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").", "location": "query" }, "key": { "location": "query", "type": "string", "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token." } }, "batchPath": "batch", "kind": "discovery#restDescription", "version": "v2beta", "title": "Identity and Access Management (IAM) API", "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/cloud-platform": { "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account." } } } }, "name": "iam", "ownerDomain": "google.com", "canonicalName": "Iam", "resources": { "policies": { "methods": { "createPolicy": { "request": { "$ref": "GoogleIamV2betaPolicy" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "GoogleLongrunningOperation" }, "parameters": { "parent": { "location": "path", "description": "Required. The resource that the policy is attached to, along with the kind of policy to create. Format: `policies/{attachment_point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.", "required": true, "pattern": "^policies/[^/]+/[^/]+$", "type": "string" }, "policyId": { "location": "query", "description": "The ID to use for this policy, which will become the final component of the policy's resource name. The ID must contain 3 to 63 characters. It can contain lowercase letters and numbers, as well as dashes (`-`) and periods (`.`). The first character must be a lowercase letter.", "type": "string" } }, "id": "iam.policies.createPolicy", "parameterOrder": [ "parent" ], "httpMethod": "POST", "flatPath": "v2beta/policies/{policiesId}/{policiesId1}", "description": "Creates a policy.", "path": "v2beta/{+parent}" }, "update": { "response": { "$ref": "GoogleLongrunningOperation" }, "path": "v2beta/{+name}", "parameters": { "name": { "required": true, "type": "string", "description": "Immutable. The resource name of the `Policy`, which must be unique. Format: `policies/{attachment_point}/denypolicies/{policy_id}` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.", "pattern": "^policies/[^/]+/[^/]+/[^/]+$", "location": "path" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "GoogleIamV2betaPolicy" }, "flatPath": "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}", "id": "iam.policies.update", "parameterOrder": [ "name" ], "description": "Updates the specified policy. You can update only the rules and the display name for the policy. To update a policy, you should use a read-modify-write loop: 1. Use GetPolicy to read the current version of the policy. 2. Modify the policy as needed. 3. Use `UpdatePolicy` to write the updated policy. This pattern helps prevent conflicts between concurrent updates.", "httpMethod": "PUT" }, "get": { "parameterOrder": [ "name" ], "httpMethod": "GET", "description": "Gets a policy.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "flatPath": "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}", "id": "iam.policies.get", "response": { "$ref": "GoogleIamV2betaPolicy" }, "parameters": { "name": { "type": "string", "pattern": "^policies/[^/]+/[^/]+/[^/]+$", "description": "Required. The resource name of the policy to retrieve. Format: `policies/{attachment_point}/denypolicies/{policy_id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.", "required": true, "location": "path" } }, "path": "v2beta/{+name}" }, "delete": { "response": { "$ref": "GoogleLongrunningOperation" }, "description": "Deletes a policy. This action is permanent.", "parameterOrder": [ "name" ], "httpMethod": "DELETE", "path": "v2beta/{+name}", "parameters": { "etag": { "description": "Optional. The expected `etag` of the policy to delete. If the value does not match the value that is stored in IAM, the request fails with a `409` error code and `ABORTED` status. If you omit this field, the policy is deleted regardless of its current `etag`.", "location": "query", "type": "string" }, "name": { "description": "Required. The resource name of the policy to delete. Format: `policies/{attachment_point}/denypolicies/{policy_id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.", "pattern": "^policies/[^/]+/[^/]+/[^/]+$", "type": "string", "location": "path", "required": true } }, "id": "iam.policies.delete", "flatPath": "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ] }, "listPolicies": { "path": "v2beta/{+parent}", "response": { "$ref": "GoogleIamV2betaListPoliciesResponse" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "Retrieves the policies of the specified kind that are attached to a resource. The response lists only policy metadata. In particular, policy rules are omitted.", "flatPath": "v2beta/policies/{policiesId}/{policiesId1}", "parameters": { "parent": { "type": "string", "required": true, "pattern": "^policies/[^/]+/[^/]+$", "description": "Required. The resource that the policy is attached to, along with the kind of policy to list. Format: `policies/{attachment_point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.", "location": "path" }, "pageToken": { "type": "string", "location": "query", "description": "A page token received in a ListPoliciesResponse. Provide this token to retrieve the next page." }, "pageSize": { "location": "query", "type": "integer", "description": "The maximum number of policies to return. IAM ignores this value and uses the value 1000.", "format": "int32" } }, "httpMethod": "GET", "parameterOrder": [ "parent" ], "id": "iam.policies.listPolicies" } }, "resources": { "operations": { "methods": { "get": { "parameterOrder": [ "name" ], "flatPath": "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}/operations/{operationsId}", "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "id": "iam.policies.operations.get", "parameters": { "name": { "required": true, "description": "The name of the operation resource.", "location": "path", "type": "string", "pattern": "^policies/[^/]+/[^/]+/[^/]+/operations/[^/]+$" } }, "response": { "$ref": "GoogleLongrunningOperation" }, "path": "v2beta/{+name}", "httpMethod": "GET" } } } } } }, "schemas": { "GoogleIamAdminV1AuditDataPermissionDelta": { "id": "GoogleIamAdminV1AuditDataPermissionDelta", "type": "object", "properties": { "addedPermissions": { "items": { "type": "string" }, "type": "array", "description": "Added permissions." }, "removedPermissions": { "description": "Removed permissions.", "type": "array", "items": { "type": "string" } } }, "description": "A PermissionDelta message to record the added_permissions and removed_permissions inside a role." }, "GoogleIamAdminV1AuditData": { "description": "Audit log information specific to Cloud IAM admin APIs. This message is serialized as an `Any` type in the `ServiceData` message of an `AuditLog` message.", "properties": { "permissionDelta": { "description": "The permission_delta when when creating or updating a Role.", "$ref": "GoogleIamAdminV1AuditDataPermissionDelta" } }, "type": "object", "id": "GoogleIamAdminV1AuditData" }, "GoogleIamV1LoggingAuditData": { "type": "object", "description": "Audit log information specific to Cloud IAM. This message is serialized as an `Any` type in the `ServiceData` message of an `AuditLog` message.", "properties": { "policyDelta": { "$ref": "GoogleIamV1PolicyDelta", "description": "Policy delta between the original policy and the newly set policy." } }, "id": "GoogleIamV1LoggingAuditData" }, "GoogleIamV1betaWorkloadIdentityPoolOperationMetadata": { "description": "Metadata for long-running WorkloadIdentityPool operations.", "type": "object", "id": "GoogleIamV1betaWorkloadIdentityPoolOperationMetadata", "properties": {} }, "GoogleRpcStatus": { "type": "object", "properties": { "message": { "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.", "type": "string" }, "code": { "format": "int32", "type": "integer", "description": "The status code, which should be an enum value of google.rpc.Code." }, "details": { "items": { "type": "object", "additionalProperties": { "description": "Properties of the object. Contains field @type with type URL.", "type": "any" } }, "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.", "type": "array" } }, "id": "GoogleRpcStatus", "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors)." }, "GoogleIamV2betaDenyRule": { "id": "GoogleIamV2betaDenyRule", "properties": { "exceptionPrincipals": { "type": "array", "items": { "type": "string" }, "description": "The identities that are excluded from the deny rule, even if they are listed in the `denied_principals`. For example, you could add a Google group to the `denied_principals`, then exclude specific users who belong to that group. This field can contain the same values as the `denied_principals` field, excluding `principalSet://goog/public:all`, which represents all users on the internet." }, "deniedPrincipals": { "items": { "type": "string" }, "type": "array", "description": "The identities that are prevented from using one or more permissions on Google Cloud resources. This field can contain the following values: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `principalSet://goog/public:all`: A special identifier that represents any user who is on the internet, even if they do not have a Google Account or are not logged in. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `principal://goog/subject/{email_id}`: A specific Google Account. Includes Gmail, Cloud Identity, and Google Workspace user accounts. For example, `principal://goog/subject/alice@example.com`. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific Google Account that was deleted recently. For example, `deleted:principal://goog/subject/alice@example.com?uid=1234567890`. If the Google Account is recovered, this identifier reverts to the standard identifier for a Google Account. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `principalSet://goog/group/{group_id}`: A Google group. For example, `principalSet://goog/group/admins@example.com`. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group that was deleted recently. For example, `deleted:principalSet://goog/group/admins@example.com?uid=1234567890`. If the Google group is restored, this identifier reverts to the standard identifier for a Google group. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`: A Google Cloud service account. For example, `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account@iam.gserviceaccount.com`. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`: A Google Cloud service account that was deleted recently. For example, `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account@iam.gserviceaccount.com?uid=1234567890`. If the service account is undeleted, this identifier reverts to the standard identifier for a service account. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the principals associated with the specified Google Workspace or Cloud Identity customer ID. For example, `principalSet://goog/cloudIdentityCustomerId/C01Abc35`." }, "exceptionPermissions": { "items": { "type": "string" }, "description": "Specifies the permissions that this rule excludes from the set of denied permissions given by `denied_permissions`. If a permission appears in `denied_permissions` _and_ in `exception_permissions` then it will _not_ be denied. The excluded permissions can be specified using the same syntax as `denied_permissions`.", "type": "array" }, "denialCondition": { "description": "The condition that determines whether this deny rule applies to a request. If the condition expression evaluates to `true`, then the deny rule is applied; otherwise, the deny rule is not applied. Each deny rule is evaluated independently. If this deny rule does not apply to a request, other deny rules might still apply. The condition can use CEL functions that evaluate [resource tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other functions and operators are not supported.", "$ref": "GoogleTypeExpr" }, "deniedPermissions": { "description": "The permissions that are explicitly denied by this rule. Each permission uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}` is the fully qualified domain name for the service. For example, `iam.googleapis.com/roles.list`.", "type": "array", "items": { "type": "string" } } }, "type": "object", "description": "A deny rule in an IAM deny policy." }, "GoogleIamV1BindingDelta": { "id": "GoogleIamV1BindingDelta", "properties": { "action": { "description": "The action that was performed on a Binding. Required", "enumDescriptions": [ "Unspecified.", "Addition of a Binding.", "Removal of a Binding." ], "enum": [ "ACTION_UNSPECIFIED", "ADD", "REMOVE" ], "type": "string" }, "role": { "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. Required", "type": "string" }, "member": { "type": "string", "description": "A single identity requesting access for a Google Cloud resource. Follows the same format of Binding.members. Required" }, "condition": { "$ref": "GoogleTypeExpr", "description": "The condition that is associated with this binding." } }, "type": "object", "description": "One delta entry for Binding. Each individual change (only one member in each entry) to a binding will be a separate entry." }, "GoogleIamV2betaPolicyRule": { "id": "GoogleIamV2betaPolicyRule", "properties": { "denyRule": { "$ref": "GoogleIamV2betaDenyRule", "description": "A rule for a deny policy." }, "description": { "description": "A user-specified description of the rule. This value can be up to 256 characters.", "type": "string" } }, "type": "object", "description": "A single rule in a `Policy`." }, "GoogleLongrunningOperation": { "id": "GoogleLongrunningOperation", "properties": { "done": { "type": "boolean", "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available." }, "name": { "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.", "type": "string" }, "metadata": { "type": "object", "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.", "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." } }, "response": { "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.", "additionalProperties": { "description": "Properties of the object. Contains field @type with type URL.", "type": "any" }, "type": "object" }, "error": { "$ref": "GoogleRpcStatus", "description": "The error result of the operation in case of failure or cancellation." } }, "type": "object", "description": "This resource represents a long-running operation that is the result of a network API call." }, "GoogleIamV2betaListPoliciesResponse": { "id": "GoogleIamV2betaListPoliciesResponse", "description": "Response message for `ListPolicies`.", "properties": { "policies": { "items": { "$ref": "GoogleIamV2betaPolicy" }, "description": "Metadata for the policies that are attached to the resource.", "type": "array" }, "nextPageToken": { "description": "A page token that you can use in a ListPoliciesRequest to retrieve the next page. If this field is omitted, there are no additional pages.", "type": "string" } }, "type": "object" }, "GoogleIamV2betaPolicyOperationMetadata": { "id": "GoogleIamV2betaPolicyOperationMetadata", "type": "object", "description": "Metadata for long-running `Policy` operations.", "properties": { "createTime": { "type": "string", "description": "Timestamp when the `google.longrunning.Operation` was created.", "format": "google-datetime" } } }, "GoogleIamV1PolicyDelta": { "type": "object", "description": "The difference delta between two policies.", "properties": { "bindingDeltas": { "description": "The delta for Bindings between two policies.", "items": { "$ref": "GoogleIamV1BindingDelta" }, "type": "array" } }, "id": "GoogleIamV1PolicyDelta" }, "GoogleIamV2betaPolicy": { "id": "GoogleIamV2betaPolicy", "type": "object", "properties": { "annotations": { "additionalProperties": { "type": "string" }, "type": "object", "description": "A key-value map to store arbitrary metadata for the `Policy`. Keys can be up to 63 characters. Values can be up to 255 characters." }, "deleteTime": { "description": "Output only. The time when the `Policy` was deleted. Empty if the policy is not deleted.", "readOnly": true, "format": "google-datetime", "type": "string" }, "rules": { "type": "array", "description": "A list of rules that specify the behavior of the `Policy`. All of the rules should be of the `kind` specified in the `Policy`.", "items": { "$ref": "GoogleIamV2betaPolicyRule" } }, "kind": { "readOnly": true, "description": "Output only. The kind of the `Policy`. Always contains the value `DenyPolicy`.", "type": "string" }, "createTime": { "readOnly": true, "description": "Output only. The time when the `Policy` was created.", "format": "google-datetime", "type": "string" }, "etag": { "description": "An opaque tag that identifies the current version of the `Policy`. IAM uses this value to help manage concurrent updates, so they do not cause one update to be overwritten by another. If this field is present in a CreatePolicy request, the value is ignored.", "type": "string" }, "uid": { "type": "string", "description": "Immutable. The globally unique ID of the `Policy`. Assigned automatically when the `Policy` is created." }, "displayName": { "type": "string", "description": "A user-specified description of the `Policy`. This value can be up to 63 characters." }, "updateTime": { "description": "Output only. The time when the `Policy` was last updated.", "format": "google-datetime", "readOnly": true, "type": "string" }, "name": { "type": "string", "description": "Immutable. The resource name of the `Policy`, which must be unique. Format: `policies/{attachment_point}/denypolicies/{policy_id}` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID." } }, "description": "Data for an IAM policy." }, "GoogleTypeExpr": { "description": "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() \u003c 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' && document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.", "properties": { "expression": { "type": "string", "description": "Textual representation of an expression in Common Expression Language syntax." }, "title": { "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.", "type": "string" }, "description": { "description": "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.", "type": "string" }, "location": { "type": "string", "description": "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file." } }, "id": "GoogleTypeExpr", "type": "object" } }, "icons": { "x32": "http://www.google.com/images/icons/product/search-32.gif", "x16": "http://www.google.com/images/icons/product/search-16.gif" }, "revision": "20220621", "basePath": "" }
-]===]))
+return {
+  ["auth"] = {
+    ["oauth2"] = {
+      ["scopes"] = {
+        ["https://www.googleapis.com/auth/cloud-platform"] = {
+          ["description"] = "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.",
+        },
+      },
+    },
+  },
+  ["basePath"] = "",
+  ["baseUrl"] = "https://iam.googleapis.com/",
+  ["batchPath"] = "batch",
+  ["canonicalName"] = "Iam",
+  ["description"] = "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls. ",
+  ["discoveryVersion"] = "v1",
+  ["documentationLink"] = "https://cloud.google.com/iam/",
+  ["fullyEncodeReservedExpansion"] = true,
+  ["icons"] = {
+    ["x16"] = "http://www.google.com/images/icons/product/search-16.gif",
+    ["x32"] = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  ["id"] = "iam:v2beta",
+  ["kind"] = "discovery#restDescription",
+  ["mtlsRootUrl"] = "https://iam.mtls.googleapis.com/",
+  ["name"] = "iam",
+  ["ownerDomain"] = "google.com",
+  ["ownerName"] = "Google",
+  ["parameters"] = {
+    ["$.xgafv"] = {
+      ["description"] = "V1 error format.",
+      ["enum"] = {
+        "1",
+        "2",
+      },
+      ["enumDescriptions"] = {
+        "v1 error format",
+        "v2 error format",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["access_token"] = {
+      ["description"] = "OAuth access token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["alt"] = {
+      ["default"] = "json",
+      ["description"] = "Data format for response.",
+      ["enum"] = {
+        "json",
+        "media",
+        "proto",
+      },
+      ["enumDescriptions"] = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["callback"] = {
+      ["description"] = "JSONP",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["fields"] = {
+      ["description"] = "Selector specifying which fields to include in a partial response.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["key"] = {
+      ["description"] = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["oauth_token"] = {
+      ["description"] = "OAuth 2.0 token for the current user.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["prettyPrint"] = {
+      ["default"] = "true",
+      ["description"] = "Returns response with indentations and line breaks.",
+      ["location"] = "query",
+      ["type"] = "boolean",
+    },
+    ["quotaUser"] = {
+      ["description"] = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["uploadType"] = {
+      ["description"] = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["upload_protocol"] = {
+      ["description"] = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+  },
+  ["protocol"] = "rest",
+  ["resources"] = {
+    ["policies"] = {
+      ["methods"] = {
+        ["createPolicy"] = {
+          ["description"] = "Creates a policy.",
+          ["flatPath"] = "v2beta/policies/{policiesId}/{policiesId1}",
+          ["httpMethod"] = "POST",
+          ["id"] = "iam.policies.createPolicy",
+          ["parameterOrder"] = {
+            "parent",
+          },
+          ["parameters"] = {
+            ["parent"] = {
+              ["description"] = "Required. The resource that the policy is attached to, along with the kind of policy to create. Format: `policies/{attachment_point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+              ["location"] = "path",
+              ["pattern"] = "^policies/[^/]+/[^/]+$",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["policyId"] = {
+              ["description"] = "The ID to use for this policy, which will become the final component of the policy's resource name. The ID must contain 3 to 63 characters. It can contain lowercase letters and numbers, as well as dashes (`-`) and periods (`.`). The first character must be a lowercase letter.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "v2beta/{+parent}",
+          ["request"] = {
+            ["$ref"] = "GoogleIamV2betaPolicy",
+          },
+          ["response"] = {
+            ["$ref"] = "GoogleLongrunningOperation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        ["delete"] = {
+          ["description"] = "Deletes a policy. This action is permanent.",
+          ["flatPath"] = "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}",
+          ["httpMethod"] = "DELETE",
+          ["id"] = "iam.policies.delete",
+          ["parameterOrder"] = {
+            "name",
+          },
+          ["parameters"] = {
+            ["etag"] = {
+              ["description"] = "Optional. The expected `etag` of the policy to delete. If the value does not match the value that is stored in IAM, the request fails with a `409` error code and `ABORTED` status. If you omit this field, the policy is deleted regardless of its current `etag`.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["name"] = {
+              ["description"] = "Required. The resource name of the policy to delete. Format: `policies/{attachment_point}/denypolicies/{policy_id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+              ["location"] = "path",
+              ["pattern"] = "^policies/[^/]+/[^/]+/[^/]+$",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "v2beta/{+name}",
+          ["response"] = {
+            ["$ref"] = "GoogleLongrunningOperation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        ["get"] = {
+          ["description"] = "Gets a policy.",
+          ["flatPath"] = "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}",
+          ["httpMethod"] = "GET",
+          ["id"] = "iam.policies.get",
+          ["parameterOrder"] = {
+            "name",
+          },
+          ["parameters"] = {
+            ["name"] = {
+              ["description"] = "Required. The resource name of the policy to retrieve. Format: `policies/{attachment_point}/denypolicies/{policy_id}` Use the URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+              ["location"] = "path",
+              ["pattern"] = "^policies/[^/]+/[^/]+/[^/]+$",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "v2beta/{+name}",
+          ["response"] = {
+            ["$ref"] = "GoogleIamV2betaPolicy",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        ["listPolicies"] = {
+          ["description"] = "Retrieves the policies of the specified kind that are attached to a resource. The response lists only policy metadata. In particular, policy rules are omitted.",
+          ["flatPath"] = "v2beta/policies/{policiesId}/{policiesId1}",
+          ["httpMethod"] = "GET",
+          ["id"] = "iam.policies.listPolicies",
+          ["parameterOrder"] = {
+            "parent",
+          },
+          ["parameters"] = {
+            ["pageSize"] = {
+              ["description"] = "The maximum number of policies to return. IAM ignores this value and uses the value 1000.",
+              ["format"] = "int32",
+              ["location"] = "query",
+              ["type"] = "integer",
+            },
+            ["pageToken"] = {
+              ["description"] = "A page token received in a ListPoliciesResponse. Provide this token to retrieve the next page.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["parent"] = {
+              ["description"] = "Required. The resource that the policy is attached to, along with the kind of policy to list. Format: `policies/{attachment_point}/denypolicies` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`. For organizations and folders, use the numeric ID in the full resource name. For projects, you can use the alphanumeric or the numeric ID.",
+              ["location"] = "path",
+              ["pattern"] = "^policies/[^/]+/[^/]+$",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "v2beta/{+parent}",
+          ["response"] = {
+            ["$ref"] = "GoogleIamV2betaListPoliciesResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        ["update"] = {
+          ["description"] = "Updates the specified policy. You can update only the rules and the display name for the policy. To update a policy, you should use a read-modify-write loop: 1. Use GetPolicy to read the current version of the policy. 2. Modify the policy as needed. 3. Use `UpdatePolicy` to write the updated policy. This pattern helps prevent conflicts between concurrent updates.",
+          ["flatPath"] = "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}",
+          ["httpMethod"] = "PUT",
+          ["id"] = "iam.policies.update",
+          ["parameterOrder"] = {
+            "name",
+          },
+          ["parameters"] = {
+            ["name"] = {
+              ["description"] = "Immutable. The resource name of the `Policy`, which must be unique. Format: `policies/{attachment_point}/denypolicies/{policy_id}` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.",
+              ["location"] = "path",
+              ["pattern"] = "^policies/[^/]+/[^/]+/[^/]+$",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "v2beta/{+name}",
+          ["request"] = {
+            ["$ref"] = "GoogleIamV2betaPolicy",
+          },
+          ["response"] = {
+            ["$ref"] = "GoogleLongrunningOperation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+      },
+      ["resources"] = {
+        ["operations"] = {
+          ["methods"] = {
+            ["get"] = {
+              ["description"] = "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+              ["flatPath"] = "v2beta/policies/{policiesId}/{policiesId1}/{policiesId2}/operations/{operationsId}",
+              ["httpMethod"] = "GET",
+              ["id"] = "iam.policies.operations.get",
+              ["parameterOrder"] = {
+                "name",
+              },
+              ["parameters"] = {
+                ["name"] = {
+                  ["description"] = "The name of the operation resource.",
+                  ["location"] = "path",
+                  ["pattern"] = "^policies/[^/]+/[^/]+/[^/]+/operations/[^/]+$",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "v2beta/{+name}",
+              ["response"] = {
+                ["$ref"] = "GoogleLongrunningOperation",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  ["revision"] = "20220728",
+  ["rootUrl"] = "https://iam.googleapis.com/",
+  ["schemas"] = {
+    ["GoogleIamAdminV1AuditData"] = {
+      ["description"] = "Audit log information specific to Cloud IAM admin APIs. This message is serialized as an `Any` type in the `ServiceData` message of an `AuditLog` message.",
+      ["id"] = "GoogleIamAdminV1AuditData",
+      ["properties"] = {
+        ["permissionDelta"] = {
+          ["$ref"] = "GoogleIamAdminV1AuditDataPermissionDelta",
+          ["description"] = "The permission_delta when when creating or updating a Role.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamAdminV1AuditDataPermissionDelta"] = {
+      ["description"] = "A PermissionDelta message to record the added_permissions and removed_permissions inside a role.",
+      ["id"] = "GoogleIamAdminV1AuditDataPermissionDelta",
+      ["properties"] = {
+        ["addedPermissions"] = {
+          ["description"] = "Added permissions.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["removedPermissions"] = {
+          ["description"] = "Removed permissions.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV1BindingDelta"] = {
+      ["description"] = "One delta entry for Binding. Each individual change (only one member in each entry) to a binding will be a separate entry.",
+      ["id"] = "GoogleIamV1BindingDelta",
+      ["properties"] = {
+        ["action"] = {
+          ["description"] = "The action that was performed on a Binding. Required",
+          ["enum"] = {
+            "ACTION_UNSPECIFIED",
+            "ADD",
+            "REMOVE",
+          },
+          ["enumDescriptions"] = {
+            "Unspecified.",
+            "Addition of a Binding.",
+            "Removal of a Binding.",
+          },
+          ["type"] = "string",
+        },
+        ["condition"] = {
+          ["$ref"] = "GoogleTypeExpr",
+          ["description"] = "The condition that is associated with this binding.",
+        },
+        ["member"] = {
+          ["description"] = "A single identity requesting access for a Google Cloud resource. Follows the same format of Binding.members. Required",
+          ["type"] = "string",
+        },
+        ["role"] = {
+          ["description"] = "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. Required",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV1LoggingAuditData"] = {
+      ["description"] = "Audit log information specific to Cloud IAM. This message is serialized as an `Any` type in the `ServiceData` message of an `AuditLog` message.",
+      ["id"] = "GoogleIamV1LoggingAuditData",
+      ["properties"] = {
+        ["policyDelta"] = {
+          ["$ref"] = "GoogleIamV1PolicyDelta",
+          ["description"] = "Policy delta between the original policy and the newly set policy.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV1PolicyDelta"] = {
+      ["description"] = "The difference delta between two policies.",
+      ["id"] = "GoogleIamV1PolicyDelta",
+      ["properties"] = {
+        ["bindingDeltas"] = {
+          ["description"] = "The delta for Bindings between two policies.",
+          ["items"] = {
+            ["$ref"] = "GoogleIamV1BindingDelta",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV1betaWorkloadIdentityPoolOperationMetadata"] = {
+      ["description"] = "Metadata for long-running WorkloadIdentityPool operations.",
+      ["id"] = "GoogleIamV1betaWorkloadIdentityPoolOperationMetadata",
+      ["properties"] = {},
+      ["type"] = "object",
+    },
+    ["GoogleIamV2betaDenyRule"] = {
+      ["description"] = "A deny rule in an IAM deny policy.",
+      ["id"] = "GoogleIamV2betaDenyRule",
+      ["properties"] = {
+        ["denialCondition"] = {
+          ["$ref"] = "GoogleTypeExpr",
+          ["description"] = "The condition that determines whether this deny rule applies to a request. If the condition expression evaluates to `true`, then the deny rule is applied; otherwise, the deny rule is not applied. Each deny rule is evaluated independently. If this deny rule does not apply to a request, other deny rules might still apply. The condition can use CEL functions that evaluate [resource tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other functions and operators are not supported.",
+        },
+        ["deniedPermissions"] = {
+          ["description"] = "The permissions that are explicitly denied by this rule. Each permission uses the format `{service_fqdn}/{resource}.{verb}`, where `{service_fqdn}` is the fully qualified domain name for the service. For example, `iam.googleapis.com/roles.list`.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["deniedPrincipals"] = {
+          ["description"] = "The identities that are prevented from using one or more permissions on Google Cloud resources. This field can contain the following values: * `principalSet://goog/public:all`: A special identifier that represents any principal that is on the internet, even if they do not have a Google Account or are not logged in. * `principal://goog/subject/{email_id}`: A specific Google Account. Includes Gmail, Cloud Identity, and Google Workspace user accounts. For example, `principal://goog/subject/alice@example.com`. * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific Google Account that was deleted recently. For example, `deleted:principal://goog/subject/alice@example.com?uid=1234567890`. If the Google Account is recovered, this identifier reverts to the standard identifier for a Google Account. * `principalSet://goog/group/{group_id}`: A Google group. For example, `principalSet://goog/group/admins@example.com`. * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group that was deleted recently. For example, `deleted:principalSet://goog/group/admins@example.com?uid=1234567890`. If the Google group is restored, this identifier reverts to the standard identifier for a Google group. * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`: A Google Cloud service account. For example, `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account@iam.gserviceaccount.com`. * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`: A Google Cloud service account that was deleted recently. For example, `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account@iam.gserviceaccount.com?uid=1234567890`. If the service account is undeleted, this identifier reverts to the standard identifier for a service account. * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the principals associated with the specified Google Workspace or Cloud Identity customer ID. For example, `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["exceptionPermissions"] = {
+          ["description"] = "Specifies the permissions that this rule excludes from the set of denied permissions given by `denied_permissions`. If a permission appears in `denied_permissions` _and_ in `exception_permissions` then it will _not_ be denied. The excluded permissions can be specified using the same syntax as `denied_permissions`.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["exceptionPrincipals"] = {
+          ["description"] = "The identities that are excluded from the deny rule, even if they are listed in the `denied_principals`. For example, you could add a Google group to the `denied_principals`, then exclude specific users who belong to that group. This field can contain the same values as the `denied_principals` field, excluding `principalSet://goog/public:all`, which represents all users on the internet.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV2betaListPoliciesResponse"] = {
+      ["description"] = "Response message for `ListPolicies`.",
+      ["id"] = "GoogleIamV2betaListPoliciesResponse",
+      ["properties"] = {
+        ["nextPageToken"] = {
+          ["description"] = "A page token that you can use in a ListPoliciesRequest to retrieve the next page. If this field is omitted, there are no additional pages.",
+          ["type"] = "string",
+        },
+        ["policies"] = {
+          ["description"] = "Metadata for the policies that are attached to the resource.",
+          ["items"] = {
+            ["$ref"] = "GoogleIamV2betaPolicy",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV2betaPolicy"] = {
+      ["description"] = "Data for an IAM policy.",
+      ["id"] = "GoogleIamV2betaPolicy",
+      ["properties"] = {
+        ["annotations"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "A key-value map to store arbitrary metadata for the `Policy`. Keys can be up to 63 characters. Values can be up to 255 characters.",
+          ["type"] = "object",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. The time when the `Policy` was created.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["deleteTime"] = {
+          ["description"] = "Output only. The time when the `Policy` was deleted. Empty if the policy is not deleted.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["displayName"] = {
+          ["description"] = "A user-specified description of the `Policy`. This value can be up to 63 characters.",
+          ["type"] = "string",
+        },
+        ["etag"] = {
+          ["description"] = "An opaque tag that identifies the current version of the `Policy`. IAM uses this value to help manage concurrent updates, so they do not cause one update to be overwritten by another. If this field is present in a CreatePolicy request, the value is ignored.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "Output only. The kind of the `Policy`. Always contains the value `DenyPolicy`.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Immutable. The resource name of the `Policy`, which must be unique. Format: `policies/{attachment_point}/denypolicies/{policy_id}` The attachment point is identified by its URL-encoded full resource name, which means that the forward-slash character, `/`, must be written as `%2F`. For example, `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`. For organizations and folders, use the numeric ID in the full resource name. For projects, requests can use the alphanumeric or the numeric ID. Responses always contain the numeric ID.",
+          ["type"] = "string",
+        },
+        ["rules"] = {
+          ["description"] = "A list of rules that specify the behavior of the `Policy`. All of the rules should be of the `kind` specified in the `Policy`.",
+          ["items"] = {
+            ["$ref"] = "GoogleIamV2betaPolicyRule",
+          },
+          ["type"] = "array",
+        },
+        ["uid"] = {
+          ["description"] = "Immutable. The globally unique ID of the `Policy`. Assigned automatically when the `Policy` is created.",
+          ["type"] = "string",
+        },
+        ["updateTime"] = {
+          ["description"] = "Output only. The time when the `Policy` was last updated.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV2betaPolicyOperationMetadata"] = {
+      ["description"] = "Metadata for long-running `Policy` operations.",
+      ["id"] = "GoogleIamV2betaPolicyOperationMetadata",
+      ["properties"] = {
+        ["createTime"] = {
+          ["description"] = "Timestamp when the `google.longrunning.Operation` was created.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleIamV2betaPolicyRule"] = {
+      ["description"] = "A single rule in a `Policy`.",
+      ["id"] = "GoogleIamV2betaPolicyRule",
+      ["properties"] = {
+        ["denyRule"] = {
+          ["$ref"] = "GoogleIamV2betaDenyRule",
+          ["description"] = "A rule for a deny policy.",
+        },
+        ["description"] = {
+          ["description"] = "A user-specified description of the rule. This value can be up to 256 characters.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleLongrunningOperation"] = {
+      ["description"] = "This resource represents a long-running operation that is the result of a network API call.",
+      ["id"] = "GoogleLongrunningOperation",
+      ["properties"] = {
+        ["done"] = {
+          ["description"] = "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
+          ["type"] = "boolean",
+        },
+        ["error"] = {
+          ["$ref"] = "GoogleRpcStatus",
+          ["description"] = "The error result of the operation in case of failure or cancellation.",
+        },
+        ["metadata"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object. Contains field @type with type URL.",
+            ["type"] = "any",
+          },
+          ["description"] = "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+          ["type"] = "object",
+        },
+        ["name"] = {
+          ["description"] = "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
+          ["type"] = "string",
+        },
+        ["response"] = {
+          ["additionalProperties"] = {
+            ["description"] = "Properties of the object. Contains field @type with type URL.",
+            ["type"] = "any",
+          },
+          ["description"] = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          ["type"] = "object",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleRpcStatus"] = {
+      ["description"] = "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      ["id"] = "GoogleRpcStatus",
+      ["properties"] = {
+        ["code"] = {
+          ["description"] = "The status code, which should be an enum value of google.rpc.Code.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["details"] = {
+          ["description"] = "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          ["items"] = {
+            ["additionalProperties"] = {
+              ["description"] = "Properties of the object. Contains field @type with type URL.",
+              ["type"] = "any",
+            },
+            ["type"] = "object",
+          },
+          ["type"] = "array",
+        },
+        ["message"] = {
+          ["description"] = "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GoogleTypeExpr"] = {
+      ["description"] = "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() < 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' && document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
+      ["id"] = "GoogleTypeExpr",
+      ["properties"] = {
+        ["description"] = {
+          ["description"] = "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
+          ["type"] = "string",
+        },
+        ["expression"] = {
+          ["description"] = "Textual representation of an expression in Common Expression Language syntax.",
+          ["type"] = "string",
+        },
+        ["location"] = {
+          ["description"] = "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
+          ["type"] = "string",
+        },
+        ["title"] = {
+          ["description"] = "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+  },
+  ["servicePath"] = "",
+  ["title"] = "Identity and Access Management (IAM) API",
+  ["version"] = "v2beta",
+  ["version_module"] = true,
+}

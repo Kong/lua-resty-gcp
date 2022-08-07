@@ -1,0 +1,171 @@
+{
+  "description": "The Groups Migration API allows domain administrators to archive emails into Google groups.",
+  "schemas": {
+    "Groups": {
+      "type": "object",
+      "properties": {
+        "responseCode": {
+          "type": "string",
+          "description": "The status of the insert request."
+        },
+        "kind": {
+          "type": "string",
+          "description": "The kind of insert resource this is."
+        }
+      },
+      "description": "JSON response template for groups migration API.",
+      "id": "Groups"
+    }
+  },
+  "resources": {
+    "archive": {
+      "methods": {
+        "insert": {
+          "flatPath": "groups/v1/groups/{groupId}/archive",
+          "parameters": {
+            "groupId": {
+              "type": "string",
+              "description": "The group ID",
+              "location": "path",
+              "required": true
+            }
+          },
+          "path": "groups/v1/groups/{groupId}/archive",
+          "supportsMediaUpload": true,
+          "parameterOrder": [
+            "groupId"
+          ],
+          "response": {
+            "$ref": "Groups"
+          },
+          "mediaUpload": {
+            "maxSize": "26214400",
+            "protocols": {
+              "simple": {
+                "multipart": true,
+                "path": "/upload/groups/v1/groups/{groupId}/archive"
+              }
+            },
+            "accept": [
+              "message/rfc822"
+            ]
+          },
+          "description": "Inserts a new mail into the archive of the Google group.",
+          "httpMethod": "POST",
+          "scopes": [
+            "https://www.googleapis.com/auth/apps.groups.migration"
+          ],
+          "id": "groupsmigration.archive.insert"
+        }
+      }
+    }
+  },
+  "canonicalName": "Groups Migration",
+  "baseUrl": "https://groupsmigration.googleapis.com/",
+  "title": "Groups Migration API",
+  "documentationLink": "https://developers.google.com/google-apps/groups-migration/",
+  "servicePath": "",
+  "id": "groupsmigration:v1",
+  "name": "groupsmigration",
+  "ownerDomain": "google.com",
+  "batchPath": "batch",
+  "revision": "20220728",
+  "rootUrl": "https://groupsmigration.googleapis.com/",
+  "mtlsRootUrl": "https://groupsmigration.mtls.googleapis.com/",
+  "kind": "discovery#restDescription",
+  "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  },
+  "parameters": {
+    "$.xgafv": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2"
+      ],
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "description": "V1 error format.",
+      "location": "query"
+    },
+    "uploadType": {
+      "type": "string",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "location": "query"
+    },
+    "access_token": {
+      "description": "OAuth access token.",
+      "location": "query",
+      "type": "string"
+    },
+    "prettyPrint": {
+      "default": "true",
+      "type": "boolean",
+      "description": "Returns response with indentations and line breaks.",
+      "location": "query"
+    },
+    "upload_protocol": {
+      "location": "query",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string"
+    },
+    "key": {
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string"
+    },
+    "oauth_token": {
+      "type": "string",
+      "description": "OAuth 2.0 token for the current user.",
+      "location": "query"
+    },
+    "alt": {
+      "default": "json",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "type": "string",
+      "location": "query",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "description": "Data format for response."
+    },
+    "quotaUser": {
+      "type": "string",
+      "location": "query",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters."
+    },
+    "callback": {
+      "description": "JSONP",
+      "location": "query",
+      "type": "string"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "location": "query",
+      "type": "string"
+    }
+  },
+  "basePath": "",
+  "protocol": "rest",
+  "discoveryVersion": "v1",
+  "version": "v1",
+  "auth": {
+    "oauth2": {
+      "scopes": {
+        "https://www.googleapis.com/auth/apps.groups.migration": {
+          "description": "Upload messages to any Google group in your domain"
+        }
+      }
+    }
+  },
+  "ownerName": "Google"
+}
