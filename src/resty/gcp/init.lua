@@ -14,30 +14,19 @@ local lookup_helper = function(self, key) -- signature to match __index meta-met
     error(("key '%s' not found"):format(tostring(key)), 2)
 end
 
-local ApiDiscovery = function(apis)
-    -- local req = {
-    --     method = "GET",
-    --     ssl_verify = false
-    -- }
-    -- local client = http.new()
-    -- res, err = client:request_uri(url, req)
-    -- if not res then
-    --     error(err)
-    --     return
-    -- end
-    -- client:close()
-    -- local apis = cjson.decode(res.body).items
-    -- if (not apis) then
-    --     error("Failed to get Discovery API")
-    -- end
-    local apis = require "resty.gcp.request.discovery"
-    local apiList = {}
-    for k, v in pairs(apis.items) do
+local APIS
+
+local function ApiDiscovery()
+    if APIS then return end
+
+    local discovery = require "resty.gcp.request.discovery"
+    APIS = {}
+
+    for _, v in pairs(discovery.items) do
         local id, _ = string.gsub(v.id, ":", "_")
         id, _ = string.gsub(id, "%.", "p")
-        apiList[#apiList + 1] = id
+        APIS[id] = true
     end
-    return apiList
 end
 
 local FindApis
@@ -108,20 +97,40 @@ local BuildMethods = function(methods)
     return setmetatable(services, {__index = lookup_helper})
 end
 
-local GCP = {}
-GCP.__index = lookup_helper
+local load_api
+do
+    local cache = {}
 
-function GCP:new()
-    -- local discoveryUrl = "https://discovery.googleapis.com/discovery/v1/apis"
-    local apis = ApiDiscovery()
-    local servicesInstance = {}
-    for _, service in pairs(apis) do
+    function load_api(service)
+        if not APIS[service] then
+            error("Unknown API/service: " .. tostring(service), 2)
+        end
+
+        local api = cache[service]
+        if api then
+            return api
+        end
+
         local rawAPI = require("resty.gcp.api." .. service)
         local methods = FindApis(rawAPI, {})
-        servicesInstance[service] = BuildMethods(methods)
+        api = BuildMethods(methods)
+
+        cache[service] = api
+        return api
     end
-    local gcp_instance = setmetatable(servicesInstance, GCP)
-    return gcp_instance
+end
+
+local GCP = {}
+GCP.__index = function(self, service)
+    local api = load_api(service)
+    self[service] = api
+    return api
+end
+
+function GCP:new()
+    ApiDiscovery()
+
+    return setmetatable({}, GCP)
 end
 
 return setmetatable(
