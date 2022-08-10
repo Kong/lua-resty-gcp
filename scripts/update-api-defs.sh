@@ -75,7 +75,7 @@ do
             --retry-delay 5 \
             --retry 3 \
             --url "$url" \
-            --output "$dest" \
+        | jq -r -S . > "$dest" \
         || {
             FAILED+=("$name (failed download)")
             continue
