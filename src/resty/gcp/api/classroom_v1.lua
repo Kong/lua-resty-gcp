@@ -2400,7 +2400,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220801",
+  ["revision"] = "20220804",
   ["rootUrl"] = "https://classroom.googleapis.com/",
   ["schemas"] = {
     ["Announcement"] = {

@@ -400,7 +400,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220729",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://licensing.googleapis.com/",
   ["schemas"] = {
     ["Empty"] = {

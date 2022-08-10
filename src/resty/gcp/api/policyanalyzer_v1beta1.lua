@@ -163,7 +163,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220730",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://policyanalyzer.googleapis.com/",
   ["schemas"] = {
     ["GoogleCloudPolicyanalyzerV1beta1Activity"] = {

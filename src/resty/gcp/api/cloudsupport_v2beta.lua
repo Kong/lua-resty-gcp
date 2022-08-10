@@ -575,7 +575,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220805",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://cloudsupport.googleapis.com/",
   ["schemas"] = {
     ["Actor"] = {

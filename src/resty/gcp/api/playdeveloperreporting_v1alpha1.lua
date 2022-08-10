@@ -718,7 +718,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220803",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://playdeveloperreporting.googleapis.com/",
   ["schemas"] = {
     ["GooglePlayDeveloperReportingV1alpha1Anomaly"] = {

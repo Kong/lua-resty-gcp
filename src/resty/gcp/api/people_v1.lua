@@ -1172,7 +1172,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220809",
   ["rootUrl"] = "https://people.googleapis.com/",
   ["schemas"] = {
     ["Address"] = {

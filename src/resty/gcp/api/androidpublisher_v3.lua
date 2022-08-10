@@ -3915,7 +3915,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220810",
   ["rootUrl"] = "https://androidpublisher.googleapis.com/",
   ["schemas"] = {
     ["AcquisitionTargetingRule"] = {

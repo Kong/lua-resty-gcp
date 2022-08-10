@@ -3829,7 +3829,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://youtube.googleapis.com/",
   ["schemas"] = {
     ["AbuseReport"] = {

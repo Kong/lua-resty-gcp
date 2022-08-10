@@ -418,7 +418,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220721",
+  ["revision"] = "20220802",
   ["rootUrl"] = "https://cloudscheduler.googleapis.com/",
   ["schemas"] = {
     ["AppEngineHttpTarget"] = {

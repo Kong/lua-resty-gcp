@@ -351,7 +351,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220803",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://firebasedatabase.googleapis.com/",
   ["schemas"] = {
     ["DatabaseInstance"] = {

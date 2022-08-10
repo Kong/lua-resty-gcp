@@ -697,7 +697,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220806",
+  ["revision"] = "20220810",
   ["rootUrl"] = "https://cloudtasks.googleapis.com/",
   ["schemas"] = {
     ["AppEngineHttpQueue"] = {

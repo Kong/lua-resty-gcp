@@ -584,7 +584,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220721",
+  ["revision"] = "20220802",
   ["rootUrl"] = "https://memcache.googleapis.com/",
   ["schemas"] = {
     ["ApplyParametersRequest"] = {

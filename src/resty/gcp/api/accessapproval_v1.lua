@@ -913,7 +913,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220729",
+  ["revision"] = "20220805",
   ["rootUrl"] = "https://accessapproval.googleapis.com/",
   ["schemas"] = {
     ["AccessApprovalServiceAccount"] = {

@@ -2671,7 +2671,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220803",
+  ["revision"] = "20220805",
   ["rootUrl"] = "https://books.googleapis.com/",
   ["schemas"] = {
     ["Annotation"] = {

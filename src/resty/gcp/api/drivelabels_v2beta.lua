@@ -888,7 +888,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220802",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://drivelabels.googleapis.com/",
   ["schemas"] = {
     ["GoogleAppsDriveLabelsV2betaBadgeColors"] = {

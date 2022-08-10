@@ -1463,7 +1463,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220810",
   ["rootUrl"] = "https://toolresults.googleapis.com/",
   ["schemas"] = {
     ["ANR"] = {
@@ -1766,6 +1766,12 @@ return {
           ["type"] = "string",
         },
       },
+      ["type"] = "object",
+    },
+    ["DetectedAppSplashScreen"] = {
+      ["description"] = "A notification that Robo detected a splash screen provided by app (vs. Android OS splash screen).",
+      ["id"] = "DetectedAppSplashScreen",
+      ["properties"] = {},
       ["type"] = "object",
     },
     ["DeviceOutOfMemory"] = {
@@ -3617,6 +3623,7 @@ return {
             "unityException",
             "deviceOutOfMemory",
             "logcatCollectionError",
+            "detectedAppSplashScreen",
           },
           ["enumDescriptions"] = {
             "Default unspecified type. Do not use. For versioning only.",
@@ -3650,6 +3657,7 @@ return {
             "An uncaught Unity exception was detected (these don't crash apps).",
             "Device running out of memory was detected",
             "Problems detected while collecting logcat",
+            "Robo detected a splash screen provided by app (vs. Android OS splash screen).",
           },
           ["type"] = "string",
         },

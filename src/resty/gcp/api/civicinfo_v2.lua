@@ -352,7 +352,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220802",
+  ["revision"] = "20220809",
   ["rootUrl"] = "https://civicinfo.googleapis.com/",
   ["schemas"] = {
     ["AdministrationRegion"] = {

@@ -1049,7 +1049,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220714",
+  ["revision"] = "20220731",
   ["rootUrl"] = "https://datamigration.googleapis.com/",
   ["schemas"] = {
     ["AuditConfig"] = {

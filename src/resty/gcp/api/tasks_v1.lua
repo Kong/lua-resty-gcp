@@ -566,7 +566,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220802",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://tasks.googleapis.com/",
   ["schemas"] = {
     ["Task"] = {

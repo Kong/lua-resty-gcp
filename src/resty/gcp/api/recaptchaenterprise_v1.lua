@@ -514,7 +514,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220730",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://recaptchaenterprise.googleapis.com/",
   ["schemas"] = {
     ["GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment"] = {

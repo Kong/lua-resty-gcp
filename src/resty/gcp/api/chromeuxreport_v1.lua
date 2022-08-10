@@ -116,7 +116,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220809",
   ["rootUrl"] = "https://chromeuxreport.googleapis.com/",
   ["schemas"] = {
     ["Bin"] = {

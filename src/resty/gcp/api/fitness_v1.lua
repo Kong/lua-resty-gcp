@@ -831,7 +831,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220802",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://fitness.googleapis.com/",
   ["schemas"] = {
     ["AggregateBucket"] = {

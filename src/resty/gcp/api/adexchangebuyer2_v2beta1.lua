@@ -2568,7 +2568,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220810",
   ["rootUrl"] = "https://adexchangebuyer.googleapis.com/",
   ["schemas"] = {
     ["AbsoluteDateRange"] = {

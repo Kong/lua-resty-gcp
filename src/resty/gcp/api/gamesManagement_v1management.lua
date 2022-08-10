@@ -471,7 +471,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220726",
+  ["revision"] = "20220803",
   ["rootUrl"] = "https://gamesmanagement.googleapis.com/",
   ["schemas"] = {
     ["AchievementResetAllResponse"] = {

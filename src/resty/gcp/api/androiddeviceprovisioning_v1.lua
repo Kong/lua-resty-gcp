@@ -825,7 +825,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220803",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://androiddeviceprovisioning.googleapis.com/",
   ["schemas"] = {
     ["ClaimDeviceRequest"] = {

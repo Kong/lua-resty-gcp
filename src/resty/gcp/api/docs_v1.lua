@@ -216,7 +216,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220801",
+  ["revision"] = "20220802",
   ["rootUrl"] = "https://docs.googleapis.com/",
   ["schemas"] = {
     ["AutoText"] = {

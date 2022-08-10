@@ -193,7 +193,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220802",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://pagespeedonline.googleapis.com/",
   ["schemas"] = {
     ["AuditRefs"] = {

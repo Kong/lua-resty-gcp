@@ -261,7 +261,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220805",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://safebrowsing.googleapis.com/",
   ["schemas"] = {
     ["GoogleProtobufEmpty"] = {

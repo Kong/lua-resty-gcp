@@ -586,7 +586,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220809",
   ["rootUrl"] = "https://area120tables.googleapis.com/",
   ["schemas"] = {
     ["BatchCreateRowsRequest"] = {

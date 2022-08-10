@@ -1244,7 +1244,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220726",
+  ["revision"] = "20220803",
   ["rootUrl"] = "https://games.googleapis.com/",
   ["schemas"] = {
     ["AchievementDefinition"] = {

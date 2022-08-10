@@ -450,7 +450,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220730",
+  ["revision"] = "20220720",
   ["rootUrl"] = "https://sourcerepo.googleapis.com/",
   ["schemas"] = {
     ["AuditConfig"] = {

@@ -224,7 +224,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220803",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://firebasedynamiclinks.googleapis.com/",
   ["schemas"] = {
     ["AnalyticsInfo"] = {

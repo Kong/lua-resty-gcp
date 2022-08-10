@@ -887,7 +887,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220722",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://script.googleapis.com/",
   ["schemas"] = {
     ["Content"] = {

@@ -321,7 +321,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220810",
   ["rootUrl"] = "https://admob.googleapis.com/",
   ["schemas"] = {
     ["AdUnit"] = {

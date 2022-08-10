@@ -624,7 +624,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220721",
+  ["revision"] = "20220728",
   ["rootUrl"] = "https://redis.googleapis.com/",
   ["schemas"] = {
     ["Empty"] = {

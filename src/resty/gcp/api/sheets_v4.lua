@@ -870,7 +870,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220728",
+  ["revision"] = "20220804",
   ["rootUrl"] = "https://sheets.googleapis.com/",
   ["schemas"] = {
     ["AddBandingRequest"] = {

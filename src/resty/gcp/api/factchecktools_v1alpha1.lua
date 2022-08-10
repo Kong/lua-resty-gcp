@@ -304,7 +304,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220805",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://factchecktools.googleapis.com/",
   ["schemas"] = {
     ["GoogleFactcheckingFactchecktoolsV1alpha1Claim"] = {

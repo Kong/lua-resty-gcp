@@ -631,7 +631,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220802",
+  ["revision"] = "20220807",
   ["rootUrl"] = "https://reseller.googleapis.com/",
   ["schemas"] = {
     ["Address"] = {

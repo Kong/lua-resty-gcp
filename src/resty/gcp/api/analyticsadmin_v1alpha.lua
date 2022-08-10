@@ -2802,7 +2802,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://analyticsadmin.googleapis.com/",
   ["schemas"] = {
     ["GoogleAnalyticsAdminV1alphaAccessBetweenFilter"] = {

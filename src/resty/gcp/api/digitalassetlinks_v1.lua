@@ -199,7 +199,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220730",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://digitalassetlinks.googleapis.com/",
   ["schemas"] = {
     ["AndroidAppAsset"] = {

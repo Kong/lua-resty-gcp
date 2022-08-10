@@ -154,7 +154,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220805",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://fcmdata.googleapis.com/",
   ["schemas"] = {
     ["GoogleFirebaseFcmDataV1beta1AndroidDeliveryData"] = {

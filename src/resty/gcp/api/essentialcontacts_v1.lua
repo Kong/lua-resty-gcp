@@ -850,7 +850,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220804",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://essentialcontacts.googleapis.com/",
   ["schemas"] = {
     ["GoogleCloudEssentialcontactsV1ComputeContactsResponse"] = {

@@ -4223,6 +4223,21 @@ return {
     },
     {
       ["description"] = "Policy Simulator is a collection of endpoints for creating, running, and viewing a [Replay][google.cloud.policysimulator.v1beta1.Replay]. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy. During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.",
+      ["discoveryRestUrl"] = "https://policysimulator.googleapis.com/$discovery/rest?version=v1alpha",
+      ["documentationLink"] = "https://cloud.google.com/iam/docs/simulating-access",
+      ["icons"] = {
+        ["x16"] = "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        ["x32"] = "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png",
+      },
+      ["id"] = "policysimulator:v1alpha",
+      ["kind"] = "discovery#directoryItem",
+      ["name"] = "policysimulator",
+      ["preferred"] = false,
+      ["title"] = "Policy Simulator API",
+      ["version"] = "v1alpha",
+    },
+    {
+      ["description"] = "Policy Simulator is a collection of endpoints for creating, running, and viewing a [Replay][google.cloud.policysimulator.v1beta1.Replay]. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy. During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.",
       ["discoveryRestUrl"] = "https://policysimulator.googleapis.com/$discovery/rest?version=v1beta1",
       ["documentationLink"] = "https://cloud.google.com/iam/docs/simulating-access",
       ["icons"] = {

@@ -452,7 +452,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220729",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://webrisk.googleapis.com/",
   ["schemas"] = {
     ["GoogleCloudWebriskV1ComputeThreatListDiffResponse"] = {
@@ -716,6 +716,7 @@ return {
             "SUCCEEDED",
             "CANCELLED",
             "FAILED",
+            "CLOSED",
           },
           ["enumDescriptions"] = {
             "Default unspecified state.",
@@ -723,6 +724,7 @@ return {
             "The operation finished with a success status.",
             "The operation was cancelled.",
             "The operation finished with a failure status.",
+            "The operation was closed with no action taken.",
           },
           ["type"] = "string",
         },

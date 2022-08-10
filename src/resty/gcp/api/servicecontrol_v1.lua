@@ -197,7 +197,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220726",
+  ["revision"] = "20220729",
   ["rootUrl"] = "https://servicecontrol.googleapis.com/",
   ["schemas"] = {
     ["AllocateInfo"] = {

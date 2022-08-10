@@ -138,7 +138,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220803",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://playintegrity.googleapis.com/",
   ["schemas"] = {
     ["AccountDetails"] = {

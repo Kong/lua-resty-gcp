@@ -423,7 +423,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220801",
+  ["revision"] = "20220808",
   ["rootUrl"] = "https://alertcenter.googleapis.com/",
   ["schemas"] = {
     ["AccountSuspensionDetails"] = {

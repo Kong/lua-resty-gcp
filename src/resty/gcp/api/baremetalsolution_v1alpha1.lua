@@ -189,7 +189,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220725",
+  ["revision"] = "20220731",
   ["rootUrl"] = "https://baremetalsolution.googleapis.com/",
   ["schemas"] = {
     ["InstanceConfig"] = {

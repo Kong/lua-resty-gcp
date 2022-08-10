@@ -609,7 +609,7 @@ return {
       },
     },
   },
-  ["revision"] = "20220730",
+  ["revision"] = "20220806",
   ["rootUrl"] = "https://accesscontextmanager.googleapis.com/",
   ["schemas"] = {
     ["AccessContextManagerOperationMetadata"] = {
