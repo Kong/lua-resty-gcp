@@ -99,7 +99,8 @@ end
 
 local load_api
 do
-    local cache = {}
+    -- using weak values so that API objects can be garbage-collected
+    local cache = setmetatable({}, { __mode = "v" })
 
     function load_api(service)
         if not APIS[service] then
