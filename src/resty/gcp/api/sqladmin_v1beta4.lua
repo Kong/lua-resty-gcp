@@ -1,4 +1,4836 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "ownerDomain": "google.com", "resources": { "databases": { "methods": { "get": { "id": "sql.databases.get", "response": { "$ref": "Database" }, "httpMethod": "GET", "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "project": { "location": "path", "description": "Project ID of the project that contains the instance.", "type": "string", "required": true }, "instance": { "location": "path", "required": true, "description": "Database instance ID. This does not include the project ID.", "type": "string" }, "database": { "type": "string", "location": "path", "required": true, "description": "Name of the database in the instance." } }, "parameterOrder": [ "project", "instance", "database" ], "description": "Retrieves a resource containing information about a database inside a Cloud SQL instance." }, "list": { "parameters": { "project": { "type": "string", "description": "Project ID of the project that contains the instance.", "location": "path", "required": true }, "instance": { "required": true, "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "location": "path" } }, "httpMethod": "GET", "id": "sql.databases.list", "description": "Lists databases in the specified Cloud SQL instance.", "response": { "$ref": "DatabasesListResponse" }, "parameterOrder": [ "project", "instance" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/databases", "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases" }, "delete": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameterOrder": [ "project", "instance", "database" ], "id": "sql.databases.delete", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "response": { "$ref": "Operation" }, "parameters": { "instance": { "location": "path", "description": "Database instance ID. This does not include the project ID.", "type": "string", "required": true }, "project": { "required": true, "type": "string", "description": "Project ID of the project that contains the instance.", "location": "path" }, "database": { "required": true, "type": "string", "location": "path", "description": "Name of the database to be deleted in the instance." } }, "httpMethod": "DELETE", "description": "Deletes a database from a Cloud SQL instance." }, "insert": { "description": "Inserts a resource containing information about a database inside a Cloud SQL instance.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "project": { "required": true, "description": "Project ID of the project that contains the instance.", "type": "string", "location": "path" }, "instance": { "type": "string", "description": "Database instance ID. This does not include the project ID.", "location": "path", "required": true } }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases", "parameterOrder": [ "project", "instance" ], "httpMethod": "POST", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/databases", "request": { "$ref": "Database" }, "id": "sql.databases.insert", "response": { "$ref": "Operation" } }, "patch": { "parameters": { "project": { "location": "path", "description": "Project ID of the project that contains the instance.", "type": "string", "required": true }, "instance": { "type": "string", "location": "path", "required": true, "description": "Database instance ID. This does not include the project ID." }, "database": { "required": true, "type": "string", "description": "Name of the database to be updated in the instance.", "location": "path" } }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "response": { "$ref": "Operation" }, "id": "sql.databases.patch", "httpMethod": "PATCH", "request": { "$ref": "Database" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameterOrder": [ "project", "instance", "database" ], "description": "Partially updates a resource containing information about a database inside a Cloud SQL instance. This method supports patch semantics." }, "update": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "parameterOrder": [ "project", "instance", "database" ], "description": "Updates a resource containing information about a database inside a Cloud SQL instance.", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}", "httpMethod": "PUT", "parameters": { "project": { "required": true, "description": "Project ID of the project that contains the instance.", "location": "path", "type": "string" }, "database": { "location": "path", "type": "string", "required": true, "description": "Name of the database to be updated in the instance." }, "instance": { "location": "path", "required": true, "description": "Database instance ID. This does not include the project ID.", "type": "string" } }, "id": "sql.databases.update", "response": { "$ref": "Operation" }, "request": { "$ref": "Database" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ] } } }, "instances": { "methods": { "listServerCas": { "id": "sql.instances.listServerCas", "parameters": { "instance": { "location": "path", "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "required": true }, "project": { "description": "Project ID of the project that contains the instance.", "required": true, "type": "string", "location": "path" } }, "response": { "$ref": "InstancesListServerCasResponse" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "description": "Lists all of the trusted Certificate Authorities (CAs) for the specified instance. There can be up to three CAs listed: the CA that was used to sign the certificate that is currently in use, a CA that has been added but not yet used to sign a certificate, and a CA used to sign a certificate that has previously rotated out.", "parameterOrder": [ "project", "instance" ], "path": "sql/v1beta4/projects/{project}/instances/{instance}/listServerCas", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/listServerCas", "httpMethod": "GET" }, "failover": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/failover", "id": "sql.instances.failover", "response": { "$ref": "Operation" }, "description": "Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.", "parameters": { "project": { "description": "ID of the project that contains the read replica.", "type": "string", "location": "path", "required": true }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "required": true, "location": "path" } }, "httpMethod": "POST", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "request": { "$ref": "InstancesFailoverRequest" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/failover", "parameterOrder": [ "project", "instance" ] }, "delete": { "id": "sql.instances.delete", "httpMethod": "DELETE", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}", "response": { "$ref": "Operation" }, "path": "sql/v1beta4/projects/{project}/instances/{instance}", "parameters": { "instance": { "location": "path", "type": "string", "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true }, "project": { "required": true, "type": "string", "description": "Project ID of the project that contains the instance to be deleted.", "location": "path" } }, "description": "Deletes a Cloud SQL instance.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameterOrder": [ "project", "instance" ] }, "clone": { "id": "sql.instances.clone", "path": "sql/v1beta4/projects/{project}/instances/{instance}/clone", "parameterOrder": [ "project", "instance" ], "parameters": { "instance": { "required": true, "location": "path", "type": "string", "description": "The ID of the Cloud SQL instance to be cloned (source). This does not include the project ID." }, "project": { "location": "path", "type": "string", "required": true, "description": "Project ID of the source as well as the clone Cloud SQL instance." } }, "httpMethod": "POST", "response": { "$ref": "Operation" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/clone", "description": "Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "request": { "$ref": "InstancesCloneRequest" } }, "get": { "id": "sql.instances.get", "parameterOrder": [ "project", "instance" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}", "response": { "$ref": "DatabaseInstance" }, "parameters": { "instance": { "required": true, "description": "Database instance ID. This does not include the project ID.", "type": "string", "location": "path" }, "project": { "description": "Project ID of the project that contains the instance.", "location": "path", "type": "string", "required": true } }, "httpMethod": "GET", "path": "sql/v1beta4/projects/{project}/instances/{instance}", "description": "Retrieves a resource containing information about a Cloud SQL instance." }, "rotateServerCa": { "id": "sql.instances.rotateServerCa", "description": "Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method.", "parameters": { "instance": { "required": true, "type": "string", "location": "path", "description": "Cloud SQL instance ID. This does not include the project ID." }, "project": { "description": "Project ID of the project that contains the instance.", "type": "string", "required": true, "location": "path" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "path": "sql/v1beta4/projects/{project}/instances/{instance}/rotateServerCa", "httpMethod": "POST", "request": { "$ref": "InstancesRotateServerCaRequest" }, "response": { "$ref": "Operation" }, "parameterOrder": [ "project", "instance" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/rotateServerCa" }, "stopReplica": { "httpMethod": "POST", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/stopReplica", "parameterOrder": [ "project", "instance" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "id": "sql.instances.stopReplica", "parameters": { "project": { "description": "ID of the project that contains the read replica.", "type": "string", "location": "path", "required": true }, "instance": { "description": "Cloud SQL read replica instance name.", "type": "string", "required": true, "location": "path" } }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/stopReplica", "description": "Stops the replication in the read replica instance.", "response": { "$ref": "Operation" } }, "promoteReplica": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/promoteReplica", "parameters": { "instance": { "required": true, "location": "path", "description": "Cloud SQL read replica instance name.", "type": "string" }, "project": { "type": "string", "description": "ID of the project that contains the read replica.", "required": true, "location": "path" } }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/promoteReplica", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "response": { "$ref": "Operation" }, "parameterOrder": [ "project", "instance" ], "description": "Promotes the read replica instance to be a stand-alone Cloud SQL instance. Using this operation might cause your instance to restart.", "httpMethod": "POST", "id": "sql.instances.promoteReplica" }, "insert": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "response": { "$ref": "Operation" }, "httpMethod": "POST", "path": "sql/v1beta4/projects/{project}/instances", "id": "sql.instances.insert", "parameters": { "project": { "description": "Project ID of the project to which the newly created Cloud SQL instances should belong.", "location": "path", "type": "string", "required": true } }, "flatPath": "sql/v1beta4/projects/{project}/instances", "request": { "$ref": "DatabaseInstance" }, "parameterOrder": [ "project" ], "description": "Creates a new Cloud SQL instance." }, "truncateLog": { "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/truncateLog", "parameterOrder": [ "project", "instance" ], "response": { "$ref": "Operation" }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/truncateLog", "request": { "$ref": "InstancesTruncateLogRequest" }, "id": "sql.instances.truncateLog", "description": "Truncate MySQL general and slow query log tables MySQL only.", "parameters": { "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true, "type": "string", "location": "path" }, "project": { "type": "string", "description": "Project ID of the Cloud SQL project.", "location": "path", "required": true } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "httpMethod": "POST" }, "restart": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/restart", "response": { "$ref": "Operation" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/restart", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "location": "path", "type": "string", "required": true }, "project": { "required": true, "type": "string", "location": "path", "description": "Project ID of the project that contains the instance to be restarted." } }, "parameterOrder": [ "project", "instance" ], "id": "sql.instances.restart", "description": "Restarts a Cloud SQL instance.", "httpMethod": "POST" }, "resetSslConfig": { "description": "Deletes all client certificates and generates a new server SSL certificate for the instance.", "path": "sql/v1beta4/projects/{project}/instances/{instance}/resetSslConfig", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/resetSslConfig", "httpMethod": "POST", "parameterOrder": [ "project", "instance" ], "response": { "$ref": "Operation" }, "id": "sql.instances.resetSslConfig", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "instance": { "type": "string", "required": true, "description": "Cloud SQL instance ID. This does not include the project ID.", "location": "path" }, "project": { "type": "string", "description": "Project ID of the project that contains the instance.", "required": true, "location": "path" } } }, "update": { "parameterOrder": [ "project", "instance" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "request": { "$ref": "DatabaseInstance" }, "id": "sql.instances.update", "parameters": { "project": { "type": "string", "location": "path", "required": true, "description": "Project ID of the project that contains the instance." }, "instance": { "required": true, "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "location": "path" } }, "description": "Updates settings of a Cloud SQL instance. Using this operation might cause your instance to restart.", "response": { "$ref": "Operation" }, "httpMethod": "PUT", "path": "sql/v1beta4/projects/{project}/instances/{instance}" }, "list": { "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "pageToken": { "description": "A previously-returned page token representing part of the larger set of results to view.", "location": "query", "type": "string" }, "filter": { "description": "A filter expression that filters resources listed in the response. The expression is in the form of field:value. For example, 'instanceType:CLOUD_SQL_INSTANCE'. Fields can be nested as needed as per their JSON representation, such as 'settings.userLabels.auto_start:true'. Multiple filter queries are space-separated. For example. 'state:RUNNABLE instanceType:CLOUD_SQL_INSTANCE'. By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly.", "location": "query", "type": "string" }, "maxResults": { "location": "query", "format": "uint32", "description": "The maximum number of instances to return. The service may return fewer than this value. If unspecified, at most 500 instances are returned. The maximum value is 1000; values above 1000 are coerced to 1000.", "type": "integer" }, "project": { "required": true, "description": "Project ID of the project for which to list Cloud SQL instances.", "location": "path", "type": "string" } }, "id": "sql.instances.list", "path": "sql/v1beta4/projects/{project}/instances", "response": { "$ref": "InstancesListResponse" }, "description": "Lists instances under a given project.", "parameterOrder": [ "project" ], "flatPath": "sql/v1beta4/projects/{project}/instances" }, "import": { "request": { "$ref": "InstancesImportRequest" }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/import", "httpMethod": "POST", "response": { "$ref": "Operation" }, "parameters": { "instance": { "type": "string", "description": "Cloud SQL instance ID. This does not include the project ID.", "location": "path", "required": true }, "project": { "description": "Project ID of the project that contains the instance.", "required": true, "location": "path", "type": "string" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "id": "sql.instances.import", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/import", "description": "Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.", "parameterOrder": [ "project", "instance" ] }, "patch": { "parameterOrder": [ "project", "instance" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "path": "sql/v1beta4/projects/{project}/instances/{instance}", "request": { "$ref": "DatabaseInstance" }, "id": "sql.instances.patch", "httpMethod": "PATCH", "description": "Updates settings of a Cloud SQL instance. This method supports patch semantics.", "response": { "$ref": "Operation" }, "parameters": { "project": { "location": "path", "required": true, "type": "string", "description": "Project ID of the project that contains the instance." }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true, "type": "string", "location": "path" } } }, "startReplica": { "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/startReplica", "path": "sql/v1beta4/projects/{project}/instances/{instance}/startReplica", "parameterOrder": [ "project", "instance" ], "response": { "$ref": "Operation" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "project": { "description": "ID of the project that contains the read replica.", "location": "path", "required": true, "type": "string" }, "instance": { "description": "Cloud SQL read replica instance name.", "location": "path", "required": true, "type": "string" } }, "id": "sql.instances.startReplica", "description": "Starts the replication in the read replica instance.", "httpMethod": "POST" }, "restoreBackup": { "httpMethod": "POST", "request": { "$ref": "InstancesRestoreBackupRequest" }, "id": "sql.instances.restoreBackup", "response": { "$ref": "Operation" }, "parameterOrder": [ "project", "instance" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/restoreBackup", "description": "Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.", "parameters": { "project": { "location": "path", "description": "Project ID of the project that contains the instance.", "type": "string", "required": true }, "instance": { "required": true, "location": "path", "type": "string", "description": "Cloud SQL instance ID. This does not include the project ID." } }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/restoreBackup", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ] }, "export": { "request": { "$ref": "InstancesExportRequest" }, "description": "Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameterOrder": [ "project", "instance" ], "parameters": { "project": { "description": "Project ID of the project that contains the instance to be exported.", "location": "path", "type": "string", "required": true }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "required": true, "location": "path" } }, "id": "sql.instances.export", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/export", "httpMethod": "POST", "path": "sql/v1beta4/projects/{project}/instances/{instance}/export", "response": { "$ref": "Operation" } }, "addServerCa": { "response": { "$ref": "Operation" }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/addServerCa", "parameterOrder": [ "project", "instance" ], "id": "sql.instances.addServerCa", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "instance": { "location": "path", "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true, "type": "string" }, "project": { "description": "Project ID of the project that contains the instance.", "location": "path", "required": true, "type": "string" } }, "description": "Add a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one CA version waiting to be rotated in.", "httpMethod": "POST", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/addServerCa" }, "demoteMaster": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/demoteMaster", "parameters": { "project": { "type": "string", "location": "path", "description": "ID of the project that contains the instance.", "required": true }, "instance": { "type": "string", "required": true, "location": "path", "description": "Cloud SQL instance name." } }, "response": { "$ref": "Operation" }, "description": "Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "id": "sql.instances.demoteMaster", "parameterOrder": [ "project", "instance" ], "request": { "$ref": "InstancesDemoteMasterRequest" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/demoteMaster", "httpMethod": "POST" } } }, "backupRuns": { "methods": { "list": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns", "httpMethod": "GET", "parameters": { "pageToken": { "type": "string", "description": "A previously-returned page token representing part of the larger set of results to view.", "location": "query" }, "project": { "required": true, "description": "Project ID of the project that contains the instance.", "location": "path", "type": "string" }, "instance": { "type": "string", "description": "Cloud SQL instance ID, or \"-\" for all instances. This does not include the project ID.", "required": true, "location": "path" }, "maxResults": { "format": "int32", "location": "query", "type": "integer", "description": "Maximum number of backup runs per response." } }, "id": "sql.backupRuns.list", "parameterOrder": [ "project", "instance" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "response": { "$ref": "BackupRunsListResponse" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns", "description": "Lists all backup runs associated with the project or a given instance and configuration in the reverse chronological order of the backup initiation time." }, "insert": { "response": { "$ref": "Operation" }, "id": "sql.backupRuns.insert", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameterOrder": [ "project", "instance" ], "httpMethod": "POST", "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns", "parameters": { "project": { "location": "path", "type": "string", "description": "Project ID of the project that contains the instance.", "required": true }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "location": "path", "required": true } }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns", "description": "Creates a new backup run on demand.", "request": { "$ref": "BackupRun" } }, "get": { "parameterOrder": [ "project", "instance", "id" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}", "httpMethod": "GET", "response": { "$ref": "BackupRun" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "description": "Retrieves a resource containing information about a backup run.", "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}", "parameters": { "instance": { "type": "string", "location": "path", "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true }, "id": { "format": "int64", "location": "path", "required": true, "type": "string", "description": "The ID of this backup run." }, "project": { "description": "Project ID of the project that contains the instance.", "type": "string", "required": true, "location": "path" } }, "id": "sql.backupRuns.get" }, "delete": { "parameterOrder": [ "project", "instance", "id" ], "id": "sql.backupRuns.delete", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "httpMethod": "DELETE", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}", "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}", "parameters": { "project": { "required": true, "description": "Project ID of the project that contains the instance.", "type": "string", "location": "path" }, "id": { "location": "path", "required": true, "description": "The ID of the backup run to delete. To find a backup run ID, use the [list](https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1beta4/backupRuns/list) method.", "type": "string", "format": "int64" }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "location": "path", "required": true } }, "response": { "$ref": "Operation" }, "description": "Deletes the backup taken by a backup run." } } }, "projects": { "resources": { "instances": { "methods": { "rescheduleMaintenance": { "path": "sql/v1beta4/projects/{project}/instances/{instance}/rescheduleMaintenance", "response": { "$ref": "Operation" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "id": "sql.projects.instances.rescheduleMaintenance", "request": { "$ref": "SqlInstancesRescheduleMaintenanceRequestBody" }, "description": "Reschedules the maintenance on the given instance.", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/rescheduleMaintenance", "parameters": { "instance": { "required": true, "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "location": "path" }, "project": { "description": "ID of the project that contains the instance.", "required": true, "type": "string", "location": "path" } }, "parameterOrder": [ "project", "instance" ], "httpMethod": "POST" }, "startExternalSync": { "response": { "$ref": "Operation" }, "parameterOrder": [ "project", "instance" ], "request": { "$ref": "SqlInstancesStartExternalSyncRequest" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "path": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync", "id": "sql.projects.instances.startExternalSync", "description": "Start External primary instance migration.", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync", "parameters": { "instance": { "location": "path", "type": "string", "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true }, "project": { "description": "ID of the project that contains the instance.", "type": "string", "required": true, "location": "path" } }, "httpMethod": "POST" }, "verifyExternalSyncSettings": { "response": { "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse" }, "description": "Verify External primary instance external sync settings.", "parameters": { "project": { "required": true, "location": "path", "description": "Project ID of the project that contains the instance.", "type": "string" }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true, "type": "string", "location": "path" } }, "id": "sql.projects.instances.verifyExternalSyncSettings", "httpMethod": "POST", "parameterOrder": [ "project", "instance" ], "path": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings", "request": { "$ref": "SqlInstancesVerifyExternalSyncSettingsRequest" } } } } } }, "sslCerts": { "methods": { "get": { "parameterOrder": [ "project", "instance", "sha1Fingerprint" ], "description": "Retrieves a particular SSL certificate. Does not include the private key (required for usage). The private key must be saved from the response to initial creation.", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}", "parameters": { "sha1Fingerprint": { "location": "path", "description": "Sha1 FingerPrint.", "required": true, "type": "string" }, "instance": { "type": "string", "location": "path", "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true }, "project": { "type": "string", "location": "path", "description": "Project ID of the project that contains the instance.", "required": true } }, "response": { "$ref": "SslCert" }, "httpMethod": "GET", "path": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "id": "sql.sslCerts.get" }, "list": { "httpMethod": "GET", "response": { "$ref": "SslCertsListResponse" }, "description": "Lists all of the current SSL certificates for the instance.", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts", "parameterOrder": [ "project", "instance" ], "id": "sql.sslCerts.list", "path": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts", "parameters": { "project": { "required": true, "description": "Project ID of the project that contains the instance.", "location": "path", "type": "string" }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "required": true, "location": "path" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ] }, "delete": { "description": "Deletes the SSL certificate. For First Generation instances, the certificate remains valid until the instance is restarted.", "parameters": { "project": { "type": "string", "description": "Project ID of the project that contains the instance.", "location": "path", "required": true }, "instance": { "location": "path", "description": "Cloud SQL instance ID. This does not include the project ID.", "required": true, "type": "string" }, "sha1Fingerprint": { "type": "string", "description": "Sha1 FingerPrint.", "required": true, "location": "path" } }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}", "id": "sql.sslCerts.delete", "parameterOrder": [ "project", "instance", "sha1Fingerprint" ], "response": { "$ref": "Operation" }, "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ] }, "insert": { "parameters": { "project": { "description": "Project ID of the project that contains the instance.", "location": "path", "type": "string", "required": true }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "location": "path", "required": true, "type": "string" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "path": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts", "httpMethod": "POST", "description": "Creates an SSL certificate and returns it along with the private key and server certificate authority. The new certificate will not be usable until the instance is restarted.", "response": { "$ref": "SslCertsInsertResponse" }, "parameterOrder": [ "project", "instance" ], "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts", "id": "sql.sslCerts.insert", "request": { "$ref": "SslCertsInsertRequest" } }, "createEphemeral": { "response": { "$ref": "SslCert" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/createEphemeral", "request": { "$ref": "SslCertsCreateEphemeralRequest" }, "id": "sql.sslCerts.createEphemeral", "parameterOrder": [ "project", "instance" ], "description": "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "httpMethod": "POST", "path": "sql/v1beta4/projects/{project}/instances/{instance}/createEphemeral", "parameters": { "project": { "required": true, "type": "string", "description": "Project ID of the Cloud SQL project.", "location": "path" }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "required": true, "location": "path" } } } } }, "operations": { "methods": { "get": { "parameters": { "operation": { "location": "path", "type": "string", "description": "Instance operation ID.", "required": true }, "project": { "type": "string", "required": true, "location": "path", "description": "Project ID of the project that contains the instance." } }, "id": "sql.operations.get", "response": { "$ref": "Operation" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "path": "sql/v1beta4/projects/{project}/operations/{operation}", "flatPath": "sql/v1beta4/projects/{project}/operations/{operation}", "httpMethod": "GET", "description": "Retrieves an instance operation that has been performed on an instance.", "parameterOrder": [ "project", "operation" ] }, "list": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "response": { "$ref": "OperationsListResponse" }, "flatPath": "sql/v1beta4/projects/{project}/operations", "id": "sql.operations.list", "path": "sql/v1beta4/projects/{project}/operations", "parameters": { "pageToken": { "location": "query", "description": "A previously-returned page token representing part of the larger set of results to view.", "type": "string" }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "type": "string", "location": "query" }, "project": { "description": "Project ID of the project that contains the instance.", "location": "path", "type": "string", "required": true }, "maxResults": { "location": "query", "type": "integer", "format": "uint32", "description": "Maximum number of operations per response." } }, "description": "Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.", "parameterOrder": [ "project" ], "httpMethod": "GET" } } }, "connect": { "methods": { "generateEphemeralCert": { "httpMethod": "POST", "path": "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert", "request": { "$ref": "GenerateEphemeralCertRequest" }, "description": "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.", "parameterOrder": [ "project", "instance" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "id": "sql.connect.generateEphemeral", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert", "response": { "$ref": "GenerateEphemeralCertResponse" }, "parameters": { "project": { "location": "path", "required": true, "description": "Project ID of the project that contains the instance.", "type": "string" }, "instance": { "type": "string", "location": "path", "required": true, "description": "Cloud SQL instance ID. This does not include the project ID." } } }, "get": { "response": { "$ref": "ConnectSettings" }, "httpMethod": "GET", "parameterOrder": [ "project", "instance" ], "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "project": { "type": "string", "required": true, "location": "path", "description": "Project ID of the project that contains the instance." }, "readTime": { "format": "google-datetime", "type": "string", "location": "query", "description": "Optional. Optional snapshot read timestamp to trade freshness for performance." }, "instance": { "description": "Cloud SQL instance ID. This does not include the project ID.", "location": "path", "type": "string", "required": true } }, "description": "Retrieves connect settings about a Cloud SQL instance.", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings", "id": "sql.connect.get", "path": "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings" } } }, "users": { "methods": { "update": { "description": "Updates an existing user in a Cloud SQL instance.", "parameterOrder": [ "project", "instance" ], "response": { "$ref": "Operation" }, "id": "sql.users.update", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/users", "path": "sql/v1beta4/projects/{project}/instances/{instance}/users", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "request": { "$ref": "User" }, "httpMethod": "PUT", "parameters": { "name": { "location": "query", "type": "string", "description": "Name of the user in the instance." }, "project": { "required": true, "type": "string", "description": "Project ID of the project that contains the instance.", "location": "path" }, "instance": { "description": "Database instance ID. This does not include the project ID.", "required": true, "type": "string", "location": "path" }, "host": { "location": "query", "type": "string", "description": "Optional. Host of the user in the instance." } } }, "delete": { "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/users", "id": "sql.users.delete", "path": "sql/v1beta4/projects/{project}/instances/{instance}/users", "response": { "$ref": "Operation" }, "parameters": { "instance": { "type": "string", "description": "Database instance ID. This does not include the project ID.", "location": "path", "required": true }, "project": { "location": "path", "required": true, "type": "string", "description": "Project ID of the project that contains the instance." }, "host": { "type": "string", "location": "query", "description": "Host of the user in the instance." }, "name": { "location": "query", "description": "Name of the user in the instance.", "type": "string" } }, "parameterOrder": [ "project", "instance" ], "description": "Deletes a user from a Cloud SQL instance.", "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ] }, "insert": { "response": { "$ref": "Operation" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "id": "sql.users.insert", "path": "sql/v1beta4/projects/{project}/instances/{instance}/users", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/users", "parameters": { "instance": { "description": "Database instance ID. This does not include the project ID.", "required": true, "type": "string", "location": "path" }, "project": { "type": "string", "required": true, "description": "Project ID of the project that contains the instance.", "location": "path" } }, "httpMethod": "POST", "parameterOrder": [ "project", "instance" ], "request": { "$ref": "User" }, "description": "Creates a new user in a Cloud SQL instance." }, "get": { "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "httpMethod": "GET", "parameters": { "project": { "required": true, "location": "path", "type": "string", "description": "Project ID of the project that contains the instance." }, "instance": { "required": true, "description": "Database instance ID. This does not include the project ID.", "type": "string", "location": "path" }, "name": { "description": "User of the instance. If the database user has a host, this is specified as {username}@{host} else as {username}.", "type": "string", "location": "path", "required": true } }, "path": "sql/v1beta4/projects/{project}/instances/{instance}/users/{name}", "description": "Retrieves a resource containing information about a user.", "response": { "$ref": "User" }, "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/users/{name}", "parameterOrder": [ "project", "instance", "name" ], "id": "sql.users.get" }, "list": { "parameterOrder": [ "project", "instance" ], "id": "sql.users.list", "response": { "$ref": "UsersListResponse" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "httpMethod": "GET", "parameters": { "project": { "type": "string", "description": "Project ID of the project that contains the instance.", "location": "path", "required": true }, "instance": { "type": "string", "required": true, "location": "path", "description": "Database instance ID. This does not include the project ID." } }, "description": "Lists users in the specified Cloud SQL instance.", "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/users", "path": "sql/v1beta4/projects/{project}/instances/{instance}/users" } } }, "flags": { "methods": { "list": { "description": "Lists all available database flags for Cloud SQL instances.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "response": { "$ref": "FlagsListResponse" }, "httpMethod": "GET", "path": "sql/v1beta4/flags", "flatPath": "sql/v1beta4/flags", "parameterOrder": [], "id": "sql.flags.list", "parameters": { "databaseVersion": { "description": "Database type and version you want to retrieve flags for. By default, this method returns flags for all database types and versions.", "location": "query", "type": "string" } } } } }, "tiers": { "methods": { "list": { "httpMethod": "GET", "description": "Lists all available machine types (tiers) for Cloud SQL, for example, `db-custom-1-3840`. For related information, see [Pricing](/sql/pricing).", "parameterOrder": [ "project" ], "path": "sql/v1beta4/projects/{project}/tiers", "id": "sql.tiers.list", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/sqlservice.admin" ], "parameters": { "project": { "required": true, "location": "path", "type": "string", "description": "Project ID of the project for which to list tiers." } }, "response": { "$ref": "TiersListResponse" }, "flatPath": "sql/v1beta4/projects/{project}/tiers" } } } }, "name": "sqladmin", "discoveryVersion": "v1", "revision": "20220623", "description": "API for Cloud SQL database instance management", "batchPath": "batch", "fullyEncodeReservedExpansion": true, "baseUrl": "https://sqladmin.googleapis.com/", "basePath": "", "mtlsRootUrl": "https://sqladmin.mtls.googleapis.com/", "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/sqlservice.admin": { "description": "Manage your Google SQL Service instances" }, "https://www.googleapis.com/auth/cloud-platform": { "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account." } } } }, "icons": { "x32": "http://www.google.com/images/icons/product/search-32.gif", "x16": "http://www.google.com/images/icons/product/search-16.gif" }, "rootUrl": "https://sqladmin.googleapis.com/", "servicePath": "", "parameters": { "oauth_token": { "location": "query", "type": "string", "description": "OAuth 2.0 token for the current user." }, "callback": { "type": "string", "description": "JSONP", "location": "query" }, "uploadType": { "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").", "type": "string", "location": "query" }, "quotaUser": { "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.", "location": "query", "type": "string" }, "alt": { "enum": [ "json", "media", "proto" ], "type": "string", "default": "json", "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "description": "Data format for response.", "location": "query" }, "access_token": { "type": "string", "description": "OAuth access token.", "location": "query" }, "fields": { "description": "Selector specifying which fields to include in a partial response.", "type": "string", "location": "query" }, "upload_protocol": { "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").", "location": "query", "type": "string" }, "key": { "location": "query", "type": "string", "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token." }, "$.xgafv": { "location": "query", "enum": [ "1", "2" ], "type": "string", "enumDescriptions": [ "v1 error format", "v2 error format" ], "description": "V1 error format." }, "prettyPrint": { "location": "query", "description": "Returns response with indentations and line breaks.", "type": "boolean", "default": "true" } }, "id": "sqladmin:v1beta4", "title": "Cloud SQL Admin API", "version": "v1beta4", "canonicalName": "SQL Admin", "documentationLink": "https://developers.google.com/cloud-sql/", "schemas": { "SqlServerAuditConfig": { "id": "SqlServerAuditConfig", "type": "object", "properties": { "bucket": { "description": "The name of the destination bucket (e.g., gs://mybucket).", "type": "string" }, "retentionInterval": { "type": "string", "format": "google-duration", "description": "How long to keep generated audit files." }, "uploadInterval": { "description": "How often to upload generated audit files.", "type": "string", "format": "google-duration" }, "kind": { "description": "This is always sql#sqlServerAuditConfig", "type": "string" } }, "description": "SQL Server specific audit configuration." }, "SslCertsInsertRequest": { "properties": { "commonName": { "description": "User supplied name. Must be a distinct name from the other certificates for this instance.", "type": "string" } }, "description": "SslCerts insert request.", "type": "object", "id": "SslCertsInsertRequest" }, "ExportContext": { "description": "Database instance export context.", "type": "object", "properties": { "sqlExportOptions": { "properties": { "mysqlExportOptions": { "type": "object", "description": "Options for exporting from MySQL.", "properties": { "masterData": { "description": "Option to include SQL statement required to set up replication. If set to `1`, the dump file includes a CHANGE MASTER TO statement with the binary log coordinates, and --set-gtid-purged is set to ON. If set to `2`, the CHANGE MASTER TO statement is written as a SQL comment and has no effect. If set to any value other than `1`, --set-gtid-purged is set to OFF.", "type": "integer", "format": "int32" } } }, "schemaOnly": { "description": "Export only schemas.", "type": "boolean" }, "tables": { "items": { "type": "string" }, "type": "array", "description": "Tables to export, or that were exported, from the specified database. If you specify tables, specify one and only one database. For PostgreSQL instances, you can specify only one table." } }, "type": "object", "description": "Options for exporting data as SQL statements." }, "csvExportOptions": { "type": "object", "properties": { "escapeCharacter": { "type": "string", "description": "Specifies the character that should appear before a data character that needs to be escaped." }, "fieldsTerminatedBy": { "description": "Specifies the character that separates columns within each row (line) of the file.", "type": "string" }, "quoteCharacter": { "type": "string", "description": "Specifies the quoting character to be used when a data value is quoted." }, "linesTerminatedBy": { "description": "This is used to separate lines. If a line does not contain all fields, the rest of the columns are set to their default values.", "type": "string" }, "selectQuery": { "description": "The select query used to extract the data.", "type": "string" } }, "description": "Options for exporting data as CSV. `MySQL` and `PostgreSQL` instances only." }, "fileType": { "enum": [ "SQL_FILE_TYPE_UNSPECIFIED", "SQL", "CSV", "BAK" ], "description": "The file type for the specified uri.", "enumDescriptions": [ "Unknown file type.", "File containing SQL statements.", "File in CSV format.", "" ], "type": "string" }, "databases": { "items": { "type": "string" }, "type": "array", "description": "Databases to be exported. `MySQL instances:` If `fileType` is `SQL` and no database is specified, all databases are exported, except for the `mysql` system database. If `fileType` is `CSV`, you can specify one database, either by using this property or by using the `csvExportOptions.selectQuery` property, which takes precedence over this property. `PostgreSQL instances:` You must specify one database to be exported. If `fileType` is `CSV`, this database must match the one specified in the `csvExportOptions.selectQuery` property. `SQL Server instances:` You must specify one database to be exported, and the `fileType` must be `BAK`." }, "kind": { "type": "string", "description": "This is always `sql#exportContext`." }, "offload": { "type": "boolean", "description": "Option for export offload." }, "uri": { "description": "The path to the file in Google Cloud Storage where the export will be stored. The URI is in the form `gs://bucketName/fileName`. If the file already exists, the request succeeds, but the operation fails. If `fileType` is `SQL` and the filename ends with .gz, the contents are compressed.", "type": "string" } }, "id": "ExportContext" }, "InstancesTruncateLogRequest": { "description": "Instance truncate log request.", "id": "InstancesTruncateLogRequest", "type": "object", "properties": { "truncateLogContext": { "description": "Contains details about the truncate log operation.", "$ref": "TruncateLogContext" } } }, "SslCert": { "description": "SslCerts Resource", "id": "SslCert", "type": "object", "properties": { "certSerialNumber": { "type": "string", "description": "Serial number, as extracted from the certificate." }, "instance": { "description": "Name of the database instance.", "type": "string" }, "selfLink": { "description": "The URI of this resource.", "type": "string" }, "createTime": { "format": "google-datetime", "type": "string", "description": "The time when the certificate was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`." }, "cert": { "type": "string", "description": "PEM representation." }, "sha1Fingerprint": { "type": "string", "description": "Sha1 Fingerprint." }, "expirationTime": { "format": "google-datetime", "type": "string", "description": "The time when the certificate expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`." }, "kind": { "type": "string", "description": "This is always `sql#sslCert`." }, "commonName": { "type": "string", "description": "User supplied name. Constrained to [a-zA-Z.-_ ]+." } } }, "FailoverContext": { "description": "Database instance failover context.", "id": "FailoverContext", "properties": { "kind": { "description": "This is always `sql#failoverContext`.", "type": "string" }, "settingsVersion": { "type": "string", "format": "int64", "description": "The current settings version of this instance. Request will be rejected if this version doesn't match the current settings version." } }, "type": "object" }, "DatabaseFlags": { "type": "object", "id": "DatabaseFlags", "description": "Database flags for Cloud SQL instances.", "properties": { "value": { "description": "The value of the flag. Boolean flags are set to `on` for true and `off` for false. This field must be omitted if the flag doesn't take a value.", "type": "string" }, "name": { "type": "string", "description": "The name of the flag. These flags are passed at instance startup, so include both server options and system variables. Flags are specified with underscores, not hyphens. For more information, see [Configuring Database Flags](https://cloud.google.com/sql/docs/mysql/flags) in the Cloud SQL documentation." } } }, "InstancesRotateServerCaRequest": { "description": "Rotate Server CA request.", "type": "object", "properties": { "rotateServerCaContext": { "$ref": "RotateServerCaContext", "description": "Contains details about the rotate server CA operation." } }, "id": "InstancesRotateServerCaRequest" }, "BackupConfiguration": { "type": "object", "id": "BackupConfiguration", "properties": { "location": { "type": "string", "description": "Location of the backup" }, "replicationLogArchivingEnabled": { "description": "Reserved for future use.", "type": "boolean" }, "kind": { "type": "string", "description": "This is always `sql#backupConfiguration`." }, "transactionLogRetentionDays": { "type": "integer", "description": "The number of days of transaction logs we retain for point in time restore, from 1-7.", "format": "int32" }, "pointInTimeRecoveryEnabled": { "description": "(Postgres only) Whether point in time recovery is enabled.", "type": "boolean" }, "startTime": { "type": "string", "description": "Start time for the daily backup configuration in UTC timezone in the 24 hour format - `HH:MM`." }, "backupRetentionSettings": { "$ref": "BackupRetentionSettings", "description": "Backup retention settings." }, "enabled": { "type": "boolean", "description": "Whether this configuration is enabled." }, "binaryLogEnabled": { "description": "(MySQL only) Whether binary log is enabled. If backup configuration is disabled, binarylog must be disabled as well.", "type": "boolean" } }, "description": "Database instance backup configuration." }, "MySqlSyncConfig": { "type": "object", "description": "MySQL-specific external server sync settings.", "id": "MySqlSyncConfig", "properties": { "initialSyncFlags": { "type": "array", "description": "Flags to use for the initial dump.", "items": { "$ref": "SyncFlags" } } } }, "DiskEncryptionConfiguration": { "description": "Disk encryption configuration for an instance.", "type": "object", "properties": { "kmsKeyName": { "type": "string", "description": "Resource name of KMS key for disk encryption" }, "kind": { "description": "This is always `sql#diskEncryptionConfiguration`.", "type": "string" } }, "id": "DiskEncryptionConfiguration" }, "ConnectSettings": { "id": "ConnectSettings", "type": "object", "description": "Connect settings retrieval response.", "properties": { "region": { "description": "The cloud region for the instance. e.g. `us-central1`, `europe-west1`. The region cannot be changed after instance creation.", "type": "string" }, "databaseVersion": { "enum": [ "SQL_DATABASE_VERSION_UNSPECIFIED", "MYSQL_5_1", "MYSQL_5_5", "MYSQL_5_6", "MYSQL_5_7", "POSTGRES_9_6", "POSTGRES_11", "SQLSERVER_2017_STANDARD", "SQLSERVER_2017_ENTERPRISE", "SQLSERVER_2017_EXPRESS", "SQLSERVER_2017_WEB", "POSTGRES_10", "POSTGRES_12", "MYSQL_8_0", "MYSQL_8_0_18", "MYSQL_8_0_26", "MYSQL_8_0_27", "MYSQL_8_0_28", "MYSQL_8_0_29", "POSTGRES_13", "POSTGRES_14", "SQLSERVER_2019_STANDARD", "SQLSERVER_2019_ENTERPRISE", "SQLSERVER_2019_EXPRESS", "SQLSERVER_2019_WEB" ], "type": "string", "description": "The database engine type and version. The `databaseVersion` field cannot be changed after instance creation. MySQL instances: `MYSQL_8_0`, `MYSQL_5_7` (default), or `MYSQL_5_6`. PostgreSQL instances: `POSTGRES_9_6`, `POSTGRES_10`, `POSTGRES_11` or `POSTGRES_12` (default), `POSTGRES_13`, or `POSTGRES_14`. SQL Server instances: `SQLSERVER_2017_STANDARD` (default), `SQLSERVER_2017_ENTERPRISE`, `SQLSERVER_2017_EXPRESS`, `SQLSERVER_2017_WEB`, `SQLSERVER_2019_STANDARD`, `SQLSERVER_2019_ENTERPRISE`, `SQLSERVER_2019_EXPRESS`, or `SQLSERVER_2019_WEB`.", "enumDescriptions": [ "This is an unknown database version.", "The database version is MySQL 5.1.", "The database version is MySQL 5.5.", "The database version is MySQL 5.6.", "The database version is MySQL 5.7.", "The database version is PostgreSQL 9.6.", "The database version is PostgreSQL 11.", "The database version is SQL Server 2017 Standard.", "The database version is SQL Server 2017 Enterprise.", "The database version is SQL Server 2017 Express.", "The database version is SQL Server 2017 Web.", "The database version is PostgreSQL 10.", "The database version is PostgreSQL 12.", "The database version is MySQL 8.", "The database major version is MySQL 8.0 and the minor version is 18.", "The database major version is MySQL 8.0 and the minor version is 26.", "The database major version is MySQL 8.0 and the minor version is 27.", "The database major version is MySQL 8.0 and the minor version is 28.", "The database major version is MySQL 8.0 and the minor version is 29.", "The database version is PostgreSQL 13.", "The database version is PostgreSQL 14.", "The database version is SQL Server 2019 Standard.", "The database version is SQL Server 2019 Enterprise.", "The database version is SQL Server 2019 Express.", "The database version is SQL Server 2019 Web." ] }, "kind": { "description": "This is always `sql#connectSettings`.", "type": "string" }, "ipAddresses": { "items": { "$ref": "IpMapping" }, "description": "The assigned IP addresses for the instance.", "type": "array" }, "serverCaCert": { "$ref": "SslCert", "description": "SSL configuration." }, "backendType": { "enumDescriptions": [ "This is an unknown backend type for instance.", "V1 speckle instance.", "V2 speckle instance.", "On premises instance." ], "type": "string", "enum": [ "SQL_BACKEND_TYPE_UNSPECIFIED", "FIRST_GEN", "SECOND_GEN", "EXTERNAL" ], "description": "`SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type." } } }, "BinLogCoordinates": { "type": "object", "id": "BinLogCoordinates", "properties": { "kind": { "type": "string", "description": "This is always `sql#binLogCoordinates`." }, "binLogFileName": { "description": "Name of the binary log file for a Cloud SQL instance.", "type": "string" }, "binLogPosition": { "type": "string", "description": "Position (offset) within the binary log file.", "format": "int64" } }, "description": "Binary log coordinates." }, "SqlInstancesStartExternalSyncRequest": { "type": "object", "properties": { "syncMode": { "enumDescriptions": [ "Unknown external sync mode, will be defaulted to ONLINE mode", "Online external sync will set up replication after initial data external sync", "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data" ], "description": "External sync mode.", "type": "string", "enum": [ "EXTERNAL_SYNC_MODE_UNSPECIFIED", "ONLINE", "OFFLINE" ] }, "skipVerification": { "type": "boolean", "description": "Whether to skip the verification step (VESS)." }, "mysqlSyncConfig": { "$ref": "MySqlSyncConfig", "description": "MySQL-specific settings for start external sync." } }, "id": "SqlInstancesStartExternalSyncRequest" }, "GenerateEphemeralCertResponse": { "id": "GenerateEphemeralCertResponse", "properties": { "ephemeralCert": { "description": "Generated cert", "$ref": "SslCert" } }, "description": "Ephemeral certificate creation request.", "type": "object" }, "InstancesDemoteMasterRequest": { "type": "object", "properties": { "demoteMasterContext": { "$ref": "DemoteMasterContext", "description": "Contains details about the demoteMaster operation." } }, "id": "InstancesDemoteMasterRequest", "description": "Database demote primary instance request." }, "InstancesListServerCasResponse": { "description": "Instances ListServerCas response.", "properties": { "certs": { "description": "List of server CA certificates for the instance.", "items": { "$ref": "SslCert" }, "type": "array" }, "kind": { "type": "string", "description": "This is always `sql#instancesListServerCas`." }, "activeVersion": { "type": "string" } }, "id": "InstancesListServerCasResponse", "type": "object" }, "OperationErrors": { "id": "OperationErrors", "properties": { "errors": { "items": { "$ref": "OperationError" }, "type": "array", "description": "The list of errors encountered while processing this operation." }, "kind": { "description": "This is always `sql#operationErrors`.", "type": "string" } }, "description": "Database instance operation errors list wrapper.", "type": "object" }, "MaintenanceWindow": { "type": "object", "properties": { "updateTrack": { "enum": [ "SQL_UPDATE_TRACK_UNSPECIFIED", "canary", "stable" ], "type": "string", "enumDescriptions": [ "This is an unknown maintenance timing preference.", "For instance update that requires a restart, this update track indicates your instance prefer to restart for new version early in maintenance window.", "For instance update that requires a restart, this update track indicates your instance prefer to let Cloud SQL choose the timing of restart (within its Maintenance window, if applicable)." ], "description": "Maintenance timing setting: `canary` (Earlier) or `stable` (Later). [Learn more](https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-timing-2ndgen)." }, "kind": { "description": "This is always `sql#maintenanceWindow`.", "type": "string" }, "day": { "type": "integer", "format": "int32", "description": "day of week (1-7), starting on Monday." }, "hour": { "description": "hour of day - 0 to 23.", "format": "int32", "type": "integer" } }, "description": "Maintenance window. This specifies when a Cloud SQL instance is restarted for system maintenance purposes.", "id": "MaintenanceWindow" }, "UsersListResponse": { "properties": { "nextPageToken": { "type": "string", "description": "An identifier that uniquely identifies the operation. You can use this identifier to retrieve the Operations resource that has information about the operation." }, "items": { "items": { "$ref": "User" }, "description": "List of user resources in the instance.", "type": "array" }, "kind": { "description": "This is always *sql#usersList*.", "type": "string" } }, "type": "object", "description": "User list response.", "id": "UsersListResponse" }, "SslCertsInsertResponse": { "id": "SslCertsInsertResponse", "description": "SslCert insert response.", "properties": { "serverCaCert": { "description": "The server Certificate Authority's certificate. If this is missing you can force a new one to be generated by calling resetSslConfig method on instances resource.", "$ref": "SslCert" }, "kind": { "type": "string", "description": "This is always `sql#sslCertsInsert`." }, "operation": { "description": "The operation to track the ssl certs insert request.", "$ref": "Operation" }, "clientCert": { "$ref": "SslCertDetail", "description": "The new client certificate and private key." } }, "type": "object" }, "BackupContext": { "type": "object", "properties": { "kind": { "type": "string", "description": "This is always `sql#backupContext`." }, "backupId": { "type": "string", "description": "The identifier of the backup.", "format": "int64" } }, "description": "Backup context.", "id": "BackupContext" }, "ApiWarning": { "id": "ApiWarning", "type": "object", "properties": { "code": { "enum": [ "SQL_API_WARNING_CODE_UNSPECIFIED", "REGION_UNREACHABLE", "MAX_RESULTS_EXCEEDS_LIMIT" ], "enumDescriptions": [ "An unknown or unset warning type from Cloud SQL API.", "Warning when one or more regions are not reachable. The returned result set may be incomplete.", "Warning when user provided maxResults parameter exceeds the limit. The returned result set may be incomplete." ], "description": "Code to uniquely identify the warning type.", "type": "string" }, "region": { "type": "string", "description": "The region name for REGION_UNREACHABLE warning." }, "message": { "type": "string", "description": "The warning message." } }, "description": "An Admin API warning message." }, "GenerateEphemeralCertRequest": { "description": "Ephemeral certificate creation request.", "properties": { "validDuration": { "type": "string", "description": "Optional. If set, it will contain the cert valid duration.", "format": "google-duration" }, "access_token": { "type": "string", "description": "Optional. Access token to include in the signed certificate." }, "public_key": { "description": "PEM encoded public key to include in the signed certificate.", "type": "string" }, "readTime": { "format": "google-datetime", "description": "Optional. Optional snapshot read timestamp to trade freshness for performance.", "type": "string" } }, "type": "object", "id": "GenerateEphemeralCertRequest" }, "RotateServerCaContext": { "properties": { "nextVersion": { "type": "string", "description": "The fingerprint of the next version to be rotated to. If left unspecified, will be rotated to the most recently added server CA version." }, "kind": { "description": "This is always `sql#rotateServerCaContext`.", "type": "string" } }, "id": "RotateServerCaContext", "type": "object", "description": "Instance rotate server CA context." }, "Database": { "type": "object", "id": "Database", "description": "Represents a SQL database on the Cloud SQL instance.", "properties": { "sqlserverDatabaseDetails": { "$ref": "SqlServerDatabaseDetails" }, "project": { "type": "string", "description": "The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable." }, "collation": { "type": "string", "description": "The Cloud SQL collation value." }, "etag": { "type": "string", "description": "This field is deprecated and will be removed from a future version of the API." }, "kind": { "description": "This is always `sql#database`.", "type": "string" }, "charset": { "type": "string", "description": "The Cloud SQL charset value." }, "selfLink": { "type": "string", "description": "The URI of this resource." }, "instance": { "type": "string", "description": "The name of the Cloud SQL instance. This does not include the project ID." }, "name": { "type": "string", "description": "The name of the database in the Cloud SQL instance. This does not include the project ID or instance name." } } }, "PasswordValidationPolicy": { "properties": { "passwordChangeInterval": { "format": "google-duration", "description": "Minimum interval after which the password can be changed. This flag is only supported for PostgresSQL.", "type": "string" }, "minLength": { "description": "Minimum number of characters allowed.", "type": "integer", "format": "int32" }, "reuseInterval": { "description": "Number of previous passwords that cannot be reused.", "format": "int32", "type": "integer" }, "disallowUsernameSubstring": { "type": "boolean", "description": "Disallow username as a part of the password." }, "complexity": { "enum": [ "COMPLEXITY_UNSPECIFIED", "COMPLEXITY_DEFAULT" ], "description": "The complexity of the password.", "type": "string", "enumDescriptions": [ "Complexity check is not specified.", "A combination of lowercase, uppercase, numeric, and non-alphanumeric characters." ] }, "enablePasswordPolicy": { "description": "Whether the password policy is enabled or not.", "type": "boolean" } }, "description": "Database instance local user password validation policy", "id": "PasswordValidationPolicy", "type": "object" }, "SqlServerUserDetails": { "properties": { "disabled": { "description": "If the user has been disabled", "type": "boolean" }, "serverRoles": { "items": { "type": "string" }, "type": "array", "description": "The server roles for this user" } }, "id": "SqlServerUserDetails", "type": "object", "description": "Represents a Sql Server user on the Cloud SQL instance." }, "SqlOutOfDiskReport": { "id": "SqlOutOfDiskReport", "properties": { "sqlMinRecommendedIncreaseSizeGb": { "description": "The minimum recommended increase size in GigaBytes This field is consumed by the frontend LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Writers: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh the proactive database wellness job for OOD. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Readers:", "type": "integer", "format": "int32" }, "sqlOutOfDiskState": { "description": "This field represents the state generated by the proactive database wellness job for OutOfDisk issues. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Writers: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh the proactive database wellness job for OOD. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Readers: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh the proactive database wellness job", "type": "string", "enum": [ "SQL_OUT_OF_DISK_STATE_UNSPECIFIED", "NORMAL", "SOFT_SHUTDOWN" ], "enumDescriptions": [ "Unspecified state", "The instance has plenty space on data disk", "Data disk is almost used up. It is shutdown to prevent data corruption." ] } }, "type": "object", "description": "This message wraps up the information written by out-of-disk detection job." }, "DemoteMasterConfiguration": { "description": "Read-replica configuration for connecting to the on-premises primary instance.", "properties": { "mysqlReplicaConfiguration": { "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named `master.info` in the data directory.", "$ref": "DemoteMasterMySqlReplicaConfiguration" }, "kind": { "type": "string", "description": "This is always `sql#demoteMasterConfiguration`." } }, "type": "object", "id": "DemoteMasterConfiguration" }, "ImportContext": { "description": "Database instance import context.", "properties": { "fileType": { "enumDescriptions": [ "Unknown file type.", "File containing SQL statements.", "File in CSV format.", "" ], "enum": [ "SQL_FILE_TYPE_UNSPECIFIED", "SQL", "CSV", "BAK" ], "description": "The file type for the specified uri. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `SQL`: The file contains SQL statements. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `CSV`: The file contains CSV data. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `BAK`: The file contains backup data for a SQL Server instance.", "type": "string" }, "uri": { "description": "Path to the import file in Cloud Storage, in the form `gs://bucketName/fileName`. Compressed gzip files (.gz) are supported when `fileType` is `SQL`. The instance must have write permissions to the bucket and read access to the file.", "type": "string" }, "kind": { "type": "string", "description": "This is always `sql#importContext`." }, "importUser": { "description": "The PostgreSQL user for this import operation. PostgreSQL instances only.", "type": "string" }, "database": { "description": "The target database for the import. If `fileType` is `SQL`, this field is required only if the import file does not specify a database, and is overridden by any database specification in the import file. If `fileType` is `CSV`, one database must be specified.", "type": "string" }, "csvImportOptions": { "properties": { "escapeCharacter": { "type": "string", "description": "Specifies the character that should appear before a data character that needs to be escaped." }, "quoteCharacter": { "type": "string", "description": "Specifies the quoting character to be used when a data value is quoted." }, "linesTerminatedBy": { "type": "string", "description": "This is used to separate lines. If a line does not contain all fields, the rest of the columns are set to their default values." }, "columns": { "description": "The columns to which CSV data is imported. If not specified, all columns of the database table are loaded with CSV data.", "items": { "type": "string" }, "type": "array" }, "fieldsTerminatedBy": { "description": "Specifies the character that separates columns within each row (line) of the file.", "type": "string" }, "table": { "type": "string", "description": "The table to which CSV data is imported." } }, "description": "Options for importing data as CSV.", "type": "object" }, "bakImportOptions": { "description": "Import parameters specific to SQL Server .BAK files", "type": "object", "properties": { "encryptionOptions": { "properties": { "pvkPassword": { "type": "string", "description": "Password that encrypts the private key" }, "certPath": { "description": "Path to the Certificate (.cer) in Cloud Storage, in the form `gs://bucketName/fileName`. The instance must have write permissions to the bucket and read access to the file.", "type": "string" }, "pvkPath": { "description": "Path to the Certificate Private Key (.pvk) in Cloud Storage, in the form `gs://bucketName/fileName`. The instance must have write permissions to the bucket and read access to the file.", "type": "string" } }, "type": "object" } } } }, "id": "ImportContext", "type": "object" }, "Settings": { "properties": { "dataDiskSizeGb": { "type": "string", "description": "The size of data disk, in GB. The data disk size minimum is 10GB.", "format": "int64" }, "authorizedGaeApplications": { "items": { "type": "string" }, "type": "array", "description": "The App Engine app IDs that can access this instance. (Deprecated) Applied to First Generation instances only." }, "insightsConfig": { "description": "Insights configuration, for now relevant only for Postgres.", "$ref": "InsightsConfig" }, "databaseReplicationEnabled": { "description": "Configuration specific to read replica instances. Indicates whether replication is enabled or not. WARNING: Changing this restarts the instance.", "type": "boolean" }, "passwordValidationPolicy": { "$ref": "PasswordValidationPolicy", "description": "The local user password validation policy of the instance." }, "dataDiskType": { "type": "string", "enum": [ "SQL_DATA_DISK_TYPE_UNSPECIFIED", "PD_SSD", "PD_HDD", "OBSOLETE_LOCAL_SSD" ], "description": "The type of data disk: `PD_SSD` (default) or `PD_HDD`. Not used for First Generation instances.", "enumDescriptions": [ "This is an unknown data disk type.", "An SSD data disk.", "An HDD data disk.", "This field is deprecated and will be removed from a future version of the API." ] }, "pricingPlan": { "description": "The pricing plan for this instance. This can be either `PER_USE` or `PACKAGE`. Only `PER_USE` is supported for Second Generation instances.", "type": "string", "enumDescriptions": [ "This is an unknown pricing plan for this instance.", "The instance is billed at a monthly flat rate.", "The instance is billed per usage." ], "enum": [ "SQL_PRICING_PLAN_UNSPECIFIED", "PACKAGE", "PER_USE" ] }, "collation": { "description": "The name of server Instance collation.", "type": "string" }, "sqlServerAuditConfig": { "description": "SQL Server specific audit configuration.", "$ref": "SqlServerAuditConfig" }, "databaseFlags": { "items": { "$ref": "DatabaseFlags" }, "type": "array", "description": "The database flags passed to the instance at startup." }, "settingsVersion": { "format": "int64", "type": "string", "description": "The version of instance settings. This is a required field for update method to make sure concurrent updates are handled properly. During update, use the most recent settingsVersion value for this instance and do not try to update this value." }, "tier": { "type": "string", "description": "The tier (or machine type) for this instance, for example `db-custom-1-3840`. WARNING: Changing this restarts the instance." }, "storageAutoResize": { "description": "Configuration to increase storage size automatically. The default value is true.", "type": "boolean" }, "activationPolicy": { "enum": [ "SQL_ACTIVATION_POLICY_UNSPECIFIED", "ALWAYS", "NEVER", "ON_DEMAND" ], "type": "string", "description": "The activation policy specifies when the instance is activated; it is applicable only when the instance state is RUNNABLE. Valid values: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `ALWAYS`: The instance is on, and remains so even in the absence of connection requests. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `NEVER`: The instance is off; it is not activated, even if a connection request arrives.", "enumDescriptions": [ "Unknown activation plan.", "The instance is always up and running.", "The instance never starts.", "The instance starts upon receiving requests." ] }, "crashSafeReplicationEnabled": { "description": "Configuration specific to read replica instances. Indicates whether database flags for crash-safe replication are enabled. This property was only applicable to First Generation instances.", "type": "boolean" }, "availabilityType": { "enum": [ "SQL_AVAILABILITY_TYPE_UNSPECIFIED", "ZONAL", "REGIONAL" ], "type": "string", "description": "Availability type. Potential values: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `ZONAL`: The instance serves data from only one zone. Outages in that zone affect data accessibility. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `REGIONAL`: The instance can serve data from more than one zone in a region (it is highly available)./ For more information, see [Overview of the High Availability Configuration](https://cloud.google.com/sql/docs/mysql/high-availability).", "enumDescriptions": [ "This is an unknown Availability type.", "Zonal available instance.", "Regional available instance." ] }, "ipConfiguration": { "$ref": "IpConfiguration", "description": "The settings for IP Management. This allows to enable or disable the instance IP and manage which external networks can connect to the instance. The IPv4 address cannot be disabled for Second Generation instances." }, "locationPreference": { "description": "The location preference settings. This allows the instance to be located as near as possible to either an App Engine app or Compute Engine zone for better performance. App Engine co-location was only applicable to First Generation instances.", "$ref": "LocationPreference" }, "activeDirectoryConfig": { "$ref": "SqlActiveDirectoryConfig", "description": "Active Directory configuration, relevant only for Cloud SQL for SQL Server." }, "denyMaintenancePeriods": { "description": "Deny maintenance periods", "type": "array", "items": { "$ref": "DenyMaintenancePeriod" } }, "replicationType": { "description": "The type of replication this instance uses. This can be either `ASYNCHRONOUS` or `SYNCHRONOUS`. (Deprecated) This property was only applicable to First Generation instances.", "type": "string", "enum": [ "SQL_REPLICATION_TYPE_UNSPECIFIED", "SYNCHRONOUS", "ASYNCHRONOUS" ], "enumDescriptions": [ "This is an unknown replication type for a Cloud SQL instance.", "The synchronous replication mode for First Generation instances. It is the default value.", "The asynchronous replication mode for First Generation instances. It provides a slight performance gain, but if an outage occurs while this option is set to asynchronous, you can lose up to a few seconds of updates to your data." ] }, "backupConfiguration": { "description": "The daily backup configuration for the instance.", "$ref": "BackupConfiguration" }, "maintenanceWindow": { "$ref": "MaintenanceWindow", "description": "The maintenance window for this instance. This specifies when the instance can be restarted for maintenance purposes." }, "storageAutoResizeLimit": { "format": "int64", "type": "string", "description": "The maximum size to which storage capacity can be automatically increased. The default value is 0, which specifies that there is no limit." }, "userLabels": { "additionalProperties": { "type": "string" }, "type": "object", "description": "User-provided labels, represented as a dictionary where each label is a single key value pair." }, "kind": { "type": "string", "description": "This is always `sql#settings`." } }, "type": "object", "description": "Database instance settings.", "id": "Settings" }, "User": { "description": "A Cloud SQL user resource.", "type": "object", "properties": { "name": { "description": "The name of the user in the Cloud SQL instance. Can be omitted for `update` because it is already specified in the URL.", "type": "string" }, "project": { "description": "The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for *update* because it is already specified on the URL.", "type": "string" }, "password": { "description": "The password for the user.", "type": "string" }, "kind": { "description": "This is always `sql#user`.", "type": "string" }, "host": { "type": "string", "description": "Optional. The host from which the user can connect. For `insert` operations, host defaults to an empty string. For `update` operations, host is specified as part of the request URL. The host name cannot be updated after insertion. For a MySQL instance, it's required; for a PostgreSQL or SQL Server instance, it's optional." }, "type": { "enumDescriptions": [ "The database's built-in user type.", "Cloud IAM user.", "Cloud IAM service account." ], "type": "string", "description": "The user type. It determines the method to authenticate the user during login. The default is the database's built-in user type.", "enum": [ "BUILT_IN", "CLOUD_IAM_USER", "CLOUD_IAM_SERVICE_ACCOUNT" ] }, "dualPasswordType": { "description": "Dual password status for the user.", "enumDescriptions": [ "The default value.", "Do not update the user's dual password status.", "No dual password usable for connecting using this user.", "Dual password usable for connecting using this user." ], "enum": [ "DUAL_PASSWORD_TYPE_UNSPECIFIED", "NO_MODIFY_DUAL_PASSWORD", "NO_DUAL_PASSWORD", "DUAL_PASSWORD" ], "type": "string" }, "instance": { "type": "string", "description": "The name of the Cloud SQL instance. This does not include the project ID. Can be omitted for *update* because it is already specified on the URL." }, "etag": { "description": "This field is deprecated and will be removed from a future version of the API.", "type": "string" }, "sqlserverUserDetails": { "$ref": "SqlServerUserDetails" }, "passwordPolicy": { "$ref": "UserPasswordValidationPolicy", "description": "User level password validation policy." } }, "id": "User" }, "UserPasswordValidationPolicy": { "id": "UserPasswordValidationPolicy", "description": "User level password validation policy.", "type": "object", "properties": { "status": { "$ref": "PasswordStatus", "description": "Output only. Read-only password status.", "readOnly": true }, "enableFailedAttemptsCheck": { "type": "boolean", "description": "If true, failed login attempts check will be enabled." }, "allowedFailedAttempts": { "description": "Number of failed login attempts allowed before user get locked.", "format": "int32", "type": "integer" }, "passwordExpirationDuration": { "type": "string", "format": "google-duration", "description": "Expiration duration after password is updated." }, "enablePasswordVerification": { "description": "If true, the user must specify the current password before changing the password. This flag is supported only for MySQL.", "type": "boolean" } } }, "OperationError": { "id": "OperationError", "description": "Database instance operation error.", "type": "object", "properties": { "kind": { "description": "This is always `sql#operationError`.", "type": "string" }, "message": { "description": "Additional information about the error encountered.", "type": "string" }, "code": { "type": "string", "description": "Identifies the specific error that occurred." } } }, "Flag": { "type": "object", "description": "A flag resource.", "properties": { "maxValue": { "type": "string", "description": "For `INTEGER` flags, the maximum allowed value.", "format": "int64" }, "allowedStringValues": { "description": "For `STRING` flags, a list of strings that the value can be set to.", "items": { "type": "string" }, "type": "array" }, "requiresRestart": { "description": "Indicates whether changing this flag will trigger a database restart. Only applicable to Second Generation instances.", "type": "boolean" }, "minValue": { "format": "int64", "type": "string", "description": "For `INTEGER` flags, the minimum allowed value." }, "allowedIntValues": { "type": "array", "description": "Use this field if only certain integers are accepted. Can be combined with min_value and max_value to add additional values.", "items": { "type": "string", "format": "int64" } }, "appliesTo": { "description": "The database version this flag applies to. Can be MySQL instances: `MYSQL_8_0`, `MYSQL_8_0_18`, `MYSQL_8_0_26`, `MYSQL_5_7`, or `MYSQL_5_6`. PostgreSQL instances: `POSTGRES_9_6`, `POSTGRES_10`, `POSTGRES_11` or `POSTGRES_12`. SQL Server instances: `SQLSERVER_2017_STANDARD`, `SQLSERVER_2017_ENTERPRISE`, `SQLSERVER_2017_EXPRESS`, `SQLSERVER_2017_WEB`, `SQLSERVER_2019_STANDARD`, `SQLSERVER_2019_ENTERPRISE`, `SQLSERVER_2019_EXPRESS`, or `SQLSERVER_2019_WEB`. See [the complete list](/sql/docs/mysql/admin-api/rest/v1/SqlDatabaseVersion).", "type": "array", "items": { "enumDescriptions": [ "This is an unknown database version.", "The database version is MySQL 5.1.", "The database version is MySQL 5.5.", "The database version is MySQL 5.6.", "The database version is MySQL 5.7.", "The database version is PostgreSQL 9.6.", "The database version is PostgreSQL 11.", "The database version is SQL Server 2017 Standard.", "The database version is SQL Server 2017 Enterprise.", "The database version is SQL Server 2017 Express.", "The database version is SQL Server 2017 Web.", "The database version is PostgreSQL 10.", "The database version is PostgreSQL 12.", "The database version is MySQL 8.", "The database major version is MySQL 8.0 and the minor version is 18.", "The database major version is MySQL 8.0 and the minor version is 26.", "The database major version is MySQL 8.0 and the minor version is 27.", "The database major version is MySQL 8.0 and the minor version is 28.", "The database major version is MySQL 8.0 and the minor version is 29.", "The database version is PostgreSQL 13.", "The database version is PostgreSQL 14.", "The database version is SQL Server 2019 Standard.", "The database version is SQL Server 2019 Enterprise.", "The database version is SQL Server 2019 Express.", "The database version is SQL Server 2019 Web." ], "enum": [ "SQL_DATABASE_VERSION_UNSPECIFIED", "MYSQL_5_1", "MYSQL_5_5", "MYSQL_5_6", "MYSQL_5_7", "POSTGRES_9_6", "POSTGRES_11", "SQLSERVER_2017_STANDARD", "SQLSERVER_2017_ENTERPRISE", "SQLSERVER_2017_EXPRESS", "SQLSERVER_2017_WEB", "POSTGRES_10", "POSTGRES_12", "MYSQL_8_0", "MYSQL_8_0_18", "MYSQL_8_0_26", "MYSQL_8_0_27", "MYSQL_8_0_28", "MYSQL_8_0_29", "POSTGRES_13", "POSTGRES_14", "SQLSERVER_2019_STANDARD", "SQLSERVER_2019_ENTERPRISE", "SQLSERVER_2019_EXPRESS", "SQLSERVER_2019_WEB" ], "type": "string" } }, "name": { "description": "This is the name of the flag. Flag names always use underscores, not hyphens, for example: `max_allowed_packet`", "type": "string" }, "kind": { "type": "string", "description": "This is always `sql#flag`." }, "type": { "type": "string", "description": "The type of the flag. Flags are typed to being `BOOLEAN`, `STRING`, `INTEGER` or `NONE`. `NONE` is used for flags which do not take a value, such as `skip_grant_tables`.", "enumDescriptions": [ "This is an unknown flag type.", "Boolean type flag.", "String type flag.", "Integer type flag.", "Flag type used for a server startup option.", "Type introduced specially for MySQL TimeZone offset. Accept a string value with the format [-12:59, 13:00].", "Float type flag.", "Comma-separated list of the strings in a SqlFlagType enum." ], "enum": [ "SQL_FLAG_TYPE_UNSPECIFIED", "BOOLEAN", "STRING", "INTEGER", "NONE", "MYSQL_TIMEZONE_OFFSET", "FLOAT", "REPEATED_STRING" ] }, "inBeta": { "description": "Whether or not the flag is considered in beta.", "type": "boolean" } }, "id": "Flag" }, "CloneContext": { "type": "object", "properties": { "pitrTimestampMs": { "type": "string", "format": "int64", "description": "Reserved for future use." }, "pointInTime": { "description": "Timestamp, if specified, identifies the time to which the source instance is cloned.", "type": "string", "format": "google-datetime" }, "destinationInstanceName": { "description": "Name of the Cloud SQL instance to be created as a clone.", "type": "string" }, "binLogCoordinates": { "description": "Binary log coordinates, if specified, identify the position up to which the source instance is cloned. If not specified, the source instance is cloned up to the most recent binary log coordinates.", "$ref": "BinLogCoordinates" }, "kind": { "description": "This is always `sql#cloneContext`.", "type": "string" }, "allocatedIpRange": { "type": "string", "description": "The name of the allocated ip range for the private ip CloudSQL instance. For example: \"google-managed-services-default\". If set, the cloned instance ip will be created in the allocated range. The range name must comply with [RFC 1035](https://tools.ietf.org/html/rfc1035). Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])?. Reserved for future use." } }, "id": "CloneContext", "description": "Database instance clone context." }, "InstancesImportRequest": { "description": "Database instance import request.", "id": "InstancesImportRequest", "properties": { "importContext": { "$ref": "ImportContext", "description": "Contains details about the import operation." } }, "type": "object" }, "TiersListResponse": { "properties": { "kind": { "description": "This is always `sql#tiersList`.", "type": "string" }, "items": { "type": "array", "description": "List of tiers.", "items": { "$ref": "Tier" } } }, "description": "Tiers list response.", "id": "TiersListResponse", "type": "object" }, "BackupRunsListResponse": { "description": "Backup run list results.", "properties": { "kind": { "description": "This is always `sql#backupRunsList`.", "type": "string" }, "items": { "description": "A list of backup runs in reverse chronological order of the enqueued time.", "items": { "$ref": "BackupRun" }, "type": "array" }, "nextPageToken": { "type": "string", "description": "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results." } }, "id": "BackupRunsListResponse", "type": "object" }, "SqlExternalSyncSettingError": { "type": "object", "id": "SqlExternalSyncSettingError", "properties": { "kind": { "description": "Can be `sql#externalSyncSettingError` or `sql#externalSyncSettingWarning`.", "type": "string" }, "type": { "type": "string", "description": "Identifies the specific error that occurred.", "enumDescriptions": [ "", "", "", "", "", "", "Unsupported migration type.", "No pglogical extension installed on databases, applicable for postgres.", "pglogical node already exists on databases, applicable for postgres.", "The value of parameter wal_level is not set to logical.", "The value of parameter shared_preload_libraries does not include pglogical.", "The value of parameter max_replication_slots is not sufficient.", "The value of parameter max_wal_senders is not sufficient.", "The value of parameter max_worker_processes is not sufficient.", "Extensions installed are either not supported or having unsupported versions", "The value of parameter rds.logical_replication is not set to 1.", "The primary instance logging setup doesn't allow EM sync.", "The primary instance database parameter setup doesn't allow EM sync.", "The gtid_mode is not supported, applicable for MySQL.", "SQL Server Agent is not running.", "The table definition is not support due to missing primary key or replica identity, applicable for postgres.", "The customer has a definer that will break EM setup.", "SQL Server @@SERVERNAME does not match actual host name", "The primary instance has been setup and will fail the setup.", "The primary instance has unsupported binary log format.", "The primary instance's binary log retention setting.", "The primary instance has tables with unsupported storage engine.", "Source has tables with limited support eg: PostgreSQL tables without primary keys" ], "enum": [ "SQL_EXTERNAL_SYNC_SETTING_ERROR_TYPE_UNSPECIFIED", "CONNECTION_FAILURE", "BINLOG_NOT_ENABLED", "INCOMPATIBLE_DATABASE_VERSION", "REPLICA_ALREADY_SETUP", "INSUFFICIENT_PRIVILEGE", "UNSUPPORTED_MIGRATION_TYPE", "NO_PGLOGICAL_INSTALLED", "PGLOGICAL_NODE_ALREADY_EXISTS", "INVALID_WAL_LEVEL", "INVALID_SHARED_PRELOAD_LIBRARY", "INSUFFICIENT_MAX_REPLICATION_SLOTS", "INSUFFICIENT_MAX_WAL_SENDERS", "INSUFFICIENT_MAX_WORKER_PROCESSES", "UNSUPPORTED_EXTENSIONS", "INVALID_RDS_LOGICAL_REPLICATION", "INVALID_LOGGING_SETUP", "INVALID_DB_PARAM", "UNSUPPORTED_GTID_MODE", "SQLSERVER_AGENT_NOT_RUNNING", "UNSUPPORTED_TABLE_DEFINITION", "UNSUPPORTED_DEFINER", "SQLSERVER_SERVERNAME_MISMATCH", "PRIMARY_ALREADY_SETUP", "UNSUPPORTED_BINLOG_FORMAT", "BINLOG_RETENTION_SETTING", "UNSUPPORTED_STORAGE_ENGINE", "LIMITED_SUPPORT_TABLES" ] }, "detail": { "description": "Additional information about the error encountered.", "type": "string" } }, "description": "External primary instance migration setting error/warning." }, "Operation": { "description": "An Operation resource. For successful operations that return an Operation resource, only the fields relevant to the operation are populated in the resource.", "id": "Operation", "properties": { "kind": { "type": "string", "description": "This is always `sql#operation`." }, "targetLink": { "type": "string" }, "exportContext": { "$ref": "ExportContext", "description": "The context for export operation, if applicable." }, "operationType": { "enumDescriptions": [ "Unknown operation type.", "Imports data into a Cloud SQL instance.", "Exports data from a Cloud SQL instance to a Cloud Storage bucket.", "Creates a new Cloud SQL instance.", "Updates the settings of a Cloud SQL instance.", "Deletes a Cloud SQL instance.", "Restarts the Cloud SQL instance.", "", "", "Performs instance backup.", "Deletes an instance backup.", "Restores an instance backup.", "Injects a privileged user in mysql for MOB instances.", "Clones a Cloud SQL instance.", "Stops replication on a Cloud SQL read replica instance.", "Starts replication on a Cloud SQL read replica instance.", "Promotes a Cloud SQL replica instance.", "Creates a Cloud SQL replica instance.", "Creates a new user in a Cloud SQL instance.", "Deletes a user from a Cloud SQL instance.", "Updates an existing user in a Cloud SQL instance.", "Creates a database in the Cloud SQL instance.", "Deletes a database in the Cloud SQL instance.", "Updates a database in the Cloud SQL instance.", "Performs failover of an HA-enabled Cloud SQL failover replica.", "Deletes the backup taken by a backup run.", "", "Truncates a general or slow log table in MySQL.", "Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.", "Indicates that the instance is currently in maintenance. Maintenance typically causes the instance to be unavailable for 1-3 minutes.", "This field is deprecated, and will be removed in future version of API.", "", "Creates clone instance.", "Reschedule maintenance to another time.", "Starts external sync of a Cloud SQL EM replica to an external primary instance.", "Recovers logs from an instance's old data disk.", "Performs auto-restart of an HA-enabled Cloud SQL database for auto recovery." ], "type": "string", "description": "The type of the operation. Valid values are: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `CREATE` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `DELETE` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `UPDATE` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `RESTART` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `IMPORT` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `EXPORT` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `BACKUP_VOLUME` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `RESTORE_VOLUME` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `CREATE_USER` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `DELETE_USER` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `CREATE_DATABASE` LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `DELETE_DATABASE`", "enum": [ "SQL_OPERATION_TYPE_UNSPECIFIED", "IMPORT", "EXPORT", "CREATE", "UPDATE", "DELETE", "RESTART", "BACKUP", "SNAPSHOT", "BACKUP_VOLUME", "DELETE_VOLUME", "RESTORE_VOLUME", "INJECT_USER", "CLONE", "STOP_REPLICA", "START_REPLICA", "PROMOTE_REPLICA", "CREATE_REPLICA", "CREATE_USER", "DELETE_USER", "UPDATE_USER", "CREATE_DATABASE", "DELETE_DATABASE", "UPDATE_DATABASE", "FAILOVER", "DELETE_BACKUP", "RECREATE_REPLICA", "TRUNCATE_LOG", "DEMOTE_MASTER", "MAINTENANCE", "ENABLE_PRIVATE_IP", "DEFER_MAINTENANCE", "CREATE_CLONE", "RESCHEDULE_MAINTENANCE", "START_EXTERNAL_SYNC", "LOG_CLEANUP", "AUTO_RESTART" ] }, "selfLink": { "type": "string", "description": "The URI of this resource." }, "name": { "type": "string", "description": "An identifier that uniquely identifies the operation. You can use this identifier to retrieve the Operations resource that has information about the operation." }, "status": { "type": "string", "enum": [ "SQL_OPERATION_STATUS_UNSPECIFIED", "PENDING", "RUNNING", "DONE" ], "enumDescriptions": [ "The state of the operation is unknown.", "The operation has been queued, but has not started yet.", "The operation is running.", "The operation completed." ], "description": "The status of an operation." }, "error": { "description": "If errors occurred during processing of this operation, this field will be populated.", "$ref": "OperationErrors" }, "startTime": { "type": "string", "format": "google-datetime", "description": "The time this operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`." }, "insertTime": { "description": "The time this operation was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.", "type": "string", "format": "google-datetime" }, "importContext": { "description": "The context for import operation, if applicable.", "$ref": "ImportContext" }, "endTime": { "format": "google-datetime", "description": "The time this operation finished in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.", "type": "string" }, "backupContext": { "description": "The context for backup operation, if applicable.", "$ref": "BackupContext" }, "targetProject": { "type": "string", "description": "The project ID of the target instance related to this operation." }, "user": { "type": "string", "description": "The email address of the user who initiated this operation." }, "targetId": { "description": "Name of the database instance related to this operation.", "type": "string" } }, "type": "object" }, "RestoreBackupContext": { "properties": { "kind": { "type": "string", "description": "This is always `sql#restoreBackupContext`." }, "project": { "type": "string", "description": "The full project ID of the source instance." }, "backupRunId": { "format": "int64", "type": "string", "description": "The ID of the backup run to restore from." }, "instanceId": { "description": "The ID of the instance that the backup was taken from.", "type": "string" } }, "type": "object", "description": "Database instance restore from backup context. Backup context contains source instance id and project id.", "id": "RestoreBackupContext" }, "OnPremisesConfiguration": { "description": "On-premises instance configuration.", "properties": { "clientKey": { "type": "string", "description": "PEM representation of the replica's private key. The corresponsing public key is encoded in the client's certificate." }, "caCertificate": { "description": "PEM representation of the trusted CA's x509 certificate.", "type": "string" }, "hostPort": { "description": "The host and port of the on-premises instance in host:port format", "type": "string" }, "password": { "description": "The password for connecting to on-premises instance.", "type": "string" }, "dumpFilePath": { "type": "string", "description": "The dump file to create the Cloud SQL replica." }, "kind": { "description": "This is always `sql#onPremisesConfiguration`.", "type": "string" }, "username": { "type": "string", "description": "The username for connecting to on-premises instance." }, "clientCertificate": { "description": "PEM representation of the replica's x509 certificate.", "type": "string" }, "sourceInstance": { "$ref": "InstanceReference", "description": "The reference to Cloud SQL instance if the source is Cloud SQL." } }, "type": "object", "id": "OnPremisesConfiguration" }, "Tier": { "id": "Tier", "properties": { "DiskQuota": { "type": "string", "format": "int64", "description": "The maximum disk size of this tier in bytes." }, "RAM": { "description": "The maximum RAM usage of this tier in bytes.", "type": "string", "format": "int64" }, "kind": { "description": "This is always `sql#tier`.", "type": "string" }, "region": { "items": { "type": "string" }, "description": "The applicable regions for this tier.", "type": "array" }, "tier": { "description": "An identifier for the machine type, for example, `db-custom-1-3840`. For related information, see [Pricing](/sql/pricing).", "type": "string" } }, "type": "object", "description": "A Google Cloud SQL service tier resource." }, "FlagsListResponse": { "description": "Flags list response.", "type": "object", "id": "FlagsListResponse", "properties": { "kind": { "description": "This is always `sql#flagsList`.", "type": "string" }, "items": { "description": "List of flags.", "type": "array", "items": { "$ref": "Flag" } } } }, "BackupRun": { "properties": { "diskEncryptionConfiguration": { "description": "Encryption configuration specific to a backup.", "$ref": "DiskEncryptionConfiguration" }, "error": { "description": "Information about why the backup operation failed. This is only present if the run has the FAILED status.", "$ref": "OperationError" }, "windowStartTime": { "type": "string", "format": "google-datetime", "description": "The start time of the backup window during which this the backup was attempted in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`." }, "kind": { "description": "This is always `sql#backupRun`.", "type": "string" }, "description": { "type": "string", "description": "The description of this run, only applicable to on-demand backups." }, "instance": { "type": "string", "description": "Name of the database instance." }, "status": { "enumDescriptions": [ "The status of the run is unknown.", "The backup operation was enqueued.", "The backup is overdue across a given backup window. Indicates a problem. Example: Long-running operation in progress during the whole window.", "The backup is in progress.", "The backup failed.", "The backup was successful.", "The backup was skipped (without problems) for a given backup window. Example: Instance was idle.", "The backup is about to be deleted.", "The backup deletion failed.", "The backup has been deleted." ], "type": "string", "description": "The status of this run.", "enum": [ "SQL_BACKUP_RUN_STATUS_UNSPECIFIED", "ENQUEUED", "OVERDUE", "RUNNING", "FAILED", "SUCCESSFUL", "SKIPPED", "DELETION_PENDING", "DELETION_FAILED", "DELETED" ] }, "endTime": { "format": "google-datetime", "type": "string", "description": "The time the backup operation completed in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`." }, "backupKind": { "type": "string", "enumDescriptions": [ "This is an unknown BackupKind.", "The snapshot based backups", "Physical backups" ], "description": "Specifies the kind of backup, PHYSICAL or DEFAULT_SNAPSHOT.", "enum": [ "SQL_BACKUP_KIND_UNSPECIFIED", "SNAPSHOT", "PHYSICAL" ] }, "enqueuedTime": { "description": "The time the run was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.", "format": "google-datetime", "type": "string" }, "type": { "description": "The type of this run; can be either \"AUTOMATED\" or \"ON_DEMAND\". This field defaults to \"ON_DEMAND\" and is ignored, when specified for insert requests.", "type": "string", "enum": [ "SQL_BACKUP_RUN_TYPE_UNSPECIFIED", "AUTOMATED", "ON_DEMAND" ], "enumDescriptions": [ "This is an unknown BackupRun type.", "The backup schedule automatically triggers a backup.", "The user manually triggers a backup." ] }, "location": { "description": "Location of the backups.", "type": "string" }, "id": { "description": "The identifier for this backup run. Unique only for a specific Cloud SQL instance.", "type": "string", "format": "int64" }, "selfLink": { "type": "string", "description": "The URI of this resource." }, "diskEncryptionStatus": { "$ref": "DiskEncryptionStatus", "description": "Encryption status specific to a backup." }, "startTime": { "format": "google-datetime", "description": "The time the backup operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.", "type": "string" } }, "description": "A BackupRun resource.", "type": "object", "id": "BackupRun" }, "InsightsConfig": { "properties": { "queryStringLength": { "type": "integer", "description": "Maximum query length stored in bytes. Default value: 1024 bytes. Range: 256-4500 bytes. Query length more than this field value will be truncated to this value. When unset, query length will be the default value. Changing query length will restart the database.", "format": "int32" }, "queryInsightsEnabled": { "description": "Whether Query Insights feature is enabled.", "type": "boolean" }, "recordApplicationTags": { "description": "Whether Query Insights will record application tags from query when enabled.", "type": "boolean" }, "queryPlansPerMinute": { "type": "integer", "description": "Number of query execution plans captured by Insights per minute for all queries combined. Default is 5.", "format": "int32" }, "recordClientAddress": { "type": "boolean", "description": "Whether Query Insights will record client address when enabled." } }, "description": "Insights configuration. This specifies when Cloud SQL Insights feature is enabled and optional configuration.", "id": "InsightsConfig", "type": "object" }, "SslCertsListResponse": { "properties": { "kind": { "type": "string", "description": "This is always `sql#sslCertsList`." }, "items": { "items": { "$ref": "SslCert" }, "type": "array", "description": "List of client certificates for the instance." } }, "type": "object", "id": "SslCertsListResponse", "description": "SslCerts list response." }, "InstancesExportRequest": { "properties": { "exportContext": { "description": "Contains details about the export operation.", "$ref": "ExportContext" } }, "description": "Database instance export request.", "id": "InstancesExportRequest", "type": "object" }, "InstancesCloneRequest": { "id": "InstancesCloneRequest", "description": "Database instance clone request.", "type": "object", "properties": { "cloneContext": { "description": "Contains details about the clone operation.", "$ref": "CloneContext" } } }, "SqlActiveDirectoryConfig": { "description": "Active Directory configuration, relevant only for Cloud SQL for SQL Server.", "properties": { "domain": { "type": "string", "description": "The name of the domain (e.g., mydomain.com)." }, "kind": { "type": "string", "description": "This is always sql#activeDirectoryConfig." } }, "type": "object", "id": "SqlActiveDirectoryConfig" }, "MySqlReplicaConfiguration": { "id": "MySqlReplicaConfiguration", "description": "Read-replica configuration specific to MySQL databases.", "properties": { "masterHeartbeatPeriod": { "type": "string", "description": "Interval in milliseconds between replication heartbeats.", "format": "int64" }, "dumpFilePath": { "type": "string", "description": "Path to a SQL dump file in Google Cloud Storage from which the replica instance is to be created. The URI is in the form gs://bucketName/fileName. Compressed gzip files (.gz) are also supported. Dumps have the binlog co-ordinates from which replication begins. This can be accomplished by setting --master-data to 1 when using mysqldump." }, "kind": { "description": "This is always `sql#mysqlReplicaConfiguration`.", "type": "string" }, "caCertificate": { "description": "PEM representation of the trusted CA's x509 certificate.", "type": "string" }, "clientCertificate": { "type": "string", "description": "PEM representation of the replica's x509 certificate." }, "password": { "description": "The password for the replication connection.", "type": "string" }, "verifyServerCertificate": { "type": "boolean", "description": "Whether or not to check the primary instance's Common Name value in the certificate that it sends during the SSL handshake." }, "connectRetryInterval": { "format": "int32", "description": "Seconds to wait between connect retries. MySQL's default is 60 seconds.", "type": "integer" }, "sslCipher": { "description": "A list of permissible ciphers to use for SSL encryption.", "type": "string" }, "username": { "type": "string", "description": "The username for the replication connection." }, "clientKey": { "description": "PEM representation of the replica's private key. The corresponsing public key is encoded in the client's certificate.", "type": "string" } }, "type": "object" }, "SqlInstancesRescheduleMaintenanceRequestBody": { "type": "object", "properties": { "reschedule": { "$ref": "Reschedule", "description": "Required. The type of the reschedule the user wants." } }, "description": "Reschedule options for maintenance windows.", "id": "SqlInstancesRescheduleMaintenanceRequestBody" }, "SslCertsCreateEphemeralRequest": { "description": "SslCerts create ephemeral certificate request.", "type": "object", "properties": { "public_key": { "type": "string", "description": "PEM encoded public key to include in the signed certificate." }, "access_token": { "type": "string", "description": "Access token to include in the signed certificate." } }, "id": "SslCertsCreateEphemeralRequest" }, "InstancesFailoverRequest": { "id": "InstancesFailoverRequest", "type": "object", "properties": { "failoverContext": { "description": "Failover Context.", "$ref": "FailoverContext" } }, "description": "Instance failover request." }, "InstanceReference": { "description": "Reference to another Cloud SQL instance.", "id": "InstanceReference", "type": "object", "properties": { "name": { "type": "string", "description": "The name of the Cloud SQL instance being referenced. This does not include the project ID." }, "project": { "type": "string", "description": "The project ID of the Cloud SQL instance being referenced. The default is the same project ID as the instance references it." }, "region": { "description": "The region of the Cloud SQL instance being referenced.", "type": "string" } } }, "BackupRetentionSettings": { "description": "We currently only support backup retention by specifying the number of backups we will retain.", "id": "BackupRetentionSettings", "type": "object", "properties": { "retainedBackups": { "description": "Depending on the value of retention_unit, this is used to determine if a backup needs to be deleted. If retention_unit is 'COUNT', we will retain this many backups.", "format": "int32", "type": "integer" }, "retentionUnit": { "enum": [ "RETENTION_UNIT_UNSPECIFIED", "COUNT" ], "enumDescriptions": [ "Backup retention unit is unspecified, will be treated as COUNT.", "Retention will be by count, eg. \"retain the most recent 7 backups\"." ], "description": "The unit that 'retained_backups' represents.", "type": "string" } } }, "DatabasesListResponse": { "description": "Database list response.", "properties": { "items": { "type": "array", "items": { "$ref": "Database" }, "description": "List of database resources in the instance." }, "kind": { "type": "string", "description": "This is always `sql#databasesList`." } }, "type": "object", "id": "DatabasesListResponse" }, "DemoteMasterContext": { "properties": { "masterInstanceName": { "type": "string", "description": "The name of the instance which will act as on-premises primary instance in the replication setup." }, "replicaConfiguration": { "description": "Configuration specific to read-replicas replicating from the on-premises primary instance.", "$ref": "DemoteMasterConfiguration" }, "skipReplicationSetup": { "type": "boolean", "description": "Flag to skip replication setup on the instance." }, "verifyGtidConsistency": { "description": "Verify the GTID consistency for demote operation. Default value: `True`. Setting this flag to `false` enables you to bypass the GTID consistency check between on-premises primary instance and Cloud SQL instance during the demotion operation but also exposes you to the risk of future replication failures. Change the value only if you know the reason for the GTID divergence and are confident that doing so will not cause any replication issues.", "type": "boolean" }, "kind": { "type": "string", "description": "This is always `sql#demoteMasterContext`." } }, "description": "Database instance demote primary instance context.", "type": "object", "id": "DemoteMasterContext" }, "SqlServerDatabaseDetails": { "properties": { "recoveryModel": { "type": "string", "description": "The recovery model of a SQL Server database" }, "compatibilityLevel": { "description": "The version of SQL Server with which the database is to be made compatible", "type": "integer", "format": "int32" } }, "type": "object", "id": "SqlServerDatabaseDetails", "description": "Represents a Sql Server database on the Cloud SQL instance." }, "SqlInstancesVerifyExternalSyncSettingsRequest": { "properties": { "syncMode": { "enumDescriptions": [ "Unknown external sync mode, will be defaulted to ONLINE mode", "Online external sync will set up replication after initial data external sync", "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data" ], "enum": [ "EXTERNAL_SYNC_MODE_UNSPECIFIED", "ONLINE", "OFFLINE" ], "type": "string", "description": "External sync mode" }, "mysqlSyncConfig": { "description": "Optional. MySQL-specific settings for start external sync.", "$ref": "MySqlSyncConfig" }, "verifyReplicationOnly": { "description": "Optional. Flag to verify settings required by replication setup only", "type": "boolean" }, "verifyConnectionOnly": { "type": "boolean", "description": "Flag to enable verifying connection only" } }, "type": "object", "id": "SqlInstancesVerifyExternalSyncSettingsRequest" }, "IpMapping": { "properties": { "ipAddress": { "description": "The IP address assigned.", "type": "string" }, "type": { "description": "The type of this IP address. A `PRIMARY` address is a public address that can accept incoming connections. A `PRIVATE` address is a private address that can accept incoming connections. An `OUTGOING` address is the source address of connections originating from the instance, if supported.", "enum": [ "SQL_IP_ADDRESS_TYPE_UNSPECIFIED", "PRIMARY", "OUTGOING", "PRIVATE", "MIGRATED_1ST_GEN" ], "type": "string", "enumDescriptions": [ "This is an unknown IP address type.", "IP address the customer is supposed to connect to. Usually this is the load balancer's IP address", "Source IP address of the connection a read replica establishes to its external primary instance. This IP address can be allowlisted by the customer in case it has a firewall that filters incoming connection to its on premises primary instance.", "Private IP used when using private IPs and network peering.", "V1 IP of a migrated instance. We want the user to decommission this IP as soon as the migration is complete. Note: V1 instances with V1 ip addresses will be counted as PRIMARY." ] }, "timeToRetire": { "type": "string", "format": "google-datetime", "description": "The due time for this IP to be retired in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`. This field is only available when the IP is scheduled to be retired." } }, "type": "object", "id": "IpMapping", "description": "Database instance IP Mapping." }, "DiskEncryptionStatus": { "id": "DiskEncryptionStatus", "properties": { "kind": { "type": "string", "description": "This is always `sql#diskEncryptionStatus`." }, "kmsKeyVersionName": { "type": "string", "description": "KMS key version used to encrypt the Cloud SQL instance resource" } }, "description": "Disk encryption status for an instance.", "type": "object" }, "DatabaseInstance": { "id": "DatabaseInstance", "description": "A Cloud SQL instance resource.", "properties": { "serverCaCert": { "$ref": "SslCert", "description": "SSL configuration." }, "name": { "description": "Name of the Cloud SQL instance. This does not include the project ID.", "type": "string" }, "maxDiskSize": { "type": "string", "format": "int64", "description": "The maximum disk size of the instance in bytes." }, "secondaryGceZone": { "type": "string", "description": "The Compute Engine zone that the failover instance is currently serving from for a regional instance. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary/failover zone." }, "currentDiskSize": { "description": "The current disk usage of the instance in bytes. This property has been deprecated. Use the \"cloudsql.googleapis.com/database/disk/bytes_used\" metric in Cloud Monitoring API instead. Please see [this announcement](https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ) for details.", "format": "int64", "type": "string" }, "region": { "type": "string", "description": "The geographical region. Can be: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `us-central` (`FIRST_GEN` instances only) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `us-central1` (`SECOND_GEN` instances only) LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh `asia-east1` or `europe-west1`. Defaults to `us-central` or `us-central1` depending on the instance type. The region cannot be changed after instance creation." }, "rootPassword": { "description": "Initial root password. Use only on creation.", "type": "string" }, "availableMaintenanceVersions": { "type": "array", "description": "List all maintenance versions applicable on the instance", "items": { "type": "string" } }, "outOfDiskReport": { "$ref": "SqlOutOfDiskReport", "description": "This field represents the report generated by the proactive database wellness job for OutOfDisk issues. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Writers: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh the proactive database wellness job for OOD. LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh Readers: LICENSE Makefile README.md gsa_key.json lua-resty-gcp-dev-1.rockspec lua-resty-gcp-scm-1.rockspec.original lua-resty-gcp-scm-1.rockspec.template spec src upload.sh the proactive database wellness job" }, "databaseInstalledVersion": { "type": "string", "description": "Output only. Stores the current database version running on the instance including minor version such as `MYSQL_8_0_18`.", "readOnly": true }, "suspensionReason": { "items": { "enumDescriptions": [ "This is an unknown suspension reason.", "The instance is suspended due to billing issues (for example:, GCP account issue)", "The instance is suspended due to illegal content (for example:, child pornography, copyrighted material, etc.).", "The instance is causing operational issues (for example:, causing the database to crash).", "The KMS key used by the instance is either revoked or denied access to" ], "type": "string", "enum": [ "SQL_SUSPENSION_REASON_UNSPECIFIED", "BILLING_ISSUE", "LEGAL_ISSUE", "OPERATIONAL_ISSUE", "KMS_KEY_ISSUE" ] }, "type": "array", "description": "If the instance state is SUSPENDED, the reason for the suspension." }, "etag": { "type": "string", "description": "This field is deprecated and will be removed from a future version of the API. Use the `settings.settingsVersion` field instead." }, "instanceType": { "type": "string", "enum": [ "SQL_INSTANCE_TYPE_UNSPECIFIED", "CLOUD_SQL_INSTANCE", "ON_PREMISES_INSTANCE", "READ_REPLICA_INSTANCE" ], "enumDescriptions": [ "This is an unknown Cloud SQL instance type.", "A regular Cloud SQL instance that is not replicating from a primary instance.", "An instance running on the customer's premises that is not managed by Cloud SQL.", "A Cloud SQL instance acting as a read-replica." ], "description": "The instance type." }, "replicaNames": { "items": { "type": "string" }, "description": "The replicas of the instance.", "type": "array" }, "scheduledMaintenance": { "description": "The start time of any upcoming scheduled maintenance for this instance.", "$ref": "SqlScheduledMaintenance" }, "selfLink": { "type": "string", "description": "The URI of this resource." }, "gceZone": { "type": "string", "description": "The Compute Engine zone that the instance is currently serving from. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary zone. WARNING: Changing this might restart the instance." }, "maintenanceVersion": { "description": "The current software version on the instance.", "type": "string" }, "ipv6Address": { "description": "The IPv6 address assigned to the instance. (Deprecated) This property was applicable only to First Generation instances.", "type": "string" }, "project": { "type": "string", "description": "The project ID of the project containing the Cloud SQL instance. The Google apps domain is prefixed if applicable." }, "kind": { "description": "This is always `sql#instance`.", "type": "string" }, "settings": { "$ref": "Settings", "description": "The user settings." }, "state": { "description": "The current serving state of the Cloud SQL instance.", "enum": [ "SQL_INSTANCE_STATE_UNSPECIFIED", "RUNNABLE", "SUSPENDED", "PENDING_DELETE", "PENDING_CREATE", "MAINTENANCE", "FAILED", "ONLINE_MAINTENANCE" ], "enumDescriptions": [ "The state of the instance is unknown.", "The instance is running, or has been stopped by owner.", "The instance is not available, for example due to problems with billing.", "The instance is being deleted.", "The instance is being created.", "The instance is down for maintenance.", "The creation of the instance failed or a fatal error occurred during maintenance.", "Deprecated" ], "type": "string" }, "satisfiesPzs": { "description": "The status indicating if instance satisfiesPzs. Reserved for future use.", "type": "boolean" }, "diskEncryptionConfiguration": { "$ref": "DiskEncryptionConfiguration", "description": "Disk encryption configuration specific to an instance." }, "serviceAccountEmailAddress": { "type": "string", "description": "The service account email address assigned to the instance. \\This property is read-only." }, "ipAddresses": { "type": "array", "description": "The assigned IP addresses for the instance.", "items": { "$ref": "IpMapping" } }, "createTime": { "format": "google-datetime", "readOnly": true, "description": "Output only. The time when the instance was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.", "type": "string" }, "backendType": { "enum": [ "SQL_BACKEND_TYPE_UNSPECIFIED", "FIRST_GEN", "SECOND_GEN", "EXTERNAL" ], "type": "string", "description": "The backend type. `SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type.", "enumDescriptions": [ "This is an unknown backend type for instance.", "V1 speckle instance.", "V2 speckle instance.", "On premises instance." ] }, "connectionName": { "type": "string", "description": "Connection name of the Cloud SQL instance used in connection strings." }, "onPremisesConfiguration": { "$ref": "OnPremisesConfiguration", "description": "Configuration specific to on-premises instances." }, "failoverReplica": { "description": "The name and status of the failover replica.", "properties": { "name": { "type": "string", "description": "The name of the failover replica. If specified at instance creation, a failover replica is created for the instance. The name doesn't include the project ID." }, "available": { "type": "boolean", "description": "The availability status of the failover replica. A false status indicates that the failover replica is out of sync. The primary instance can only failover to the failover replica when the status is true." } }, "type": "object" }, "diskEncryptionStatus": { "$ref": "DiskEncryptionStatus", "description": "Disk encryption status specific to an instance." }, "replicaConfiguration": { "description": "Configuration specific to failover replicas and read replicas.", "$ref": "ReplicaConfiguration" }, "masterInstanceName": { "type": "string", "description": "The name of the instance which will act as primary in the replication setup." }, "databaseVersion": { "type": "string", "description": "The database engine type and version. The `databaseVersion` field cannot be changed after instance creation.", "enum": [ "SQL_DATABASE_VERSION_UNSPECIFIED", "MYSQL_5_1", "MYSQL_5_5", "MYSQL_5_6", "MYSQL_5_7", "POSTGRES_9_6", "POSTGRES_11", "SQLSERVER_2017_STANDARD", "SQLSERVER_2017_ENTERPRISE", "SQLSERVER_2017_EXPRESS", "SQLSERVER_2017_WEB", "POSTGRES_10", "POSTGRES_12", "MYSQL_8_0", "MYSQL_8_0_18", "MYSQL_8_0_26", "MYSQL_8_0_27", "MYSQL_8_0_28", "MYSQL_8_0_29", "POSTGRES_13", "POSTGRES_14", "SQLSERVER_2019_STANDARD", "SQLSERVER_2019_ENTERPRISE", "SQLSERVER_2019_EXPRESS", "SQLSERVER_2019_WEB" ], "enumDescriptions": [ "This is an unknown database version.", "The database version is MySQL 5.1.", "The database version is MySQL 5.5.", "The database version is MySQL 5.6.", "The database version is MySQL 5.7.", "The database version is PostgreSQL 9.6.", "The database version is PostgreSQL 11.", "The database version is SQL Server 2017 Standard.", "The database version is SQL Server 2017 Enterprise.", "The database version is SQL Server 2017 Express.", "The database version is SQL Server 2017 Web.", "The database version is PostgreSQL 10.", "The database version is PostgreSQL 12.", "The database version is MySQL 8.", "The database major version is MySQL 8.0 and the minor version is 18.", "The database major version is MySQL 8.0 and the minor version is 26.", "The database major version is MySQL 8.0 and the minor version is 27.", "The database major version is MySQL 8.0 and the minor version is 28.", "The database major version is MySQL 8.0 and the minor version is 29.", "The database version is PostgreSQL 13.", "The database version is PostgreSQL 14.", "The database version is SQL Server 2019 Standard.", "The database version is SQL Server 2019 Enterprise.", "The database version is SQL Server 2019 Express.", "The database version is SQL Server 2019 Web." ] } }, "type": "object" }, "AclEntry": { "properties": { "name": { "type": "string", "description": "Optional. A label to identify this entry." }, "value": { "description": "The allowlisted value for the access control list.", "type": "string" }, "expirationTime": { "description": "The time when this access control entry expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.", "format": "google-datetime", "type": "string" }, "kind": { "description": "This is always `sql#aclEntry`.", "type": "string" } }, "type": "object", "description": "An entry for an Access Control list.", "id": "AclEntry" }, "DenyMaintenancePeriod": { "properties": { "endDate": { "type": "string", "description": "\"deny maintenance period\" end date. If the year of the end date is empty, the year of the start date also must be empty. In this case, it means the deny maintenance period recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01" }, "time": { "type": "string", "description": "Time in UTC when the \"deny maintenance period\" starts on start_date and ends on end_date. The time is in format: HH:mm:SS, i.e., 00:00:00" }, "startDate": { "description": "\"deny maintenance period\" start date. If the year of the start date is empty, the year of the end date also must be empty. In this case, it means the deny maintenance period recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01", "type": "string" } }, "type": "object", "id": "DenyMaintenancePeriod", "description": "Deny Maintenance Periods. This specifies a date range during when all CSA rollout will be denied." }, "IpConfiguration": { "type": "object", "description": "IP Management configuration.", "id": "IpConfiguration", "properties": { "authorizedNetworks": { "type": "array", "items": { "$ref": "AclEntry" }, "description": "The list of external networks that are allowed to connect to the instance using the IP. In 'CIDR' notation, also known as 'slash' notation (for example: `157.197.200.0/24`)." }, "requireSsl": { "description": "Whether SSL connections over IP are enforced or not.", "type": "boolean" }, "privateNetwork": { "type": "string", "description": "The resource link for the VPC network from which the Cloud SQL instance is accessible for private IP. For example, `/projects/myProject/global/networks/default`. This setting can be updated, but it cannot be removed after it is set." }, "ipv4Enabled": { "type": "boolean", "description": "Whether the instance is assigned a public IP address or not." }, "allocatedIpRange": { "description": "The name of the allocated ip range for the private ip CloudSQL instance. For example: \"google-managed-services-default\". If set, the instance ip will be created in the allocated range. The range name must comply with [RFC 1035](https://tools.ietf.org/html/rfc1035). Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?.`", "type": "string" } } }, "SqlScheduledMaintenance": { "properties": { "startTime": { "format": "google-datetime", "description": "The start time of any upcoming scheduled maintenance for this instance.", "type": "string" }, "canDefer": { "type": "boolean" }, "scheduleDeadlineTime": { "description": "Maintenance cannot be rescheduled to start beyond this deadline.", "type": "string", "format": "google-datetime" }, "canReschedule": { "type": "boolean", "description": "If the scheduled maintenance can be rescheduled." } }, "id": "SqlScheduledMaintenance", "type": "object", "description": "Any scheduled maintenance for this instance." }, "InstancesRestoreBackupRequest": { "type": "object", "description": "Database instance restore backup request.", "id": "InstancesRestoreBackupRequest", "properties": { "restoreBackupContext": { "description": "Parameters required to perform the restore backup operation.", "$ref": "RestoreBackupContext" } } }, "SqlInstancesVerifyExternalSyncSettingsResponse": { "description": "Instance verify external sync settings response.", "id": "SqlInstancesVerifyExternalSyncSettingsResponse", "type": "object", "properties": { "warnings": { "items": { "$ref": "SqlExternalSyncSettingError" }, "type": "array", "description": "List of migration warnings." }, "errors": { "description": "List of migration violations.", "items": { "$ref": "SqlExternalSyncSettingError" }, "type": "array" }, "kind": { "type": "string", "description": "This is always `sql#migrationSettingErrorList`." } } }, "InstancesListResponse": { "properties": { "warnings": { "type": "array", "description": "List of warnings that occurred while handling the request.", "items": { "$ref": "ApiWarning" } }, "items": { "type": "array", "description": "List of database instance resources.", "items": { "$ref": "DatabaseInstance" } }, "nextPageToken": { "type": "string", "description": "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results." }, "kind": { "description": "This is always `sql#instancesList`.", "type": "string" } }, "type": "object", "description": "Database instances list response.", "id": "InstancesListResponse" }, "DemoteMasterMySqlReplicaConfiguration": { "properties": { "kind": { "type": "string", "description": "This is always `sql#demoteMasterMysqlReplicaConfiguration`." }, "username": { "type": "string", "description": "The username for the replication connection." }, "clientCertificate": { "description": "PEM representation of the replica's x509 certificate.", "type": "string" }, "password": { "description": "The password for the replication connection.", "type": "string" }, "caCertificate": { "type": "string", "description": "PEM representation of the trusted CA's x509 certificate." }, "clientKey": { "type": "string", "description": "PEM representation of the replica's private key. The corresponsing public key is encoded in the client's certificate. The format of the replica's private key can be either PKCS #1 or PKCS #8." } }, "description": "Read-replica configuration specific to MySQL databases.", "type": "object", "id": "DemoteMasterMySqlReplicaConfiguration" }, "SyncFlags": { "properties": { "name": { "description": "The name of the flag.", "type": "string" }, "value": { "type": "string", "description": "The value of the flag. This field must be omitted if the flag doesn't take a value." } }, "id": "SyncFlags", "type": "object", "description": "Initial sync flags for certain Cloud SQL APIs. Currently used for the MySQL external server initial dump." }, "LocationPreference": { "properties": { "kind": { "description": "This is always `sql#locationPreference`.", "type": "string" }, "followGaeApplication": { "description": "The App Engine application to follow, it must be in the same region as the Cloud SQL instance. WARNING: Changing this might restart the instance.", "type": "string" }, "zone": { "type": "string", "description": "The preferred Compute Engine zone (for example: us-central1-a, us-central1-b, etc.). WARNING: Changing this might restart the instance." }, "secondaryZone": { "description": "The preferred Compute Engine zone for the secondary/failover (for example: us-central1-a, us-central1-b, etc.).", "type": "string" } }, "id": "LocationPreference", "type": "object", "description": "Preferred location. This specifies where a Cloud SQL instance is located. Note that if the preferred location is not available, the instance will be located as close as possible within the region. Only one location may be specified." }, "PasswordStatus": { "description": "Read-only password status.", "id": "PasswordStatus", "type": "object", "properties": { "passwordExpirationTime": { "format": "google-datetime", "description": "The expiration time of the current password.", "type": "string" }, "locked": { "type": "boolean", "description": "If true, user does not have login privileges." } } }, "TruncateLogContext": { "properties": { "logType": { "description": "The type of log to truncate. Valid values are `MYSQL_GENERAL_TABLE` and `MYSQL_SLOW_TABLE`.", "type": "string" }, "kind": { "description": "This is always `sql#truncateLogContext`.", "type": "string" } }, "id": "TruncateLogContext", "description": "Database Instance truncate log context.", "type": "object" }, "SslCertDetail": { "properties": { "certInfo": { "description": "The public information about the cert.", "$ref": "SslCert" }, "certPrivateKey": { "type": "string", "description": "The private key for the client cert, in pem format. Keep private in order to protect your security." } }, "type": "object", "id": "SslCertDetail", "description": "SslCertDetail." }, "Reschedule": { "type": "object", "id": "Reschedule", "properties": { "rescheduleType": { "type": "string", "enumDescriptions": [ "", "Reschedules maintenance to happen now (within 5 minutes).", "Reschedules maintenance to occur within one week from the originally scheduled day and time.", "Reschedules maintenance to a specific time and day." ], "description": "Required. The type of the reschedule.", "enum": [ "RESCHEDULE_TYPE_UNSPECIFIED", "IMMEDIATE", "NEXT_AVAILABLE_WINDOW", "SPECIFIC_TIME" ] }, "scheduleTime": { "type": "string", "description": "Optional. Timestamp when the maintenance shall be rescheduled to if reschedule_type=SPECIFIC_TIME, in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.", "format": "google-datetime" } } }, "ReplicaConfiguration": { "properties": { "failoverTarget": { "description": "Specifies if the replica is the failover target. If the field is set to `true` the replica will be designated as a failover replica. In case the primary instance fails, the replica instance will be promoted as the new primary instance. Only one replica can be specified as failover target, and the replica has to be in different zone with the primary instance.", "type": "boolean" }, "mysqlReplicaConfiguration": { "$ref": "MySqlReplicaConfiguration", "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named `master.info` in the data directory." }, "kind": { "type": "string", "description": "This is always `sql#replicaConfiguration`." } }, "description": "Read-replica configuration for connecting to the primary instance.", "type": "object", "id": "ReplicaConfiguration" }, "OperationsListResponse": { "type": "object", "description": "Operations list response.", "id": "OperationsListResponse", "properties": { "nextPageToken": { "description": "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results.", "type": "string" }, "items": { "type": "array", "description": "List of operation resources.", "items": { "$ref": "Operation" } }, "kind": { "type": "string", "description": "This is always `sql#operationsList`." } } } }, "ownerName": "Google", "kind": "discovery#restDescription", "protocol": "rest" }
-]===]))
+return {
+  ["auth"] = {
+    ["oauth2"] = {
+      ["scopes"] = {
+        ["https://www.googleapis.com/auth/cloud-platform"] = {
+          ["description"] = "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.",
+        },
+        ["https://www.googleapis.com/auth/sqlservice.admin"] = {
+          ["description"] = "Manage your Google SQL Service instances",
+        },
+      },
+    },
+  },
+  ["basePath"] = "",
+  ["baseUrl"] = "https://sqladmin.googleapis.com/",
+  ["batchPath"] = "batch",
+  ["canonicalName"] = "SQL Admin",
+  ["description"] = "API for Cloud SQL database instance management",
+  ["discoveryVersion"] = "v1",
+  ["documentationLink"] = "https://developers.google.com/cloud-sql/",
+  ["fullyEncodeReservedExpansion"] = true,
+  ["icons"] = {
+    ["x16"] = "http://www.google.com/images/icons/product/search-16.gif",
+    ["x32"] = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  ["id"] = "sqladmin:v1beta4",
+  ["kind"] = "discovery#restDescription",
+  ["mtlsRootUrl"] = "https://sqladmin.mtls.googleapis.com/",
+  ["name"] = "sqladmin",
+  ["ownerDomain"] = "google.com",
+  ["ownerName"] = "Google",
+  ["parameters"] = {
+    ["$.xgafv"] = {
+      ["description"] = "V1 error format.",
+      ["enum"] = {
+        "1",
+        "2",
+      },
+      ["enumDescriptions"] = {
+        "v1 error format",
+        "v2 error format",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["access_token"] = {
+      ["description"] = "OAuth access token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["alt"] = {
+      ["default"] = "json",
+      ["description"] = "Data format for response.",
+      ["enum"] = {
+        "json",
+        "media",
+        "proto",
+      },
+      ["enumDescriptions"] = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["callback"] = {
+      ["description"] = "JSONP",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["fields"] = {
+      ["description"] = "Selector specifying which fields to include in a partial response.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["key"] = {
+      ["description"] = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["oauth_token"] = {
+      ["description"] = "OAuth 2.0 token for the current user.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["prettyPrint"] = {
+      ["default"] = "true",
+      ["description"] = "Returns response with indentations and line breaks.",
+      ["location"] = "query",
+      ["type"] = "boolean",
+    },
+    ["quotaUser"] = {
+      ["description"] = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["uploadType"] = {
+      ["description"] = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+    ["upload_protocol"] = {
+      ["description"] = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      ["location"] = "query",
+      ["type"] = "string",
+    },
+  },
+  ["protocol"] = "rest",
+  ["resources"] = {
+    ["backupRuns"] = {
+      ["methods"] = {
+        ["delete"] = {
+          ["description"] = "Deletes the backup taken by a backup run.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
+          ["httpMethod"] = "DELETE",
+          ["id"] = "sql.backupRuns.delete",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "id",
+          },
+          ["parameters"] = {
+            ["id"] = {
+              ["description"] = "The ID of the backup run to delete. To find a backup run ID, use the [list](https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1beta4/backupRuns/list) method.",
+              ["format"] = "int64",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["get"] = {
+          ["description"] = "Retrieves a resource containing information about a backup run.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.backupRuns.get",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "id",
+          },
+          ["parameters"] = {
+            ["id"] = {
+              ["description"] = "The ID of this backup run.",
+              ["format"] = "int64",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns/{id}",
+          ["response"] = {
+            ["$ref"] = "BackupRun",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["insert"] = {
+          ["description"] = "Creates a new backup run on demand.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.backupRuns.insert",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
+          ["request"] = {
+            ["$ref"] = "BackupRun",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["list"] = {
+          ["description"] = "Lists all backup runs associated with the project or a given instance and configuration in the reverse chronological order of the backup initiation time.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.backupRuns.list",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID, or \"-\" for all instances. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["maxResults"] = {
+              ["description"] = "Maximum number of backup runs per response.",
+              ["format"] = "int32",
+              ["location"] = "query",
+              ["type"] = "integer",
+            },
+            ["pageToken"] = {
+              ["description"] = "A previously-returned page token representing part of the larger set of results to view.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
+          ["response"] = {
+            ["$ref"] = "BackupRunsListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["connect"] = {
+      ["methods"] = {
+        ["generateEphemeralCert"] = {
+          ["description"] = "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.connect.generateEphemeral",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert",
+          ["request"] = {
+            ["$ref"] = "GenerateEphemeralCertRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "GenerateEphemeralCertResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["get"] = {
+          ["description"] = "Retrieves connect settings about a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.connect.get",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["readTime"] = {
+              ["description"] = "Optional. Optional snapshot read timestamp to trade freshness for performance.",
+              ["format"] = "google-datetime",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings",
+          ["response"] = {
+            ["$ref"] = "ConnectSettings",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["databases"] = {
+      ["methods"] = {
+        ["delete"] = {
+          ["description"] = "Deletes a database from a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["httpMethod"] = "DELETE",
+          ["id"] = "sql.databases.delete",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "database",
+          },
+          ["parameters"] = {
+            ["database"] = {
+              ["description"] = "Name of the database to be deleted in the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["get"] = {
+          ["description"] = "Retrieves a resource containing information about a database inside a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.databases.get",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "database",
+          },
+          ["parameters"] = {
+            ["database"] = {
+              ["description"] = "Name of the database in the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["response"] = {
+            ["$ref"] = "Database",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["insert"] = {
+          ["description"] = "Inserts a resource containing information about a database inside a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.databases.insert",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases",
+          ["request"] = {
+            ["$ref"] = "Database",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["list"] = {
+          ["description"] = "Lists databases in the specified Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.databases.list",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases",
+          ["response"] = {
+            ["$ref"] = "DatabasesListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["patch"] = {
+          ["description"] = "Partially updates a resource containing information about a database inside a Cloud SQL instance. This method supports patch semantics.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["httpMethod"] = "PATCH",
+          ["id"] = "sql.databases.patch",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "database",
+          },
+          ["parameters"] = {
+            ["database"] = {
+              ["description"] = "Name of the database to be updated in the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["request"] = {
+            ["$ref"] = "Database",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["update"] = {
+          ["description"] = "Updates a resource containing information about a database inside a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["httpMethod"] = "PUT",
+          ["id"] = "sql.databases.update",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "database",
+          },
+          ["parameters"] = {
+            ["database"] = {
+              ["description"] = "Name of the database to be updated in the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/databases/{database}",
+          ["request"] = {
+            ["$ref"] = "Database",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["flags"] = {
+      ["methods"] = {
+        ["list"] = {
+          ["description"] = "Lists all available database flags for Cloud SQL instances.",
+          ["flatPath"] = "sql/v1beta4/flags",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.flags.list",
+          ["parameterOrder"] = {},
+          ["parameters"] = {
+            ["databaseVersion"] = {
+              ["description"] = "Database type and version you want to retrieve flags for. By default, this method returns flags for all database types and versions.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/flags",
+          ["response"] = {
+            ["$ref"] = "FlagsListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["instances"] = {
+      ["methods"] = {
+        ["addServerCa"] = {
+          ["description"] = "Add a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one CA version waiting to be rotated in.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/addServerCa",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.addServerCa",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/addServerCa",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["clone"] = {
+          ["description"] = "Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/clone",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.clone",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "The ID of the Cloud SQL instance to be cloned (source). This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the source as well as the clone Cloud SQL instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/clone",
+          ["request"] = {
+            ["$ref"] = "InstancesCloneRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["delete"] = {
+          ["description"] = "Deletes a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["httpMethod"] = "DELETE",
+          ["id"] = "sql.instances.delete",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance to be deleted.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["demoteMaster"] = {
+          ["description"] = "Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/demoteMaster",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.demoteMaster",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance name.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/demoteMaster",
+          ["request"] = {
+            ["$ref"] = "InstancesDemoteMasterRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["export"] = {
+          ["description"] = "Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/export",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.export",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance to be exported.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/export",
+          ["request"] = {
+            ["$ref"] = "InstancesExportRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        ["failover"] = {
+          ["description"] = "Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/failover",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.failover",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "ID of the project that contains the read replica.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/failover",
+          ["request"] = {
+            ["$ref"] = "InstancesFailoverRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["get"] = {
+          ["description"] = "Retrieves a resource containing information about a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.instances.get",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["response"] = {
+            ["$ref"] = "DatabaseInstance",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["import"] = {
+          ["description"] = "Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/import",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.import",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/import",
+          ["request"] = {
+            ["$ref"] = "InstancesImportRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        ["insert"] = {
+          ["description"] = "Creates a new Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.insert",
+          ["parameterOrder"] = {
+            "project",
+          },
+          ["parameters"] = {
+            ["project"] = {
+              ["description"] = "Project ID of the project to which the newly created Cloud SQL instances should belong.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances",
+          ["request"] = {
+            ["$ref"] = "DatabaseInstance",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["list"] = {
+          ["description"] = "Lists instances under a given project.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.instances.list",
+          ["parameterOrder"] = {
+            "project",
+          },
+          ["parameters"] = {
+            ["filter"] = {
+              ["description"] = "A filter expression that filters resources listed in the response. The expression is in the form of field:value. For example, 'instanceType:CLOUD_SQL_INSTANCE'. Fields can be nested as needed as per their JSON representation, such as 'settings.userLabels.auto_start:true'. Multiple filter queries are space-separated. For example. 'state:RUNNABLE instanceType:CLOUD_SQL_INSTANCE'. By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["maxResults"] = {
+              ["description"] = "The maximum number of instances to return. The service may return fewer than this value. If unspecified, at most 500 instances are returned. The maximum value is 1000; values above 1000 are coerced to 1000.",
+              ["format"] = "uint32",
+              ["location"] = "query",
+              ["type"] = "integer",
+            },
+            ["pageToken"] = {
+              ["description"] = "A previously-returned page token representing part of the larger set of results to view.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project for which to list Cloud SQL instances.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances",
+          ["response"] = {
+            ["$ref"] = "InstancesListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["listServerCas"] = {
+          ["description"] = "Lists all of the trusted Certificate Authorities (CAs) for the specified instance. There can be up to three CAs listed: the CA that was used to sign the certificate that is currently in use, a CA that has been added but not yet used to sign a certificate, and a CA used to sign a certificate that has previously rotated out.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/listServerCas",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.instances.listServerCas",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/listServerCas",
+          ["response"] = {
+            ["$ref"] = "InstancesListServerCasResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["patch"] = {
+          ["description"] = "Updates settings of a Cloud SQL instance. This method supports patch semantics.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["httpMethod"] = "PATCH",
+          ["id"] = "sql.instances.patch",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["request"] = {
+            ["$ref"] = "DatabaseInstance",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["promoteReplica"] = {
+          ["description"] = "Promotes the read replica instance to be a stand-alone Cloud SQL instance. Using this operation might cause your instance to restart.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/promoteReplica",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.promoteReplica",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL read replica instance name.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "ID of the project that contains the read replica.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/promoteReplica",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["resetSslConfig"] = {
+          ["description"] = "Deletes all client certificates and generates a new server SSL certificate for the instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/resetSslConfig",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.resetSslConfig",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/resetSslConfig",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["restart"] = {
+          ["description"] = "Restarts a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/restart",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.restart",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance to be restarted.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/restart",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["restoreBackup"] = {
+          ["description"] = "Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/restoreBackup",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.restoreBackup",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/restoreBackup",
+          ["request"] = {
+            ["$ref"] = "InstancesRestoreBackupRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["rotateServerCa"] = {
+          ["description"] = "Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/rotateServerCa",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.rotateServerCa",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/rotateServerCa",
+          ["request"] = {
+            ["$ref"] = "InstancesRotateServerCaRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["startReplica"] = {
+          ["description"] = "Starts the replication in the read replica instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/startReplica",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.startReplica",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL read replica instance name.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "ID of the project that contains the read replica.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/startReplica",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["stopReplica"] = {
+          ["description"] = "Stops the replication in the read replica instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/stopReplica",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.stopReplica",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL read replica instance name.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "ID of the project that contains the read replica.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/stopReplica",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["truncateLog"] = {
+          ["description"] = "Truncate MySQL general and slow query log tables MySQL only.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/truncateLog",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.instances.truncateLog",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the Cloud SQL project.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/truncateLog",
+          ["request"] = {
+            ["$ref"] = "InstancesTruncateLogRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["update"] = {
+          ["description"] = "Updates settings of a Cloud SQL instance. Using this operation might cause your instance to restart.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["httpMethod"] = "PUT",
+          ["id"] = "sql.instances.update",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}",
+          ["request"] = {
+            ["$ref"] = "DatabaseInstance",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["operations"] = {
+      ["methods"] = {
+        ["get"] = {
+          ["description"] = "Retrieves an instance operation that has been performed on an instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/operations/{operation}",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.operations.get",
+          ["parameterOrder"] = {
+            "project",
+            "operation",
+          },
+          ["parameters"] = {
+            ["operation"] = {
+              ["description"] = "Instance operation ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/operations/{operation}",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["list"] = {
+          ["description"] = "Lists all instance operations that have been performed on the given Cloud SQL instance in the reverse chronological order of the start time.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/operations",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.operations.list",
+          ["parameterOrder"] = {
+            "project",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["maxResults"] = {
+              ["description"] = "Maximum number of operations per response.",
+              ["format"] = "uint32",
+              ["location"] = "query",
+              ["type"] = "integer",
+            },
+            ["pageToken"] = {
+              ["description"] = "A previously-returned page token representing part of the larger set of results to view.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/operations",
+          ["response"] = {
+            ["$ref"] = "OperationsListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["projects"] = {
+      ["resources"] = {
+        ["instances"] = {
+          ["methods"] = {
+            ["rescheduleMaintenance"] = {
+              ["description"] = "Reschedules the maintenance on the given instance.",
+              ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/rescheduleMaintenance",
+              ["httpMethod"] = "POST",
+              ["id"] = "sql.projects.instances.rescheduleMaintenance",
+              ["parameterOrder"] = {
+                "project",
+                "instance",
+              },
+              ["parameters"] = {
+                ["instance"] = {
+                  ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+                  ["location"] = "path",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+                ["project"] = {
+                  ["description"] = "ID of the project that contains the instance.",
+                  ["location"] = "path",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/rescheduleMaintenance",
+              ["request"] = {
+                ["$ref"] = "SqlInstancesRescheduleMaintenanceRequestBody",
+              },
+              ["response"] = {
+                ["$ref"] = "Operation",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/sqlservice.admin",
+              },
+            },
+            ["startExternalSync"] = {
+              ["description"] = "Start External primary instance migration.",
+              ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
+              ["httpMethod"] = "POST",
+              ["id"] = "sql.projects.instances.startExternalSync",
+              ["parameterOrder"] = {
+                "project",
+                "instance",
+              },
+              ["parameters"] = {
+                ["instance"] = {
+                  ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+                  ["location"] = "path",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+                ["project"] = {
+                  ["description"] = "ID of the project that contains the instance.",
+                  ["location"] = "path",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
+              ["request"] = {
+                ["$ref"] = "SqlInstancesStartExternalSyncRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "Operation",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/sqlservice.admin",
+              },
+            },
+            ["verifyExternalSyncSettings"] = {
+              ["description"] = "Verify External primary instance external sync settings.",
+              ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
+              ["httpMethod"] = "POST",
+              ["id"] = "sql.projects.instances.verifyExternalSyncSettings",
+              ["parameterOrder"] = {
+                "project",
+                "instance",
+              },
+              ["parameters"] = {
+                ["instance"] = {
+                  ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+                  ["location"] = "path",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+                ["project"] = {
+                  ["description"] = "Project ID of the project that contains the instance.",
+                  ["location"] = "path",
+                  ["required"] = true,
+                  ["type"] = "string",
+                },
+              },
+              ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
+              ["request"] = {
+                ["$ref"] = "SqlInstancesVerifyExternalSyncSettingsRequest",
+              },
+              ["response"] = {
+                ["$ref"] = "SqlInstancesVerifyExternalSyncSettingsResponse",
+              },
+              ["scopes"] = {
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/sqlservice.admin",
+              },
+            },
+          },
+        },
+      },
+    },
+    ["sslCerts"] = {
+      ["methods"] = {
+        ["createEphemeral"] = {
+          ["description"] = "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/createEphemeral",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.sslCerts.createEphemeral",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the Cloud SQL project.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/createEphemeral",
+          ["request"] = {
+            ["$ref"] = "SslCertsCreateEphemeralRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "SslCert",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["delete"] = {
+          ["description"] = "Deletes the SSL certificate. For First Generation instances, the certificate remains valid until the instance is restarted.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+          ["httpMethod"] = "DELETE",
+          ["id"] = "sql.sslCerts.delete",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "sha1Fingerprint",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["sha1Fingerprint"] = {
+              ["description"] = "Sha1 FingerPrint.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["get"] = {
+          ["description"] = "Retrieves a particular SSL certificate. Does not include the private key (required for usage). The private key must be saved from the response to initial creation.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.sslCerts.get",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "sha1Fingerprint",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["sha1Fingerprint"] = {
+              ["description"] = "Sha1 FingerPrint.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}",
+          ["response"] = {
+            ["$ref"] = "SslCert",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["insert"] = {
+          ["description"] = "Creates an SSL certificate and returns it along with the private key and server certificate authority. The new certificate will not be usable until the instance is restarted.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.sslCerts.insert",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts",
+          ["request"] = {
+            ["$ref"] = "SslCertsInsertRequest",
+          },
+          ["response"] = {
+            ["$ref"] = "SslCertsInsertResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["list"] = {
+          ["description"] = "Lists all of the current SSL certificates for the instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.sslCerts.list",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Cloud SQL instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/sslCerts",
+          ["response"] = {
+            ["$ref"] = "SslCertsListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["tiers"] = {
+      ["methods"] = {
+        ["list"] = {
+          ["description"] = "Lists all available machine types (tiers) for Cloud SQL, for example, `db-custom-1-3840`. For related information, see [Pricing](/sql/pricing).",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/tiers",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.tiers.list",
+          ["parameterOrder"] = {
+            "project",
+          },
+          ["parameters"] = {
+            ["project"] = {
+              ["description"] = "Project ID of the project for which to list tiers.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/tiers",
+          ["response"] = {
+            ["$ref"] = "TiersListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+    ["users"] = {
+      ["methods"] = {
+        ["delete"] = {
+          ["description"] = "Deletes a user from a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["httpMethod"] = "DELETE",
+          ["id"] = "sql.users.delete",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["host"] = {
+              ["description"] = "Host of the user in the instance.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["name"] = {
+              ["description"] = "Name of the user in the instance.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["get"] = {
+          ["description"] = "Retrieves a resource containing information about a user.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/users/{name}",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.users.get",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+            "name",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["name"] = {
+              ["description"] = "User of the instance. If the database user has a host, this is specified as {username}@{host} else as {username}.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/users/{name}",
+          ["response"] = {
+            ["$ref"] = "User",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["insert"] = {
+          ["description"] = "Creates a new user in a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["httpMethod"] = "POST",
+          ["id"] = "sql.users.insert",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["request"] = {
+            ["$ref"] = "User",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["list"] = {
+          ["description"] = "Lists users in the specified Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["httpMethod"] = "GET",
+          ["id"] = "sql.users.list",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["response"] = {
+            ["$ref"] = "UsersListResponse",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+        ["update"] = {
+          ["description"] = "Updates an existing user in a Cloud SQL instance.",
+          ["flatPath"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["httpMethod"] = "PUT",
+          ["id"] = "sql.users.update",
+          ["parameterOrder"] = {
+            "project",
+            "instance",
+          },
+          ["parameters"] = {
+            ["host"] = {
+              ["description"] = "Optional. Host of the user in the instance.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["instance"] = {
+              ["description"] = "Database instance ID. This does not include the project ID.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+            ["name"] = {
+              ["description"] = "Name of the user in the instance.",
+              ["location"] = "query",
+              ["type"] = "string",
+            },
+            ["project"] = {
+              ["description"] = "Project ID of the project that contains the instance.",
+              ["location"] = "path",
+              ["required"] = true,
+              ["type"] = "string",
+            },
+          },
+          ["path"] = "sql/v1beta4/projects/{project}/instances/{instance}/users",
+          ["request"] = {
+            ["$ref"] = "User",
+          },
+          ["response"] = {
+            ["$ref"] = "Operation",
+          },
+          ["scopes"] = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin",
+          },
+        },
+      },
+    },
+  },
+  ["revision"] = "20220724",
+  ["rootUrl"] = "https://sqladmin.googleapis.com/",
+  ["schemas"] = {
+    ["AclEntry"] = {
+      ["description"] = "An entry for an Access Control list.",
+      ["id"] = "AclEntry",
+      ["properties"] = {
+        ["expirationTime"] = {
+          ["description"] = "The time when this access control entry expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#aclEntry`.",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Optional. A label to identify this entry.",
+          ["type"] = "string",
+        },
+        ["value"] = {
+          ["description"] = "The allowlisted value for the access control list.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ApiWarning"] = {
+      ["description"] = "An Admin API warning message.",
+      ["id"] = "ApiWarning",
+      ["properties"] = {
+        ["code"] = {
+          ["description"] = "Code to uniquely identify the warning type.",
+          ["enum"] = {
+            "SQL_API_WARNING_CODE_UNSPECIFIED",
+            "REGION_UNREACHABLE",
+            "MAX_RESULTS_EXCEEDS_LIMIT",
+          },
+          ["enumDescriptions"] = {
+            "An unknown or unset warning type from Cloud SQL API.",
+            "Warning when one or more regions are not reachable. The returned result set may be incomplete.",
+            "Warning when user provided maxResults parameter exceeds the limit. The returned result set may be incomplete.",
+          },
+          ["type"] = "string",
+        },
+        ["message"] = {
+          ["description"] = "The warning message.",
+          ["type"] = "string",
+        },
+        ["region"] = {
+          ["description"] = "The region name for REGION_UNREACHABLE warning.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["BackupConfiguration"] = {
+      ["description"] = "Database instance backup configuration.",
+      ["id"] = "BackupConfiguration",
+      ["properties"] = {
+        ["backupRetentionSettings"] = {
+          ["$ref"] = "BackupRetentionSettings",
+          ["description"] = "Backup retention settings.",
+        },
+        ["binaryLogEnabled"] = {
+          ["description"] = "(MySQL only) Whether binary log is enabled. If backup configuration is disabled, binarylog must be disabled as well.",
+          ["type"] = "boolean",
+        },
+        ["enabled"] = {
+          ["description"] = "Whether this configuration is enabled.",
+          ["type"] = "boolean",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#backupConfiguration`.",
+          ["type"] = "string",
+        },
+        ["location"] = {
+          ["description"] = "Location of the backup",
+          ["type"] = "string",
+        },
+        ["pointInTimeRecoveryEnabled"] = {
+          ["description"] = "(Postgres only) Whether point in time recovery is enabled.",
+          ["type"] = "boolean",
+        },
+        ["replicationLogArchivingEnabled"] = {
+          ["description"] = "Reserved for future use.",
+          ["type"] = "boolean",
+        },
+        ["startTime"] = {
+          ["description"] = "Start time for the daily backup configuration in UTC timezone in the 24 hour format - `HH:MM`.",
+          ["type"] = "string",
+        },
+        ["transactionLogRetentionDays"] = {
+          ["description"] = "The number of days of transaction logs we retain for point in time restore, from 1-7.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["BackupContext"] = {
+      ["description"] = "Backup context.",
+      ["id"] = "BackupContext",
+      ["properties"] = {
+        ["backupId"] = {
+          ["description"] = "The identifier of the backup.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#backupContext`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["BackupRetentionSettings"] = {
+      ["description"] = "We currently only support backup retention by specifying the number of backups we will retain.",
+      ["id"] = "BackupRetentionSettings",
+      ["properties"] = {
+        ["retainedBackups"] = {
+          ["description"] = "Depending on the value of retention_unit, this is used to determine if a backup needs to be deleted. If retention_unit is 'COUNT', we will retain this many backups.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["retentionUnit"] = {
+          ["description"] = "The unit that 'retained_backups' represents.",
+          ["enum"] = {
+            "RETENTION_UNIT_UNSPECIFIED",
+            "COUNT",
+          },
+          ["enumDescriptions"] = {
+            "Backup retention unit is unspecified, will be treated as COUNT.",
+            "Retention will be by count, eg. \"retain the most recent 7 backups\".",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["BackupRun"] = {
+      ["description"] = "A BackupRun resource.",
+      ["id"] = "BackupRun",
+      ["properties"] = {
+        ["backupKind"] = {
+          ["description"] = "Specifies the kind of backup, PHYSICAL or DEFAULT_SNAPSHOT.",
+          ["enum"] = {
+            "SQL_BACKUP_KIND_UNSPECIFIED",
+            "SNAPSHOT",
+            "PHYSICAL",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown BackupKind.",
+            "The snapshot based backups",
+            "Physical backups",
+          },
+          ["type"] = "string",
+        },
+        ["description"] = {
+          ["description"] = "The description of this run, only applicable to on-demand backups.",
+          ["type"] = "string",
+        },
+        ["diskEncryptionConfiguration"] = {
+          ["$ref"] = "DiskEncryptionConfiguration",
+          ["description"] = "Encryption configuration specific to a backup.",
+        },
+        ["diskEncryptionStatus"] = {
+          ["$ref"] = "DiskEncryptionStatus",
+          ["description"] = "Encryption status specific to a backup.",
+        },
+        ["endTime"] = {
+          ["description"] = "The time the backup operation completed in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["enqueuedTime"] = {
+          ["description"] = "The time the run was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["error"] = {
+          ["$ref"] = "OperationError",
+          ["description"] = "Information about why the backup operation failed. This is only present if the run has the FAILED status.",
+        },
+        ["id"] = {
+          ["description"] = "The identifier for this backup run. Unique only for a specific Cloud SQL instance.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["instance"] = {
+          ["description"] = "Name of the database instance.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#backupRun`.",
+          ["type"] = "string",
+        },
+        ["location"] = {
+          ["description"] = "Location of the backups.",
+          ["type"] = "string",
+        },
+        ["selfLink"] = {
+          ["description"] = "The URI of this resource.",
+          ["type"] = "string",
+        },
+        ["startTime"] = {
+          ["description"] = "The time the backup operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["status"] = {
+          ["description"] = "The status of this run.",
+          ["enum"] = {
+            "SQL_BACKUP_RUN_STATUS_UNSPECIFIED",
+            "ENQUEUED",
+            "OVERDUE",
+            "RUNNING",
+            "FAILED",
+            "SUCCESSFUL",
+            "SKIPPED",
+            "DELETION_PENDING",
+            "DELETION_FAILED",
+            "DELETED",
+          },
+          ["enumDescriptions"] = {
+            "The status of the run is unknown.",
+            "The backup operation was enqueued.",
+            "The backup is overdue across a given backup window. Indicates a problem. Example: Long-running operation in progress during the whole window.",
+            "The backup is in progress.",
+            "The backup failed.",
+            "The backup was successful.",
+            "The backup was skipped (without problems) for a given backup window. Example: Instance was idle.",
+            "The backup is about to be deleted.",
+            "The backup deletion failed.",
+            "The backup has been deleted.",
+          },
+          ["type"] = "string",
+        },
+        ["type"] = {
+          ["description"] = "The type of this run; can be either \"AUTOMATED\" or \"ON_DEMAND\" or \"FINAL\". This field defaults to \"ON_DEMAND\" and is ignored, when specified for insert requests.",
+          ["enum"] = {
+            "SQL_BACKUP_RUN_TYPE_UNSPECIFIED",
+            "AUTOMATED",
+            "ON_DEMAND",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown BackupRun type.",
+            "The backup schedule automatically triggers a backup.",
+            "The user manually triggers a backup.",
+          },
+          ["type"] = "string",
+        },
+        ["windowStartTime"] = {
+          ["description"] = "The start time of the backup window during which this the backup was attempted in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["BackupRunsListResponse"] = {
+      ["description"] = "Backup run list results.",
+      ["id"] = "BackupRunsListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "A list of backup runs in reverse chronological order of the enqueued time.",
+          ["items"] = {
+            ["$ref"] = "BackupRun",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#backupRunsList`.",
+          ["type"] = "string",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["BinLogCoordinates"] = {
+      ["description"] = "Binary log coordinates.",
+      ["id"] = "BinLogCoordinates",
+      ["properties"] = {
+        ["binLogFileName"] = {
+          ["description"] = "Name of the binary log file for a Cloud SQL instance.",
+          ["type"] = "string",
+        },
+        ["binLogPosition"] = {
+          ["description"] = "Position (offset) within the binary log file.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#binLogCoordinates`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["CloneContext"] = {
+      ["description"] = "Database instance clone context.",
+      ["id"] = "CloneContext",
+      ["properties"] = {
+        ["allocatedIpRange"] = {
+          ["description"] = "The name of the allocated ip range for the private ip CloudSQL instance. For example: \"google-managed-services-default\". If set, the cloned instance ip will be created in the allocated range. The range name must comply with [RFC 1035](https://tools.ietf.org/html/rfc1035). Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])?. Reserved for future use.",
+          ["type"] = "string",
+        },
+        ["binLogCoordinates"] = {
+          ["$ref"] = "BinLogCoordinates",
+          ["description"] = "Binary log coordinates, if specified, identify the position up to which the source instance is cloned. If not specified, the source instance is cloned up to the most recent binary log coordinates.",
+        },
+        ["destinationInstanceName"] = {
+          ["description"] = "Name of the Cloud SQL instance to be created as a clone.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#cloneContext`.",
+          ["type"] = "string",
+        },
+        ["pitrTimestampMs"] = {
+          ["description"] = "Reserved for future use.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["pointInTime"] = {
+          ["description"] = "Timestamp, if specified, identifies the time to which the source instance is cloned.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ConnectSettings"] = {
+      ["description"] = "Connect settings retrieval response.",
+      ["id"] = "ConnectSettings",
+      ["properties"] = {
+        ["backendType"] = {
+          ["description"] = "`SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type.",
+          ["enum"] = {
+            "SQL_BACKEND_TYPE_UNSPECIFIED",
+            "FIRST_GEN",
+            "SECOND_GEN",
+            "EXTERNAL",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown backend type for instance.",
+            "V1 speckle instance.",
+            "V2 speckle instance.",
+            "On premises instance.",
+          },
+          ["type"] = "string",
+        },
+        ["databaseVersion"] = {
+          ["description"] = "The database engine type and version. The `databaseVersion` field cannot be changed after instance creation. MySQL instances: `MYSQL_8_0`, `MYSQL_5_7` (default), or `MYSQL_5_6`. PostgreSQL instances: `POSTGRES_9_6`, `POSTGRES_10`, `POSTGRES_11` or `POSTGRES_12` (default), `POSTGRES_13`, or `POSTGRES_14`. SQL Server instances: `SQLSERVER_2017_STANDARD` (default), `SQLSERVER_2017_ENTERPRISE`, `SQLSERVER_2017_EXPRESS`, `SQLSERVER_2017_WEB`, `SQLSERVER_2019_STANDARD`, `SQLSERVER_2019_ENTERPRISE`, `SQLSERVER_2019_EXPRESS`, or `SQLSERVER_2019_WEB`.",
+          ["enum"] = {
+            "SQL_DATABASE_VERSION_UNSPECIFIED",
+            "MYSQL_5_1",
+            "MYSQL_5_5",
+            "MYSQL_5_6",
+            "MYSQL_5_7",
+            "POSTGRES_9_6",
+            "POSTGRES_11",
+            "SQLSERVER_2017_STANDARD",
+            "SQLSERVER_2017_ENTERPRISE",
+            "SQLSERVER_2017_EXPRESS",
+            "SQLSERVER_2017_WEB",
+            "POSTGRES_10",
+            "POSTGRES_12",
+            "MYSQL_8_0",
+            "MYSQL_8_0_18",
+            "MYSQL_8_0_26",
+            "MYSQL_8_0_27",
+            "MYSQL_8_0_28",
+            "MYSQL_8_0_29",
+            "POSTGRES_13",
+            "POSTGRES_14",
+            "SQLSERVER_2019_STANDARD",
+            "SQLSERVER_2019_ENTERPRISE",
+            "SQLSERVER_2019_EXPRESS",
+            "SQLSERVER_2019_WEB",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown database version.",
+            "The database version is MySQL 5.1.",
+            "The database version is MySQL 5.5.",
+            "The database version is MySQL 5.6.",
+            "The database version is MySQL 5.7.",
+            "The database version is PostgreSQL 9.6.",
+            "The database version is PostgreSQL 11.",
+            "The database version is SQL Server 2017 Standard.",
+            "The database version is SQL Server 2017 Enterprise.",
+            "The database version is SQL Server 2017 Express.",
+            "The database version is SQL Server 2017 Web.",
+            "The database version is PostgreSQL 10.",
+            "The database version is PostgreSQL 12.",
+            "The database version is MySQL 8.",
+            "The database major version is MySQL 8.0 and the minor version is 18.",
+            "The database major version is MySQL 8.0 and the minor version is 26.",
+            "The database major version is MySQL 8.0 and the minor version is 27.",
+            "The database major version is MySQL 8.0 and the minor version is 28.",
+            "The database major version is MySQL 8.0 and the minor version is 29.",
+            "The database version is PostgreSQL 13.",
+            "The database version is PostgreSQL 14.",
+            "The database version is SQL Server 2019 Standard.",
+            "The database version is SQL Server 2019 Enterprise.",
+            "The database version is SQL Server 2019 Express.",
+            "The database version is SQL Server 2019 Web.",
+          },
+          ["type"] = "string",
+        },
+        ["ipAddresses"] = {
+          ["description"] = "The assigned IP addresses for the instance.",
+          ["items"] = {
+            ["$ref"] = "IpMapping",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#connectSettings`.",
+          ["type"] = "string",
+        },
+        ["region"] = {
+          ["description"] = "The cloud region for the instance. e.g. `us-central1`, `europe-west1`. The region cannot be changed after instance creation.",
+          ["type"] = "string",
+        },
+        ["serverCaCert"] = {
+          ["$ref"] = "SslCert",
+          ["description"] = "SSL configuration.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Database"] = {
+      ["description"] = "Represents a SQL database on the Cloud SQL instance.",
+      ["id"] = "Database",
+      ["properties"] = {
+        ["charset"] = {
+          ["description"] = "The Cloud SQL charset value.",
+          ["type"] = "string",
+        },
+        ["collation"] = {
+          ["description"] = "The Cloud SQL collation value.",
+          ["type"] = "string",
+        },
+        ["etag"] = {
+          ["description"] = "This field is deprecated and will be removed from a future version of the API.",
+          ["type"] = "string",
+        },
+        ["instance"] = {
+          ["description"] = "The name of the Cloud SQL instance. This does not include the project ID.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#database`.",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "The name of the database in the Cloud SQL instance. This does not include the project ID or instance name.",
+          ["type"] = "string",
+        },
+        ["project"] = {
+          ["description"] = "The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable.",
+          ["type"] = "string",
+        },
+        ["selfLink"] = {
+          ["description"] = "The URI of this resource.",
+          ["type"] = "string",
+        },
+        ["sqlserverDatabaseDetails"] = {
+          ["$ref"] = "SqlServerDatabaseDetails",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DatabaseFlags"] = {
+      ["description"] = "Database flags for Cloud SQL instances.",
+      ["id"] = "DatabaseFlags",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "The name of the flag. These flags are passed at instance startup, so include both server options and system variables. Flags are specified with underscores, not hyphens. For more information, see [Configuring Database Flags](https://cloud.google.com/sql/docs/mysql/flags) in the Cloud SQL documentation.",
+          ["type"] = "string",
+        },
+        ["value"] = {
+          ["description"] = "The value of the flag. Boolean flags are set to `on` for true and `off` for false. This field must be omitted if the flag doesn't take a value.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DatabaseInstance"] = {
+      ["description"] = "A Cloud SQL instance resource.",
+      ["id"] = "DatabaseInstance",
+      ["properties"] = {
+        ["availableMaintenanceVersions"] = {
+          ["description"] = "List all maintenance versions applicable on the instance",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["backendType"] = {
+          ["description"] = "The backend type. `SECOND_GEN`: Cloud SQL database instance. `EXTERNAL`: A database server that is not managed by Google. This property is read-only; use the `tier` property in the `settings` object to determine the database type.",
+          ["enum"] = {
+            "SQL_BACKEND_TYPE_UNSPECIFIED",
+            "FIRST_GEN",
+            "SECOND_GEN",
+            "EXTERNAL",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown backend type for instance.",
+            "V1 speckle instance.",
+            "V2 speckle instance.",
+            "On premises instance.",
+          },
+          ["type"] = "string",
+        },
+        ["connectionName"] = {
+          ["description"] = "Connection name of the Cloud SQL instance used in connection strings.",
+          ["type"] = "string",
+        },
+        ["createTime"] = {
+          ["description"] = "Output only. The time when the instance was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["currentDiskSize"] = {
+          ["description"] = "The current disk usage of the instance in bytes. This property has been deprecated. Use the \"cloudsql.googleapis.com/database/disk/bytes_used\" metric in Cloud Monitoring API instead. Please see [this announcement](https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ) for details.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["databaseInstalledVersion"] = {
+          ["description"] = "Output only. Stores the current database version running on the instance including minor version such as `MYSQL_8_0_18`.",
+          ["readOnly"] = true,
+          ["type"] = "string",
+        },
+        ["databaseVersion"] = {
+          ["description"] = "The database engine type and version. The `databaseVersion` field cannot be changed after instance creation.",
+          ["enum"] = {
+            "SQL_DATABASE_VERSION_UNSPECIFIED",
+            "MYSQL_5_1",
+            "MYSQL_5_5",
+            "MYSQL_5_6",
+            "MYSQL_5_7",
+            "POSTGRES_9_6",
+            "POSTGRES_11",
+            "SQLSERVER_2017_STANDARD",
+            "SQLSERVER_2017_ENTERPRISE",
+            "SQLSERVER_2017_EXPRESS",
+            "SQLSERVER_2017_WEB",
+            "POSTGRES_10",
+            "POSTGRES_12",
+            "MYSQL_8_0",
+            "MYSQL_8_0_18",
+            "MYSQL_8_0_26",
+            "MYSQL_8_0_27",
+            "MYSQL_8_0_28",
+            "MYSQL_8_0_29",
+            "POSTGRES_13",
+            "POSTGRES_14",
+            "SQLSERVER_2019_STANDARD",
+            "SQLSERVER_2019_ENTERPRISE",
+            "SQLSERVER_2019_EXPRESS",
+            "SQLSERVER_2019_WEB",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown database version.",
+            "The database version is MySQL 5.1.",
+            "The database version is MySQL 5.5.",
+            "The database version is MySQL 5.6.",
+            "The database version is MySQL 5.7.",
+            "The database version is PostgreSQL 9.6.",
+            "The database version is PostgreSQL 11.",
+            "The database version is SQL Server 2017 Standard.",
+            "The database version is SQL Server 2017 Enterprise.",
+            "The database version is SQL Server 2017 Express.",
+            "The database version is SQL Server 2017 Web.",
+            "The database version is PostgreSQL 10.",
+            "The database version is PostgreSQL 12.",
+            "The database version is MySQL 8.",
+            "The database major version is MySQL 8.0 and the minor version is 18.",
+            "The database major version is MySQL 8.0 and the minor version is 26.",
+            "The database major version is MySQL 8.0 and the minor version is 27.",
+            "The database major version is MySQL 8.0 and the minor version is 28.",
+            "The database major version is MySQL 8.0 and the minor version is 29.",
+            "The database version is PostgreSQL 13.",
+            "The database version is PostgreSQL 14.",
+            "The database version is SQL Server 2019 Standard.",
+            "The database version is SQL Server 2019 Enterprise.",
+            "The database version is SQL Server 2019 Express.",
+            "The database version is SQL Server 2019 Web.",
+          },
+          ["type"] = "string",
+        },
+        ["diskEncryptionConfiguration"] = {
+          ["$ref"] = "DiskEncryptionConfiguration",
+          ["description"] = "Disk encryption configuration specific to an instance.",
+        },
+        ["diskEncryptionStatus"] = {
+          ["$ref"] = "DiskEncryptionStatus",
+          ["description"] = "Disk encryption status specific to an instance.",
+        },
+        ["etag"] = {
+          ["description"] = "This field is deprecated and will be removed from a future version of the API. Use the `settings.settingsVersion` field instead.",
+          ["type"] = "string",
+        },
+        ["failoverReplica"] = {
+          ["description"] = "The name and status of the failover replica.",
+          ["properties"] = {
+            ["available"] = {
+              ["description"] = "The availability status of the failover replica. A false status indicates that the failover replica is out of sync. The primary instance can only failover to the failover replica when the status is true.",
+              ["type"] = "boolean",
+            },
+            ["name"] = {
+              ["description"] = "The name of the failover replica. If specified at instance creation, a failover replica is created for the instance. The name doesn't include the project ID.",
+              ["type"] = "string",
+            },
+          },
+          ["type"] = "object",
+        },
+        ["gceZone"] = {
+          ["description"] = "The Compute Engine zone that the instance is currently serving from. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary zone. WARNING: Changing this might restart the instance.",
+          ["type"] = "string",
+        },
+        ["instanceType"] = {
+          ["description"] = "The instance type.",
+          ["enum"] = {
+            "SQL_INSTANCE_TYPE_UNSPECIFIED",
+            "CLOUD_SQL_INSTANCE",
+            "ON_PREMISES_INSTANCE",
+            "READ_REPLICA_INSTANCE",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown Cloud SQL instance type.",
+            "A regular Cloud SQL instance that is not replicating from a primary instance.",
+            "An instance running on the customer's premises that is not managed by Cloud SQL.",
+            "A Cloud SQL instance acting as a read-replica.",
+          },
+          ["type"] = "string",
+        },
+        ["ipAddresses"] = {
+          ["description"] = "The assigned IP addresses for the instance.",
+          ["items"] = {
+            ["$ref"] = "IpMapping",
+          },
+          ["type"] = "array",
+        },
+        ["ipv6Address"] = {
+          ["description"] = "The IPv6 address assigned to the instance. (Deprecated) This property was applicable only to First Generation instances.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#instance`.",
+          ["type"] = "string",
+        },
+        ["maintenanceVersion"] = {
+          ["description"] = "The current software version on the instance.",
+          ["type"] = "string",
+        },
+        ["masterInstanceName"] = {
+          ["description"] = "The name of the instance which will act as primary in the replication setup.",
+          ["type"] = "string",
+        },
+        ["maxDiskSize"] = {
+          ["description"] = "The maximum disk size of the instance in bytes.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "Name of the Cloud SQL instance. This does not include the project ID.",
+          ["type"] = "string",
+        },
+        ["onPremisesConfiguration"] = {
+          ["$ref"] = "OnPremisesConfiguration",
+          ["description"] = "Configuration specific to on-premises instances.",
+        },
+        ["outOfDiskReport"] = {
+          ["$ref"] = "SqlOutOfDiskReport",
+          ["description"] = "This field represents the report generated by the proactive database wellness job for OutOfDisk issues. * Writers: * the proactive database wellness job for OOD. * Readers: * the proactive database wellness job",
+        },
+        ["project"] = {
+          ["description"] = "The project ID of the project containing the Cloud SQL instance. The Google apps domain is prefixed if applicable.",
+          ["type"] = "string",
+        },
+        ["region"] = {
+          ["description"] = "The geographical region. Can be: * `us-central` (`FIRST_GEN` instances only) * `us-central1` (`SECOND_GEN` instances only) * `asia-east1` or `europe-west1`. Defaults to `us-central` or `us-central1` depending on the instance type. The region cannot be changed after instance creation.",
+          ["type"] = "string",
+        },
+        ["replicaConfiguration"] = {
+          ["$ref"] = "ReplicaConfiguration",
+          ["description"] = "Configuration specific to failover replicas and read replicas.",
+        },
+        ["replicaNames"] = {
+          ["description"] = "The replicas of the instance.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["rootPassword"] = {
+          ["description"] = "Initial root password. Use only on creation. You must set root passwords before you can connect to PostgreSQL instances.",
+          ["type"] = "string",
+        },
+        ["satisfiesPzs"] = {
+          ["description"] = "The status indicating if instance satisfiesPzs. Reserved for future use.",
+          ["type"] = "boolean",
+        },
+        ["scheduledMaintenance"] = {
+          ["$ref"] = "SqlScheduledMaintenance",
+          ["description"] = "The start time of any upcoming scheduled maintenance for this instance.",
+        },
+        ["secondaryGceZone"] = {
+          ["description"] = "The Compute Engine zone that the failover instance is currently serving from for a regional instance. This value could be different from the zone that was specified when the instance was created if the instance has failed over to its secondary/failover zone.",
+          ["type"] = "string",
+        },
+        ["selfLink"] = {
+          ["description"] = "The URI of this resource.",
+          ["type"] = "string",
+        },
+        ["serverCaCert"] = {
+          ["$ref"] = "SslCert",
+          ["description"] = "SSL configuration.",
+        },
+        ["serviceAccountEmailAddress"] = {
+          ["description"] = "The service account email address assigned to the instance. \\This property is read-only.",
+          ["type"] = "string",
+        },
+        ["settings"] = {
+          ["$ref"] = "Settings",
+          ["description"] = "The user settings.",
+        },
+        ["state"] = {
+          ["description"] = "The current serving state of the Cloud SQL instance.",
+          ["enum"] = {
+            "SQL_INSTANCE_STATE_UNSPECIFIED",
+            "RUNNABLE",
+            "SUSPENDED",
+            "PENDING_DELETE",
+            "PENDING_CREATE",
+            "MAINTENANCE",
+            "FAILED",
+            "ONLINE_MAINTENANCE",
+          },
+          ["enumDescriptions"] = {
+            "The state of the instance is unknown.",
+            "The instance is running, or has been stopped by owner.",
+            "The instance is not available, for example due to problems with billing.",
+            "The instance is being deleted.",
+            "The instance is being created.",
+            "The instance is down for maintenance.",
+            "The creation of the instance failed or a fatal error occurred during maintenance.",
+            "Deprecated",
+          },
+          ["type"] = "string",
+        },
+        ["suspensionReason"] = {
+          ["description"] = "If the instance state is SUSPENDED, the reason for the suspension.",
+          ["items"] = {
+            ["enum"] = {
+              "SQL_SUSPENSION_REASON_UNSPECIFIED",
+              "BILLING_ISSUE",
+              "LEGAL_ISSUE",
+              "OPERATIONAL_ISSUE",
+              "KMS_KEY_ISSUE",
+            },
+            ["enumDescriptions"] = {
+              "This is an unknown suspension reason.",
+              "The instance is suspended due to billing issues (for example:, GCP account issue)",
+              "The instance is suspended due to illegal content (for example:, child pornography, copyrighted material, etc.).",
+              "The instance is causing operational issues (for example:, causing the database to crash).",
+              "The KMS key used by the instance is either revoked or denied access to",
+            },
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DatabasesListResponse"] = {
+      ["description"] = "Database list response.",
+      ["id"] = "DatabasesListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "List of database resources in the instance.",
+          ["items"] = {
+            ["$ref"] = "Database",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#databasesList`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DemoteMasterConfiguration"] = {
+      ["description"] = "Read-replica configuration for connecting to the on-premises primary instance.",
+      ["id"] = "DemoteMasterConfiguration",
+      ["properties"] = {
+        ["kind"] = {
+          ["description"] = "This is always `sql#demoteMasterConfiguration`.",
+          ["type"] = "string",
+        },
+        ["mysqlReplicaConfiguration"] = {
+          ["$ref"] = "DemoteMasterMySqlReplicaConfiguration",
+          ["description"] = "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named `master.info` in the data directory.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DemoteMasterContext"] = {
+      ["description"] = "Database instance demote primary instance context.",
+      ["id"] = "DemoteMasterContext",
+      ["properties"] = {
+        ["kind"] = {
+          ["description"] = "This is always `sql#demoteMasterContext`.",
+          ["type"] = "string",
+        },
+        ["masterInstanceName"] = {
+          ["description"] = "The name of the instance which will act as on-premises primary instance in the replication setup.",
+          ["type"] = "string",
+        },
+        ["replicaConfiguration"] = {
+          ["$ref"] = "DemoteMasterConfiguration",
+          ["description"] = "Configuration specific to read-replicas replicating from the on-premises primary instance.",
+        },
+        ["skipReplicationSetup"] = {
+          ["description"] = "Flag to skip replication setup on the instance.",
+          ["type"] = "boolean",
+        },
+        ["verifyGtidConsistency"] = {
+          ["description"] = "Verify the GTID consistency for demote operation. Default value: `True`. Setting this flag to `false` enables you to bypass the GTID consistency check between on-premises primary instance and Cloud SQL instance during the demotion operation but also exposes you to the risk of future replication failures. Change the value only if you know the reason for the GTID divergence and are confident that doing so will not cause any replication issues.",
+          ["type"] = "boolean",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DemoteMasterMySqlReplicaConfiguration"] = {
+      ["description"] = "Read-replica configuration specific to MySQL databases.",
+      ["id"] = "DemoteMasterMySqlReplicaConfiguration",
+      ["properties"] = {
+        ["caCertificate"] = {
+          ["description"] = "PEM representation of the trusted CA's x509 certificate.",
+          ["type"] = "string",
+        },
+        ["clientCertificate"] = {
+          ["description"] = "PEM representation of the replica's x509 certificate.",
+          ["type"] = "string",
+        },
+        ["clientKey"] = {
+          ["description"] = "PEM representation of the replica's private key. The corresponsing public key is encoded in the client's certificate. The format of the replica's private key can be either PKCS #1 or PKCS #8.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#demoteMasterMysqlReplicaConfiguration`.",
+          ["type"] = "string",
+        },
+        ["password"] = {
+          ["description"] = "The password for the replication connection.",
+          ["type"] = "string",
+        },
+        ["username"] = {
+          ["description"] = "The username for the replication connection.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DenyMaintenancePeriod"] = {
+      ["description"] = "Deny Maintenance Periods. This specifies a date range during when all CSA rollout will be denied.",
+      ["id"] = "DenyMaintenancePeriod",
+      ["properties"] = {
+        ["endDate"] = {
+          ["description"] = "\"deny maintenance period\" end date. If the year of the end date is empty, the year of the start date also must be empty. In this case, it means the deny maintenance period recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
+          ["type"] = "string",
+        },
+        ["startDate"] = {
+          ["description"] = "\"deny maintenance period\" start date. If the year of the start date is empty, the year of the end date also must be empty. In this case, it means the deny maintenance period recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
+          ["type"] = "string",
+        },
+        ["time"] = {
+          ["description"] = "Time in UTC when the \"deny maintenance period\" starts on start_date and ends on end_date. The time is in format: HH:mm:SS, i.e., 00:00:00",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DiskEncryptionConfiguration"] = {
+      ["description"] = "Disk encryption configuration for an instance.",
+      ["id"] = "DiskEncryptionConfiguration",
+      ["properties"] = {
+        ["kind"] = {
+          ["description"] = "This is always `sql#diskEncryptionConfiguration`.",
+          ["type"] = "string",
+        },
+        ["kmsKeyName"] = {
+          ["description"] = "Resource name of KMS key for disk encryption",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["DiskEncryptionStatus"] = {
+      ["description"] = "Disk encryption status for an instance.",
+      ["id"] = "DiskEncryptionStatus",
+      ["properties"] = {
+        ["kind"] = {
+          ["description"] = "This is always `sql#diskEncryptionStatus`.",
+          ["type"] = "string",
+        },
+        ["kmsKeyVersionName"] = {
+          ["description"] = "KMS key version used to encrypt the Cloud SQL instance resource",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ExportContext"] = {
+      ["description"] = "Database instance export context.",
+      ["id"] = "ExportContext",
+      ["properties"] = {
+        ["csvExportOptions"] = {
+          ["description"] = "Options for exporting data as CSV. `MySQL` and `PostgreSQL` instances only.",
+          ["properties"] = {
+            ["escapeCharacter"] = {
+              ["description"] = "Specifies the character that should appear before a data character that needs to be escaped.",
+              ["type"] = "string",
+            },
+            ["fieldsTerminatedBy"] = {
+              ["description"] = "Specifies the character that separates columns within each row (line) of the file.",
+              ["type"] = "string",
+            },
+            ["linesTerminatedBy"] = {
+              ["description"] = "This is used to separate lines. If a line does not contain all fields, the rest of the columns are set to their default values.",
+              ["type"] = "string",
+            },
+            ["quoteCharacter"] = {
+              ["description"] = "Specifies the quoting character to be used when a data value is quoted.",
+              ["type"] = "string",
+            },
+            ["selectQuery"] = {
+              ["description"] = "The select query used to extract the data.",
+              ["type"] = "string",
+            },
+          },
+          ["type"] = "object",
+        },
+        ["databases"] = {
+          ["description"] = "Databases to be exported. `MySQL instances:` If `fileType` is `SQL` and no database is specified, all databases are exported, except for the `mysql` system database. If `fileType` is `CSV`, you can specify one database, either by using this property or by using the `csvExportOptions.selectQuery` property, which takes precedence over this property. `PostgreSQL instances:` You must specify one database to be exported. If `fileType` is `CSV`, this database must match the one specified in the `csvExportOptions.selectQuery` property. `SQL Server instances:` You must specify one database to be exported, and the `fileType` must be `BAK`.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["fileType"] = {
+          ["description"] = "The file type for the specified uri.",
+          ["enum"] = {
+            "SQL_FILE_TYPE_UNSPECIFIED",
+            "SQL",
+            "CSV",
+            "BAK",
+          },
+          ["enumDescriptions"] = {
+            "Unknown file type.",
+            "File containing SQL statements.",
+            "File in CSV format.",
+            "",
+          },
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#exportContext`.",
+          ["type"] = "string",
+        },
+        ["offload"] = {
+          ["description"] = "Option for export offload.",
+          ["type"] = "boolean",
+        },
+        ["sqlExportOptions"] = {
+          ["description"] = "Options for exporting data as SQL statements.",
+          ["properties"] = {
+            ["mysqlExportOptions"] = {
+              ["description"] = "Options for exporting from MySQL.",
+              ["properties"] = {
+                ["masterData"] = {
+                  ["description"] = "Option to include SQL statement required to set up replication. If set to `1`, the dump file includes a CHANGE MASTER TO statement with the binary log coordinates, and --set-gtid-purged is set to ON. If set to `2`, the CHANGE MASTER TO statement is written as a SQL comment and has no effect. If set to any value other than `1`, --set-gtid-purged is set to OFF.",
+                  ["format"] = "int32",
+                  ["type"] = "integer",
+                },
+              },
+              ["type"] = "object",
+            },
+            ["schemaOnly"] = {
+              ["description"] = "Export only schemas.",
+              ["type"] = "boolean",
+            },
+            ["tables"] = {
+              ["description"] = "Tables to export, or that were exported, from the specified database. If you specify tables, specify one and only one database. For PostgreSQL instances, you can specify only one table.",
+              ["items"] = {
+                ["type"] = "string",
+              },
+              ["type"] = "array",
+            },
+          },
+          ["type"] = "object",
+        },
+        ["uri"] = {
+          ["description"] = "The path to the file in Google Cloud Storage where the export will be stored. The URI is in the form `gs://bucketName/fileName`. If the file already exists, the request succeeds, but the operation fails. If `fileType` is `SQL` and the filename ends with .gz, the contents are compressed.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["FailoverContext"] = {
+      ["description"] = "Database instance failover context.",
+      ["id"] = "FailoverContext",
+      ["properties"] = {
+        ["kind"] = {
+          ["description"] = "This is always `sql#failoverContext`.",
+          ["type"] = "string",
+        },
+        ["settingsVersion"] = {
+          ["description"] = "The current settings version of this instance. Request will be rejected if this version doesn't match the current settings version.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Flag"] = {
+      ["description"] = "A flag resource.",
+      ["id"] = "Flag",
+      ["properties"] = {
+        ["allowedIntValues"] = {
+          ["description"] = "Use this field if only certain integers are accepted. Can be combined with min_value and max_value to add additional values.",
+          ["items"] = {
+            ["format"] = "int64",
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["allowedStringValues"] = {
+          ["description"] = "For `STRING` flags, a list of strings that the value can be set to.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["appliesTo"] = {
+          ["description"] = "The database version this flag applies to. Can be MySQL instances: `MYSQL_8_0`, `MYSQL_8_0_18`, `MYSQL_8_0_26`, `MYSQL_5_7`, or `MYSQL_5_6`. PostgreSQL instances: `POSTGRES_9_6`, `POSTGRES_10`, `POSTGRES_11` or `POSTGRES_12`. SQL Server instances: `SQLSERVER_2017_STANDARD`, `SQLSERVER_2017_ENTERPRISE`, `SQLSERVER_2017_EXPRESS`, `SQLSERVER_2017_WEB`, `SQLSERVER_2019_STANDARD`, `SQLSERVER_2019_ENTERPRISE`, `SQLSERVER_2019_EXPRESS`, or `SQLSERVER_2019_WEB`. See [the complete list](/sql/docs/mysql/admin-api/rest/v1/SqlDatabaseVersion).",
+          ["items"] = {
+            ["enum"] = {
+              "SQL_DATABASE_VERSION_UNSPECIFIED",
+              "MYSQL_5_1",
+              "MYSQL_5_5",
+              "MYSQL_5_6",
+              "MYSQL_5_7",
+              "POSTGRES_9_6",
+              "POSTGRES_11",
+              "SQLSERVER_2017_STANDARD",
+              "SQLSERVER_2017_ENTERPRISE",
+              "SQLSERVER_2017_EXPRESS",
+              "SQLSERVER_2017_WEB",
+              "POSTGRES_10",
+              "POSTGRES_12",
+              "MYSQL_8_0",
+              "MYSQL_8_0_18",
+              "MYSQL_8_0_26",
+              "MYSQL_8_0_27",
+              "MYSQL_8_0_28",
+              "MYSQL_8_0_29",
+              "POSTGRES_13",
+              "POSTGRES_14",
+              "SQLSERVER_2019_STANDARD",
+              "SQLSERVER_2019_ENTERPRISE",
+              "SQLSERVER_2019_EXPRESS",
+              "SQLSERVER_2019_WEB",
+            },
+            ["enumDescriptions"] = {
+              "This is an unknown database version.",
+              "The database version is MySQL 5.1.",
+              "The database version is MySQL 5.5.",
+              "The database version is MySQL 5.6.",
+              "The database version is MySQL 5.7.",
+              "The database version is PostgreSQL 9.6.",
+              "The database version is PostgreSQL 11.",
+              "The database version is SQL Server 2017 Standard.",
+              "The database version is SQL Server 2017 Enterprise.",
+              "The database version is SQL Server 2017 Express.",
+              "The database version is SQL Server 2017 Web.",
+              "The database version is PostgreSQL 10.",
+              "The database version is PostgreSQL 12.",
+              "The database version is MySQL 8.",
+              "The database major version is MySQL 8.0 and the minor version is 18.",
+              "The database major version is MySQL 8.0 and the minor version is 26.",
+              "The database major version is MySQL 8.0 and the minor version is 27.",
+              "The database major version is MySQL 8.0 and the minor version is 28.",
+              "The database major version is MySQL 8.0 and the minor version is 29.",
+              "The database version is PostgreSQL 13.",
+              "The database version is PostgreSQL 14.",
+              "The database version is SQL Server 2019 Standard.",
+              "The database version is SQL Server 2019 Enterprise.",
+              "The database version is SQL Server 2019 Express.",
+              "The database version is SQL Server 2019 Web.",
+            },
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["inBeta"] = {
+          ["description"] = "Whether or not the flag is considered in beta.",
+          ["type"] = "boolean",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#flag`.",
+          ["type"] = "string",
+        },
+        ["maxValue"] = {
+          ["description"] = "For `INTEGER` flags, the maximum allowed value.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["minValue"] = {
+          ["description"] = "For `INTEGER` flags, the minimum allowed value.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "This is the name of the flag. Flag names always use underscores, not hyphens, for example: `max_allowed_packet`",
+          ["type"] = "string",
+        },
+        ["requiresRestart"] = {
+          ["description"] = "Indicates whether changing this flag will trigger a database restart. Only applicable to Second Generation instances.",
+          ["type"] = "boolean",
+        },
+        ["type"] = {
+          ["description"] = "The type of the flag. Flags are typed to being `BOOLEAN`, `STRING`, `INTEGER` or `NONE`. `NONE` is used for flags which do not take a value, such as `skip_grant_tables`.",
+          ["enum"] = {
+            "SQL_FLAG_TYPE_UNSPECIFIED",
+            "BOOLEAN",
+            "STRING",
+            "INTEGER",
+            "NONE",
+            "MYSQL_TIMEZONE_OFFSET",
+            "FLOAT",
+            "REPEATED_STRING",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown flag type.",
+            "Boolean type flag.",
+            "String type flag.",
+            "Integer type flag.",
+            "Flag type used for a server startup option.",
+            "Type introduced specially for MySQL TimeZone offset. Accept a string value with the format [-12:59, 13:00].",
+            "Float type flag.",
+            "Comma-separated list of the strings in a SqlFlagType enum.",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["FlagsListResponse"] = {
+      ["description"] = "Flags list response.",
+      ["id"] = "FlagsListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "List of flags.",
+          ["items"] = {
+            ["$ref"] = "Flag",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#flagsList`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GenerateEphemeralCertRequest"] = {
+      ["description"] = "Ephemeral certificate creation request.",
+      ["id"] = "GenerateEphemeralCertRequest",
+      ["properties"] = {
+        ["access_token"] = {
+          ["description"] = "Optional. Access token to include in the signed certificate.",
+          ["type"] = "string",
+        },
+        ["public_key"] = {
+          ["description"] = "PEM encoded public key to include in the signed certificate.",
+          ["type"] = "string",
+        },
+        ["readTime"] = {
+          ["description"] = "Optional. Optional snapshot read timestamp to trade freshness for performance.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["validDuration"] = {
+          ["description"] = "Optional. If set, it will contain the cert valid duration.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["GenerateEphemeralCertResponse"] = {
+      ["description"] = "Ephemeral certificate creation request.",
+      ["id"] = "GenerateEphemeralCertResponse",
+      ["properties"] = {
+        ["ephemeralCert"] = {
+          ["$ref"] = "SslCert",
+          ["description"] = "Generated cert",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ImportContext"] = {
+      ["description"] = "Database instance import context.",
+      ["id"] = "ImportContext",
+      ["properties"] = {
+        ["bakImportOptions"] = {
+          ["description"] = "Import parameters specific to SQL Server .BAK files",
+          ["properties"] = {
+            ["encryptionOptions"] = {
+              ["properties"] = {
+                ["certPath"] = {
+                  ["description"] = "Path to the Certificate (.cer) in Cloud Storage, in the form `gs://bucketName/fileName`. The instance must have write permissions to the bucket and read access to the file.",
+                  ["type"] = "string",
+                },
+                ["pvkPassword"] = {
+                  ["description"] = "Password that encrypts the private key",
+                  ["type"] = "string",
+                },
+                ["pvkPath"] = {
+                  ["description"] = "Path to the Certificate Private Key (.pvk) in Cloud Storage, in the form `gs://bucketName/fileName`. The instance must have write permissions to the bucket and read access to the file.",
+                  ["type"] = "string",
+                },
+              },
+              ["type"] = "object",
+            },
+          },
+          ["type"] = "object",
+        },
+        ["csvImportOptions"] = {
+          ["description"] = "Options for importing data as CSV.",
+          ["properties"] = {
+            ["columns"] = {
+              ["description"] = "The columns to which CSV data is imported. If not specified, all columns of the database table are loaded with CSV data.",
+              ["items"] = {
+                ["type"] = "string",
+              },
+              ["type"] = "array",
+            },
+            ["escapeCharacter"] = {
+              ["description"] = "Specifies the character that should appear before a data character that needs to be escaped.",
+              ["type"] = "string",
+            },
+            ["fieldsTerminatedBy"] = {
+              ["description"] = "Specifies the character that separates columns within each row (line) of the file.",
+              ["type"] = "string",
+            },
+            ["linesTerminatedBy"] = {
+              ["description"] = "This is used to separate lines. If a line does not contain all fields, the rest of the columns are set to their default values.",
+              ["type"] = "string",
+            },
+            ["quoteCharacter"] = {
+              ["description"] = "Specifies the quoting character to be used when a data value is quoted.",
+              ["type"] = "string",
+            },
+            ["table"] = {
+              ["description"] = "The table to which CSV data is imported.",
+              ["type"] = "string",
+            },
+          },
+          ["type"] = "object",
+        },
+        ["database"] = {
+          ["description"] = "The target database for the import. If `fileType` is `SQL`, this field is required only if the import file does not specify a database, and is overridden by any database specification in the import file. If `fileType` is `CSV`, one database must be specified.",
+          ["type"] = "string",
+        },
+        ["fileType"] = {
+          ["description"] = "The file type for the specified uri. * `SQL`: The file contains SQL statements. * `CSV`: The file contains CSV data. * `BAK`: The file contains backup data for a SQL Server instance.",
+          ["enum"] = {
+            "SQL_FILE_TYPE_UNSPECIFIED",
+            "SQL",
+            "CSV",
+            "BAK",
+          },
+          ["enumDescriptions"] = {
+            "Unknown file type.",
+            "File containing SQL statements.",
+            "File in CSV format.",
+            "",
+          },
+          ["type"] = "string",
+        },
+        ["importUser"] = {
+          ["description"] = "The PostgreSQL user for this import operation. PostgreSQL instances only.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#importContext`.",
+          ["type"] = "string",
+        },
+        ["uri"] = {
+          ["description"] = "Path to the import file in Cloud Storage, in the form `gs://bucketName/fileName`. Compressed gzip files (.gz) are supported when `fileType` is `SQL`. The instance must have write permissions to the bucket and read access to the file.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InsightsConfig"] = {
+      ["description"] = "Insights configuration. This specifies when Cloud SQL Insights feature is enabled and optional configuration.",
+      ["id"] = "InsightsConfig",
+      ["properties"] = {
+        ["queryInsightsEnabled"] = {
+          ["description"] = "Whether Query Insights feature is enabled.",
+          ["type"] = "boolean",
+        },
+        ["queryPlansPerMinute"] = {
+          ["description"] = "Number of query execution plans captured by Insights per minute for all queries combined. Default is 5.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["queryStringLength"] = {
+          ["description"] = "Maximum query length stored in bytes. Default value: 1024 bytes. Range: 256-4500 bytes. Query length more than this field value will be truncated to this value. When unset, query length will be the default value. Changing query length will restart the database.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["recordApplicationTags"] = {
+          ["description"] = "Whether Query Insights will record application tags from query when enabled.",
+          ["type"] = "boolean",
+        },
+        ["recordClientAddress"] = {
+          ["description"] = "Whether Query Insights will record client address when enabled.",
+          ["type"] = "boolean",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstanceReference"] = {
+      ["description"] = "Reference to another Cloud SQL instance.",
+      ["id"] = "InstanceReference",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "The name of the Cloud SQL instance being referenced. This does not include the project ID.",
+          ["type"] = "string",
+        },
+        ["project"] = {
+          ["description"] = "The project ID of the Cloud SQL instance being referenced. The default is the same project ID as the instance references it.",
+          ["type"] = "string",
+        },
+        ["region"] = {
+          ["description"] = "The region of the Cloud SQL instance being referenced.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesCloneRequest"] = {
+      ["description"] = "Database instance clone request.",
+      ["id"] = "InstancesCloneRequest",
+      ["properties"] = {
+        ["cloneContext"] = {
+          ["$ref"] = "CloneContext",
+          ["description"] = "Contains details about the clone operation.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesDemoteMasterRequest"] = {
+      ["description"] = "Database demote primary instance request.",
+      ["id"] = "InstancesDemoteMasterRequest",
+      ["properties"] = {
+        ["demoteMasterContext"] = {
+          ["$ref"] = "DemoteMasterContext",
+          ["description"] = "Contains details about the demoteMaster operation.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesExportRequest"] = {
+      ["description"] = "Database instance export request.",
+      ["id"] = "InstancesExportRequest",
+      ["properties"] = {
+        ["exportContext"] = {
+          ["$ref"] = "ExportContext",
+          ["description"] = "Contains details about the export operation.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesFailoverRequest"] = {
+      ["description"] = "Instance failover request.",
+      ["id"] = "InstancesFailoverRequest",
+      ["properties"] = {
+        ["failoverContext"] = {
+          ["$ref"] = "FailoverContext",
+          ["description"] = "Failover Context.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesImportRequest"] = {
+      ["description"] = "Database instance import request.",
+      ["id"] = "InstancesImportRequest",
+      ["properties"] = {
+        ["importContext"] = {
+          ["$ref"] = "ImportContext",
+          ["description"] = "Contains details about the import operation.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesListResponse"] = {
+      ["description"] = "Database instances list response.",
+      ["id"] = "InstancesListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "List of database instance resources.",
+          ["items"] = {
+            ["$ref"] = "DatabaseInstance",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#instancesList`.",
+          ["type"] = "string",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results.",
+          ["type"] = "string",
+        },
+        ["warnings"] = {
+          ["description"] = "List of warnings that occurred while handling the request.",
+          ["items"] = {
+            ["$ref"] = "ApiWarning",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesListServerCasResponse"] = {
+      ["description"] = "Instances ListServerCas response.",
+      ["id"] = "InstancesListServerCasResponse",
+      ["properties"] = {
+        ["activeVersion"] = {
+          ["type"] = "string",
+        },
+        ["certs"] = {
+          ["description"] = "List of server CA certificates for the instance.",
+          ["items"] = {
+            ["$ref"] = "SslCert",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#instancesListServerCas`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesRestoreBackupRequest"] = {
+      ["description"] = "Database instance restore backup request.",
+      ["id"] = "InstancesRestoreBackupRequest",
+      ["properties"] = {
+        ["restoreBackupContext"] = {
+          ["$ref"] = "RestoreBackupContext",
+          ["description"] = "Parameters required to perform the restore backup operation.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesRotateServerCaRequest"] = {
+      ["description"] = "Rotate Server CA request.",
+      ["id"] = "InstancesRotateServerCaRequest",
+      ["properties"] = {
+        ["rotateServerCaContext"] = {
+          ["$ref"] = "RotateServerCaContext",
+          ["description"] = "Contains details about the rotate server CA operation.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["InstancesTruncateLogRequest"] = {
+      ["description"] = "Instance truncate log request.",
+      ["id"] = "InstancesTruncateLogRequest",
+      ["properties"] = {
+        ["truncateLogContext"] = {
+          ["$ref"] = "TruncateLogContext",
+          ["description"] = "Contains details about the truncate log operation.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["IpConfiguration"] = {
+      ["description"] = "IP Management configuration.",
+      ["id"] = "IpConfiguration",
+      ["properties"] = {
+        ["allocatedIpRange"] = {
+          ["description"] = "The name of the allocated ip range for the private ip CloudSQL instance. For example: \"google-managed-services-default\". If set, the instance ip will be created in the allocated range. The range name must comply with [RFC 1035](https://tools.ietf.org/html/rfc1035). Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?.`",
+          ["type"] = "string",
+        },
+        ["authorizedNetworks"] = {
+          ["description"] = "The list of external networks that are allowed to connect to the instance using the IP. In 'CIDR' notation, also known as 'slash' notation (for example: `157.197.200.0/24`).",
+          ["items"] = {
+            ["$ref"] = "AclEntry",
+          },
+          ["type"] = "array",
+        },
+        ["ipv4Enabled"] = {
+          ["description"] = "Whether the instance is assigned a public IP address or not.",
+          ["type"] = "boolean",
+        },
+        ["privateNetwork"] = {
+          ["description"] = "The resource link for the VPC network from which the Cloud SQL instance is accessible for private IP. For example, `/projects/myProject/global/networks/default`. This setting can be updated, but it cannot be removed after it is set.",
+          ["type"] = "string",
+        },
+        ["requireSsl"] = {
+          ["description"] = "Whether SSL connections over IP are enforced or not.",
+          ["type"] = "boolean",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["IpMapping"] = {
+      ["description"] = "Database instance IP Mapping.",
+      ["id"] = "IpMapping",
+      ["properties"] = {
+        ["ipAddress"] = {
+          ["description"] = "The IP address assigned.",
+          ["type"] = "string",
+        },
+        ["timeToRetire"] = {
+          ["description"] = "The due time for this IP to be retired in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`. This field is only available when the IP is scheduled to be retired.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["type"] = {
+          ["description"] = "The type of this IP address. A `PRIMARY` address is a public address that can accept incoming connections. A `PRIVATE` address is a private address that can accept incoming connections. An `OUTGOING` address is the source address of connections originating from the instance, if supported.",
+          ["enum"] = {
+            "SQL_IP_ADDRESS_TYPE_UNSPECIFIED",
+            "PRIMARY",
+            "OUTGOING",
+            "PRIVATE",
+            "MIGRATED_1ST_GEN",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown IP address type.",
+            "IP address the customer is supposed to connect to. Usually this is the load balancer's IP address",
+            "Source IP address of the connection a read replica establishes to its external primary instance. This IP address can be allowlisted by the customer in case it has a firewall that filters incoming connection to its on premises primary instance.",
+            "Private IP used when using private IPs and network peering.",
+            "V1 IP of a migrated instance. We want the user to decommission this IP as soon as the migration is complete. Note: V1 instances with V1 ip addresses will be counted as PRIMARY.",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["LocationPreference"] = {
+      ["description"] = "Preferred location. This specifies where a Cloud SQL instance is located. Note that if the preferred location is not available, the instance will be located as close as possible within the region. Only one location may be specified.",
+      ["id"] = "LocationPreference",
+      ["properties"] = {
+        ["followGaeApplication"] = {
+          ["description"] = "The App Engine application to follow, it must be in the same region as the Cloud SQL instance. WARNING: Changing this might restart the instance.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#locationPreference`.",
+          ["type"] = "string",
+        },
+        ["secondaryZone"] = {
+          ["description"] = "The preferred Compute Engine zone for the secondary/failover (for example: us-central1-a, us-central1-b, etc.).",
+          ["type"] = "string",
+        },
+        ["zone"] = {
+          ["description"] = "The preferred Compute Engine zone (for example: us-central1-a, us-central1-b, etc.). WARNING: Changing this might restart the instance.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["MaintenanceWindow"] = {
+      ["description"] = "Maintenance window. This specifies when a Cloud SQL instance is restarted for system maintenance purposes.",
+      ["id"] = "MaintenanceWindow",
+      ["properties"] = {
+        ["day"] = {
+          ["description"] = "day of week (1-7), starting on Monday.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["hour"] = {
+          ["description"] = "hour of day - 0 to 23.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#maintenanceWindow`.",
+          ["type"] = "string",
+        },
+        ["updateTrack"] = {
+          ["description"] = "Maintenance timing setting: `canary` (Earlier) or `stable` (Later). [Learn more](https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-timing-2ndgen).",
+          ["enum"] = {
+            "SQL_UPDATE_TRACK_UNSPECIFIED",
+            "canary",
+            "stable",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown maintenance timing preference.",
+            "For instance update that requires a restart, this update track indicates your instance prefer to restart for new version early in maintenance window.",
+            "For instance update that requires a restart, this update track indicates your instance prefer to let Cloud SQL choose the timing of restart (within its Maintenance window, if applicable).",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["MySqlReplicaConfiguration"] = {
+      ["description"] = "Read-replica configuration specific to MySQL databases.",
+      ["id"] = "MySqlReplicaConfiguration",
+      ["properties"] = {
+        ["caCertificate"] = {
+          ["description"] = "PEM representation of the trusted CA's x509 certificate.",
+          ["type"] = "string",
+        },
+        ["clientCertificate"] = {
+          ["description"] = "PEM representation of the replica's x509 certificate.",
+          ["type"] = "string",
+        },
+        ["clientKey"] = {
+          ["description"] = "PEM representation of the replica's private key. The corresponsing public key is encoded in the client's certificate.",
+          ["type"] = "string",
+        },
+        ["connectRetryInterval"] = {
+          ["description"] = "Seconds to wait between connect retries. MySQL's default is 60 seconds.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["dumpFilePath"] = {
+          ["description"] = "Path to a SQL dump file in Google Cloud Storage from which the replica instance is to be created. The URI is in the form gs://bucketName/fileName. Compressed gzip files (.gz) are also supported. Dumps have the binlog co-ordinates from which replication begins. This can be accomplished by setting --master-data to 1 when using mysqldump.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#mysqlReplicaConfiguration`.",
+          ["type"] = "string",
+        },
+        ["masterHeartbeatPeriod"] = {
+          ["description"] = "Interval in milliseconds between replication heartbeats.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["password"] = {
+          ["description"] = "The password for the replication connection.",
+          ["type"] = "string",
+        },
+        ["sslCipher"] = {
+          ["description"] = "A list of permissible ciphers to use for SSL encryption.",
+          ["type"] = "string",
+        },
+        ["username"] = {
+          ["description"] = "The username for the replication connection.",
+          ["type"] = "string",
+        },
+        ["verifyServerCertificate"] = {
+          ["description"] = "Whether or not to check the primary instance's Common Name value in the certificate that it sends during the SSL handshake.",
+          ["type"] = "boolean",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["MySqlSyncConfig"] = {
+      ["description"] = "MySQL-specific external server sync settings.",
+      ["id"] = "MySqlSyncConfig",
+      ["properties"] = {
+        ["initialSyncFlags"] = {
+          ["description"] = "Flags to use for the initial dump.",
+          ["items"] = {
+            ["$ref"] = "SyncFlags",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["OnPremisesConfiguration"] = {
+      ["description"] = "On-premises instance configuration.",
+      ["id"] = "OnPremisesConfiguration",
+      ["properties"] = {
+        ["caCertificate"] = {
+          ["description"] = "PEM representation of the trusted CA's x509 certificate.",
+          ["type"] = "string",
+        },
+        ["clientCertificate"] = {
+          ["description"] = "PEM representation of the replica's x509 certificate.",
+          ["type"] = "string",
+        },
+        ["clientKey"] = {
+          ["description"] = "PEM representation of the replica's private key. The corresponsing public key is encoded in the client's certificate.",
+          ["type"] = "string",
+        },
+        ["dumpFilePath"] = {
+          ["description"] = "The dump file to create the Cloud SQL replica.",
+          ["type"] = "string",
+        },
+        ["hostPort"] = {
+          ["description"] = "The host and port of the on-premises instance in host:port format",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#onPremisesConfiguration`.",
+          ["type"] = "string",
+        },
+        ["password"] = {
+          ["description"] = "The password for connecting to on-premises instance.",
+          ["type"] = "string",
+        },
+        ["sourceInstance"] = {
+          ["$ref"] = "InstanceReference",
+          ["description"] = "The reference to Cloud SQL instance if the source is Cloud SQL.",
+        },
+        ["username"] = {
+          ["description"] = "The username for connecting to on-premises instance.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Operation"] = {
+      ["description"] = "An Operation resource. For successful operations that return an Operation resource, only the fields relevant to the operation are populated in the resource.",
+      ["id"] = "Operation",
+      ["properties"] = {
+        ["backupContext"] = {
+          ["$ref"] = "BackupContext",
+          ["description"] = "The context for backup operation, if applicable.",
+        },
+        ["endTime"] = {
+          ["description"] = "The time this operation finished in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["error"] = {
+          ["$ref"] = "OperationErrors",
+          ["description"] = "If errors occurred during processing of this operation, this field will be populated.",
+        },
+        ["exportContext"] = {
+          ["$ref"] = "ExportContext",
+          ["description"] = "The context for export operation, if applicable.",
+        },
+        ["importContext"] = {
+          ["$ref"] = "ImportContext",
+          ["description"] = "The context for import operation, if applicable.",
+        },
+        ["insertTime"] = {
+          ["description"] = "The time this operation was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#operation`.",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "An identifier that uniquely identifies the operation. You can use this identifier to retrieve the Operations resource that has information about the operation.",
+          ["type"] = "string",
+        },
+        ["operationType"] = {
+          ["description"] = "The type of the operation. Valid values are: * `CREATE` * `DELETE` * `UPDATE` * `RESTART` * `IMPORT` * `EXPORT` * `BACKUP_VOLUME` * `RESTORE_VOLUME` * `CREATE_USER` * `DELETE_USER` * `CREATE_DATABASE` * `DELETE_DATABASE`",
+          ["enum"] = {
+            "SQL_OPERATION_TYPE_UNSPECIFIED",
+            "IMPORT",
+            "EXPORT",
+            "CREATE",
+            "UPDATE",
+            "DELETE",
+            "RESTART",
+            "BACKUP",
+            "SNAPSHOT",
+            "BACKUP_VOLUME",
+            "DELETE_VOLUME",
+            "RESTORE_VOLUME",
+            "INJECT_USER",
+            "CLONE",
+            "STOP_REPLICA",
+            "START_REPLICA",
+            "PROMOTE_REPLICA",
+            "CREATE_REPLICA",
+            "CREATE_USER",
+            "DELETE_USER",
+            "UPDATE_USER",
+            "CREATE_DATABASE",
+            "DELETE_DATABASE",
+            "UPDATE_DATABASE",
+            "FAILOVER",
+            "DELETE_BACKUP",
+            "RECREATE_REPLICA",
+            "TRUNCATE_LOG",
+            "DEMOTE_MASTER",
+            "MAINTENANCE",
+            "ENABLE_PRIVATE_IP",
+            "DEFER_MAINTENANCE",
+            "CREATE_CLONE",
+            "RESCHEDULE_MAINTENANCE",
+            "START_EXTERNAL_SYNC",
+            "LOG_CLEANUP",
+            "AUTO_RESTART",
+          },
+          ["enumDescriptions"] = {
+            "Unknown operation type.",
+            "Imports data into a Cloud SQL instance.",
+            "Exports data from a Cloud SQL instance to a Cloud Storage bucket.",
+            "Creates a new Cloud SQL instance.",
+            "Updates the settings of a Cloud SQL instance.",
+            "Deletes a Cloud SQL instance.",
+            "Restarts the Cloud SQL instance.",
+            "",
+            "",
+            "Performs instance backup.",
+            "Deletes an instance backup.",
+            "Restores an instance backup.",
+            "Injects a privileged user in mysql for MOB instances.",
+            "Clones a Cloud SQL instance.",
+            "Stops replication on a Cloud SQL read replica instance.",
+            "Starts replication on a Cloud SQL read replica instance.",
+            "Promotes a Cloud SQL replica instance.",
+            "Creates a Cloud SQL replica instance.",
+            "Creates a new user in a Cloud SQL instance.",
+            "Deletes a user from a Cloud SQL instance.",
+            "Updates an existing user in a Cloud SQL instance.",
+            "Creates a database in the Cloud SQL instance.",
+            "Deletes a database in the Cloud SQL instance.",
+            "Updates a database in the Cloud SQL instance.",
+            "Performs failover of an HA-enabled Cloud SQL failover replica.",
+            "Deletes the backup taken by a backup run.",
+            "",
+            "Truncates a general or slow log table in MySQL.",
+            "Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.",
+            "Indicates that the instance is currently in maintenance. Maintenance typically causes the instance to be unavailable for 1-3 minutes.",
+            "This field is deprecated, and will be removed in future version of API.",
+            "",
+            "Creates clone instance.",
+            "Reschedule maintenance to another time.",
+            "Starts external sync of a Cloud SQL EM replica to an external primary instance.",
+            "Recovers logs from an instance's old data disk.",
+            "Performs auto-restart of an HA-enabled Cloud SQL database for auto recovery.",
+          },
+          ["type"] = "string",
+        },
+        ["selfLink"] = {
+          ["description"] = "The URI of this resource.",
+          ["type"] = "string",
+        },
+        ["startTime"] = {
+          ["description"] = "The time this operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["status"] = {
+          ["description"] = "The status of an operation.",
+          ["enum"] = {
+            "SQL_OPERATION_STATUS_UNSPECIFIED",
+            "PENDING",
+            "RUNNING",
+            "DONE",
+          },
+          ["enumDescriptions"] = {
+            "The state of the operation is unknown.",
+            "The operation has been queued, but has not started yet.",
+            "The operation is running.",
+            "The operation completed.",
+          },
+          ["type"] = "string",
+        },
+        ["targetId"] = {
+          ["description"] = "Name of the database instance related to this operation.",
+          ["type"] = "string",
+        },
+        ["targetLink"] = {
+          ["type"] = "string",
+        },
+        ["targetProject"] = {
+          ["description"] = "The project ID of the target instance related to this operation.",
+          ["type"] = "string",
+        },
+        ["user"] = {
+          ["description"] = "The email address of the user who initiated this operation.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["OperationError"] = {
+      ["description"] = "Database instance operation error.",
+      ["id"] = "OperationError",
+      ["properties"] = {
+        ["code"] = {
+          ["description"] = "Identifies the specific error that occurred.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#operationError`.",
+          ["type"] = "string",
+        },
+        ["message"] = {
+          ["description"] = "Additional information about the error encountered.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["OperationErrors"] = {
+      ["description"] = "Database instance operation errors list wrapper.",
+      ["id"] = "OperationErrors",
+      ["properties"] = {
+        ["errors"] = {
+          ["description"] = "The list of errors encountered while processing this operation.",
+          ["items"] = {
+            ["$ref"] = "OperationError",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#operationErrors`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["OperationsListResponse"] = {
+      ["description"] = "Operations list response.",
+      ["id"] = "OperationsListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "List of operation resources.",
+          ["items"] = {
+            ["$ref"] = "Operation",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#operationsList`.",
+          ["type"] = "string",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["PasswordStatus"] = {
+      ["description"] = "Read-only password status.",
+      ["id"] = "PasswordStatus",
+      ["properties"] = {
+        ["locked"] = {
+          ["description"] = "If true, user does not have login privileges.",
+          ["type"] = "boolean",
+        },
+        ["passwordExpirationTime"] = {
+          ["description"] = "The expiration time of the current password.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["PasswordValidationPolicy"] = {
+      ["description"] = "Database instance local user password validation policy",
+      ["id"] = "PasswordValidationPolicy",
+      ["properties"] = {
+        ["complexity"] = {
+          ["description"] = "The complexity of the password.",
+          ["enum"] = {
+            "COMPLEXITY_UNSPECIFIED",
+            "COMPLEXITY_DEFAULT",
+          },
+          ["enumDescriptions"] = {
+            "Complexity check is not specified.",
+            "A combination of lowercase, uppercase, numeric, and non-alphanumeric characters.",
+          },
+          ["type"] = "string",
+        },
+        ["disallowUsernameSubstring"] = {
+          ["description"] = "Disallow username as a part of the password.",
+          ["type"] = "boolean",
+        },
+        ["enablePasswordPolicy"] = {
+          ["description"] = "Whether the password policy is enabled or not.",
+          ["type"] = "boolean",
+        },
+        ["minLength"] = {
+          ["description"] = "Minimum number of characters allowed.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["passwordChangeInterval"] = {
+          ["description"] = "Minimum interval after which the password can be changed. This flag is only supported for PostgresSQL.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+        ["reuseInterval"] = {
+          ["description"] = "Number of previous passwords that cannot be reused.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["ReplicaConfiguration"] = {
+      ["description"] = "Read-replica configuration for connecting to the primary instance.",
+      ["id"] = "ReplicaConfiguration",
+      ["properties"] = {
+        ["failoverTarget"] = {
+          ["description"] = "Specifies if the replica is the failover target. If the field is set to `true` the replica will be designated as a failover replica. In case the primary instance fails, the replica instance will be promoted as the new primary instance. Only one replica can be specified as failover target, and the replica has to be in different zone with the primary instance.",
+          ["type"] = "boolean",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#replicaConfiguration`.",
+          ["type"] = "string",
+        },
+        ["mysqlReplicaConfiguration"] = {
+          ["$ref"] = "MySqlReplicaConfiguration",
+          ["description"] = "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named `master.info` in the data directory.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Reschedule"] = {
+      ["id"] = "Reschedule",
+      ["properties"] = {
+        ["rescheduleType"] = {
+          ["description"] = "Required. The type of the reschedule.",
+          ["enum"] = {
+            "RESCHEDULE_TYPE_UNSPECIFIED",
+            "IMMEDIATE",
+            "NEXT_AVAILABLE_WINDOW",
+            "SPECIFIC_TIME",
+          },
+          ["enumDescriptions"] = {
+            "",
+            "Reschedules maintenance to happen now (within 5 minutes).",
+            "Reschedules maintenance to occur within one week from the originally scheduled day and time.",
+            "Reschedules maintenance to a specific time and day.",
+          },
+          ["type"] = "string",
+        },
+        ["scheduleTime"] = {
+          ["description"] = "Optional. Timestamp when the maintenance shall be rescheduled to if reschedule_type=SPECIFIC_TIME, in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["RestoreBackupContext"] = {
+      ["description"] = "Database instance restore from backup context. Backup context contains source instance id and project id.",
+      ["id"] = "RestoreBackupContext",
+      ["properties"] = {
+        ["backupRunId"] = {
+          ["description"] = "The ID of the backup run to restore from.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["instanceId"] = {
+          ["description"] = "The ID of the instance that the backup was taken from.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#restoreBackupContext`.",
+          ["type"] = "string",
+        },
+        ["project"] = {
+          ["description"] = "The full project ID of the source instance.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["RotateServerCaContext"] = {
+      ["description"] = "Instance rotate server CA context.",
+      ["id"] = "RotateServerCaContext",
+      ["properties"] = {
+        ["kind"] = {
+          ["description"] = "This is always `sql#rotateServerCaContext`.",
+          ["type"] = "string",
+        },
+        ["nextVersion"] = {
+          ["description"] = "The fingerprint of the next version to be rotated to. If left unspecified, will be rotated to the most recently added server CA version.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Settings"] = {
+      ["description"] = "Database instance settings.",
+      ["id"] = "Settings",
+      ["properties"] = {
+        ["activationPolicy"] = {
+          ["description"] = "The activation policy specifies when the instance is activated; it is applicable only when the instance state is RUNNABLE. Valid values: * `ALWAYS`: The instance is on, and remains so even in the absence of connection requests. * `NEVER`: The instance is off; it is not activated, even if a connection request arrives.",
+          ["enum"] = {
+            "SQL_ACTIVATION_POLICY_UNSPECIFIED",
+            "ALWAYS",
+            "NEVER",
+            "ON_DEMAND",
+          },
+          ["enumDescriptions"] = {
+            "Unknown activation plan.",
+            "The instance is always up and running.",
+            "The instance never starts.",
+            "The instance starts upon receiving requests.",
+          },
+          ["type"] = "string",
+        },
+        ["activeDirectoryConfig"] = {
+          ["$ref"] = "SqlActiveDirectoryConfig",
+          ["description"] = "Active Directory configuration, relevant only for Cloud SQL for SQL Server.",
+        },
+        ["authorizedGaeApplications"] = {
+          ["description"] = "The App Engine app IDs that can access this instance. (Deprecated) Applied to First Generation instances only.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["availabilityType"] = {
+          ["description"] = "Availability type. Potential values: * `ZONAL`: The instance serves data from only one zone. Outages in that zone affect data accessibility. * `REGIONAL`: The instance can serve data from more than one zone in a region (it is highly available)./ For more information, see [Overview of the High Availability Configuration](https://cloud.google.com/sql/docs/mysql/high-availability).",
+          ["enum"] = {
+            "SQL_AVAILABILITY_TYPE_UNSPECIFIED",
+            "ZONAL",
+            "REGIONAL",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown Availability type.",
+            "Zonal available instance.",
+            "Regional available instance.",
+          },
+          ["type"] = "string",
+        },
+        ["backupConfiguration"] = {
+          ["$ref"] = "BackupConfiguration",
+          ["description"] = "The daily backup configuration for the instance.",
+        },
+        ["collation"] = {
+          ["description"] = "The name of server Instance collation.",
+          ["type"] = "string",
+        },
+        ["crashSafeReplicationEnabled"] = {
+          ["description"] = "Configuration specific to read replica instances. Indicates whether database flags for crash-safe replication are enabled. This property was only applicable to First Generation instances.",
+          ["type"] = "boolean",
+        },
+        ["dataDiskSizeGb"] = {
+          ["description"] = "The size of data disk, in GB. The data disk size minimum is 10GB.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["dataDiskType"] = {
+          ["description"] = "The type of data disk: `PD_SSD` (default) or `PD_HDD`. Not used for First Generation instances.",
+          ["enum"] = {
+            "SQL_DATA_DISK_TYPE_UNSPECIFIED",
+            "PD_SSD",
+            "PD_HDD",
+            "OBSOLETE_LOCAL_SSD",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown data disk type.",
+            "An SSD data disk.",
+            "An HDD data disk.",
+            "This field is deprecated and will be removed from a future version of the API.",
+          },
+          ["type"] = "string",
+        },
+        ["databaseFlags"] = {
+          ["description"] = "The database flags passed to the instance at startup.",
+          ["items"] = {
+            ["$ref"] = "DatabaseFlags",
+          },
+          ["type"] = "array",
+        },
+        ["databaseReplicationEnabled"] = {
+          ["description"] = "Configuration specific to read replica instances. Indicates whether replication is enabled or not. WARNING: Changing this restarts the instance.",
+          ["type"] = "boolean",
+        },
+        ["deletionProtectionEnabled"] = {
+          ["description"] = "Configuration to protect against accidental instance deletion.",
+          ["type"] = "boolean",
+        },
+        ["denyMaintenancePeriods"] = {
+          ["description"] = "Deny maintenance periods",
+          ["items"] = {
+            ["$ref"] = "DenyMaintenancePeriod",
+          },
+          ["type"] = "array",
+        },
+        ["insightsConfig"] = {
+          ["$ref"] = "InsightsConfig",
+          ["description"] = "Insights configuration, for now relevant only for Postgres.",
+        },
+        ["ipConfiguration"] = {
+          ["$ref"] = "IpConfiguration",
+          ["description"] = "The settings for IP Management. This allows to enable or disable the instance IP and manage which external networks can connect to the instance. The IPv4 address cannot be disabled for Second Generation instances.",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#settings`.",
+          ["type"] = "string",
+        },
+        ["locationPreference"] = {
+          ["$ref"] = "LocationPreference",
+          ["description"] = "The location preference settings. This allows the instance to be located as near as possible to either an App Engine app or Compute Engine zone for better performance. App Engine co-location was only applicable to First Generation instances.",
+        },
+        ["maintenanceWindow"] = {
+          ["$ref"] = "MaintenanceWindow",
+          ["description"] = "The maintenance window for this instance. This specifies when the instance can be restarted for maintenance purposes.",
+        },
+        ["passwordValidationPolicy"] = {
+          ["$ref"] = "PasswordValidationPolicy",
+          ["description"] = "The local user password validation policy of the instance.",
+        },
+        ["pricingPlan"] = {
+          ["description"] = "The pricing plan for this instance. This can be either `PER_USE` or `PACKAGE`. Only `PER_USE` is supported for Second Generation instances.",
+          ["enum"] = {
+            "SQL_PRICING_PLAN_UNSPECIFIED",
+            "PACKAGE",
+            "PER_USE",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown pricing plan for this instance.",
+            "The instance is billed at a monthly flat rate.",
+            "The instance is billed per usage.",
+          },
+          ["type"] = "string",
+        },
+        ["replicationType"] = {
+          ["description"] = "The type of replication this instance uses. This can be either `ASYNCHRONOUS` or `SYNCHRONOUS`. (Deprecated) This property was only applicable to First Generation instances.",
+          ["enum"] = {
+            "SQL_REPLICATION_TYPE_UNSPECIFIED",
+            "SYNCHRONOUS",
+            "ASYNCHRONOUS",
+          },
+          ["enumDescriptions"] = {
+            "This is an unknown replication type for a Cloud SQL instance.",
+            "The synchronous replication mode for First Generation instances. It is the default value.",
+            "The asynchronous replication mode for First Generation instances. It provides a slight performance gain, but if an outage occurs while this option is set to asynchronous, you can lose up to a few seconds of updates to your data.",
+          },
+          ["type"] = "string",
+        },
+        ["settingsVersion"] = {
+          ["description"] = "The version of instance settings. This is a required field for update method to make sure concurrent updates are handled properly. During update, use the most recent settingsVersion value for this instance and do not try to update this value.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["sqlServerAuditConfig"] = {
+          ["$ref"] = "SqlServerAuditConfig",
+          ["description"] = "SQL Server specific audit configuration.",
+        },
+        ["storageAutoResize"] = {
+          ["description"] = "Configuration to increase storage size automatically. The default value is true.",
+          ["type"] = "boolean",
+        },
+        ["storageAutoResizeLimit"] = {
+          ["description"] = "The maximum size to which storage capacity can be automatically increased. The default value is 0, which specifies that there is no limit.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["tier"] = {
+          ["description"] = "The tier (or machine type) for this instance, for example `db-custom-1-3840`. WARNING: Changing this restarts the instance.",
+          ["type"] = "string",
+        },
+        ["userLabels"] = {
+          ["additionalProperties"] = {
+            ["type"] = "string",
+          },
+          ["description"] = "User-provided labels, represented as a dictionary where each label is a single key value pair.",
+          ["type"] = "object",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlActiveDirectoryConfig"] = {
+      ["description"] = "Active Directory configuration, relevant only for Cloud SQL for SQL Server.",
+      ["id"] = "SqlActiveDirectoryConfig",
+      ["properties"] = {
+        ["domain"] = {
+          ["description"] = "The name of the domain (e.g., mydomain.com).",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always sql#activeDirectoryConfig.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlExternalSyncSettingError"] = {
+      ["description"] = "External primary instance migration setting error/warning.",
+      ["id"] = "SqlExternalSyncSettingError",
+      ["properties"] = {
+        ["detail"] = {
+          ["description"] = "Additional information about the error encountered.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "Can be `sql#externalSyncSettingError` or `sql#externalSyncSettingWarning`.",
+          ["type"] = "string",
+        },
+        ["type"] = {
+          ["description"] = "Identifies the specific error that occurred.",
+          ["enum"] = {
+            "SQL_EXTERNAL_SYNC_SETTING_ERROR_TYPE_UNSPECIFIED",
+            "CONNECTION_FAILURE",
+            "BINLOG_NOT_ENABLED",
+            "INCOMPATIBLE_DATABASE_VERSION",
+            "REPLICA_ALREADY_SETUP",
+            "INSUFFICIENT_PRIVILEGE",
+            "UNSUPPORTED_MIGRATION_TYPE",
+            "NO_PGLOGICAL_INSTALLED",
+            "PGLOGICAL_NODE_ALREADY_EXISTS",
+            "INVALID_WAL_LEVEL",
+            "INVALID_SHARED_PRELOAD_LIBRARY",
+            "INSUFFICIENT_MAX_REPLICATION_SLOTS",
+            "INSUFFICIENT_MAX_WAL_SENDERS",
+            "INSUFFICIENT_MAX_WORKER_PROCESSES",
+            "UNSUPPORTED_EXTENSIONS",
+            "INVALID_RDS_LOGICAL_REPLICATION",
+            "INVALID_LOGGING_SETUP",
+            "INVALID_DB_PARAM",
+            "UNSUPPORTED_GTID_MODE",
+            "SQLSERVER_AGENT_NOT_RUNNING",
+            "UNSUPPORTED_TABLE_DEFINITION",
+            "UNSUPPORTED_DEFINER",
+            "SQLSERVER_SERVERNAME_MISMATCH",
+            "PRIMARY_ALREADY_SETUP",
+            "UNSUPPORTED_BINLOG_FORMAT",
+            "BINLOG_RETENTION_SETTING",
+            "UNSUPPORTED_STORAGE_ENGINE",
+            "LIMITED_SUPPORT_TABLES",
+          },
+          ["enumDescriptions"] = {
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Unsupported migration type.",
+            "No pglogical extension installed on databases, applicable for postgres.",
+            "pglogical node already exists on databases, applicable for postgres.",
+            "The value of parameter wal_level is not set to logical.",
+            "The value of parameter shared_preload_libraries does not include pglogical.",
+            "The value of parameter max_replication_slots is not sufficient.",
+            "The value of parameter max_wal_senders is not sufficient.",
+            "The value of parameter max_worker_processes is not sufficient.",
+            "Extensions installed are either not supported or having unsupported versions",
+            "The value of parameter rds.logical_replication is not set to 1.",
+            "The primary instance logging setup doesn't allow EM sync.",
+            "The primary instance database parameter setup doesn't allow EM sync.",
+            "The gtid_mode is not supported, applicable for MySQL.",
+            "SQL Server Agent is not running.",
+            "The table definition is not support due to missing primary key or replica identity, applicable for postgres.",
+            "The customer has a definer that will break EM setup.",
+            "SQL Server @@SERVERNAME does not match actual host name",
+            "The primary instance has been setup and will fail the setup.",
+            "The primary instance has unsupported binary log format.",
+            "The primary instance's binary log retention setting.",
+            "The primary instance has tables with unsupported storage engine.",
+            "Source has tables with limited support eg: PostgreSQL tables without primary keys",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlInstancesRescheduleMaintenanceRequestBody"] = {
+      ["description"] = "Reschedule options for maintenance windows.",
+      ["id"] = "SqlInstancesRescheduleMaintenanceRequestBody",
+      ["properties"] = {
+        ["reschedule"] = {
+          ["$ref"] = "Reschedule",
+          ["description"] = "Required. The type of the reschedule the user wants.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlInstancesStartExternalSyncRequest"] = {
+      ["id"] = "SqlInstancesStartExternalSyncRequest",
+      ["properties"] = {
+        ["mysqlSyncConfig"] = {
+          ["$ref"] = "MySqlSyncConfig",
+          ["description"] = "MySQL-specific settings for start external sync.",
+        },
+        ["skipVerification"] = {
+          ["description"] = "Whether to skip the verification step (VESS).",
+          ["type"] = "boolean",
+        },
+        ["syncMode"] = {
+          ["description"] = "External sync mode.",
+          ["enum"] = {
+            "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+            "ONLINE",
+            "OFFLINE",
+          },
+          ["enumDescriptions"] = {
+            "Unknown external sync mode, will be defaulted to ONLINE mode",
+            "Online external sync will set up replication after initial data external sync",
+            "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlInstancesVerifyExternalSyncSettingsRequest"] = {
+      ["id"] = "SqlInstancesVerifyExternalSyncSettingsRequest",
+      ["properties"] = {
+        ["mysqlSyncConfig"] = {
+          ["$ref"] = "MySqlSyncConfig",
+          ["description"] = "Optional. MySQL-specific settings for start external sync.",
+        },
+        ["syncMode"] = {
+          ["description"] = "External sync mode",
+          ["enum"] = {
+            "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+            "ONLINE",
+            "OFFLINE",
+          },
+          ["enumDescriptions"] = {
+            "Unknown external sync mode, will be defaulted to ONLINE mode",
+            "Online external sync will set up replication after initial data external sync",
+            "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data",
+          },
+          ["type"] = "string",
+        },
+        ["verifyConnectionOnly"] = {
+          ["description"] = "Flag to enable verifying connection only",
+          ["type"] = "boolean",
+        },
+        ["verifyReplicationOnly"] = {
+          ["description"] = "Optional. Flag to verify settings required by replication setup only",
+          ["type"] = "boolean",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlInstancesVerifyExternalSyncSettingsResponse"] = {
+      ["description"] = "Instance verify external sync settings response.",
+      ["id"] = "SqlInstancesVerifyExternalSyncSettingsResponse",
+      ["properties"] = {
+        ["errors"] = {
+          ["description"] = "List of migration violations.",
+          ["items"] = {
+            ["$ref"] = "SqlExternalSyncSettingError",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#migrationSettingErrorList`.",
+          ["type"] = "string",
+        },
+        ["warnings"] = {
+          ["description"] = "List of migration warnings.",
+          ["items"] = {
+            ["$ref"] = "SqlExternalSyncSettingError",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlOutOfDiskReport"] = {
+      ["description"] = "This message wraps up the information written by out-of-disk detection job.",
+      ["id"] = "SqlOutOfDiskReport",
+      ["properties"] = {
+        ["sqlMinRecommendedIncreaseSizeGb"] = {
+          ["description"] = "The minimum recommended increase size in GigaBytes This field is consumed by the frontend * Writers: * the proactive database wellness job for OOD. * Readers:",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["sqlOutOfDiskState"] = {
+          ["description"] = "This field represents the state generated by the proactive database wellness job for OutOfDisk issues. * Writers: * the proactive database wellness job for OOD. * Readers: * the proactive database wellness job",
+          ["enum"] = {
+            "SQL_OUT_OF_DISK_STATE_UNSPECIFIED",
+            "NORMAL",
+            "SOFT_SHUTDOWN",
+          },
+          ["enumDescriptions"] = {
+            "Unspecified state",
+            "The instance has plenty space on data disk",
+            "Data disk is almost used up. It is shutdown to prevent data corruption.",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlScheduledMaintenance"] = {
+      ["description"] = "Any scheduled maintenance for this instance.",
+      ["id"] = "SqlScheduledMaintenance",
+      ["properties"] = {
+        ["canDefer"] = {
+          ["type"] = "boolean",
+        },
+        ["canReschedule"] = {
+          ["description"] = "If the scheduled maintenance can be rescheduled.",
+          ["type"] = "boolean",
+        },
+        ["scheduleDeadlineTime"] = {
+          ["description"] = "Maintenance cannot be rescheduled to start beyond this deadline.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["startTime"] = {
+          ["description"] = "The start time of any upcoming scheduled maintenance for this instance.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlServerAuditConfig"] = {
+      ["description"] = "SQL Server specific audit configuration.",
+      ["id"] = "SqlServerAuditConfig",
+      ["properties"] = {
+        ["bucket"] = {
+          ["description"] = "The name of the destination bucket (e.g., gs://mybucket).",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always sql#sqlServerAuditConfig",
+          ["type"] = "string",
+        },
+        ["retentionInterval"] = {
+          ["description"] = "How long to keep generated audit files.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+        ["uploadInterval"] = {
+          ["description"] = "How often to upload generated audit files.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlServerDatabaseDetails"] = {
+      ["description"] = "Represents a Sql Server database on the Cloud SQL instance.",
+      ["id"] = "SqlServerDatabaseDetails",
+      ["properties"] = {
+        ["compatibilityLevel"] = {
+          ["description"] = "The version of SQL Server with which the database is to be made compatible",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["recoveryModel"] = {
+          ["description"] = "The recovery model of a SQL Server database",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SqlServerUserDetails"] = {
+      ["description"] = "Represents a Sql Server user on the Cloud SQL instance.",
+      ["id"] = "SqlServerUserDetails",
+      ["properties"] = {
+        ["disabled"] = {
+          ["description"] = "If the user has been disabled",
+          ["type"] = "boolean",
+        },
+        ["serverRoles"] = {
+          ["description"] = "The server roles for this user",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SslCert"] = {
+      ["description"] = "SslCerts Resource",
+      ["id"] = "SslCert",
+      ["properties"] = {
+        ["cert"] = {
+          ["description"] = "PEM representation.",
+          ["type"] = "string",
+        },
+        ["certSerialNumber"] = {
+          ["description"] = "Serial number, as extracted from the certificate.",
+          ["type"] = "string",
+        },
+        ["commonName"] = {
+          ["description"] = "User supplied name. Constrained to [a-zA-Z.-_ ]+.",
+          ["type"] = "string",
+        },
+        ["createTime"] = {
+          ["description"] = "The time when the certificate was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["expirationTime"] = {
+          ["description"] = "The time when the certificate expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.",
+          ["format"] = "google-datetime",
+          ["type"] = "string",
+        },
+        ["instance"] = {
+          ["description"] = "Name of the database instance.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#sslCert`.",
+          ["type"] = "string",
+        },
+        ["selfLink"] = {
+          ["description"] = "The URI of this resource.",
+          ["type"] = "string",
+        },
+        ["sha1Fingerprint"] = {
+          ["description"] = "Sha1 Fingerprint.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SslCertDetail"] = {
+      ["description"] = "SslCertDetail.",
+      ["id"] = "SslCertDetail",
+      ["properties"] = {
+        ["certInfo"] = {
+          ["$ref"] = "SslCert",
+          ["description"] = "The public information about the cert.",
+        },
+        ["certPrivateKey"] = {
+          ["description"] = "The private key for the client cert, in pem format. Keep private in order to protect your security.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SslCertsCreateEphemeralRequest"] = {
+      ["description"] = "SslCerts create ephemeral certificate request.",
+      ["id"] = "SslCertsCreateEphemeralRequest",
+      ["properties"] = {
+        ["access_token"] = {
+          ["description"] = "Access token to include in the signed certificate.",
+          ["type"] = "string",
+        },
+        ["public_key"] = {
+          ["description"] = "PEM encoded public key to include in the signed certificate.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SslCertsInsertRequest"] = {
+      ["description"] = "SslCerts insert request.",
+      ["id"] = "SslCertsInsertRequest",
+      ["properties"] = {
+        ["commonName"] = {
+          ["description"] = "User supplied name. Must be a distinct name from the other certificates for this instance.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SslCertsInsertResponse"] = {
+      ["description"] = "SslCert insert response.",
+      ["id"] = "SslCertsInsertResponse",
+      ["properties"] = {
+        ["clientCert"] = {
+          ["$ref"] = "SslCertDetail",
+          ["description"] = "The new client certificate and private key.",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#sslCertsInsert`.",
+          ["type"] = "string",
+        },
+        ["operation"] = {
+          ["$ref"] = "Operation",
+          ["description"] = "The operation to track the ssl certs insert request.",
+        },
+        ["serverCaCert"] = {
+          ["$ref"] = "SslCert",
+          ["description"] = "The server Certificate Authority's certificate. If this is missing you can force a new one to be generated by calling resetSslConfig method on instances resource.",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SslCertsListResponse"] = {
+      ["description"] = "SslCerts list response.",
+      ["id"] = "SslCertsListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "List of client certificates for the instance.",
+          ["items"] = {
+            ["$ref"] = "SslCert",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#sslCertsList`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["SyncFlags"] = {
+      ["description"] = "Initial sync flags for certain Cloud SQL APIs. Currently used for the MySQL external server initial dump.",
+      ["id"] = "SyncFlags",
+      ["properties"] = {
+        ["name"] = {
+          ["description"] = "The name of the flag.",
+          ["type"] = "string",
+        },
+        ["value"] = {
+          ["description"] = "The value of the flag. This field must be omitted if the flag doesn't take a value.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["Tier"] = {
+      ["description"] = "A Google Cloud SQL service tier resource.",
+      ["id"] = "Tier",
+      ["properties"] = {
+        ["DiskQuota"] = {
+          ["description"] = "The maximum disk size of this tier in bytes.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["RAM"] = {
+          ["description"] = "The maximum RAM usage of this tier in bytes.",
+          ["format"] = "int64",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#tier`.",
+          ["type"] = "string",
+        },
+        ["region"] = {
+          ["description"] = "The applicable regions for this tier.",
+          ["items"] = {
+            ["type"] = "string",
+          },
+          ["type"] = "array",
+        },
+        ["tier"] = {
+          ["description"] = "An identifier for the machine type, for example, `db-custom-1-3840`. For related information, see [Pricing](/sql/pricing).",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["TiersListResponse"] = {
+      ["description"] = "Tiers list response.",
+      ["id"] = "TiersListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "List of tiers.",
+          ["items"] = {
+            ["$ref"] = "Tier",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#tiersList`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["TruncateLogContext"] = {
+      ["description"] = "Database Instance truncate log context.",
+      ["id"] = "TruncateLogContext",
+      ["properties"] = {
+        ["kind"] = {
+          ["description"] = "This is always `sql#truncateLogContext`.",
+          ["type"] = "string",
+        },
+        ["logType"] = {
+          ["description"] = "The type of log to truncate. Valid values are `MYSQL_GENERAL_TABLE` and `MYSQL_SLOW_TABLE`.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["User"] = {
+      ["description"] = "A Cloud SQL user resource.",
+      ["id"] = "User",
+      ["properties"] = {
+        ["dualPasswordType"] = {
+          ["description"] = "Dual password status for the user.",
+          ["enum"] = {
+            "DUAL_PASSWORD_TYPE_UNSPECIFIED",
+            "NO_MODIFY_DUAL_PASSWORD",
+            "NO_DUAL_PASSWORD",
+            "DUAL_PASSWORD",
+          },
+          ["enumDescriptions"] = {
+            "The default value.",
+            "Do not update the user's dual password status.",
+            "No dual password usable for connecting using this user.",
+            "Dual password usable for connecting using this user.",
+          },
+          ["type"] = "string",
+        },
+        ["etag"] = {
+          ["description"] = "This field is deprecated and will be removed from a future version of the API.",
+          ["type"] = "string",
+        },
+        ["host"] = {
+          ["description"] = "Optional. The host from which the user can connect. For `insert` operations, host defaults to an empty string. For `update` operations, host is specified as part of the request URL. The host name cannot be updated after insertion. For a MySQL instance, it's required; for a PostgreSQL or SQL Server instance, it's optional.",
+          ["type"] = "string",
+        },
+        ["instance"] = {
+          ["description"] = "The name of the Cloud SQL instance. This does not include the project ID. Can be omitted for *update* because it is already specified on the URL.",
+          ["type"] = "string",
+        },
+        ["kind"] = {
+          ["description"] = "This is always `sql#user`.",
+          ["type"] = "string",
+        },
+        ["name"] = {
+          ["description"] = "The name of the user in the Cloud SQL instance. Can be omitted for `update` because it is already specified in the URL.",
+          ["type"] = "string",
+        },
+        ["password"] = {
+          ["description"] = "The password for the user.",
+          ["type"] = "string",
+        },
+        ["passwordPolicy"] = {
+          ["$ref"] = "UserPasswordValidationPolicy",
+          ["description"] = "User level password validation policy.",
+        },
+        ["project"] = {
+          ["description"] = "The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable. Can be omitted for *update* because it is already specified on the URL.",
+          ["type"] = "string",
+        },
+        ["sqlserverUserDetails"] = {
+          ["$ref"] = "SqlServerUserDetails",
+        },
+        ["type"] = {
+          ["description"] = "The user type. It determines the method to authenticate the user during login. The default is the database's built-in user type.",
+          ["enum"] = {
+            "BUILT_IN",
+            "CLOUD_IAM_USER",
+            "CLOUD_IAM_SERVICE_ACCOUNT",
+          },
+          ["enumDescriptions"] = {
+            "The database's built-in user type.",
+            "Cloud IAM user.",
+            "Cloud IAM service account.",
+          },
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+    ["UserPasswordValidationPolicy"] = {
+      ["description"] = "User level password validation policy.",
+      ["id"] = "UserPasswordValidationPolicy",
+      ["properties"] = {
+        ["allowedFailedAttempts"] = {
+          ["description"] = "Number of failed login attempts allowed before user get locked.",
+          ["format"] = "int32",
+          ["type"] = "integer",
+        },
+        ["enableFailedAttemptsCheck"] = {
+          ["description"] = "If true, failed login attempts check will be enabled.",
+          ["type"] = "boolean",
+        },
+        ["enablePasswordVerification"] = {
+          ["description"] = "If true, the user must specify the current password before changing the password. This flag is supported only for MySQL.",
+          ["type"] = "boolean",
+        },
+        ["passwordExpirationDuration"] = {
+          ["description"] = "Expiration duration after password is updated.",
+          ["format"] = "google-duration",
+          ["type"] = "string",
+        },
+        ["status"] = {
+          ["$ref"] = "PasswordStatus",
+          ["description"] = "Output only. Read-only password status.",
+          ["readOnly"] = true,
+        },
+      },
+      ["type"] = "object",
+    },
+    ["UsersListResponse"] = {
+      ["description"] = "User list response.",
+      ["id"] = "UsersListResponse",
+      ["properties"] = {
+        ["items"] = {
+          ["description"] = "List of user resources in the instance.",
+          ["items"] = {
+            ["$ref"] = "User",
+          },
+          ["type"] = "array",
+        },
+        ["kind"] = {
+          ["description"] = "This is always *sql#usersList*.",
+          ["type"] = "string",
+        },
+        ["nextPageToken"] = {
+          ["description"] = "An identifier that uniquely identifies the operation. You can use this identifier to retrieve the Operations resource that has information about the operation.",
+          ["type"] = "string",
+        },
+      },
+      ["type"] = "object",
+    },
+  },
+  ["servicePath"] = "",
+  ["title"] = "Cloud SQL Admin API",
+  ["version"] = "v1beta4",
+}

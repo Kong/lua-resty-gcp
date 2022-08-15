@@ -1,0 +1,318 @@
+#!/usr/bin/env lua
+
+local cjson = require "cjson"
+
+local decode = cjson.decode
+local null = cjson.null
+
+local assert       = assert
+local concat       = table.concat
+local fmt          = string.format
+local getenv       = os.getenv
+local pairs        = pairs
+local pcall        = pcall
+local rep          = string.rep
+local require      = require
+local sort         = table.sort
+local stderr       = io.stderr
+local stdin        = io.stdin
+local stdout       = io.stdout
+local tostring     = tostring
+local type         = type
+
+local warn
+do
+  if getenv("JSON2LUA_NO_WARN") then
+    warn = function() end
+  else
+    warn = function(s)
+      stderr:write("[warn] " .. s .. "\n")
+      stderr:flush()
+    end
+  end
+end
+
+local out, outf, indent, dedent, newline, finalize
+do
+  local I_LEVEL = 0
+  local I_CHARS = "  "
+  local I_CURRENT = ""
+
+  do
+    local tabs = getenv("JSON2LUA_INDENT_TABS")
+    local spaces = getenv("JSON2LUA_INDENT_SPACES")
+
+    if tabs and tabs ~= "0" then
+      I_CHARS = "\t"
+
+    elseif spaces then
+      local n = tonumber(spaces)
+      if not n or n < 0 then
+        warn("invalid JSON2LUA_INDENT_SPACES (" ..  spaces .. ")")
+      else
+        I_CHARS = rep(" ", n)
+      end
+    end
+  end
+
+  local function reset_indent()
+    I_CURRENT = "\n" .. rep(I_CHARS, I_LEVEL)
+  end
+
+  indent = function()
+    I_LEVEL = I_LEVEL + 1
+    reset_indent()
+  end
+
+  dedent = function()
+    I_LEVEL = I_LEVEL - 1
+    reset_indent()
+  end
+
+  if pcall(require, "string.buffer") then
+    local buf = require("string.buffer").new(1000)
+
+    out = function(s)
+      buf:put(s)
+    end
+
+    outf = function(f, ...)
+      buf:putf(f, ...)
+    end
+
+    finalize = function()
+      return buf:get()
+    end
+
+  else
+    warn("'string.buffer' not found")
+
+    ---@type string[]
+    local buf = {}
+    local n = 0
+
+    ---@param s string
+    out = function(s)
+      n = n + 1
+      buf[n] = s
+    end
+
+    outf = function(f, ...)
+      out(fmt(f, ...))
+    end
+
+    finalize = function()
+      return concat(buf, "", 1, n)
+    end
+  end
+
+  newline = function()
+    out(I_CURRENT)
+  end
+
+  do
+    local compact = getenv("JSON2LUA_COMPACT")
+    if compact and compact ~= "0" then
+      indent = function() end
+      dedent = indent
+      newline = indent
+    end
+  end
+end
+
+
+---@type fun(t:table):boolean
+local is_array
+do
+  local ok
+  ok, is_array = pcall(require, "table.isarray")
+  if not ok then
+    warn("'table.isarray' not found")
+    ---@param t table
+    ---@return boolean
+    is_array = function(t)
+      local n = 0
+      for k in pairs(t) do
+        if type(k) == "number" and k == (n + 1) then
+          n = n + 1
+        else
+          return false
+        end
+      end
+      return true
+    end
+  end
+end
+
+
+---@type fun(t:table):integer
+local nkeys
+do
+  local ok
+  ok, nkeys = pcall(require, "table.nkeys")
+  if not ok then
+    warn("'table.nkeys' not found")
+    ---@param t table
+    ---@return integer
+    nkeys = function(t)
+      local n = 0
+      for _ in pairs(t) do n = n + 1 end
+      return n
+    end
+  end
+end
+
+
+---@type fun(narr:integer, nrec:integer):table
+local new_tab
+do
+  local ok
+  ok, new_tab = pcall(require, "table.new")
+  if not ok then
+    warn("'table.new' not found")
+    ---@diagnostic disable-next-line
+    new_tab = function(narr, nrec)
+      return {}
+    end
+  end
+end
+
+
+---@param t table<string, any>
+---@return string[]
+local function sorted_keys(t)
+  local keys = new_tab(nkeys(t), 0)
+  local n = 0
+  for k in pairs(t) do
+    n = n + 1
+    keys[n] = k
+  end
+  sort(keys)
+  return keys
+end
+
+local render_null
+do
+  local env = getenv("JSON2LUA_NULL")
+  local NULL
+
+  if env == "ngx" then
+    NULL = "ngx.null"
+
+  elseif env == "nil" then
+    NULL = "nil"
+
+  else -- cjson or other
+    NULL = 'require("cjson").null'
+  end
+
+  render_null = function()
+    out(NULL)
+  end
+end
+
+
+---@type table<string, function>
+local RENDER = {
+  string = function(v)
+    outf("%q", v)
+  end,
+
+  number = function(v)
+    out(tostring(v))
+  end,
+
+  boolean = function(v)
+    out(v and "true" or "false")
+  end,
+
+  userdata = function(v)
+    if v == null then
+      render_null()
+    else
+      error("unhandled userdata type")
+    end
+  end,
+
+  ["nil"] = render_null,
+}
+
+
+local function render(v)
+  local typ = type(v)
+  local fn = RENDER[typ]
+  if not fn then
+    error("unhandled type: " .. typ)
+  end
+
+  fn(v)
+end
+
+
+do
+  local COMMA = ","
+  local T_BEGIN = "{"
+  local T_END = "}"
+  local T_EMPTY = "{}"
+
+  ---@param t table
+  local function render_table(t)
+    if nkeys(t) == 0 then
+      out(T_EMPTY)
+      return
+    end
+
+    out(T_BEGIN)
+    indent()
+
+    if is_array(t) then
+      for i = 1, #t do
+        newline()
+        render(t[i])
+        out(",")
+      end
+
+    else
+      local keys = sorted_keys(t)
+      for i = 1, #keys do
+        local k = keys[i]
+        local v = t[k]
+
+        newline()
+        -- not trying to get fancy with smart table key quoting here
+        outf("[%q] = ", k)
+        render(v)
+        out(COMMA)
+      end
+    end
+
+    dedent()
+    newline()
+    out(T_END)
+  end
+
+  RENDER.table = render_table
+end
+
+
+local function main()
+  local text = assert(stdin:read("*a"))
+  local json = decode(text)
+
+  out("return ")
+  render(json)
+  newline()
+
+  local code = finalize()
+  local lua, err = loadstring(code)
+  if lua == nil then
+    error("produced invalid lua code: " .. tostring(err))
+  end
+
+  stdout:write(code)
+end
+
+
+main()
+
+-- vim: ft=lua:et:sw=2 :
