@@ -4,7 +4,8 @@ GCP SDK libary for OpenResty.
 
 ## Status
 
-This library is under early development. Not everything has been implemented, and testing is hard since it requires access to GCP resources and not just regular CI.
+This library is under early development. New releases may contain breaking changes
+until further notice.
 
 
 ## Pre-requisites
@@ -22,7 +23,7 @@ luarocks make
 
 The test will go through:
 1. Test if GCP services imported
-2. Test getting Access Token (Will need to set environment variable GCP_SERVICE_ACCOUNT) 
+2. Test getting Access Token (Will need to set environment variable GCP_SERVICE_ACCOUNT)
 3. Test using GCP services (Will need to change thew service and param in spec/01-test_spec.lua)
 
 ```
@@ -41,8 +42,8 @@ local AccessToken = require "resty.gcp.request.credentials.accesstoken"
 local gcp = GCP()
 local gcpToken = AccessToken()
 
-local param = { 
-    projectsId = "kong-supersecret-project", 
+local param = {
+    projectsId = "kong-supersecret-project",
     secretsId = "kong-secret-cmek",
     versionsId = 1
 }

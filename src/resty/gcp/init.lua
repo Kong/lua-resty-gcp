@@ -121,7 +121,10 @@ do
     end
 end
 
-local GCP = {}
+local GCP = {
+    _VERSION = "0.0.5",
+}
+
 GCP.__index = function(self, service)
     local api = load_api(service)
     self[service] = api
