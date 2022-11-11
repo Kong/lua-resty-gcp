@@ -9,7 +9,7 @@ local function GetJwtToken(serviceAccount)
         error("Invalid format for GCP Service Account")
         return
     end
-    local timeNow = os.time(os.date("!*t"))
+    local timeNow = os.time()
     if (not (saDecode.client_email and saDecode.private_key and saDecode.private_key_id)) then
         ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, missing required field")
         error("Invalid GCP Service Account")
