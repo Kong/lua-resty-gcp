@@ -52,10 +52,12 @@ FindApis = function(apiClass, methods, curr)
 end
 
 local function template_expansion(str, params)
-    return (string.gsub(str, "{(.-)}", params))
+    return (string.gsub(str, "{(.-)}", function (key)
+        return ngx.escape_uri(params[key])
+    end))
 end
 
-local function build_request(accesstoken, apiDetail, params, requestBody)
+local function build_request(accesstoken, apiDetail, params, requestBody, opt)
     local req = {
         method = apiDetail.httpMethod,
         headers = {
@@ -76,14 +78,21 @@ local function build_request(accesstoken, apiDetail, params, requestBody)
 
     for k, v in pairs(params) do
         local param = apiDetail.parameters[k]
-        local location = param.location
         if not param then
             error("invalid parameter: " .. k)
         end
+        local location = param.location
         if location == "query" then
             query[k] = v
             -- skip paths as they are already handled
         end
+    end
+
+    if opt and opt.media then
+        if not apiDetail.supportsMediaDownload then
+            error("API does not supported media download")
+        end
+        query.alt = "media"
     end
 
     if next(query) then
@@ -100,11 +109,11 @@ local BuildMethods = function(methods)
         if type(v) == "table" then
             services[k] = {}
             for serviceName, apiDetail in pairs(v) do
-                services[k][serviceName] = function(accesstoken, params, requestBody)
+                services[k][serviceName] = function(accesstoken, params, requestBody, opt)
                     if (not params) then
                         error("params is required")
                     end
-                    local path, request = build_request(accesstoken, apiDetail, params, requestBody)
+                    local path, request = build_request(accesstoken, apiDetail, params, requestBody, opt)
                     local client = http.new()
                     local res, err = client:request_uri(baseUrl .. path, request)
                     if not res then
@@ -113,15 +122,21 @@ local BuildMethods = function(methods)
                     end
                     client:close()
 
-                    -- todo: some APIs expect status other than 2xx
-                    if res.status < 200 or res.status >= 300 then
-                        return nil, res.body
+                    local mime = res.headers["Content-Type"]
+                    local body = res.body
+                    if mime == "application/json" then
+                        body = cjson.decode(body)
                     end
 
-                    local mime = res.headers["Content-Type"]
-                    if mime == "application/json" then
-                        return cjson.decode(res.body)
+                    -- todo: some APIs expect status other than 2xx
+                    if res.status < 200 or res.status >= 300 then
+                        -- try to decode even if no mime is provided
+                        if type(body) ~= "table" then
+                            body = cjson.decode(body)
+                        end
+                        return nil, body and body.error and body.error.errors[1] and body.error.errors[1].message or res.body
                     end
+
                     return res.body
                 end
             end
