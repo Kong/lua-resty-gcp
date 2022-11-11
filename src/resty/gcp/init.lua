@@ -112,7 +112,17 @@ local BuildMethods = function(methods)
                         return
                     end
                     client:close()
-                    return cjson.decode(res.body)
+
+                    -- todo: some APIs expect status other than 2xx
+                    if res.status < 200 or res.status >= 300 then
+                        return nil, res.body
+                    end
+
+                    local mime = res.headers["Content-Type"]
+                    if mime == "application/json" then
+                        return cjson.decode(res.body)
+                    end
+                    return res.body
                 end
             end
         end
