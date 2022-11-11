@@ -51,6 +51,48 @@ FindApis = function(apiClass, methods, curr)
     return methods
 end
 
+local function template_expansion(str, params)
+    return (string.gsub(str, "{(.-)}", params))
+end
+
+local function build_request(accesstoken, apiDetail, params, requestBody)
+    local req = {
+        method = apiDetail.httpMethod,
+        headers = {
+            ["Authorization"] = "Bearer " .. accesstoken.token
+        },
+        body = requestBody,
+        ssl_verify = false
+    }
+
+    -- simple APIs
+    if apiDetail.flatPath then
+        local path = template_expansion(apiDetail.flatPath, params)
+        return path, req
+    end
+
+    local path = template_expansion(apiDetail.path, params)
+    local query = {}
+
+    for k, v in pairs(params) do
+        local param = apiDetail.parameters[k]
+        local location = param.location
+        if not param then
+            error("invalid parameter: " .. k)
+        end
+        if location == "query" then
+            query[k] = v
+            -- skip paths as they are already handled
+        end
+    end
+
+    if next(query) then
+        path = path .. "?" .. ngx.encode_args(query)
+    end
+
+    return path, req
+end
+
 local BuildMethods = function(methods)
     local baseUrl = methods.baseUrl
     local services = {}
@@ -60,30 +102,11 @@ local BuildMethods = function(methods)
             for serviceName, apiDetail in pairs(v) do
                 services[k][serviceName] = function(accesstoken, params, requestBody)
                     if (not params) then
-                        return
+                        error("params is required")
                     end
-                    local path, _ =
-                        string.gsub(
-                        apiDetail.flatPath,
-                        "{(.-)}",
-                        function(p)
-                            for paramK, paramV in pairs(params) do
-                                if (paramK == p) then
-                                    return paramV
-                                end
-                            end
-                        end
-                    )
-                    local req = {
-                        method = apiDetail.httpMethod,
-                        headers = {
-                            ["Authorization"] = "Bearer " .. accesstoken.token
-                        },
-                        body = requestBody,
-                        ssl_verify = false
-                    }
+                    local path, request = build_request(accesstoken, apiDetail, params, requestBody)
                     local client = http.new()
-                    local res, err = client:request_uri(baseUrl .. path, req)
+                    local res, err = client:request_uri(baseUrl .. path, request)
                     if not res then
                         error(err)
                         return
@@ -94,7 +117,7 @@ local BuildMethods = function(methods)
             end
         end
     end
-    return setmetatable(services, {__index = lookup_helper})
+    return setmetatable(services, { __index = lookup_helper })
 end
 
 local load_api
