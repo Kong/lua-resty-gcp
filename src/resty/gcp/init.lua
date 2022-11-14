@@ -57,7 +57,14 @@ local function template_expansion(str, params)
     end))
 end
 
-local function build_request(accesstoken, apiDetail, params, requestBody, opt)
+local function build_request(accesstoken, apiDetail, baseUrl, params, requestBody, opt)
+    local media = opt and opt.media
+    if media and not apiDetail.supportsMediaDownload then
+        error("API does not supported media download")
+    end
+
+    local mediaUpload = apiDetail.supportsMediaUpload
+
     local req = {
         method = apiDetail.httpMethod,
         headers = {
@@ -73,8 +80,19 @@ local function build_request(accesstoken, apiDetail, params, requestBody, opt)
         return path, req
     end
 
-    local path = template_expansion(apiDetail.path, params)
+    local path_template
+    if mediaUpload then
+        path_template = "https://storage.googleapis.com" .. apiDetail.mediaUpload.protocols.simple.path
+    else
+        path_template = baseUrl .. apiDetail.path
+    end
+
+    local path = template_expansion(path_template, params)
     local query = {}
+
+    if media then
+        query.alt = "media"
+    end
 
     for k, v in pairs(params) do
         local param = apiDetail.parameters[k]
@@ -113,9 +131,9 @@ local BuildMethods = function(methods)
                     if (not params) then
                         error("params is required")
                     end
-                    local path, request = build_request(accesstoken, apiDetail, params, requestBody, opt)
+                    local path, request = build_request(accesstoken, apiDetail, baseUrl, params, requestBody, opt)
                     local client = http.new()
-                    local res, err = client:request_uri(baseUrl .. path, request)
+                    local res, err = client:request_uri(path, request)
                     if not res then
                         error(err)
                         return
