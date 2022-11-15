@@ -155,7 +155,7 @@ local BuildMethods = function(methods)
                         return nil, body and body.error and body.error.errors[1] and body.error.errors[1].message or res.body
                     end
 
-                    return res.body
+                    return body
                 end
             end
         end
