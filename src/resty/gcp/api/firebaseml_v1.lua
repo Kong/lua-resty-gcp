@@ -1,4 +1,331 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "resources": { "operations": { "methods": { "delete": { "path": "v1/{+name}", "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.", "id": "firebaseml.operations.delete", "parameterOrder": [ "name" ], "flatPath": "v1/operations/{operationsId}", "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Empty" }, "parameters": { "name": { "required": true, "type": "string", "pattern": "^operations/.*$", "description": "The name of the operation resource to be deleted.", "location": "path" } } }, "list": { "path": "v1/{+name}", "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.", "response": { "$ref": "ListOperationsResponse" }, "flatPath": "v1/operations", "httpMethod": "GET", "parameterOrder": [ "name" ], "id": "firebaseml.operations.list", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "parameters": { "pageSize": { "description": "The standard list page size.", "type": "integer", "format": "int32", "location": "query" }, "name": { "type": "string", "description": "The name of the operation's parent resource.", "required": true, "pattern": "^operations$", "location": "path" }, "filter": { "description": "The standard list filter.", "type": "string", "location": "query" }, "pageToken": { "type": "string", "description": "The standard list page token.", "location": "query" } } }, "cancel": { "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.", "parameters": { "name": { "type": "string", "description": "The name of the operation resource to be cancelled.", "required": true, "location": "path", "pattern": "^operations/.*$" } }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "request": { "$ref": "CancelOperationRequest" }, "httpMethod": "POST", "flatPath": "v1/operations/{operationsId}:cancel", "parameterOrder": [ "name" ], "response": { "$ref": "Empty" }, "path": "v1/{+name}:cancel", "id": "firebaseml.operations.cancel" } } } }, "protocol": "rest", "documentationLink": "https://firebase.google.com", "servicePath": "", "baseUrl": "https://firebaseml.googleapis.com/", "revision": "20220711", "kind": "discovery#restDescription", "ownerDomain": "google.com", "description": "Access custom machine learning models hosted via Firebase ML.", "batchPath": "batch", "name": "firebaseml", "canonicalName": "Firebase ML", "fullyEncodeReservedExpansion": true, "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/cloud-platform": { "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account." } } } }, "title": "Firebase ML API", "version_module": true, "schemas": { "Status": { "type": "object", "properties": { "message": { "type": "string", "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client." }, "details": { "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.", "type": "array", "items": { "type": "object", "additionalProperties": { "description": "Properties of the object. Contains field @type with type URL.", "type": "any" } } }, "code": { "type": "integer", "format": "int32", "description": "The status code, which should be an enum value of google.rpc.Code." } }, "id": "Status", "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors)." }, "CancelOperationRequest": { "description": "The request message for Operations.CancelOperation.", "properties": {}, "type": "object", "id": "CancelOperationRequest" }, "ModelOperationMetadata": { "type": "object", "description": "This is returned in the longrunning operations for create/update.", "id": "ModelOperationMetadata", "properties": { "name": { "type": "string", "description": "The name of the model we are creating/updating The name must have the form `projects/{project_id}/models/{model_id}`" }, "basicOperationStatus": { "type": "string", "enumDescriptions": [ "The status is unspecified", "The model file is being uploaded", "The model file is being verified" ], "enum": [ "BASIC_OPERATION_STATUS_UNSPECIFIED", "BASIC_OPERATION_STATUS_UPLOADING", "BASIC_OPERATION_STATUS_VERIFYING" ] } } }, "Operation": { "description": "This resource represents a long-running operation that is the result of a network API call.", "type": "object", "id": "Operation", "properties": { "error": { "$ref": "Status", "description": "The error result of the operation in case of failure or cancellation." }, "done": { "type": "boolean", "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available." }, "name": { "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.", "type": "string" }, "metadata": { "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." }, "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.", "type": "object" }, "response": { "type": "object", "additionalProperties": { "description": "Properties of the object. Contains field @type with type URL.", "type": "any" }, "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`." } } }, "Empty": { "properties": {}, "type": "object", "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }", "id": "Empty" }, "ListOperationsResponse": { "type": "object", "description": "The response message for Operations.ListOperations.", "id": "ListOperationsResponse", "properties": { "nextPageToken": { "description": "The standard List next-page token.", "type": "string" }, "operations": { "description": "A list of operations that matches the specified filter in the request.", "items": { "$ref": "Operation" }, "type": "array" } } } }, "version": "v1", "basePath": "", "mtlsRootUrl": "https://firebaseml.mtls.googleapis.com/", "rootUrl": "https://firebaseml.googleapis.com/", "ownerName": "Google", "discoveryVersion": "v1", "id": "firebaseml:v1", "icons": { "x32": "http://www.google.com/images/icons/product/search-32.gif", "x16": "http://www.google.com/images/icons/product/search-16.gif" }, "parameters": { "prettyPrint": { "type": "boolean", "default": "true", "location": "query", "description": "Returns response with indentations and line breaks." }, "quotaUser": { "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.", "location": "query", "type": "string" }, "$.xgafv": { "description": "V1 error format.", "location": "query", "enum": [ "1", "2" ], "type": "string", "enumDescriptions": [ "v1 error format", "v2 error format" ] }, "alt": { "enum": [ "json", "media", "proto" ], "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "default": "json", "location": "query", "description": "Data format for response.", "type": "string" }, "fields": { "location": "query", "description": "Selector specifying which fields to include in a partial response.", "type": "string" }, "uploadType": { "type": "string", "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").", "location": "query" }, "key": { "location": "query", "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.", "type": "string" }, "oauth_token": { "location": "query", "type": "string", "description": "OAuth 2.0 token for the current user." }, "access_token": { "location": "query", "type": "string", "description": "OAuth access token." }, "callback": { "type": "string", "description": "JSONP", "location": "query" }, "upload_protocol": { "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").", "location": "query", "type": "string" } } }
-]===]))
+return {
+  auth = {
+    oauth2 = {
+      scopes = {
+        ["https://www.googleapis.com/auth/cloud-platform"] = {
+          description = "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.",
+        },
+      },
+    },
+  },
+  basePath = "",
+  baseUrl = "https://firebaseml.googleapis.com/",
+  batchPath = "batch",
+  canonicalName = "Firebase ML",
+  description = "Access custom machine learning models hosted via Firebase ML.",
+  discoveryVersion = "v1",
+  documentationLink = "https://firebase.google.com",
+  fullyEncodeReservedExpansion = true,
+  icons = {
+    x16 = "http://www.google.com/images/icons/product/search-16.gif",
+    x32 = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  id = "firebaseml:v1",
+  kind = "discovery#restDescription",
+  mtlsRootUrl = "https://firebaseml.mtls.googleapis.com/",
+  name = "firebaseml",
+  ownerDomain = "google.com",
+  ownerName = "Google",
+  parameters = {
+    ["$.xgafv"] = {
+      description = "V1 error format.",
+      enum = {
+        "1",
+        "2",
+      },
+      enumDescriptions = {
+        "v1 error format",
+        "v2 error format",
+      },
+      location = "query",
+      type = "string",
+    },
+    access_token = {
+      description = "OAuth access token.",
+      location = "query",
+      type = "string",
+    },
+    alt = {
+      default = "json",
+      description = "Data format for response.",
+      enum = {
+        "json",
+        "media",
+        "proto",
+      },
+      enumDescriptions = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      location = "query",
+      type = "string",
+    },
+    callback = {
+      description = "JSONP",
+      location = "query",
+      type = "string",
+    },
+    fields = {
+      description = "Selector specifying which fields to include in a partial response.",
+      location = "query",
+      type = "string",
+    },
+    key = {
+      description = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      location = "query",
+      type = "string",
+    },
+    oauth_token = {
+      description = "OAuth 2.0 token for the current user.",
+      location = "query",
+      type = "string",
+    },
+    prettyPrint = {
+      default = "true",
+      description = "Returns response with indentations and line breaks.",
+      location = "query",
+      type = "boolean",
+    },
+    quotaUser = {
+      description = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      location = "query",
+      type = "string",
+    },
+    uploadType = {
+      description = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      location = "query",
+      type = "string",
+    },
+    upload_protocol = {
+      description = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      location = "query",
+      type = "string",
+    },
+  },
+  protocol = "rest",
+  resources = {
+    operations = {
+      methods = {
+        cancel = {
+          description = "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          flatPath = "v1/operations/{operationsId}:cancel",
+          httpMethod = "POST",
+          id = "firebaseml.operations.cancel",
+          parameterOrder = {
+            "name",
+          },
+          parameters = {
+            name = {
+              description = "The name of the operation resource to be cancelled.",
+              location = "path",
+              pattern = "^operations/.*$",
+              required = true,
+              type = "string",
+            },
+          },
+          path = "v1/{+name}:cancel",
+          request = {
+            ["$ref"] = "CancelOperationRequest",
+          },
+          response = {
+            ["$ref"] = "Empty",
+          },
+          scopes = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        delete = {
+          description = "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
+          flatPath = "v1/operations/{operationsId}",
+          httpMethod = "DELETE",
+          id = "firebaseml.operations.delete",
+          parameterOrder = {
+            "name",
+          },
+          parameters = {
+            name = {
+              description = "The name of the operation resource to be deleted.",
+              location = "path",
+              pattern = "^operations/.*$",
+              required = true,
+              type = "string",
+            },
+          },
+          path = "v1/{+name}",
+          response = {
+            ["$ref"] = "Empty",
+          },
+          scopes = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+        list = {
+          description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+          flatPath = "v1/operations",
+          httpMethod = "GET",
+          id = "firebaseml.operations.list",
+          parameterOrder = {
+            "name",
+          },
+          parameters = {
+            filter = {
+              description = "The standard list filter.",
+              location = "query",
+              type = "string",
+            },
+            name = {
+              description = "The name of the operation's parent resource.",
+              location = "path",
+              pattern = "^operations$",
+              required = true,
+              type = "string",
+            },
+            pageSize = {
+              description = "The standard list page size.",
+              format = "int32",
+              location = "query",
+              type = "integer",
+            },
+            pageToken = {
+              description = "The standard list page token.",
+              location = "query",
+              type = "string",
+            },
+          },
+          path = "v1/{+name}",
+          response = {
+            ["$ref"] = "ListOperationsResponse",
+          },
+          scopes = {
+            "https://www.googleapis.com/auth/cloud-platform",
+          },
+        },
+      },
+    },
+  },
+  revision = "20221212",
+  rootUrl = "https://firebaseml.googleapis.com/",
+  schemas = {
+    CancelOperationRequest = {
+      description = "The request message for Operations.CancelOperation.",
+      id = "CancelOperationRequest",
+      properties = {},
+      type = "object",
+    },
+    Empty = {
+      description = "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+      id = "Empty",
+      properties = {},
+      type = "object",
+    },
+    ListOperationsResponse = {
+      description = "The response message for Operations.ListOperations.",
+      id = "ListOperationsResponse",
+      properties = {
+        nextPageToken = {
+          description = "The standard List next-page token.",
+          type = "string",
+        },
+        operations = {
+          description = "A list of operations that matches the specified filter in the request.",
+          items = {
+            ["$ref"] = "Operation",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    ModelOperationMetadata = {
+      description = "This is returned in the longrunning operations for create/update.",
+      id = "ModelOperationMetadata",
+      properties = {
+        basicOperationStatus = {
+          enum = {
+            "BASIC_OPERATION_STATUS_UNSPECIFIED",
+            "BASIC_OPERATION_STATUS_UPLOADING",
+            "BASIC_OPERATION_STATUS_VERIFYING",
+          },
+          enumDescriptions = {
+            "The status is unspecified",
+            "The model file is being uploaded",
+            "The model file is being verified",
+          },
+          type = "string",
+        },
+        name = {
+          description = "The name of the model we are creating/updating The name must have the form `projects/{project_id}/models/{model_id}`",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    Operation = {
+      description = "This resource represents a long-running operation that is the result of a network API call.",
+      id = "Operation",
+      properties = {
+        done = {
+          description = "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
+          type = "boolean",
+        },
+        error = {
+          ["$ref"] = "Status",
+          description = "The error result of the operation in case of failure or cancellation.",
+        },
+        metadata = {
+          additionalProperties = {
+            description = "Properties of the object. Contains field @type with type URL.",
+            type = "any",
+          },
+          description = "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+          type = "object",
+        },
+        name = {
+          description = "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
+          type = "string",
+        },
+        response = {
+          additionalProperties = {
+            description = "Properties of the object. Contains field @type with type URL.",
+            type = "any",
+          },
+          description = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          type = "object",
+        },
+      },
+      type = "object",
+    },
+    Status = {
+      description = "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      id = "Status",
+      properties = {
+        code = {
+          description = "The status code, which should be an enum value of google.rpc.Code.",
+          format = "int32",
+          type = "integer",
+        },
+        details = {
+          description = "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          items = {
+            additionalProperties = {
+              description = "Properties of the object. Contains field @type with type URL.",
+              type = "any",
+            },
+            type = "object",
+          },
+          type = "array",
+        },
+        message = {
+          description = "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+  },
+  servicePath = "",
+  title = "Firebase ML API",
+  version = "v1",
+  version_module = true,
+}

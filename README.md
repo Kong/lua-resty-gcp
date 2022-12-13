@@ -53,3 +53,26 @@ local response = gcp.secretmanager_v1.versions.access(gcpToken, params)
 print("The secret is: " .. base64.decode(response.payload.data))
 
 ```
+
+## Development
+
+### Updating the API Definitions
+
+Use the `update-api-defs` file in the `scripts` directory to update all API
+definitions:
+
+```
+$ ./script/update-api-defs
+```
+
+Take special care to note and investigate any failures logged by this script
+(i.e. download failures) before commiting the changes.
+
+### Adding/Removing Source Files
+
+Use the `update-rockspec` script to write the updated module list to the
+rockspec file if files are added or removed during development.
+
+```
+$ ./scripts/update-rockspec
+```
