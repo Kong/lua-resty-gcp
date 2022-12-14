@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readarray -t ROCKSPEC_FILES < <(echo *.rockspec)
+ROCKSPEC=
+
+if (( ${#ROCKSPEC_FILES[@]} == 0 )); then
+    echo "No rockspec file found!"
+    exit 1
+
+elif (( ${#ROCKSPEC_FILES[@]} > 1 )); then
+    echo "Multiple rockspec files found!"
+    prinf "%s\n" "${ROCKSPEC_FILES[@]}"
+    exit 1
+
+else
+    ROCKSPEC=${ROCKSPEC_FILES[0]}
+    echo "Updating rockspec file: $ROCKSPEC"
+fi
+
+
+readarray -t -d "" LUA_FILES < \
+<(
+  git ls-files -z 'src/**.lua' \
+  | sort -z
+)
+
+echo "Found ${#LUA_FILES[@]} files to add"
+
+CONTENT=""
+
+for fname in "${LUA_FILES[@]}"; do
+  mod=$fname
+
+  # strip src/ prefix
+  mod=${mod#src/}
+
+  # strip .lua suffix
+  mod=${mod%.lua}
+
+  # replace / with .
+  mod=${mod//\//.}
+
+  printf -v line '    ["%s"] = "%s",\n' \
+      "$mod" \
+      "$fname"
+
+  CONTENT=${CONTENT}${line}
+done
+
+
+# stolen from https://unix.stackexchange.com/a/628904
+sed -i -e '
+    /START-MARKER/,/END-MARKER/!b
+    //!d;/END-MARKER/!b
+    r /dev/stdin
+    N
+' "$ROCKSPEC" <<< "$CONTENT"
+
+echo "done!"

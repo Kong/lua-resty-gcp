@@ -1,4 +1,698 @@
-local decode = require("cjson").new().decode
-return assert(decode([===[
-{ "kind": "discovery#restDescription", "baseUrl": "https://apikeys.googleapis.com/", "protocol": "rest", "name": "apikeys", "title": "API Keys API", "id": "apikeys:v2", "schemas": { "V2Key": { "id": "V2Key", "properties": { "etag": { "readOnly": true, "description": "Output only. A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.", "type": "string" }, "name": { "readOnly": true, "description": "Output only. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.", "type": "string" }, "keyString": { "readOnly": true, "description": "Output only. An encrypted and signed value held by this key. This field can be accessed only through the `GetKeyString` method.", "type": "string" }, "updateTime": { "description": "Output only. A timestamp identifying the time this key was last updated.", "type": "string", "format": "google-datetime", "readOnly": true }, "createTime": { "readOnly": true, "format": "google-datetime", "type": "string", "description": "Output only. A timestamp identifying the time this key was originally created." }, "uid": { "type": "string", "readOnly": true, "description": "Output only. Unique id in UUID4 format." }, "displayName": { "description": "Human-readable display name of this key that you can modify. The maximum length is 63 characters.", "type": "string" }, "annotations": { "additionalProperties": { "type": "string" }, "type": "object", "description": "Annotations is an unstructured key-value map stored with a policy that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects." }, "deleteTime": { "type": "string", "readOnly": true, "format": "google-datetime", "description": "Output only. A timestamp when this key was deleted. If the resource is not deleted, this must be empty." }, "restrictions": { "description": "Key restrictions.", "$ref": "V2Restrictions" } }, "type": "object", "description": "The representation of a key managed by the API Keys API." }, "Status": { "type": "object", "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).", "properties": { "code": { "type": "integer", "format": "int32", "description": "The status code, which should be an enum value of google.rpc.Code." }, "details": { "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.", "items": { "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." }, "type": "object" }, "type": "array" }, "message": { "type": "string", "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client." } }, "id": "Status" }, "V2AndroidKeyRestrictions": { "id": "V2AndroidKeyRestrictions", "description": "The Android apps that are allowed to use the key.", "properties": { "allowedApplications": { "items": { "$ref": "V2AndroidApplication" }, "type": "array", "description": "A list of Android applications that are allowed to make API calls with this key." } }, "type": "object" }, "Operation": { "description": "This resource represents a long-running operation that is the result of a network API call.", "properties": { "metadata": { "additionalProperties": { "description": "Properties of the object. Contains field @type with type URL.", "type": "any" }, "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.", "type": "object" }, "error": { "$ref": "Status", "description": "The error result of the operation in case of failure or cancellation." }, "response": { "additionalProperties": { "type": "any", "description": "Properties of the object. Contains field @type with type URL." }, "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.", "type": "object" }, "done": { "type": "boolean", "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available." }, "name": { "type": "string", "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`." } }, "id": "Operation", "type": "object" }, "V2ServerKeyRestrictions": { "id": "V2ServerKeyRestrictions", "properties": { "allowedIps": { "items": { "type": "string" }, "description": "A list of the caller IP addresses that are allowed to make API calls with this key.", "type": "array" } }, "type": "object", "description": "The IP addresses of callers that are allowed to use the key." }, "V2BrowserKeyRestrictions": { "type": "object", "id": "V2BrowserKeyRestrictions", "properties": { "allowedReferrers": { "type": "array", "items": { "type": "string" }, "description": "A list of regular expressions for the referrer URLs that are allowed to make API calls with this key." } }, "description": "The HTTP referrers (websites) that are allowed to use the key." }, "V2ApiTarget": { "description": "A restriction for a specific service and optionally one or multiple specific methods. Both fields are case insensitive.", "id": "V2ApiTarget", "properties": { "service": { "description": "The service for this restriction. It should be the canonical service name, for example: `translate.googleapis.com`. You can use [`gcloud services list`](/sdk/gcloud/reference/services/list) to get a list of services that are enabled in the project.", "type": "string" }, "methods": { "items": { "type": "string" }, "description": "Optional. List of one or more methods that can be called. If empty, all methods for the service are allowed. A wildcard (*) can be used as the last symbol. Valid examples: `google.cloud.translate.v2.TranslateService.GetSupportedLanguage` `TranslateText` `Get*` `translate.googleapis.com.Get*`", "type": "array" } }, "type": "object" }, "V2GetKeyStringResponse": { "type": "object", "properties": { "keyString": { "type": "string", "description": "An encrypted and signed value of the key." } }, "id": "V2GetKeyStringResponse", "description": "Response message for `GetKeyString` method." }, "V2ListKeysResponse": { "id": "V2ListKeysResponse", "description": "Response message for `ListKeys` method.", "properties": { "keys": { "items": { "$ref": "V2Key" }, "description": "A list of API keys.", "type": "array" }, "nextPageToken": { "type": "string", "description": "The pagination token for the next page of results." } }, "type": "object" }, "V2LookupKeyResponse": { "type": "object", "id": "V2LookupKeyResponse", "description": "Response message for `LookupKey` method.", "properties": { "parent": { "description": "The project that owns the key with the value specified in the request.", "type": "string" }, "name": { "type": "string", "description": "The resource name of the API key. If the API key has been purged, resource name is empty." } } }, "V2Restrictions": { "description": "Describes the restrictions on the key.", "properties": { "browserKeyRestrictions": { "description": "The HTTP referrers (websites) that are allowed to use the key.", "$ref": "V2BrowserKeyRestrictions" }, "apiTargets": { "description": "A restriction for a specific service and optionally one or more specific methods. Requests are allowed if they match any of these restrictions. If no restrictions are specified, all targets are allowed.", "type": "array", "items": { "$ref": "V2ApiTarget" } }, "iosKeyRestrictions": { "description": "The iOS apps that are allowed to use the key.", "$ref": "V2IosKeyRestrictions" }, "serverKeyRestrictions": { "description": "The IP addresses of callers that are allowed to use the key.", "$ref": "V2ServerKeyRestrictions" }, "androidKeyRestrictions": { "$ref": "V2AndroidKeyRestrictions", "description": "The Android apps that are allowed to use the key." } }, "type": "object", "id": "V2Restrictions" }, "V2AndroidApplication": { "properties": { "packageName": { "type": "string", "description": "The package name of the application." }, "sha1Fingerprint": { "type": "string", "description": "The SHA1 fingerprint of the application. For example, both sha1 formats are acceptable : DA:39:A3:EE:5E:6B:4B:0D:32:55:BF:EF:95:60:18:90:AF:D8:07:09 or DA39A3EE5E6B4B0D3255BFEF95601890AFD80709. Output format is the latter." } }, "type": "object", "id": "V2AndroidApplication", "description": "Identifier of an Android application for key use." }, "V2IosKeyRestrictions": { "description": "The iOS apps that are allowed to use the key.", "properties": { "allowedBundleIds": { "description": "A list of bundle IDs that are allowed when making API calls with this key.", "type": "array", "items": { "type": "string" } } }, "id": "V2IosKeyRestrictions", "type": "object" }, "V2UndeleteKeyRequest": { "id": "V2UndeleteKeyRequest", "description": "Request message for `UndeleteKey` method.", "type": "object", "properties": {} } }, "ownerDomain": "google.com", "revision": "20220711", "ownerName": "Google", "description": "Manages the API keys associated with developer projects.", "version": "v2", "parameters": { "prettyPrint": { "location": "query", "description": "Returns response with indentations and line breaks.", "type": "boolean", "default": "true" }, "oauth_token": { "location": "query", "description": "OAuth 2.0 token for the current user.", "type": "string" }, "fields": { "location": "query", "type": "string", "description": "Selector specifying which fields to include in a partial response." }, "upload_protocol": { "location": "query", "type": "string", "description": "Upload protocol for media (e.g. \"raw\", \"multipart\")." }, "key": { "location": "query", "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.", "type": "string" }, "quotaUser": { "type": "string", "location": "query", "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters." }, "access_token": { "type": "string", "description": "OAuth access token.", "location": "query" }, "alt": { "enum": [ "json", "media", "proto" ], "location": "query", "enumDescriptions": [ "Responses with Content-Type of application/json", "Media download with context-dependent Content-Type", "Responses with Content-Type of application/x-protobuf" ], "type": "string", "default": "json", "description": "Data format for response." }, "callback": { "location": "query", "type": "string", "description": "JSONP" }, "uploadType": { "type": "string", "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").", "location": "query" }, "$.xgafv": { "enum": [ "1", "2" ], "location": "query", "description": "V1 error format.", "type": "string", "enumDescriptions": [ "v1 error format", "v2 error format" ] } }, "servicePath": "", "rootUrl": "https://apikeys.googleapis.com/", "batchPath": "batch", "documentationLink": "https://cloud.google.com/api-keys/docs", "canonicalName": "Api Keys Service", "fullyEncodeReservedExpansion": true, "auth": { "oauth2": { "scopes": { "https://www.googleapis.com/auth/cloud-platform": { "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account." }, "https://www.googleapis.com/auth/cloud-platform.read-only": { "description": "View your data across Google Cloud services and see the email address of your Google Account" } } } }, "resources": { "operations": { "methods": { "get": { "flatPath": "v2/operations/{operationsId}", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/cloud-platform.read-only" ], "parameters": { "name": { "required": true, "location": "path", "type": "string", "description": "The name of the operation resource.", "pattern": "^operations/[^/]+$" } }, "path": "v2/{+name}", "httpMethod": "GET", "response": { "$ref": "Operation" }, "parameterOrder": [ "name" ], "id": "apikeys.operations.get", "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service." } } }, "keys": { "methods": { "lookupKey": { "httpMethod": "GET", "path": "v2/keys:lookupKey", "parameters": { "keyString": { "location": "query", "description": "Required. Finds the project that owns the key string value.", "type": "string" } }, "flatPath": "v2/keys:lookupKey", "parameterOrder": [], "description": "Find the parent project and resource name of the API key that matches the key string in the request. If the API key has been purged, resource name will not be set. The service account must have the `apikeys.keys.lookup` permission on the parent project.", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/cloud-platform.read-only" ], "response": { "$ref": "V2LookupKeyResponse" }, "id": "apikeys.keys.lookupKey" } } }, "projects": { "resources": { "locations": { "resources": { "keys": { "methods": { "getKeyString": { "parameterOrder": [ "name" ], "description": "Get the key string for an API key. NOTE: Key is a global resource; hence the only supported value for location is `global`.", "path": "v2/{+name}/keyString", "response": { "$ref": "V2GetKeyStringResponse" }, "httpMethod": "GET", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/cloud-platform.read-only" ], "id": "apikeys.projects.locations.keys.getKeyString", "parameters": { "name": { "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/keys/[^/]+$", "location": "path", "type": "string", "description": "Required. The resource name of the API key to be retrieved." } }, "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}/keyString" }, "delete": { "parameters": { "name": { "description": "Required. The resource name of the API key to be deleted.", "location": "path", "required": true, "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/keys/[^/]+$" }, "etag": { "description": "Optional. The etag known to the client for the expected state of the key. This is to be used for optimistic concurrency.", "type": "string", "location": "query" } }, "path": "v2/{+name}", "id": "apikeys.projects.locations.keys.delete", "response": { "$ref": "Operation" }, "httpMethod": "DELETE", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "description": "Deletes an API key. Deleted key can be retrieved within 30 days of deletion. Afterward, key will be purged from the project. NOTE: Key is a global resource; hence the only supported value for location is `global`.", "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}", "parameterOrder": [ "name" ] }, "list": { "description": "Lists the API keys owned by a project. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.", "parameters": { "parent": { "type": "string", "location": "path", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+$", "description": "Required. Lists all API keys associated with this project." }, "pageSize": { "type": "integer", "description": "Optional. Specifies the maximum number of results to be returned at a time.", "format": "int32", "location": "query" }, "showDeleted": { "description": "Optional. Indicate that keys deleted in the past 30 days should also be returned.", "type": "boolean", "location": "query" }, "pageToken": { "description": "Optional. Requests a specific page of results.", "type": "string", "location": "query" } }, "response": { "$ref": "V2ListKeysResponse" }, "id": "apikeys.projects.locations.keys.list", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/cloud-platform.read-only" ], "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys", "httpMethod": "GET", "path": "v2/{+parent}/keys", "parameterOrder": [ "parent" ] }, "create": { "request": { "$ref": "V2Key" }, "description": "Creates a new API key. NOTE: Key is a global resource; hence the only supported value for location is `global`.", "httpMethod": "POST", "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys", "id": "apikeys.projects.locations.keys.create", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "path": "v2/{+parent}/keys", "parameterOrder": [ "parent" ], "parameters": { "parent": { "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+$", "description": "Required. The project in which the API key is created.", "location": "path", "required": true }, "keyId": { "type": "string", "description": "User specified key id (optional). If specified, it will become the final component of the key resource name. The id must be unique within the project, must conform with RFC-1034, is restricted to lower-cased letters, and has a maximum length of 63 characters. In another word, the id must match the regular expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`. The id must NOT be a UUID-like string.", "location": "query" } }, "response": { "$ref": "Operation" } }, "patch": { "request": { "$ref": "V2Key" }, "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "httpMethod": "PATCH", "response": { "$ref": "Operation" }, "parameters": { "updateMask": { "type": "string", "description": "The field mask specifies which fields to be updated as part of this request. All other fields are ignored. Mutable fields are: `display_name`, `restrictions`, and `annotations`. If an update mask is not provided, the service treats it as an implied mask equivalent to all allowed fields that are set on the wire. If the field mask has a special value \"*\", the service treats it equivalent to replace all allowed mutable fields.", "location": "query", "format": "google-fieldmask" }, "name": { "required": true, "description": "Output only. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/keys/[^/]+$", "location": "path" } }, "id": "apikeys.projects.locations.keys.patch", "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}", "path": "v2/{+name}", "description": "Patches the modifiable fields of an API key. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.", "parameterOrder": [ "name" ] }, "get": { "parameters": { "name": { "required": true, "location": "path", "description": "Required. The resource name of the API key to get.", "type": "string", "pattern": "^projects/[^/]+/locations/[^/]+/keys/[^/]+$" } }, "description": "Gets the metadata for an API key. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.", "path": "v2/{+name}", "parameterOrder": [ "name" ], "id": "apikeys.projects.locations.keys.get", "scopes": [ "https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/cloud-platform.read-only" ], "httpMethod": "GET", "response": { "$ref": "V2Key" }, "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}" }, "undelete": { "id": "apikeys.projects.locations.keys.undelete", "scopes": [ "https://www.googleapis.com/auth/cloud-platform" ], "response": { "$ref": "Operation" }, "path": "v2/{+name}:undelete", "parameterOrder": [ "name" ], "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}:undelete", "parameters": { "name": { "location": "path", "description": "Required. The resource name of the API key to be undeleted.", "type": "string", "required": true, "pattern": "^projects/[^/]+/locations/[^/]+/keys/[^/]+$" } }, "request": { "$ref": "V2UndeleteKeyRequest" }, "description": "Undeletes an API key which was deleted within 30 days. NOTE: Key is a global resource; hence the only supported value for location is `global`.", "httpMethod": "POST" } } } } } } } }, "mtlsRootUrl": "https://apikeys.mtls.googleapis.com/", "basePath": "", "version_module": true, "icons": { "x16": "http://www.google.com/images/icons/product/search-16.gif", "x32": "http://www.google.com/images/icons/product/search-32.gif" }, "discoveryVersion": "v1" }
-]===]))
+return {
+  auth = {
+    oauth2 = {
+      scopes = {
+        ["https://www.googleapis.com/auth/cloud-platform"] = {
+          description = "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.",
+        },
+        ["https://www.googleapis.com/auth/cloud-platform.read-only"] = {
+          description = "View your data across Google Cloud services and see the email address of your Google Account",
+        },
+      },
+    },
+  },
+  basePath = "",
+  baseUrl = "https://apikeys.googleapis.com/",
+  batchPath = "batch",
+  canonicalName = "Api Keys Service",
+  description = "Manages the API keys associated with developer projects.",
+  discoveryVersion = "v1",
+  documentationLink = "https://cloud.google.com/api-keys/docs",
+  fullyEncodeReservedExpansion = true,
+  icons = {
+    x16 = "http://www.google.com/images/icons/product/search-16.gif",
+    x32 = "http://www.google.com/images/icons/product/search-32.gif",
+  },
+  id = "apikeys:v2",
+  kind = "discovery#restDescription",
+  mtlsRootUrl = "https://apikeys.mtls.googleapis.com/",
+  name = "apikeys",
+  ownerDomain = "google.com",
+  ownerName = "Google",
+  parameters = {
+    ["$.xgafv"] = {
+      description = "V1 error format.",
+      enum = {
+        "1",
+        "2",
+      },
+      enumDescriptions = {
+        "v1 error format",
+        "v2 error format",
+      },
+      location = "query",
+      type = "string",
+    },
+    access_token = {
+      description = "OAuth access token.",
+      location = "query",
+      type = "string",
+    },
+    alt = {
+      default = "json",
+      description = "Data format for response.",
+      enum = {
+        "json",
+        "media",
+        "proto",
+      },
+      enumDescriptions = {
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf",
+      },
+      location = "query",
+      type = "string",
+    },
+    callback = {
+      description = "JSONP",
+      location = "query",
+      type = "string",
+    },
+    fields = {
+      description = "Selector specifying which fields to include in a partial response.",
+      location = "query",
+      type = "string",
+    },
+    key = {
+      description = "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      location = "query",
+      type = "string",
+    },
+    oauth_token = {
+      description = "OAuth 2.0 token for the current user.",
+      location = "query",
+      type = "string",
+    },
+    prettyPrint = {
+      default = "true",
+      description = "Returns response with indentations and line breaks.",
+      location = "query",
+      type = "boolean",
+    },
+    quotaUser = {
+      description = "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      location = "query",
+      type = "string",
+    },
+    uploadType = {
+      description = "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      location = "query",
+      type = "string",
+    },
+    upload_protocol = {
+      description = "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      location = "query",
+      type = "string",
+    },
+  },
+  protocol = "rest",
+  resources = {
+    keys = {
+      methods = {
+        lookupKey = {
+          description = "Find the parent project and resource name of the API key that matches the key string in the request. If the API key has been purged, resource name will not be set. The service account must have the `apikeys.keys.lookup` permission on the parent project.",
+          flatPath = "v2/keys:lookupKey",
+          httpMethod = "GET",
+          id = "apikeys.keys.lookupKey",
+          parameterOrder = {},
+          parameters = {
+            keyString = {
+              description = "Required. Finds the project that owns the key string value.",
+              location = "query",
+              type = "string",
+            },
+          },
+          path = "v2/keys:lookupKey",
+          response = {
+            ["$ref"] = "V2LookupKeyResponse",
+          },
+          scopes = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+          },
+        },
+      },
+    },
+    operations = {
+      methods = {
+        get = {
+          description = "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+          flatPath = "v2/operations/{operationsId}",
+          httpMethod = "GET",
+          id = "apikeys.operations.get",
+          parameterOrder = {
+            "name",
+          },
+          parameters = {
+            name = {
+              description = "The name of the operation resource.",
+              location = "path",
+              pattern = "^operations/[^/]+$",
+              required = true,
+              type = "string",
+            },
+          },
+          path = "v2/{+name}",
+          response = {
+            ["$ref"] = "Operation",
+          },
+          scopes = {
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+          },
+        },
+      },
+    },
+    projects = {
+      resources = {
+        locations = {
+          resources = {
+            keys = {
+              methods = {
+                create = {
+                  description = "Creates a new API key. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/keys",
+                  httpMethod = "POST",
+                  id = "apikeys.projects.locations.keys.create",
+                  parameterOrder = {
+                    "parent",
+                  },
+                  parameters = {
+                    keyId = {
+                      description = "User specified key id (optional). If specified, it will become the final component of the key resource name. The id must be unique within the project, must conform with RFC-1034, is restricted to lower-cased letters, and has a maximum length of 63 characters. In another word, the id must match the regular expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`. The id must NOT be a UUID-like string.",
+                      location = "query",
+                      type = "string",
+                    },
+                    parent = {
+                      description = "Required. The project in which the API key is created.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v2/{+parent}/keys",
+                  request = {
+                    ["$ref"] = "V2Key",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                delete = {
+                  description = "Deletes an API key. Deleted key can be retrieved within 30 days of deletion. Afterward, key will be purged from the project. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}",
+                  httpMethod = "DELETE",
+                  id = "apikeys.projects.locations.keys.delete",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    etag = {
+                      description = "Optional. The etag known to the client for the expected state of the key. This is to be used for optimistic concurrency.",
+                      location = "query",
+                      type = "string",
+                    },
+                    name = {
+                      description = "Required. The resource name of the API key to be deleted.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/keys/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v2/{+name}",
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                get = {
+                  description = "Gets the metadata for an API key. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}",
+                  httpMethod = "GET",
+                  id = "apikeys.projects.locations.keys.get",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. The resource name of the API key to get.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/keys/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v2/{+name}",
+                  response = {
+                    ["$ref"] = "V2Key",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                  },
+                },
+                getKeyString = {
+                  description = "Get the key string for an API key. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}/keyString",
+                  httpMethod = "GET",
+                  id = "apikeys.projects.locations.keys.getKeyString",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. The resource name of the API key to be retrieved.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/keys/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v2/{+name}/keyString",
+                  response = {
+                    ["$ref"] = "V2GetKeyStringResponse",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                  },
+                },
+                list = {
+                  description = "Lists the API keys owned by a project. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/keys",
+                  httpMethod = "GET",
+                  id = "apikeys.projects.locations.keys.list",
+                  parameterOrder = {
+                    "parent",
+                  },
+                  parameters = {
+                    pageSize = {
+                      description = "Optional. Specifies the maximum number of results to be returned at a time.",
+                      format = "int32",
+                      location = "query",
+                      type = "integer",
+                    },
+                    pageToken = {
+                      description = "Optional. Requests a specific page of results.",
+                      location = "query",
+                      type = "string",
+                    },
+                    parent = {
+                      description = "Required. Lists all API keys associated with this project.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                    showDeleted = {
+                      description = "Optional. Indicate that keys deleted in the past 30 days should also be returned.",
+                      location = "query",
+                      type = "boolean",
+                    },
+                  },
+                  path = "v2/{+parent}/keys",
+                  response = {
+                    ["$ref"] = "V2ListKeysResponse",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only",
+                  },
+                },
+                patch = {
+                  description = "Patches the modifiable fields of an API key. The key string of the API key isn't included in the response. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}",
+                  httpMethod = "PATCH",
+                  id = "apikeys.projects.locations.keys.patch",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Output only. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/keys/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                    updateMask = {
+                      description = "The field mask specifies which fields to be updated as part of this request. All other fields are ignored. Mutable fields are: `display_name`, `restrictions`, and `annotations`. If an update mask is not provided, the service treats it as an implied mask equivalent to all allowed fields that are set on the wire. If the field mask has a special value \"*\", the service treats it equivalent to replace all allowed mutable fields.",
+                      format = "google-fieldmask",
+                      location = "query",
+                      type = "string",
+                    },
+                  },
+                  path = "v2/{+name}",
+                  request = {
+                    ["$ref"] = "V2Key",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                undelete = {
+                  description = "Undeletes an API key which was deleted within 30 days. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}:undelete",
+                  httpMethod = "POST",
+                  id = "apikeys.projects.locations.keys.undelete",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. The resource name of the API key to be undeleted.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/keys/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v2/{+name}:undelete",
+                  request = {
+                    ["$ref"] = "V2UndeleteKeyRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  revision = "20221212",
+  rootUrl = "https://apikeys.googleapis.com/",
+  schemas = {
+    Operation = {
+      description = "This resource represents a long-running operation that is the result of a network API call.",
+      id = "Operation",
+      properties = {
+        done = {
+          description = "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
+          type = "boolean",
+        },
+        error = {
+          ["$ref"] = "Status",
+          description = "The error result of the operation in case of failure or cancellation.",
+        },
+        metadata = {
+          additionalProperties = {
+            description = "Properties of the object. Contains field @type with type URL.",
+            type = "any",
+          },
+          description = "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+          type = "object",
+        },
+        name = {
+          description = "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
+          type = "string",
+        },
+        response = {
+          additionalProperties = {
+            description = "Properties of the object. Contains field @type with type URL.",
+            type = "any",
+          },
+          description = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          type = "object",
+        },
+      },
+      type = "object",
+    },
+    Status = {
+      description = "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      id = "Status",
+      properties = {
+        code = {
+          description = "The status code, which should be an enum value of google.rpc.Code.",
+          format = "int32",
+          type = "integer",
+        },
+        details = {
+          description = "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          items = {
+            additionalProperties = {
+              description = "Properties of the object. Contains field @type with type URL.",
+              type = "any",
+            },
+            type = "object",
+          },
+          type = "array",
+        },
+        message = {
+          description = "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    V2AndroidApplication = {
+      description = "Identifier of an Android application for key use.",
+      id = "V2AndroidApplication",
+      properties = {
+        packageName = {
+          description = "The package name of the application.",
+          type = "string",
+        },
+        sha1Fingerprint = {
+          description = "The SHA1 fingerprint of the application. For example, both sha1 formats are acceptable : DA:39:A3:EE:5E:6B:4B:0D:32:55:BF:EF:95:60:18:90:AF:D8:07:09 or DA39A3EE5E6B4B0D3255BFEF95601890AFD80709. Output format is the latter.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    V2AndroidKeyRestrictions = {
+      description = "The Android apps that are allowed to use the key.",
+      id = "V2AndroidKeyRestrictions",
+      properties = {
+        allowedApplications = {
+          description = "A list of Android applications that are allowed to make API calls with this key.",
+          items = {
+            ["$ref"] = "V2AndroidApplication",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    V2ApiTarget = {
+      description = "A restriction for a specific service and optionally one or multiple specific methods. Both fields are case insensitive.",
+      id = "V2ApiTarget",
+      properties = {
+        methods = {
+          description = "Optional. List of one or more methods that can be called. If empty, all methods for the service are allowed. A wildcard (*) can be used as the last symbol. Valid examples: `google.cloud.translate.v2.TranslateService.GetSupportedLanguage` `TranslateText` `Get*` `translate.googleapis.com.Get*`",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        service = {
+          description = "The service for this restriction. It should be the canonical service name, for example: `translate.googleapis.com`. You can use [`gcloud services list`](/sdk/gcloud/reference/services/list) to get a list of services that are enabled in the project.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    V2BrowserKeyRestrictions = {
+      description = "The HTTP referrers (websites) that are allowed to use the key.",
+      id = "V2BrowserKeyRestrictions",
+      properties = {
+        allowedReferrers = {
+          description = "A list of regular expressions for the referrer URLs that are allowed to make API calls with this key.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    V2GetKeyStringResponse = {
+      description = "Response message for `GetKeyString` method.",
+      id = "V2GetKeyStringResponse",
+      properties = {
+        keyString = {
+          description = "An encrypted and signed value of the key.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    V2IosKeyRestrictions = {
+      description = "The iOS apps that are allowed to use the key.",
+      id = "V2IosKeyRestrictions",
+      properties = {
+        allowedBundleIds = {
+          description = "A list of bundle IDs that are allowed when making API calls with this key.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    V2Key = {
+      description = "The representation of a key managed by the API Keys API.",
+      id = "V2Key",
+      properties = {
+        annotations = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Annotations is an unstructured key-value map stored with a policy that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects.",
+          type = "object",
+        },
+        createTime = {
+          description = "Output only. A timestamp identifying the time this key was originally created.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        deleteTime = {
+          description = "Output only. A timestamp when this key was deleted. If the resource is not deleted, this must be empty.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        displayName = {
+          description = "Human-readable display name of this key that you can modify. The maximum length is 63 characters.",
+          type = "string",
+        },
+        etag = {
+          description = "Output only. A checksum computed by the server based on the current value of the Key resource. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. See https://google.aip.dev/154.",
+          readOnly = true,
+          type = "string",
+        },
+        keyString = {
+          description = "Output only. An encrypted and signed value held by this key. This field can be accessed only through the `GetKeyString` method.",
+          readOnly = true,
+          type = "string",
+        },
+        name = {
+          description = "Output only. The resource name of the key. The `name` has the form: `projects//locations/global/keys/`. For example: `projects/123456867718/locations/global/keys/b7ff1f9f-8275-410a-94dd-3855ee9b5dd2` NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+          readOnly = true,
+          type = "string",
+        },
+        restrictions = {
+          ["$ref"] = "V2Restrictions",
+          description = "Key restrictions.",
+        },
+        uid = {
+          description = "Output only. Unique id in UUID4 format.",
+          readOnly = true,
+          type = "string",
+        },
+        updateTime = {
+          description = "Output only. A timestamp identifying the time this key was last updated.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    V2ListKeysResponse = {
+      description = "Response message for `ListKeys` method.",
+      id = "V2ListKeysResponse",
+      properties = {
+        keys = {
+          description = "A list of API keys.",
+          items = {
+            ["$ref"] = "V2Key",
+          },
+          type = "array",
+        },
+        nextPageToken = {
+          description = "The pagination token for the next page of results.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    V2LookupKeyResponse = {
+      description = "Response message for `LookupKey` method.",
+      id = "V2LookupKeyResponse",
+      properties = {
+        name = {
+          description = "The resource name of the API key. If the API key has been purged, resource name is empty.",
+          type = "string",
+        },
+        parent = {
+          description = "The project that owns the key with the value specified in the request.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    V2Restrictions = {
+      description = "Describes the restrictions on the key.",
+      id = "V2Restrictions",
+      properties = {
+        androidKeyRestrictions = {
+          ["$ref"] = "V2AndroidKeyRestrictions",
+          description = "The Android apps that are allowed to use the key.",
+        },
+        apiTargets = {
+          description = "A restriction for a specific service and optionally one or more specific methods. Requests are allowed if they match any of these restrictions. If no restrictions are specified, all targets are allowed.",
+          items = {
+            ["$ref"] = "V2ApiTarget",
+          },
+          type = "array",
+        },
+        browserKeyRestrictions = {
+          ["$ref"] = "V2BrowserKeyRestrictions",
+          description = "The HTTP referrers (websites) that are allowed to use the key.",
+        },
+        iosKeyRestrictions = {
+          ["$ref"] = "V2IosKeyRestrictions",
+          description = "The iOS apps that are allowed to use the key.",
+        },
+        serverKeyRestrictions = {
+          ["$ref"] = "V2ServerKeyRestrictions",
+          description = "The IP addresses of callers that are allowed to use the key.",
+        },
+      },
+      type = "object",
+    },
+    V2ServerKeyRestrictions = {
+      description = "The IP addresses of callers that are allowed to use the key.",
+      id = "V2ServerKeyRestrictions",
+      properties = {
+        allowedIps = {
+          description = "A list of the caller IP addresses that are allowed to make API calls with this key.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    V2UndeleteKeyRequest = {
+      description = "Request message for `UndeleteKey` method.",
+      id = "V2UndeleteKeyRequest",
+      properties = {},
+      type = "object",
+    },
+  },
+  servicePath = "",
+  title = "API Keys API",
+  version = "v2",
+  version_module = true,
+}
