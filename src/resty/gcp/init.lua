@@ -74,22 +74,26 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
         ssl_verify = false
     }
 
-    -- simple APIs
-    if apiDetail.flatPath then
-        local path = template_expansion(apiDetail.flatPath, params)
-        return path, req
-    end
-
     -- it's strange that API supporting media upload has different way of handling path
     local path_template
-    if mediaUpload then
+    if apiDetail.flatPath then
+        path_template = apiDetail.flatPath
+    elseif mediaUpload then
         path_template = "https://storage.googleapis.com" .. apiDetail.mediaUpload.protocols.simple.path
     else
         path_template = baseUrl .. apiDetail.path
     end
 
     local path = template_expansion(path_template, params)
-    local query = {}
+    local query
+
+    local newpath, query_string = string.match(path, "^(.*)%?(.*)$")
+    if query_string then
+        path = newpath
+        query = ngx.decode_args(query_string)
+    else
+        query = {}
+    end
 
     for k, v in pairs(params) do
         local param = apiDetail.parameters[k]
@@ -180,6 +184,9 @@ end
 local GCP = {
     _VERSION = "0.0.5",
 }
+
+-- only for unit testing
+GCP._build_request = build_request
 
 GCP.__index = function(self, service)
     local api = load_api(service)
