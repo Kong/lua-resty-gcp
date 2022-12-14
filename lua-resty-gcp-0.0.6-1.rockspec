@@ -1,8 +1,8 @@
 package = "lua-resty-gcp"
-version = "0.0.5-1"
+version = "0.0.6-1"
 source = {
    url = "git+https://github.com/Kong/lua-resty-gcp",
-   tag = "0.0.5"
+   tag = "0.0.6"
 }
 description = {
   summary = "GCP SDK for OpenResty",

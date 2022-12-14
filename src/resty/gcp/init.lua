@@ -182,7 +182,7 @@ do
 end
 
 local GCP = {
-    _VERSION = "0.0.5",
+    _VERSION = "0.0.6",
 }
 
 -- only for unit testing
