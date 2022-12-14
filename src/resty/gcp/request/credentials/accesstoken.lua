@@ -79,7 +79,7 @@ local function GetAccessTokenBySA(serviceAccount)
         ngx.log(ngx.ERR, "[accesstoken] Unable to get access token: ", res.error_description)
         return
     end
-    return GetAccessTokenByJwt(jwtToken), "SA"
+    return res, "SA"
 end
 
 local function GetAccessTokenByWI()

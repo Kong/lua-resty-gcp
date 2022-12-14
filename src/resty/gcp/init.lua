@@ -57,8 +57,8 @@ local function template_expansion(str, params)
     end))
 end
 
-local function build_request(accesstoken, apiDetail, baseUrl, params, requestBody, opt)
-    local media = opt and opt.media
+local function build_request(accesstoken, apiDetail, baseUrl, params, requestBody)
+    local media = params and (params.alt == "media")
     if media and not apiDetail.supportsMediaDownload then
         error("API does not supported media download")
     end
@@ -80,6 +80,7 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
         return path, req
     end
 
+    -- it's strange that API supporting media upload has different way of handling path
     local path_template
     if mediaUpload then
         path_template = "https://storage.googleapis.com" .. apiDetail.mediaUpload.protocols.simple.path
@@ -89,10 +90,6 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
 
     local path = template_expansion(path_template, params)
     local query = {}
-
-    if media then
-        query.alt = "media"
-    end
 
     for k, v in pairs(params) do
         local param = apiDetail.parameters[k]
@@ -104,13 +101,6 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
             query[k] = v
             -- skip paths as they are already handled
         end
-    end
-
-    if opt and opt.media then
-        if not apiDetail.supportsMediaDownload then
-            error("API does not supported media download")
-        end
-        query.alt = "media"
     end
 
     if next(query) then
@@ -127,11 +117,11 @@ local BuildMethods = function(methods)
         if type(v) == "table" then
             services[k] = {}
             for serviceName, apiDetail in pairs(v) do
-                services[k][serviceName] = function(accesstoken, params, requestBody, opt)
+                services[k][serviceName] = function(accesstoken, params, requestBody)
                     if (not params) then
                         error("params is required")
                     end
-                    local path, request = build_request(accesstoken, apiDetail, baseUrl, params, requestBody, opt)
+                    local path, request = build_request(accesstoken, apiDetail, baseUrl, params, requestBody)
                     local client = http.new()
                     local res, err = client:request_uri(path, request)
                     if not res then
