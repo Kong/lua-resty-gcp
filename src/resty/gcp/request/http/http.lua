@@ -19,7 +19,6 @@ local http do
     -- restore original versions
     ngx.socket.tcp = old_tcp  -- luacheck: ignore
     package.loaded["resty.http"] = old_http_client
-  end
-  
-  return http
-  
+end
+
+return http

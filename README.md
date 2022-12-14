@@ -42,7 +42,7 @@ local AccessToken = require "resty.gcp.request.credentials.accesstoken"
 local gcp = GCP()
 local gcpToken = AccessToken()
 
-local param = {
+local params = {
     projectsId = "kong-supersecret-project",
     secretsId = "kong-secret-cmek",
     versionsId = 1

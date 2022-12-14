@@ -51,6 +51,69 @@ FindApis = function(apiClass, methods, curr)
     return methods
 end
 
+local function template_expansion(str, params)
+    return (string.gsub(str, "{(.-)}", function (key)
+        return ngx.escape_uri(params[key])
+    end))
+end
+
+local function build_request(accesstoken, apiDetail, baseUrl, params, requestBody)
+    local media = params and (params.alt == "media")
+    if media and not apiDetail.supportsMediaDownload then
+        error("API does not supported media download")
+    end
+
+    local mediaUpload = apiDetail.supportsMediaUpload
+
+    local req = {
+        method = apiDetail.httpMethod,
+        headers = {
+            ["Authorization"] = "Bearer " .. accesstoken.token
+        },
+        body = requestBody,
+        ssl_verify = false
+    }
+
+    -- it's strange that API supporting media upload has different way of handling path
+    local path_template
+    if apiDetail.flatPath then
+        path_template = apiDetail.flatPath
+    elseif mediaUpload then
+        path_template = "https://storage.googleapis.com" .. apiDetail.mediaUpload.protocols.simple.path
+    else
+        path_template = baseUrl .. apiDetail.path
+    end
+
+    local path = template_expansion(path_template, params)
+    local query
+
+    local newpath, query_string = string.match(path, "^(.*)%?(.*)$")
+    if query_string then
+        path = newpath
+        query = ngx.decode_args(query_string)
+    else
+        query = {}
+    end
+
+    for k, v in pairs(params) do
+        local param = apiDetail.parameters[k]
+        if not param then
+            error("invalid parameter: " .. k)
+        end
+        local location = param.location
+        if location == "query" then
+            query[k] = v
+            -- skip paths as they are already handled
+        end
+    end
+
+    if next(query) then
+        path = path .. "?" .. ngx.encode_args(query)
+    end
+
+    return path, req
+end
+
 local BuildMethods = function(methods)
     local baseUrl = methods.baseUrl
     local services = {}
@@ -60,41 +123,38 @@ local BuildMethods = function(methods)
             for serviceName, apiDetail in pairs(v) do
                 services[k][serviceName] = function(accesstoken, params, requestBody)
                     if (not params) then
-                        return
+                        error("params is required")
                     end
-                    local path, _ =
-                        string.gsub(
-                        apiDetail.flatPath,
-                        "{(.-)}",
-                        function(p)
-                            for paramK, paramV in pairs(params) do
-                                if (paramK == p) then
-                                    return paramV
-                                end
-                            end
-                        end
-                    )
-                    local req = {
-                        method = apiDetail.httpMethod,
-                        headers = {
-                            ["Authorization"] = "Bearer " .. accesstoken.token
-                        },
-                        body = requestBody,
-                        ssl_verify = false
-                    }
+                    local path, request = build_request(accesstoken, apiDetail, baseUrl, params, requestBody)
                     local client = http.new()
-                    local res, err = client:request_uri(baseUrl .. path, req)
+                    local res, err = client:request_uri(path, request)
                     if not res then
                         error(err)
                         return
                     end
                     client:close()
-                    return cjson.decode(res.body)
+
+                    local mime = res.headers["Content-Type"]
+                    local body = res.body
+                    if mime == "application/json" then
+                        body = cjson.decode(body)
+                    end
+
+                    -- todo: some APIs expect status other than 2xx
+                    if res.status < 200 or res.status >= 300 then
+                        -- try to decode even if no mime is provided
+                        if type(body) ~= "table" then
+                            body = cjson.decode(body)
+                        end
+                        return nil, body and body.error and body.error.errors[1] and body.error.errors[1].message or res.body
+                    end
+
+                    return body
                 end
             end
         end
     end
-    return setmetatable(services, {__index = lookup_helper})
+    return setmetatable(services, { __index = lookup_helper })
 end
 
 local load_api
@@ -124,6 +184,9 @@ end
 local GCP = {
     _VERSION = "0.0.5",
 }
+
+-- only for unit testing
+GCP._build_request = build_request
 
 GCP.__index = function(self, service)
     local api = load_api(service)
