@@ -22,20 +22,6 @@ describe("unit: build_request", function()
         local url, request = gen_request({
             httpMethod = "GET",
             flatPath = "test_service/{p1}/{p2}?{p3}",
-            parameters = {
-                p1 = {
-                    location = "path",
-                    type = "string",
-                },
-                p2 = {
-                    location = "path",
-                    type = "string",
-                },
-                p3 = {
-                    location = "path",
-                    type = "string",
-                },
-            }
         }, { p1 = "p1", p2 = "p2", p3 = "p3" })
         assert.same("test_service/p1/p2?p3", url)
         simple_header_check(request)
