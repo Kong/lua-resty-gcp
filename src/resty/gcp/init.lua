@@ -80,7 +80,8 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
         path_template = apiDetail.flatPath
     elseif mediaUpload then
         baseUrl = "https://storage.googleapis.com"
-        path_template = apiDetail.mediaUpload.protocols.simple.path
+        path_template = assert(apiDetail.mediaUpload.protocols.simple.path,
+            "we only supported simple path for media upload for now")
     else
         path_template = apiDetail.path
     end
