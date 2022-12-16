@@ -12,7 +12,8 @@ description = {
   license = "Apache 2.0",
 }
 dependencies = {
-  "lua-resty-jwt == 0.2.3"
+  "lua-resty-jwt == 0.2.3",
+  "lua-resty-aws == 1.1.2",
 }
 build = {
   type = "builtin",

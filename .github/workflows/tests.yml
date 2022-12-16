@@ -33,6 +33,7 @@ jobs:
     - name: Install deps
       run: |
         /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
+        /usr/local/openresty/luajit/bin/luarocks install lua-resty-aws
     - name: Cache
       uses: actions/cache@v2
       with:
