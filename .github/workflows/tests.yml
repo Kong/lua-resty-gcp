@@ -1,0 +1,42 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: Busted Tests
+
+    strategy:
+      matrix:
+        openresty_version:
+          - 1.17.8.2
+          - 1.19.9.1
+
+    runs-on: ubuntu-latest
+    container:
+      image: openresty/openresty:${{ matrix.openresty_version }}-alpine-fat
+      # --init runs tinit as PID 1 and prevents the 'WARNING: killing the child process' spam from the test suite
+      options: --init
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install deps
+      run: |
+        apk add --no-cache lua-resty-jwt
+
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache
+        key: ${{ runner.os }}-${{ matrix.openresty_version }}-cache
+
+    - name: Install Busted
+      run: |
+        /usr/local/openresty/luajit/bin/luarocks install busted
+
+    - uses: actions/checkout@v2
+
+    - name: Run tests
+      run: |
+        busted
