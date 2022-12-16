@@ -32,8 +32,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install deps
       run: |
-        apk add --no-cache lua-resty-jwt
-
+        /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
     - name: Cache
       uses: actions/cache@v2
       with:
