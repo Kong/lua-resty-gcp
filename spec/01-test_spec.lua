@@ -23,6 +23,7 @@ function dump(o)
  end
 
 
+-- we cannot test this yet. Need a real project and credentials
 describe("Test all", function()
     local GCP = require "resty.gcp"
     local gcp = GCP()
@@ -31,7 +32,7 @@ describe("Test all", function()
         assert.is.table(gcp)
     end)
 
-    it("Check GCP access token", function()
+    pending("Check GCP access token", function()
         local AccessToken = require "resty.gcp.request.credentials.accesstoken"
         local gcpToken = AccessToken()
         assert.same("string", type(gcpToken.token))
@@ -40,13 +41,14 @@ describe("Test all", function()
     end)
 
     -- Change param and gcp service
-    it("Check GCP service functionality", function()
+    pending("Check GCP service functionality", function()
         local AccessToken = require "resty.gcp.request.credentials.accesstoken"
         local gcpToken = AccessToken()
         local param = { projectsId = "project-last-hope", secretsId = "db-password", versionsId = "latest"}
 
-        local response = gcp.secretmanager_v1.versions.access(gcpToken, param)
+        local response, err = gcp.secretmanager_v1.versions.access(gcpToken, param)
 
+        assert.is_nil(err)
         assert.same("table", type(response))
         assert.same("table", type(response.payload))
         assert.same("string", type(response.payload.data))

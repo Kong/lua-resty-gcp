@@ -79,13 +79,19 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
     if apiDetail.flatPath then
         path_template = apiDetail.flatPath
     elseif mediaUpload then
-        path_template = "https://storage.googleapis.com" .. apiDetail.mediaUpload.protocols.simple.path
+        baseUrl = "https://storage.googleapis.com"
+        path_template = assert(apiDetail.mediaUpload.protocols.simple.path,
+            "we only supported simple path for media upload for now")
     else
-        path_template = baseUrl .. apiDetail.path
+        path_template = apiDetail.path
     end
 
-    local path = template_expansion(path_template, params)
+    local path = baseUrl .. template_expansion(path_template, params)
     local query
+
+    if apiDetail.flatPath then
+        return path, req
+    end
 
     local newpath, query_string = string.match(path, "^(.*)%?(.*)$")
     if query_string then
@@ -146,7 +152,7 @@ local BuildMethods = function(methods)
                         if type(body) ~= "table" then
                             body = cjson.decode(body)
                         end
-                        return nil, body and body.error and body.error.errors[1] and body.error.errors[1].message or res.body
+                        return nil, body and body.error and body.error.errors and body.error.errors[1] and body.error.errors[1].message or res.body
                     end
 
                     return body
