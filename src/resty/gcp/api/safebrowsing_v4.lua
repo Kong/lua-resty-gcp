@@ -261,7 +261,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20221210",
   rootUrl = "https://safebrowsing.googleapis.com/",
   schemas = {
     GoogleProtobufEmpty = {

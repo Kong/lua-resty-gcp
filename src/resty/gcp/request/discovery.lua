@@ -2134,6 +2134,21 @@ return {
       version = "v3",
     },
     {
+      description = "",
+      discoveryRestUrl = "https://integrations.googleapis.com/$discovery/rest?version=v1",
+      documentationLink = "https://cloud.google.com/application-integration",
+      icons = {
+        x16 = "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        x32 = "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png",
+      },
+      id = "integrations:v1",
+      kind = "discovery#directoryItem",
+      name = "integrations",
+      preferred = true,
+      title = "Application Integration API",
+      version = "v1",
+    },
+    {
       description = "Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.",
       discoveryRestUrl = "https://jobs.googleapis.com/$discovery/rest?version=v3",
       documentationLink = "https://cloud.google.com/talent-solution/job-search/docs/",

@@ -1486,7 +1486,7 @@ return {
       },
     },
   },
-  revision = "20221110",
+  revision = "20221206",
   rootUrl = "https://ml.googleapis.com/",
   schemas = {
     GoogleApi__HttpBody = {

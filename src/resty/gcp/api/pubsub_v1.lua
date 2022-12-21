@@ -1424,7 +1424,7 @@ return {
       },
     },
   },
-  revision = "20221201",
+  revision = "20221206",
   rootUrl = "https://pubsub.googleapis.com/",
   schemas = {
     AcknowledgeRequest = {

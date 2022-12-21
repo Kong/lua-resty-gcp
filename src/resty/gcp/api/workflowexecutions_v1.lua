@@ -299,7 +299,7 @@ return {
       },
     },
   },
-  revision = "20221201",
+  revision = "20221206",
   rootUrl = "https://workflowexecutions.googleapis.com/",
   schemas = {
     CancelExecutionRequest = {
@@ -343,7 +343,7 @@ return {
             "LOG_ERRORS_ONLY",
           },
           enumDescriptions = {
-            "No call logging specified.",
+            "No call logging level specified.",
             "Log all call steps within workflows, all call returns, and all exceptions raised.",
             "Log only exceptions that are raised from call steps within workflows.",
           },

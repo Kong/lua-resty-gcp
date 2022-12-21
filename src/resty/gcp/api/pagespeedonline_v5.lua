@@ -193,7 +193,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20221215",
   rootUrl = "https://pagespeedonline.googleapis.com/",
   schemas = {
     AuditRefs = {

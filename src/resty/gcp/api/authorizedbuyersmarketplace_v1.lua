@@ -1307,7 +1307,7 @@ return {
       },
     },
   },
-  revision = "20221213",
+  revision = "20221220",
   rootUrl = "https://authorizedbuyersmarketplace.googleapis.com/",
   schemas = {
     AcceptProposalRequest = {

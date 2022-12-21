@@ -6007,7 +6007,7 @@ return {
       },
     },
   },
-  revision = "20221202",
+  revision = "20221213",
   rootUrl = "https://logging.googleapis.com/",
   schemas = {
     BigQueryOptions = {

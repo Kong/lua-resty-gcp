@@ -685,7 +685,7 @@ return {
       },
     },
   },
-  revision = "20221129",
+  revision = "20221208",
   rootUrl = "https://cloudtasks.googleapis.com/",
   schemas = {
     AppEngineHttpRequest = {

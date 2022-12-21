@@ -217,7 +217,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20221214",
   rootUrl = "https://drivelabels.googleapis.com/",
   schemas = {
     GoogleAppsDriveLabelsV2BadgeColors = {

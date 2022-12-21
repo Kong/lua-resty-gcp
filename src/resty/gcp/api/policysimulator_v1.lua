@@ -707,7 +707,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20221213",
   rootUrl = "https://policysimulator.googleapis.com/",
   schemas = {
     GoogleCloudPolicysimulatorV1AccessStateDiff = {

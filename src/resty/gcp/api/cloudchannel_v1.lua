@@ -2009,7 +2009,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20221219",
   rootUrl = "https://cloudchannel.googleapis.com/",
   schemas = {
     GoogleCloudChannelV1ActivateEntitlementRequest = {

@@ -138,7 +138,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20221214",
   rootUrl = "https://playintegrity.googleapis.com/",
   schemas = {
     AccountActivity = {

@@ -2714,7 +2714,7 @@ return {
       },
     },
   },
-  revision = "20221205",
+  revision = "20221219",
   rootUrl = "https://monitoring.googleapis.com/",
   schemas = {
     Aggregation = {

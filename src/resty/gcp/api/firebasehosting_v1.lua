@@ -186,7 +186,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20221219",
   rootUrl = "https://firebasehosting.googleapis.com/",
   schemas = {
     CancelOperationRequest = {

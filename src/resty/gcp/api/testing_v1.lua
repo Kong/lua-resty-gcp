@@ -282,7 +282,7 @@ return {
       },
     },
   },
-  revision = "20221209",
+  revision = "20221214",
   rootUrl = "https://testing.googleapis.com/",
   schemas = {
     Account = {

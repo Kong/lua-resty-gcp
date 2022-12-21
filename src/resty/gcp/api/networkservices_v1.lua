@@ -2148,7 +2148,7 @@ return {
       },
     },
   },
-  revision = "20221128",
+  revision = "20221208",
   rootUrl = "https://networkservices.googleapis.com/",
   schemas = {
     AuditConfig = {

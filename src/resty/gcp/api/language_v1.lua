@@ -227,7 +227,7 @@ return {
       },
     },
   },
-  revision = "20221203",
+  revision = "20221210",
   rootUrl = "https://language.googleapis.com/",
   schemas = {
     AnalyzeEntitiesRequest = {

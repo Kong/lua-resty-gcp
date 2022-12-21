@@ -216,7 +216,7 @@ return {
       },
     },
   },
-  revision = "20221114",
+  revision = "20221212",
   rootUrl = "https://cloudprofiler.googleapis.com/",
   schemas = {
     CreateProfileRequest = {
