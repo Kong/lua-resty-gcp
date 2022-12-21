@@ -737,7 +737,7 @@ return {
       },
     },
   },
-  revision = "20220908",
+  revision = "20221213",
   rootUrl = "https://datafusion.googleapis.com/",
   schemas = {
     Accelerator = {
@@ -761,7 +761,7 @@ return {
           type = "string",
         },
         state = {
-          description = "The state of the accelerator",
+          description = "The state of the accelerator.",
           enum = {
             "STATE_UNSPECIFIED",
             "ENABLED",
@@ -769,10 +769,10 @@ return {
             "UNKNOWN",
           },
           enumDescriptions = {
-            "Default value, do not use",
-            "Indicates that the accelerator is enabled and available to use",
-            "Indicates that the accelerator is disabled and not available to use",
-            "Indicates that accelerator state is currently unknown. Requests for enable, disable could be retried while in this state",
+            "Default value, do not use.",
+            "Indicates that the accelerator is enabled and available to use.",
+            "Indicates that the accelerator is disabled and not available to use.",
+            "Indicates that accelerator state is currently unknown. Requests for enable, disable could be retried while in this state.",
           },
           type = "string",
         },
@@ -1008,6 +1008,10 @@ return {
         },
         enableStackdriverMonitoring = {
           description = "Option to enable Stackdriver Monitoring.",
+          type = "boolean",
+        },
+        enableZoneSeparation = {
+          description = "Option to enable granular zone separation.",
           type = "boolean",
         },
         eventPublishConfig = {

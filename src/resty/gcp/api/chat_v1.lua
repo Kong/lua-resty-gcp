@@ -5,6 +5,9 @@ return {
         ["https://www.googleapis.com/auth/chat.memberships"] = {
           description = "View, add, and remove members from conversations in Google Chat",
         },
+        ["https://www.googleapis.com/auth/chat.memberships.readonly"] = {
+          description = "View members in Google Chat conversations.",
+        },
         ["https://www.googleapis.com/auth/chat.messages"] = {
           description = "View, compose, send, update, and delete messages, and add, view, and delete reactions to messages.",
         },
@@ -639,6 +642,7 @@ return {
               },
               scopes = {
                 "https://www.googleapis.com/auth/chat.memberships",
+                "https://www.googleapis.com/auth/chat.memberships.readonly",
               },
             },
             list = {
@@ -675,6 +679,7 @@ return {
               },
               scopes = {
                 "https://www.googleapis.com/auth/chat.memberships",
+                "https://www.googleapis.com/auth/chat.memberships.readonly",
               },
             },
           },
@@ -682,7 +687,7 @@ return {
         messages = {
           methods = {
             create = {
-              description = "Creates a message. For example usage, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope.",
+              description = "Creates a message. For example usage, see [Create a message](https://developers.google.com/chat/api/guides/crudl/messages#create_a_message). Requires [authentication](https://developers.google.com/chat/api/guides/auth). Fully supports [service account authentication](https://developers.google.com/chat/api/guides/auth/service-accounts). Supports [user authentication](https://developers.google.com/chat/api/guides/auth/users) as part of the [Google Workspace Developer Preview Program](https://developers.google.com/workspace/preview), which grants early access to certain features. [User authentication](https://developers.google.com/chat/api/guides/auth/users) requires the `chat.messages` or `chat.messages.create` authorization scope. Because Chat provides authentication for [webhooks](https://developers.google.com/chat/how-tos/webhooks) as part of the URL that's generated when a webhook is registered, webhooks can create messages without a service account or user authentication.",
               flatPath = "v1/spaces/{spacesId}/messages",
               httpMethod = "POST",
               id = "chat.spaces.messages.create",
@@ -902,7 +907,7 @@ return {
       },
     },
   },
-  revision = "20221206",
+  revision = "20221219",
   rootUrl = "https://chat.googleapis.com/",
   schemas = {
     ActionParameter = {
@@ -2888,7 +2893,7 @@ return {
       id = "Space",
       properties = {
         displayName = {
-          description = "The space's display name. For direct messages between humans, this field might be empty.",
+          description = "The space's display name. Required when [creating a space](https://developers.google.com/chat/api/reference/rest/v1/spaces/create). For direct messages, this field may be empty.",
           type = "string",
         },
         name = {

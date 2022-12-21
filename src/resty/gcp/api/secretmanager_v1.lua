@@ -643,7 +643,7 @@ return {
       },
     },
   },
-  revision = "20221203",
+  revision = "20221210",
   rootUrl = "https://secretmanager.googleapis.com/",
   schemas = {
     AccessSecretVersionResponse = {

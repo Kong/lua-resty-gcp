@@ -169,7 +169,7 @@ return {
       },
     },
   },
-  revision = "20221028",
+  revision = "20221204",
   rootUrl = "https://servicecontrol.googleapis.com/",
   schemas = {
     Api = {

@@ -381,7 +381,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20221213",
   rootUrl = "https://gamesconfiguration.googleapis.com/",
   schemas = {
     AchievementConfiguration = {

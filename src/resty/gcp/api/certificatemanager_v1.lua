@@ -1108,7 +1108,7 @@ return {
       },
     },
   },
-  revision = "20221108",
+  revision = "20221208",
   rootUrl = "https://certificatemanager.googleapis.com/",
   schemas = {
     AuthorizationAttemptInfo = {

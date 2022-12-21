@@ -1457,7 +1457,7 @@ return {
       },
     },
   },
-  revision = "20221115",
+  revision = "20221210",
   rootUrl = "https://artifactregistry.googleapis.com/",
   schemas = {
     AptArtifact = {

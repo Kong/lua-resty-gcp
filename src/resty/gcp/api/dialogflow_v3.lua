@@ -3820,7 +3820,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20221213",
   rootUrl = "https://dialogflow.googleapis.com/",
   schemas = {
     GoogleCloudDialogflowCxV3AdvancedSettings = {

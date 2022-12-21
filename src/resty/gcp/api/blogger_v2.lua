@@ -401,7 +401,7 @@ return {
       },
     },
   },
-  revision = "20221210",
+  revision = "20221220",
   rootUrl = "https://blogger.googleapis.com/",
   schemas = {
     Blog = {

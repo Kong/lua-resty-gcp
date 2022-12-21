@@ -714,6 +714,11 @@ return {
               required = true,
               type = "string",
             },
+            useTrash = {
+              description = "Move to Trash if possible",
+              location = "query",
+              type = "boolean",
+            },
           },
           path = "v3/blogs/{blogId}/pages/{pageId}",
           scopes = {
@@ -1175,6 +1180,11 @@ return {
               required = true,
               type = "string",
             },
+            useTrash = {
+              description = "Move to Trash if possible",
+              location = "query",
+              type = "boolean",
+            },
           },
           path = "v3/blogs/{blogId}/posts/{postId}",
           scopes = {
@@ -1383,6 +1393,22 @@ return {
               type = "string",
             },
             pageToken = {
+              location = "query",
+              type = "string",
+            },
+            sortOption = {
+              default = "DESCENDING",
+              description = "Sort direction applied to post list.",
+              enum = {
+                "SORT_OPTION_UNSPECIFIED",
+                "DESCENDING",
+                "ASCENDING",
+              },
+              enumDescriptions = {
+                "The unspecified sort option.",
+                "The option to sort posts in descending order in time.",
+                "The option to sort posts in ascending order in time.",
+              },
               location = "query",
               type = "string",
             },
@@ -1684,7 +1710,7 @@ return {
       },
     },
   },
-  revision = "20221210",
+  revision = "20221220",
   rootUrl = "https://blogger.googleapis.com/",
   schemas = {
     Blog = {

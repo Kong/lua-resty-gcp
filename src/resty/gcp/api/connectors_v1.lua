@@ -511,6 +511,38 @@ return {
                 },
               },
               resources = {
+                connectionSchemaMetadata = {
+                  methods = {
+                    refresh = {
+                      description = "Refresh runtime schema of a connection.",
+                      flatPath = "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/connectionSchemaMetadata:refresh",
+                      httpMethod = "POST",
+                      id = "connectors.projects.locations.connections.connectionSchemaMetadata.refresh",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        name = {
+                          description = "Required. Resource name. Format: projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/connections/[^/]+/connectionSchemaMetadata$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v1/{+name}:refresh",
+                      request = {
+                        ["$ref"] = "RefreshConnectionSchemaMetadataRequest",
+                      },
+                      response = {
+                        ["$ref"] = "Operation",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
+                  },
+                },
                 runtimeActionSchemas = {
                   methods = {
                     list = {
@@ -1047,7 +1079,7 @@ return {
       },
     },
   },
-  revision = "20221110",
+  revision = "20221201",
   rootUrl = "https://connectors.googleapis.com/",
   schemas = {
     AuditConfig = {
@@ -1572,12 +1604,14 @@ return {
             "PREVIEW",
             "GA",
             "DEPRECATED",
+            "PRIVATE_PREVIEW",
           },
           enumDescriptions = {
             "LAUNCH_STAGE_UNSPECIFIED.",
             "PREVIEW.",
             "GA.",
             "DEPRECATED.",
+            "PRIVATE_PREVIEW.",
           },
           readOnly = true,
           type = "string",
@@ -1652,12 +1686,14 @@ return {
             "PREVIEW",
             "GA",
             "DEPRECATED",
+            "PRIVATE_PREVIEW",
           },
           enumDescriptions = {
             "LAUNCH_STAGE_UNSPECIFIED.",
             "PREVIEW.",
             "GA.",
             "DEPRECATED.",
+            "PRIVATE_PREVIEW.",
           },
           readOnly = true,
           type = "string",
@@ -2524,12 +2560,14 @@ return {
             "PREVIEW",
             "GA",
             "DEPRECATED",
+            "PRIVATE_PREVIEW",
           },
           enumDescriptions = {
             "LAUNCH_STAGE_UNSPECIFIED.",
             "PREVIEW.",
             "GA.",
             "DEPRECATED.",
+            "PRIVATE_PREVIEW.",
           },
           readOnly = true,
           type = "string",
@@ -2551,6 +2589,12 @@ return {
           type = "string",
         },
       },
+      type = "object",
+    },
+    RefreshConnectionSchemaMetadataRequest = {
+      description = "Request message for ConnectorsService.RefreshConnectionSchemaMetadata.",
+      id = "RefreshConnectionSchemaMetadataRequest",
+      properties = {},
       type = "object",
     },
     Resource = {

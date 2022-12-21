@@ -339,7 +339,7 @@ return {
       },
     },
   },
-  revision = "20221205",
+  revision = "20221212",
   rootUrl = "https://ondemandscanning.googleapis.com/",
   schemas = {
     AliasContext = {

@@ -448,7 +448,7 @@ return {
       },
     },
   },
-  revision = "20221202",
+  revision = "20221209",
   rootUrl = "https://clouddebugger.googleapis.com/",
   schemas = {
     AliasContext = {
