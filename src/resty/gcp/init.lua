@@ -103,7 +103,7 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
 
     for k, v in pairs(params) do
         local param = apiDetail.parameters[k]
-        if not param then
+        if not param and k ~= "alt" then
             error("invalid parameter: " .. k)
         end
         local location = param.location
