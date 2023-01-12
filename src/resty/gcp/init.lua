@@ -103,6 +103,7 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
 
     for k, v in pairs(params) do
         if k == "alt" then
+            query[k] = v
             goto continue
         end
         local param = apiDetail.parameters[k]
