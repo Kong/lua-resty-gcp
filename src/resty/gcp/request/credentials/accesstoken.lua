@@ -107,11 +107,11 @@ end
 
 local AccessToken = {}
 AccessToken.__index = AccessToken
-function AccessToken:new()
+function AccessToken:new(gcpServiceAccount)
     local self = {}
     setmetatable(self, AccessToken)
 
-    local gcpServiceAccount = os.getenv("GCP_SERVICE_ACCOUNT")
+    gcpServiceAccount = gcpServiceAccount or os.getenv("GCP_SERVICE_ACCOUNT")
 
     -- First try via Workload Identity and then via Service Account
 
