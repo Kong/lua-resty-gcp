@@ -313,7 +313,7 @@ return {
       },
     },
   },
-  revision = "20221219",
+  revision = "20230104",
   rootUrl = "https://slides.googleapis.com/",
   schemas = {
     AffineTransform = {

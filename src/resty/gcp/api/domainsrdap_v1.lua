@@ -289,7 +289,7 @@ return {
       },
     },
   },
-  revision = "20221214",
+  revision = "20230112",
   rootUrl = "https://domainsrdap.googleapis.com/",
   schemas = {
     HttpBody = {

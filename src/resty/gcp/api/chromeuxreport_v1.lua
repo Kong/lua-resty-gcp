@@ -116,7 +116,7 @@ return {
       },
     },
   },
-  revision = "20221219",
+  revision = "20230111",
   rootUrl = "https://chromeuxreport.googleapis.com/",
   schemas = {
     Bin = {

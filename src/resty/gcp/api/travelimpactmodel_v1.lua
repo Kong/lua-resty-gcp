@@ -116,7 +116,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20230111",
   rootUrl = "https://travelimpactmodel.googleapis.com/",
   schemas = {
     ComputeFlightEmissionsRequest = {

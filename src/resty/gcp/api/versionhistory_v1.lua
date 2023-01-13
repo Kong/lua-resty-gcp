@@ -271,7 +271,7 @@ return {
       },
     },
   },
-  revision = "20221219",
+  revision = "20230111",
   rootUrl = "https://versionhistory.googleapis.com/",
   schemas = {
     Channel = {

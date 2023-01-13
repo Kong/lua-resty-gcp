@@ -3920,7 +3920,7 @@ return {
       },
     },
   },
-  revision = "20221215",
+  revision = "20230112",
   rootUrl = "https://androidpublisher.googleapis.com/",
   schemas = {
     AcquisitionTargetingRule = {

@@ -164,6 +164,7 @@ build = {
     ["resty.gcp.api.identitytoolkit_v3"] = "src/resty/gcp/api/identitytoolkit_v3.lua",
     ["resty.gcp.api.ids_v1"] = "src/resty/gcp/api/ids_v1.lua",
     ["resty.gcp.api.indexing_v3"] = "src/resty/gcp/api/indexing_v3.lua",
+    ["resty.gcp.api.integrations_v1"] = "src/resty/gcp/api/integrations_v1.lua",
     ["resty.gcp.api.jobs_v3"] = "src/resty/gcp/api/jobs_v3.lua",
     ["resty.gcp.api.jobs_v4"] = "src/resty/gcp/api/jobs_v4.lua",
     ["resty.gcp.api.keep_v1"] = "src/resty/gcp/api/keep_v1.lua",

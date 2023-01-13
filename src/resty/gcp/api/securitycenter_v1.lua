@@ -3372,7 +3372,7 @@ return {
       },
     },
   },
-  revision = "20221220",
+  revision = "20230105",
   rootUrl = "https://securitycenter.googleapis.com/",
   schemas = {
     Access = {

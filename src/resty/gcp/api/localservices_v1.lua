@@ -250,7 +250,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20230111",
   rootUrl = "https://localservices.googleapis.com/",
   schemas = {
     GoogleAdsHomeservicesLocalservicesV1AccountReport = {

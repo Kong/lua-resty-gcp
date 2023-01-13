@@ -2289,7 +2289,7 @@ return {
       },
     },
   },
-  revision = "20221213",
+  revision = "20230108",
   rootUrl = "https://run.googleapis.com/",
   schemas = {
     Addressable = {

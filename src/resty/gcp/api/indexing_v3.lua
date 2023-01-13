@@ -149,7 +149,7 @@ return {
       },
     },
   },
-  revision = "20221201",
+  revision = "20221220",
   rootUrl = "https://indexing.googleapis.com/",
   schemas = {
     PublishUrlNotificationResponse = {

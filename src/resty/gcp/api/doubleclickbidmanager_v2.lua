@@ -320,7 +320,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20230104",
   rootUrl = "https://doubleclickbidmanager.googleapis.com/",
   schemas = {
     ChannelGrouping = {

@@ -62,7 +62,7 @@ Use the `update-api-defs` file in the `scripts` directory to update all API
 definitions:
 
 ```
-$ ./script/update-api-defs
+$ ./scripts/update-api-defs
 ```
 
 Take special care to note and investigate any failures logged by this script

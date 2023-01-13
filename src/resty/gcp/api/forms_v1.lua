@@ -423,7 +423,7 @@ return {
       },
     },
   },
-  revision = "20221208",
+  revision = "20230110",
   rootUrl = "https://forms.googleapis.com/",
   schemas = {
     Answer = {

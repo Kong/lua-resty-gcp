@@ -115,7 +115,7 @@ return {
       },
     },
   },
-  revision = "20221214",
+  revision = "20230111",
   rootUrl = "https://acceleratedmobilepageurl.googleapis.com/",
   schemas = {
     AmpUrl = {

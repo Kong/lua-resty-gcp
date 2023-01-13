@@ -1079,7 +1079,7 @@ return {
       },
     },
   },
-  revision = "20221201",
+  revision = "20221215",
   rootUrl = "https://connectors.googleapis.com/",
   schemas = {
     AuditConfig = {

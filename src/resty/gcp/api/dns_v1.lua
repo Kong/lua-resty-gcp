@@ -1824,7 +1824,7 @@ return {
       },
     },
   },
-  revision = "20221215",
+  revision = "20230106",
   rootUrl = "https://dns.googleapis.com/",
   schemas = {
     Change = {

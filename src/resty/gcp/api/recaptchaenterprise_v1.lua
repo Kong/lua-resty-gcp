@@ -514,7 +514,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20230107",
   rootUrl = "https://recaptchaenterprise.googleapis.com/",
   schemas = {
     GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment = {

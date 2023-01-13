@@ -2400,7 +2400,7 @@ return {
       },
     },
   },
-  revision = "20221220",
+  revision = "20230105",
   rootUrl = "https://classroom.googleapis.com/",
   schemas = {
     Announcement = {

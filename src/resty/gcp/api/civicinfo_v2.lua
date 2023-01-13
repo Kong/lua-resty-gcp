@@ -352,7 +352,7 @@ return {
       },
     },
   },
-  revision = "20221209",
+  revision = "20230110",
   rootUrl = "https://civicinfo.googleapis.com/",
   schemas = {
     AdministrationRegion = {

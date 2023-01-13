@@ -3412,7 +3412,7 @@ return {
       },
     },
   },
-  revision = "20221210",
+  revision = "20230109",
   rootUrl = "https://dlp.googleapis.com/",
   schemas = {
     GooglePrivacyDlpV2Action = {

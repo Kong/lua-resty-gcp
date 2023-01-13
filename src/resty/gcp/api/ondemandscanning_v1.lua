@@ -339,7 +339,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20230109",
   rootUrl = "https://ondemandscanning.googleapis.com/",
   schemas = {
     AliasContext = {
@@ -1723,6 +1723,8 @@ return {
             "MAVEN",
             "GO",
             "GO_STDLIB",
+            "PYPI",
+            "NPM",
           },
           enumDescriptions = {
             "",
@@ -1730,6 +1732,8 @@ return {
             "Java packages from Maven.",
             "Go third-party packages.",
             "Go toolchain + standard library packages.",
+            "Python packages.",
+            "NPM packages.",
           },
           type = "string",
         },

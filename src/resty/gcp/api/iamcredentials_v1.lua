@@ -226,7 +226,7 @@ return {
       },
     },
   },
-  revision = "20221215",
+  revision = "20230106",
   rootUrl = "https://iamcredentials.googleapis.com/",
   schemas = {
     GenerateAccessTokenRequest = {

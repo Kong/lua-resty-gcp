@@ -181,7 +181,7 @@ return {
       },
     },
   },
-  revision = "20221209",
+  revision = "20230105",
   rootUrl = "https://cloudtrace.googleapis.com/",
   schemas = {
     Annotation = {

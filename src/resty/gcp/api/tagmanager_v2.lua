@@ -1450,6 +1450,7 @@ return {
                             "serverPageLocationUrl",
                             "serverPageLocationPath",
                             "serverPageLocationHostname",
+                            "visitorRegion",
                           },
                           enumDescriptions = {
                             "",
@@ -1485,6 +1486,7 @@ return {
                             "",
                             "For web or mobile.",
                             "For web or mobile.",
+                            "",
                             "",
                             "",
                             "",
@@ -1711,6 +1713,7 @@ return {
                             "serverPageLocationUrl",
                             "serverPageLocationPath",
                             "serverPageLocationHostname",
+                            "visitorRegion",
                           },
                           enumDescriptions = {
                             "",
@@ -1746,6 +1749,7 @@ return {
                             "",
                             "For web or mobile.",
                             "For web or mobile.",
+                            "",
                             "",
                             "",
                             "",
@@ -2000,6 +2004,7 @@ return {
                             "serverPageLocationUrl",
                             "serverPageLocationPath",
                             "serverPageLocationHostname",
+                            "visitorRegion",
                           },
                           enumDescriptions = {
                             "",
@@ -2035,6 +2040,7 @@ return {
                             "",
                             "For web or mobile.",
                             "For web or mobile.",
+                            "",
                             "",
                             "",
                             "",
@@ -3710,7 +3716,7 @@ return {
       },
     },
   },
-  revision = "20221130",
+  revision = "20230111",
   rootUrl = "https://tagmanager.googleapis.com/",
   schemas = {
     Account = {
@@ -3921,6 +3927,7 @@ return {
             "serverPageLocationUrl",
             "serverPageLocationPath",
             "serverPageLocationHostname",
+            "visitorRegion",
           },
           enumDescriptions = {
             "",
@@ -3956,6 +3963,7 @@ return {
             "",
             "For web or mobile.",
             "For web or mobile.",
+            "",
             "",
             "",
             "",

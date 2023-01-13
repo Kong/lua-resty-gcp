@@ -256,7 +256,7 @@ return {
       },
     },
   },
-  revision = "20221213",
+  revision = "20230112",
   rootUrl = "https://mybusinessverifications.googleapis.com/",
   schemas = {
     AddressVerificationData = {

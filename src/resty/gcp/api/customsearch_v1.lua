@@ -674,7 +674,7 @@ return {
       },
     },
   },
-  revision = "20221212",
+  revision = "20230111",
   rootUrl = "https://customsearch.googleapis.com/",
   schemas = {
     Promotion = {

@@ -1171,7 +1171,7 @@ return {
       },
     },
   },
-  revision = "20221113",
+  revision = "20230108",
   rootUrl = "https://cloudresourcemanager.googleapis.com/",
   schemas = {
     Ancestor = {
