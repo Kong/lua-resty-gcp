@@ -198,7 +198,7 @@ return {
       },
     },
   },
-  revision = "20221213",
+  revision = "20230112",
   rootUrl = "https://mybusinessbusinesscalls.googleapis.com/",
   schemas = {
     AggregateMetrics = {

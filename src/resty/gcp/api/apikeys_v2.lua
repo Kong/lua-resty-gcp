@@ -396,7 +396,7 @@ return {
       },
     },
   },
-  revision = "20221219",
+  revision = "20230111",
   rootUrl = "https://apikeys.googleapis.com/",
   schemas = {
     Operation = {

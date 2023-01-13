@@ -10032,7 +10032,7 @@ return {
       },
     },
   },
-  revision = "20221027",
+  revision = "20230103",
   rootUrl = "https://dfareporting.googleapis.com/",
   schemas = {
     Account = {

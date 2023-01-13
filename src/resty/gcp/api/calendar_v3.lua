@@ -1781,7 +1781,7 @@ Optional. The default is to return all entries.",
       },
     },
   },
-  revision = "20221124",
+  revision = "20221229",
   rootUrl = "https://www.googleapis.com/",
   schemas = {
     Acl = {

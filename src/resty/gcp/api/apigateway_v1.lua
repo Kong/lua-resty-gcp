@@ -1083,7 +1083,7 @@ return {
       },
     },
   },
-  revision = "20221208",
+  revision = "20221213",
   rootUrl = "https://apigateway.googleapis.com/",
   schemas = {
     ApigatewayApi = {

@@ -546,7 +546,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20230105",
   rootUrl = "https://cloudfunctions.googleapis.com/",
   schemas = {
     AuditConfig = {

@@ -543,7 +543,7 @@ return {
       },
     },
   },
-  revision = "20221206",
+  revision = "20230110",
   rootUrl = "https://doubleclicksearch.googleapis.com/",
   schemas = {
     Availability = {

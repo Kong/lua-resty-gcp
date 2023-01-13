@@ -846,7 +846,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20230103",
   rootUrl = "https://file.googleapis.com/",
   schemas = {
     Backup = {

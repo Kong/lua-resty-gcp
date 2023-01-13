@@ -163,7 +163,7 @@ return {
       },
     },
   },
-  revision = "20221210",
+  revision = "20230108",
   rootUrl = "https://policyanalyzer.googleapis.com/",
   schemas = {
     GoogleCloudPolicyanalyzerV1Activity = {

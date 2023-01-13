@@ -146,7 +146,7 @@ return {
       },
     },
   },
-  revision = "20221216",
+  revision = "20230106",
   rootUrl = "https://fcm.googleapis.com/",
   schemas = {
     AndroidConfig = {

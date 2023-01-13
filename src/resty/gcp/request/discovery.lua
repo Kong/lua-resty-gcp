@@ -392,21 +392,6 @@ return {
     },
     {
       description = "Provides ways to manage Bare Metal Solution hardware installed in a regional extension located near a Google Cloud data center.",
-      discoveryRestUrl = "https://baremetalsolution.googleapis.com/$discovery/rest?version=v1",
-      documentationLink = "https://cloud.google.com/bare-metal",
-      icons = {
-        x16 = "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        x32 = "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png",
-      },
-      id = "baremetalsolution:v1",
-      kind = "discovery#directoryItem",
-      name = "baremetalsolution",
-      preferred = false,
-      title = "Bare Metal Solution API",
-      version = "v1",
-    },
-    {
-      description = "Provides ways to manage Bare Metal Solution hardware installed in a regional extension located near a Google Cloud data center.",
       discoveryRestUrl = "https://baremetalsolution.googleapis.com/$discovery/rest?version=v2",
       documentationLink = "https://cloud.google.com/bare-metal",
       icons = {
@@ -2001,7 +1986,7 @@ return {
     {
       description = "",
       discoveryRestUrl = "https://homegraph.googleapis.com/$discovery/rest?version=v1",
-      documentationLink = "https://developers.google.com/actions/smarthome/create-app#request-sync",
+      documentationLink = "https://developers.home.google.com/cloud-to-cloud/get-started",
       icons = {
         x16 = "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         x32 = "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png",
@@ -2132,21 +2117,6 @@ return {
       preferred = true,
       title = "Indexing API",
       version = "v3",
-    },
-    {
-      description = "",
-      discoveryRestUrl = "https://integrations.googleapis.com/$discovery/rest?version=v1",
-      documentationLink = "https://cloud.google.com/application-integration",
-      icons = {
-        x16 = "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        x32 = "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png",
-      },
-      id = "integrations:v1",
-      kind = "discovery#directoryItem",
-      name = "integrations",
-      preferred = true,
-      title = "Application Integration API",
-      version = "v1",
     },
     {
       description = "Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.",
@@ -3631,7 +3601,7 @@ return {
       kind = "discovery#directoryItem",
       name = "vmmigration",
       preferred = true,
-      title = "Migrate to Virtual Machines API",
+      title = "VM Migration API",
       version = "v1",
     },
     {

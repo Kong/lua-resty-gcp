@@ -128,7 +128,7 @@ return {
       },
     },
   },
-  revision = "20221210",
+  revision = "20230108",
   rootUrl = "https://policytroubleshooter.googleapis.com/",
   schemas = {
     GoogleCloudPolicytroubleshooterV1AccessTuple = {

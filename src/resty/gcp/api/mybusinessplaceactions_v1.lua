@@ -281,7 +281,7 @@ return {
       },
     },
   },
-  revision = "20221213",
+  revision = "20230112",
   rootUrl = "https://mybusinessplaceactions.googleapis.com/",
   schemas = {
     Empty = {

@@ -825,7 +825,7 @@ return {
       },
     },
   },
-  revision = "20221203",
+  revision = "20230110",
   rootUrl = "https://androiddeviceprovisioning.googleapis.com/",
   schemas = {
     ClaimDeviceRequest = {

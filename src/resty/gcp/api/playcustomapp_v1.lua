@@ -158,7 +158,7 @@ return {
       },
     },
   },
-  revision = "20221214",
+  revision = "20230111",
   rootUrl = "https://playcustomapp.googleapis.com/",
   schemas = {
     CustomApp = {

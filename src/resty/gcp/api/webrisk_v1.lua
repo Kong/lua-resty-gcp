@@ -452,7 +452,7 @@ return {
       },
     },
   },
-  revision = "20221210",
+  revision = "20230107",
   rootUrl = "https://webrisk.googleapis.com/",
   schemas = {
     GoogleCloudWebriskV1ComputeThreatListDiffResponse = {

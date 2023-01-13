@@ -524,7 +524,7 @@ return {
       },
     },
   },
-  revision = "20221213",
+  revision = "20230106",
   rootUrl = "https://speech.googleapis.com/",
   schemas = {
     ABNFGrammar = {

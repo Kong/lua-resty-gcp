@@ -288,7 +288,7 @@ return {
       },
     },
   },
-  revision = "20221214",
+  revision = "20230112",
   rootUrl = "https://manufacturers.googleapis.com/",
   schemas = {
     Attributes = {

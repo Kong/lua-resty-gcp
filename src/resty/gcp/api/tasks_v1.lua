@@ -566,7 +566,7 @@ return {
       },
     },
   },
-  revision = "20221218",
+  revision = "20230110",
   rootUrl = "https://tasks.googleapis.com/",
   schemas = {
     Task = {

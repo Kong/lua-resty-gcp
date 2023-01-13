@@ -48,7 +48,6 @@ build = {
     ["resty.gcp.api.artifactregistry_v1"] = "src/resty/gcp/api/artifactregistry_v1.lua",
     ["resty.gcp.api.assuredworkloads_v1"] = "src/resty/gcp/api/assuredworkloads_v1.lua",
     ["resty.gcp.api.authorizedbuyersmarketplace_v1"] = "src/resty/gcp/api/authorizedbuyersmarketplace_v1.lua",
-    ["resty.gcp.api.baremetalsolution_v1"] = "src/resty/gcp/api/baremetalsolution_v1.lua",
     ["resty.gcp.api.baremetalsolution_v2"] = "src/resty/gcp/api/baremetalsolution_v2.lua",
     ["resty.gcp.api.batch_v1"] = "src/resty/gcp/api/batch_v1.lua",
     ["resty.gcp.api.beyondcorp_v1"] = "src/resty/gcp/api/beyondcorp_v1.lua",

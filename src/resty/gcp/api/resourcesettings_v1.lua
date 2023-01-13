@@ -499,7 +499,7 @@ return {
       },
     },
   },
-  revision = "20221207",
+  revision = "20230111",
   rootUrl = "https://resourcesettings.googleapis.com/",
   schemas = {
     GoogleCloudResourcesettingsV1ListSettingsResponse = {

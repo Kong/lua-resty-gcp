@@ -224,7 +224,7 @@ return {
       },
     },
   },
-  revision = "20221219",
+  revision = "20230109",
   rootUrl = "https://firebasedynamiclinks.googleapis.com/",
   schemas = {
     AnalyticsInfo = {

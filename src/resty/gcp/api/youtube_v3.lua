@@ -3831,7 +3831,7 @@ return {
       },
     },
   },
-  revision = "20221220",
+  revision = "20230104",
   rootUrl = "https://youtube.googleapis.com/",
   schemas = {
     AbuseReport = {
