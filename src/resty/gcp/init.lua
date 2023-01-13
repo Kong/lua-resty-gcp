@@ -102,6 +102,8 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
     end
 
     for k, v in pairs(params) do
+        -- FIXME: this is because we have not handled top-level parameter schemas correctly.
+        -- Nesting API's descriptions also apply to the nested level API.
         if k == "alt" then
             query[k] = v
             goto continue
