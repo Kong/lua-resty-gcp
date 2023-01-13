@@ -102,6 +102,12 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
     end
 
     for k, v in pairs(params) do
+        -- FIXME: this is because we have not handled top-level parameter schemas correctly.
+        -- Nesting API's descriptions also apply to the nested level API.
+        if k == "alt" then
+            query[k] = v
+            goto continue
+        end
         local param = apiDetail.parameters[k]
         if not param then
             error("invalid parameter: " .. k)
@@ -111,6 +117,7 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
             query[k] = v
             -- skip paths as they are already handled
         end
+        ::continue::
     end
 
     if next(query) then

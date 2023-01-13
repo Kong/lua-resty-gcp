@@ -44,10 +44,6 @@ describe("unit: build_request", function()
                 p3 = {
                     location = "path",
                     type = "string",
-                },
-                alt = {
-                    location = "query",
-                    type = "string",
                 }
             }
         }
