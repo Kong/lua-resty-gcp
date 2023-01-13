@@ -1,5 +1,5 @@
 package = "lua-resty-gcp"
-version = "0.0.9-1"
+version = "0.0.9-2"
 source = {
    url = "git+https://github.com/Kong/lua-resty-gcp",
    tag = "0.0.9"
