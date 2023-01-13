@@ -76,3 +76,15 @@ rockspec file if files are added or removed during development.
 ```
 $ ./scripts/update-rockspec
 ```
+
+### Release New Versions
+
+Before releasing a new version, please make sure the API Definitions and rockspec files are up-to-date.
+
+As an example, let's assuming that we are releasing 0.1.0.
+
+1. Change the filename of the rockspec to the new version, for example: `lua-resty-gcp-0.1.0-1.rockspec`;
+1. Then change the version in rockspec file to `0.1.0-1`, and source.tag to `0.1.0`;
+1. Create new tag with command: `git tag 0.1.0`, and push that tag with `git push --tags`;
+1. Create new release for github with the new tag, and make sure the change is included in the description;
+1. Upload the rock to with Luarocks: `luarocks upload lua-resty-gcp-0.1.0-1.rockspec`.
