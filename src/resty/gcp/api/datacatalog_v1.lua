@@ -2101,7 +2101,7 @@ return {
       },
     },
   },
-  revision = "20221203",
+  revision = "20230109",
   rootUrl = "https://datacatalog.googleapis.com/",
   schemas = {
     Binding = {

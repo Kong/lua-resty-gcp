@@ -695,7 +695,7 @@ return {
       },
     },
   },
-  revision = "20230108",
+  revision = "20230102",
   rootUrl = "https://analyticshub.googleapis.com/",
   schemas = {
     AuditConfig = {

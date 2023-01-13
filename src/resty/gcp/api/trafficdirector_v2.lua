@@ -128,7 +128,7 @@ return {
       },
     },
   },
-  revision = "20221216",
+  revision = "20221229",
   rootUrl = "https://trafficdirector.googleapis.com/",
   schemas = {
     Address = {
