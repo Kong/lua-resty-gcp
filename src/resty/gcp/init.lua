@@ -149,7 +149,7 @@ local BuildMethods = function(methods)
 
                     local mime = res.headers["Content-Type"]
                     local body = res.body
-                    if mime == "application/json" then
+                    if mime:find("application/json") then
                         body = cjson.decode(body)
                     end
 
