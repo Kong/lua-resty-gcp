@@ -199,7 +199,7 @@ return {
       },
     },
   },
-  revision = "20230105",
+  revision = "20230110",
   rootUrl = "https://digitalassetlinks.googleapis.com/",
   schemas = {
     AndroidAppAsset = {

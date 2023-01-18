@@ -1403,7 +1403,7 @@ return {
       },
     },
   },
-  revision = "20221027",
+  revision = "20221227",
   rootUrl = "https://managedidentities.googleapis.com/",
   schemas = {
     AttachTrustRequest = {
@@ -2371,7 +2371,7 @@ return {
       type = "object",
     },
     MaintenancePolicy = {
-      description = "Defines policies to service maintenance events.",
+      description = "LINT.IfChange Defines policies to service maintenance events.",
       id = "MaintenancePolicy",
       properties = {
         createTime = {

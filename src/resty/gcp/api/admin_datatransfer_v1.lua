@@ -272,7 +272,7 @@ return {
       },
     },
   },
-  revision = "20230110",
+  revision = "20230117",
   rootUrl = "https://admin.googleapis.com/",
   schemas = {
     Application = {

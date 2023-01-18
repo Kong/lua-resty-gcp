@@ -197,7 +197,7 @@ return {
       },
     },
   },
-  revision = "20221204",
+  revision = "20230109",
   rootUrl = "https://servicecontrol.googleapis.com/",
   schemas = {
     AllocateInfo = {
@@ -1467,13 +1467,11 @@ return {
             "ACQUIRE",
             "ACQUIRE_BEST_EFFORT",
             "CHECK",
-            "RELEASE",
           },
           enumDescriptions = {
             "Decreases available quota by the cost specified for the operation. If cost is higher than available quota, operation fails and returns error.",
             "Decreases available quota by the cost specified for the operation. If cost is higher than available quota, operation does not fail and available quota goes down to zero but it returns error.",
             "Does not change any available quota. Only checks if there is enough quota. No lock is placed on the checked tokens neither.",
-            "DEPRECATED: Increases available quota by the operation cost specified for the operation.",
           },
           type = "string",
         },

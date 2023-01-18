@@ -132,7 +132,7 @@ return {
       },
     },
   },
-  revision = "20230110",
+  revision = "20230115",
   rootUrl = "https://driveactivity.googleapis.com/",
   schemas = {
     Action = {

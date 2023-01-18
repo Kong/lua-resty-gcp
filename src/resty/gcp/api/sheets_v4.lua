@@ -870,7 +870,7 @@ return {
       },
     },
   },
-  revision = "20230104",
+  revision = "20230112",
   rootUrl = "https://sheets.googleapis.com/",
   schemas = {
     AddBandingRequest = {

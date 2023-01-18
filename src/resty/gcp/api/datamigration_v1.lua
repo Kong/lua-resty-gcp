@@ -201,7 +201,7 @@ return {
                       type = "string",
                     },
                     requestId = {
-                      description = "A unique id used to identify the request. If the server receives two requests with the same id, then the second request will be ignored. It is recommended to always set this value to a UUID. The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+                      description = "Optional. A unique id used to identify the request. If the server receives two requests with the same id, then the second request will be ignored. It is recommended to always set this value to a UUID. The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
                       location = "query",
                       type = "string",
                     },
@@ -381,7 +381,7 @@ return {
                       type = "string",
                     },
                     requestId = {
-                      description = "A unique id used to identify the request. If the server receives two requests with the same id, then the second request will be ignored. It is recommended to always set this value to a UUID. The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+                      description = "Optional. A unique id used to identify the request. If the server receives two requests with the same id, then the second request will be ignored. It is recommended to always set this value to a UUID. The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
                       location = "query",
                       type = "string",
                     },
@@ -1583,6 +1583,11 @@ return {
                       location = "query",
                       type = "string",
                     },
+                    skipValidation = {
+                      description = "Optional. If set to true, will skip validations.",
+                      location = "query",
+                      type = "boolean",
+                    },
                   },
                   path = "v1/{+parent}/privateConnections",
                   request = {
@@ -1703,7 +1708,7 @@ return {
       },
     },
   },
-  revision = "20221220",
+  revision = "20230105",
   rootUrl = "https://datamigration.googleapis.com/",
   schemas = {
     AlloyDbConnectionProfile = {

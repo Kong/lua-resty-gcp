@@ -542,7 +542,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230116",
   rootUrl = "https://serviceconsumermanagement.googleapis.com/",
   schemas = {
     AddTenantProjectRequest = {

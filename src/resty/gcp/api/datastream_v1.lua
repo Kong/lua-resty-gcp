@@ -1222,7 +1222,7 @@ return {
       },
     },
   },
-  revision = "20221128",
+  revision = "20230103",
   rootUrl = "https://datastream.googleapis.com/",
   schemas = {
     AvroFileFormat = {

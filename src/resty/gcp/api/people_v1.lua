@@ -1172,7 +1172,7 @@ return {
       },
     },
   },
-  revision = "20230110",
+  revision = "20230112",
   rootUrl = "https://people.googleapis.com/",
   schemas = {
     Address = {

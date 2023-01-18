@@ -2649,7 +2649,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230117",
   rootUrl = "https://androidenterprise.googleapis.com/",
   schemas = {
     Administrator = {

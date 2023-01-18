@@ -591,7 +591,7 @@ return {
       },
     },
   },
-  revision = "20221117",
+  revision = "20230105",
   rootUrl = "https://networkmanagement.googleapis.com/",
   schemas = {
     AbortInfo = {

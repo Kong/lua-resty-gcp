@@ -216,7 +216,7 @@ return {
       },
     },
   },
-  revision = "20230103",
+  revision = "20230112",
   rootUrl = "https://docs.googleapis.com/",
   schemas = {
     AutoText = {

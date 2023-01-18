@@ -385,7 +385,7 @@ return {
       },
     },
   },
-  revision = "20221201",
+  revision = "20230105",
   rootUrl = "https://transcoder.googleapis.com/",
   schemas = {
     AdBreak = {

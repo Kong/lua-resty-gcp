@@ -887,7 +887,7 @@ return {
       },
     },
   },
-  revision = "20230101",
+  revision = "20230110",
   rootUrl = "https://script.googleapis.com/",
   schemas = {
     Content = {

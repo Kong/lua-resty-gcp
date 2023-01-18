@@ -411,7 +411,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230117",
   rootUrl = "https://youtubereporting.googleapis.com/",
   schemas = {
     Empty = {

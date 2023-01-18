@@ -1237,7 +1237,7 @@ return {
       },
     },
   },
-  revision = "20230102",
+  revision = "20230107",
   rootUrl = "https://identitytoolkit.googleapis.com/",
   schemas = {
     GoogleCloudIdentitytoolkitV1Argon2Parameters = {

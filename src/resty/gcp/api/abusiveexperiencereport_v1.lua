@@ -139,7 +139,7 @@ return {
       },
     },
   },
-  revision = "20221205",
+  revision = "20230114",
   rootUrl = "https://abusiveexperiencereport.googleapis.com/",
   schemas = {
     SiteSummaryResponse = {

@@ -323,7 +323,7 @@ return {
       },
     },
   },
-  revision = "20230112",
+  revision = "20230117",
   rootUrl = "https://businessprofileperformance.googleapis.com/",
   schemas = {
     Date = {

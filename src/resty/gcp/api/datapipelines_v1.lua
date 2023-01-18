@@ -369,7 +369,7 @@ return {
       },
     },
   },
-  revision = "20221210",
+  revision = "20230108",
   rootUrl = "https://datapipelines.googleapis.com/",
   schemas = {
     GoogleCloudDatapipelinesV1DataflowJobDetails = {

@@ -151,7 +151,7 @@ return {
       },
     },
   },
-  revision = "20230108",
+  revision = "20230115",
   rootUrl = "https://kgsearch.googleapis.com/",
   schemas = {
     SearchResponse = {

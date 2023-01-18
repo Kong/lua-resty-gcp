@@ -396,7 +396,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230116",
   rootUrl = "https://paymentsresellersubscription.googleapis.com/",
   schemas = {
     GoogleCloudPaymentsResellerSubscriptionV1Amount = {

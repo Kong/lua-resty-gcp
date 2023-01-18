@@ -2402,7 +2402,7 @@ return {
       },
     },
   },
-  revision = "20230105",
+  revision = "20230113",
   rootUrl = "https://spanner.googleapis.com/",
   schemas = {
     Backup = {

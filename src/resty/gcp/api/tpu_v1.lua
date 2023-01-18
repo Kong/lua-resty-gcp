@@ -659,7 +659,7 @@ return {
       },
     },
   },
-  revision = "20221130",
+  revision = "20230105",
   rootUrl = "https://tpu.googleapis.com/",
   schemas = {
     AcceleratorType = {

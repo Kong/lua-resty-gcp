@@ -3716,7 +3716,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230113",
   rootUrl = "https://tagmanager.googleapis.com/",
   schemas = {
     Account = {

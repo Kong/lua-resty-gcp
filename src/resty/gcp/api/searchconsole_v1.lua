@@ -400,7 +400,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230117",
   rootUrl = "https://searchconsole.googleapis.com/",
   schemas = {
     AmpInspectionResult = {

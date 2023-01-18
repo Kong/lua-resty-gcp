@@ -1259,7 +1259,7 @@ return {
       },
     },
   },
-  revision = "20221208",
+  revision = "20230106",
   rootUrl = "https://metastore.googleapis.com/",
   schemas = {
     AuditConfig = {

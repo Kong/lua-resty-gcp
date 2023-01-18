@@ -299,7 +299,7 @@ return {
       },
     },
   },
-  revision = "20221227",
+  revision = "20230103",
   rootUrl = "https://workflowexecutions.googleapis.com/",
   schemas = {
     CancelExecutionRequest = {

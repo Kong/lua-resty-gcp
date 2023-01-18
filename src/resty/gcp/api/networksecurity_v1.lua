@@ -1037,7 +1037,7 @@ return {
       },
     },
   },
-  revision = "20221205",
+  revision = "20230106",
   rootUrl = "https://networksecurity.googleapis.com/",
   schemas = {
     AuthorizationPolicy = {

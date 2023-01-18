@@ -444,7 +444,7 @@ return {
       },
     },
   },
-  revision = "20221208",
+  revision = "20230105",
   rootUrl = "https://workflows.googleapis.com/",
   schemas = {
     Empty = {

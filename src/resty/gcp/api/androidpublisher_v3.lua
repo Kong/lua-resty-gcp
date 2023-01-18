@@ -632,7 +632,7 @@ return {
                 accept = {
                   "application/octet-stream",
                 },
-                maxSize = "629145600",
+                maxSize = "838860800",
                 protocols = {
                   resumable = {
                     multipart = true,
@@ -3920,7 +3920,7 @@ return {
       },
     },
   },
-  revision = "20230112",
+  revision = "20230117",
   rootUrl = "https://androidpublisher.googleapis.com/",
   schemas = {
     AcquisitionTargetingRule = {

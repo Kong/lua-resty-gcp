@@ -2671,7 +2671,7 @@ return {
       },
     },
   },
-  revision = "20230103",
+  revision = "20230110",
   rootUrl = "https://books.googleapis.com/",
   schemas = {
     Annotation = {

@@ -551,7 +551,7 @@ return {
       },
     },
   },
-  revision = "20230106",
+  revision = "20230113",
   rootUrl = "https://binaryauthorization.googleapis.com/",
   schemas = {
     AdmissionRule = {

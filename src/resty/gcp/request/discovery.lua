@@ -706,7 +706,7 @@ return {
       version = "v1",
     },
     {
-      description = "The cloud asset API manages the history and inventory of cloud resources.",
+      description = "The Cloud Asset API manages the history and inventory of Google Cloud resources.",
       discoveryRestUrl = "https://cloudasset.googleapis.com/$discovery/rest?version=v1",
       documentationLink = "https://cloud.google.com/asset-inventory/docs/quickstart",
       icons = {
@@ -2176,6 +2176,21 @@ return {
       name = "kgsearch",
       preferred = true,
       title = "Knowledge Graph Search API",
+      version = "v1",
+    },
+    {
+      description = "",
+      discoveryRestUrl = "https://kmsinventory.googleapis.com/$discovery/rest?version=v1",
+      documentationLink = "https://cloud.google.com/kms/",
+      icons = {
+        x16 = "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        x32 = "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png",
+      },
+      id = "kmsinventory:v1",
+      kind = "discovery#directoryItem",
+      name = "kmsinventory",
+      preferred = true,
+      title = "KMS Inventory API",
       version = "v1",
     },
     {

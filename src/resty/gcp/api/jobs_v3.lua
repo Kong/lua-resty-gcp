@@ -651,7 +651,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230114",
   rootUrl = "https://jobs.googleapis.com/",
   schemas = {
     ApplicationInfo = {

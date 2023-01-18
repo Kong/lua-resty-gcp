@@ -1305,7 +1305,7 @@ return {
       },
     },
   },
-  revision = "20230112",
+  revision = "20230113",
   rootUrl = "https://realtimebidding.googleapis.com/",
   schemas = {
     ActivatePretargetingConfigRequest = {

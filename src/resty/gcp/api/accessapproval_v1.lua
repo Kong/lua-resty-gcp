@@ -913,7 +913,7 @@ return {
       },
     },
   },
-  revision = "20230106",
+  revision = "20230113",
   rootUrl = "https://accessapproval.googleapis.com/",
   schemas = {
     AccessApprovalServiceAccount = {

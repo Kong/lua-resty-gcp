@@ -850,7 +850,7 @@ return {
       },
     },
   },
-  revision = "20230111",
+  revision = "20230116",
   rootUrl = "https://essentialcontacts.googleapis.com/",
   schemas = {
     GoogleCloudEssentialcontactsV1ComputeContactsResponse = {
