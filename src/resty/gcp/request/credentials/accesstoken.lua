@@ -48,7 +48,7 @@ local function GetAccessTokenByJwt(jwtToken)
         {
             method = "POST",
             body = cjson.encode(params),
-            ssl_verify = false
+            ssl_verify = true,
         }
     )
     if not res then
@@ -93,7 +93,7 @@ local function GetAccessTokenByWI()
             headers = {
                 ["Metadata-Flavor"] = "Google"
             },
-            ssl_verify = false
+            ssl_verify = true,
         }
     )
     if not res then

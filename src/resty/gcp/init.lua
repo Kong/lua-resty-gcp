@@ -71,7 +71,7 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
             ["Authorization"] = "Bearer " .. accesstoken.token
         },
         body = requestBody,
-        ssl_verify = false
+        ssl_verify = true,
     }
 
     -- it's strange that API supporting media upload has different way of handling path
