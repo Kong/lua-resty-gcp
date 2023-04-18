@@ -1,5 +1,5 @@
 local cjson = require("cjson.safe").new()
-local http = require "resty.gcp.request.http.http"
+local http = require "resty.luasocket.http"
 
 
 local lookup_helper = function(self, key) -- signature to match __index meta-method

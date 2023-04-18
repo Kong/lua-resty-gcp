@@ -1,4 +1,4 @@
-local http = require "resty.gcp.request.http.http"
+local http = require "resty.luasocket.http"
 local jwt = require "resty.jwt"
 local cjson = require("cjson.safe").new()
 
@@ -63,7 +63,7 @@ local function GetAccessTokenByJwt(jwtToken)
 end
 
 local function GetAccessTokenBySA(serviceAccount)
-    
+
     ngx.log(ngx.DEBUG, "[accesstoken] Using Envrionment Service Account to get Access Token")
 
     if not serviceAccount then
@@ -119,7 +119,7 @@ function AccessToken:new(gcpServiceAccount)
     if not accessToken then
         accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
     end
-    
+
     if (accessToken) then
         self.token = accessToken.access_token
         self.expireTime = ngx.now() + accessToken.expires_in

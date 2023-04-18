@@ -54,6 +54,13 @@ print("The secret is: " .. base64.decode(response.payload.data))
 
 ```
 
+## TLS and certificate failures
+
+The http client defaults to tls name verification. For this to work, the CA store must be set.
+With OpenResty this is done through the [`lua_ssl_trusted_certificate`](https://github.com/openresty/lua-nginx-module#lua_ssl_trusted_certificate)
+directive. However; the compatibility module used, [`lua-resty-luasocket`](https://github.com/Tieske/lua-resty-luasocket), cannot automatically
+read that setting, hence you have to set it manually, see [the docs](https://tieske.github.io/lua-resty-luasocket/modules/resty.luasocket.html#get_luasec_defaults).
+
 ## Development
 
 ### Updating the API Definitions
