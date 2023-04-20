@@ -13,7 +13,7 @@ local function simple_header_check(request)
             Authorization = 'Bearer test_token'
         },
         method = 'GET',
-        ssl_verify = false,
+        ssl_verify = true,
     }, request)
 end
 
@@ -111,7 +111,7 @@ describe("unit: build_request", function()
                 Authorization = 'Bearer test_token'
             },
             method = 'POST',
-            ssl_verify = false,
+            ssl_verify = true,
             body = test_body,
         }, request)
     end)
