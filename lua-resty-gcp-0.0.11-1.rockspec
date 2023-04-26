@@ -13,7 +13,7 @@ description = {
 }
 dependencies = {
   "lua-resty-jwt == 0.2.3",
-  "lua-resty-aws == 1.1.2",
+  "lua-resty-luasocket ~> 1",
 }
 build = {
   type = "builtin",
@@ -274,8 +274,6 @@ build = {
     ["resty.gcp.init"] = "src/resty/gcp/init.lua",
     ["resty.gcp.request.credentials.accesstoken"] = "src/resty/gcp/request/credentials/accesstoken.lua",
     ["resty.gcp.request.discovery"] = "src/resty/gcp/request/discovery.lua",
-    ["resty.gcp.request.http.http"] = "src/resty/gcp/request/http/http.lua",
-    ["resty.gcp.request.http.socket"] = "src/resty/gcp/request/http/socket.lua",
 
 --END-MARKER--
    }

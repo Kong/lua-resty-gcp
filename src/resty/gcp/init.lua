@@ -1,5 +1,5 @@
 local cjson = require("cjson.safe").new()
-local http = require "resty.gcp.request.http.http"
+local http = require "resty.luasocket.http"
 
 
 local lookup_helper = function(self, key) -- signature to match __index meta-method
@@ -71,7 +71,7 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
             ["Authorization"] = "Bearer " .. accesstoken.token
         },
         body = requestBody,
-        ssl_verify = false
+        ssl_verify = true,
     }
 
     -- it's strange that API supporting media upload has different way of handling path
