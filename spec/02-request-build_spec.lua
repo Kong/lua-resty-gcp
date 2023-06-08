@@ -10,7 +10,8 @@ end
 local function simple_header_check(request)
     assert.same({
         headers = {
-            Authorization = 'Bearer test_token'
+            Authorization = 'Bearer test_token',
+            ["Content-Type"] = 'application/json',
         },
         method = 'GET',
         ssl_verify = true,
@@ -49,7 +50,6 @@ describe("unit: build_request", function()
         }
 
         local url, request = gen_request(api, { p1 = "p1", p2 = "p2", p3 = "p3", alt = "media" })
-        print(url)
         assert("https://storage.googleapis.com/test_service/p1/p2?p3&alt=media" == url or
             "https://storage.googleapis.com/test_service/p1/p2?alt=media&p3" == url)
         simple_header_check(request)
@@ -108,11 +108,54 @@ describe("unit: build_request", function()
         assert.same("https://storage.googleapis.com/upload/test_service/p1/p2?p3", url)
         assert.same({
             headers = {
-                Authorization = 'Bearer test_token'
+                Authorization = 'Bearer test_token',
+                ["Content-Type"] = 'application/json',
             },
             method = 'POST',
             ssl_verify = true,
             body = test_body,
+        }, request)
+    end)
+
+    it("create secret", function()
+        local api = {
+            flatPath = "/v1/projects/{projectsId}/secrets",
+            httpMethod = "POST",
+            parameterOrder = {
+                "parent",
+            },
+            parameters = {
+                parent = {
+                    description = "Required. The resource name of the project to associate with the Secret, in the format `projects/*`.",
+                    location = "path",
+                    pattern = "^projects/[^/]+$",
+                    required = true,
+                    type = "string",
+                },
+                secretId = {
+                    description = "Required. This must be unique within the project. A secret ID is a string with a maximum length of 255 characters and can contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and underscore (`_`) characters.",
+                    location = "query",
+                    type = "string",
+                },
+            },
+            path = "/v1/{+parent}/secrets",
+        }
+
+        local url, request = gen_request(
+                api,
+                { projectsId = "my-project", secretId = "my-secret"},
+                {
+                    replication = { automatic = {}}
+                })
+        assert.same("https://storage.googleapis.com/v1/projects/my-project/secrets?secretId=my-secret", url)
+        assert.same({
+            headers = {
+                Authorization = 'Bearer test_token',
+                ["Content-Type"] = 'application/json',
+            },
+            body = '{"replication":{"automatic":{}}}',
+            method = 'POST',
+            ssl_verify = true,
         }, request)
     end)
 end)

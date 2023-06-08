@@ -5,7 +5,7 @@ local http = require "resty.luasocket.http"
 local lookup_helper = function(self, key) -- signature to match __index meta-method
     if type(key) == "string" then
         local lckey = key:lower()
-        for k, v in pairs(self) do
+        for k, _ in pairs(self) do
             if type(k) == "string" and k:lower() == lckey then
                 error(("key '%s' not found, did you mean '%s'?"):format(key, k), 2)
             end
@@ -52,9 +52,12 @@ FindApis = function(apiClass, methods, curr)
 end
 
 local function template_expansion(str, params)
-    return (string.gsub(str, "{(.-)}", function (key)
+    local consumed = {}
+    local expanded = string.gsub(str, "{(.-)}", function (key)
+        consumed[key] = true
         return ngx.escape_uri(params[key])
-    end))
+    end)
+    return expanded, consumed
 end
 
 local function build_request(accesstoken, apiDetail, baseUrl, params, requestBody)
@@ -64,11 +67,15 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
     end
 
     local mediaUpload = apiDetail.supportsMediaUpload
+    if type(requestBody) == "table" then
+        requestBody = cjson.encode(requestBody)
+    end
 
     local req = {
         method = apiDetail.httpMethod,
         headers = {
-            ["Authorization"] = "Bearer " .. accesstoken.token
+            ["Authorization"] = "Bearer " .. accesstoken.token,
+            ["Content-Type"] = "application/json",
         },
         body = requestBody,
         ssl_verify = true,
@@ -86,12 +93,9 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
         path_template = apiDetail.path
     end
 
-    local path = baseUrl .. template_expansion(path_template, params)
+    local path, consumed_parameters = template_expansion(path_template, params)
+    path = baseUrl .. path
     local query
-
-    if apiDetail.flatPath then
-        return path, req
-    end
 
     local newpath, query_string = string.match(path, "^(.*)%?(.*)$")
     if query_string then
@@ -107,8 +111,10 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
         if k == "alt" then
             query[k] = v
             goto continue
+        elseif consumed_parameters[k] then
+            goto continue
         end
-        local param = apiDetail.parameters[k]
+        local param = apiDetail.parameters and apiDetail.parameters[k]
         if not param then
             error("invalid parameter: " .. k)
         end
