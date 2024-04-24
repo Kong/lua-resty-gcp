@@ -400,7 +400,7 @@ return {
       },
     },
   },
-  revision = "20230103",
+  revision = "20240422",
   rootUrl = "https://licensing.googleapis.com/",
   schemas = {
     Empty = {

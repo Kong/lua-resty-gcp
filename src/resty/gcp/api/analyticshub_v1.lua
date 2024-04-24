@@ -315,6 +315,48 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                   },
                 },
+                listSubscriptions = {
+                  description = "Lists all subscriptions on a given Data Exchange or Listing.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}:listSubscriptions",
+                  httpMethod = "GET",
+                  id = "analyticshub.projects.locations.dataExchanges.listSubscriptions",
+                  parameterOrder = {
+                    "resource",
+                  },
+                  parameters = {
+                    includeDeletedSubscriptions = {
+                      description = "If selected, includes deleted subscriptions in the response (up to 63 days after deletion).",
+                      location = "query",
+                      type = "boolean",
+                    },
+                    pageSize = {
+                      description = "The maximum number of results to return in a single response page.",
+                      format = "int32",
+                      location = "query",
+                      type = "integer",
+                    },
+                    pageToken = {
+                      description = "Page token, returned by a previous call.",
+                      location = "query",
+                      type = "string",
+                    },
+                    resource = {
+                      description = "Required. Resource name of the requested target. This resource may be either a Listing or a DataExchange. e.g. projects/123/locations/US/dataExchanges/456 OR e.g. projects/123/locations/US/dataExchanges/456/listings/789",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/dataExchanges/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+resource}:listSubscriptions",
+                  response = {
+                    ["$ref"] = "ListSharedResourceSubscriptionsResponse",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
                 patch = {
                   description = "Updates an existing data exchange.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}",
@@ -373,6 +415,35 @@ return {
                   },
                   response = {
                     ["$ref"] = "Policy",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                subscribe = {
+                  description = "Creates a Subscription to a Data Exchange. This is a long-running operation as it will create one or more linked datasets.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}:subscribe",
+                  httpMethod = "POST",
+                  id = "analyticshub.projects.locations.dataExchanges.subscribe",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. Resource name of the Data Exchange. e.g. `projects/publisherproject/locations/US/dataExchanges/123`",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/dataExchanges/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+name}:subscribe",
+                  request = {
+                    ["$ref"] = "SubscribeDataExchangeRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
                   },
                   scopes = {
                     "https://www.googleapis.com/auth/bigquery",
@@ -564,6 +635,48 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                       },
                     },
+                    listSubscriptions = {
+                      description = "Lists all subscriptions on a given Data Exchange or Listing.",
+                      flatPath = "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}/listings/{listingsId}:listSubscriptions",
+                      httpMethod = "GET",
+                      id = "analyticshub.projects.locations.dataExchanges.listings.listSubscriptions",
+                      parameterOrder = {
+                        "resource",
+                      },
+                      parameters = {
+                        includeDeletedSubscriptions = {
+                          description = "If selected, includes deleted subscriptions in the response (up to 63 days after deletion).",
+                          location = "query",
+                          type = "boolean",
+                        },
+                        pageSize = {
+                          description = "The maximum number of results to return in a single response page.",
+                          format = "int32",
+                          location = "query",
+                          type = "integer",
+                        },
+                        pageToken = {
+                          description = "Page token, returned by a previous call.",
+                          location = "query",
+                          type = "string",
+                        },
+                        resource = {
+                          description = "Required. Resource name of the requested target. This resource may be either a Listing or a DataExchange. e.g. projects/123/locations/US/dataExchanges/456 OR e.g. projects/123/locations/US/dataExchanges/456/listings/789",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/dataExchanges/[^/]+/listings/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v1/{+resource}:listSubscriptions",
+                      response = {
+                        ["$ref"] = "ListSharedResourceSubscriptionsResponse",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/bigquery",
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
                     patch = {
                       description = "Updates an existing listing.",
                       flatPath = "v1/projects/{projectsId}/locations/{locationsId}/dataExchanges/{dataExchangesId}/listings/{listingsId}",
@@ -690,12 +803,226 @@ return {
                 },
               },
             },
+            subscriptions = {
+              methods = {
+                delete = {
+                  description = "Deletes a subscription.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}",
+                  httpMethod = "DELETE",
+                  id = "analyticshub.projects.locations.subscriptions.delete",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. Resource name of the subscription to delete. e.g. projects/123/locations/US/subscriptions/456",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+name}",
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                get = {
+                  description = "Gets the details of a Subscription.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}",
+                  httpMethod = "GET",
+                  id = "analyticshub.projects.locations.subscriptions.get",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. Resource name of the subscription. e.g. projects/123/locations/US/subscriptions/456",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+name}",
+                  response = {
+                    ["$ref"] = "Subscription",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                getIamPolicy = {
+                  description = "Gets the IAM policy.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}:getIamPolicy",
+                  httpMethod = "POST",
+                  id = "analyticshub.projects.locations.subscriptions.getIamPolicy",
+                  parameterOrder = {
+                    "resource",
+                  },
+                  parameters = {
+                    resource = {
+                      description = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+resource}:getIamPolicy",
+                  request = {
+                    ["$ref"] = "GetIamPolicyRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Policy",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                list = {
+                  description = "Lists all subscriptions in a given project and location.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/subscriptions",
+                  httpMethod = "GET",
+                  id = "analyticshub.projects.locations.subscriptions.list",
+                  parameterOrder = {
+                    "parent",
+                  },
+                  parameters = {
+                    filter = {
+                      description = "An expression for filtering the results of the request. Eligible fields for filtering are: + `listing` + `data_exchange` Alternatively, a literal wrapped in double quotes may be provided. This will be checked for an exact match against both fields above. In all cases, the full Data Exchange or Listing resource name must be provided. Some example of using filters: + data_exchange=\"projects/myproject/locations/us/dataExchanges/123\" + listing=\"projects/123/locations/us/dataExchanges/456/listings/789\" + \"projects/myproject/locations/us/dataExchanges/123\"",
+                      location = "query",
+                      type = "string",
+                    },
+                    pageSize = {
+                      description = "The maximum number of results to return in a single response page.",
+                      format = "int32",
+                      location = "query",
+                      type = "integer",
+                    },
+                    pageToken = {
+                      description = "Page token, returned by a previous call.",
+                      location = "query",
+                      type = "string",
+                    },
+                    parent = {
+                      description = "Required. The parent resource path of the subscription. e.g. projects/myproject/locations/US",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+parent}/subscriptions",
+                  response = {
+                    ["$ref"] = "ListSubscriptionsResponse",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                refresh = {
+                  description = "Refreshes a Subscription to a Data Exchange. A Data Exchange can become stale when a publisher adds or removes data. This is a long-running operation as it may create many linked datasets.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}:refresh",
+                  httpMethod = "POST",
+                  id = "analyticshub.projects.locations.subscriptions.refresh",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. Resource name of the Subscription to refresh. e.g. `projects/subscriberproject/locations/US/subscriptions/123`",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+name}:refresh",
+                  request = {
+                    ["$ref"] = "RefreshSubscriptionRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                revoke = {
+                  description = "Revokes a given subscription.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}:revoke",
+                  httpMethod = "POST",
+                  id = "analyticshub.projects.locations.subscriptions.revoke",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. Resource name of the subscription to revoke. e.g. projects/123/locations/US/subscriptions/456",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+name}:revoke",
+                  request = {
+                    ["$ref"] = "RevokeSubscriptionRequest",
+                  },
+                  response = {
+                    ["$ref"] = "RevokeSubscriptionResponse",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                setIamPolicy = {
+                  description = "Sets the IAM policy.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/subscriptions/{subscriptionsId}:setIamPolicy",
+                  httpMethod = "POST",
+                  id = "analyticshub.projects.locations.subscriptions.setIamPolicy",
+                  parameterOrder = {
+                    "resource",
+                  },
+                  parameters = {
+                    resource = {
+                      description = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/subscriptions/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+resource}:setIamPolicy",
+                  request = {
+                    ["$ref"] = "SetIamPolicyRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Policy",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+              },
+            },
           },
         },
       },
     },
   },
-  revision = "20230108",
+  revision = "20240415",
   rootUrl = "https://analyticshub.googleapis.com/",
   schemas = {
     AuditConfig = {
@@ -754,6 +1081,17 @@ return {
           description = "Resource name of the dataset source for this listing. e.g. `projects/myproject/datasets/123`",
           type = "string",
         },
+        restrictedExportPolicy = {
+          ["$ref"] = "RestrictedExportPolicy",
+          description = "Optional. If set, restricted export policy will be propagated and enforced on the linked dataset.",
+        },
+        selectedResources = {
+          description = "Optional. Resources in this dataset that are selectively shared. If this field is empty, then the entire dataset (all resources) are shared. This field is only valid for data clean room exchanges.",
+          items = {
+            ["$ref"] = "SelectedResource",
+          },
+          type = "array",
+        },
       },
       type = "object",
     },
@@ -766,14 +1104,14 @@ return {
           description = "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
         },
         members = {
-          description = "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
+          description = "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workforce identity pool. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`: All workforce identities in a group. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All workforce identities with a specific attribute value. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`: All identities in a workforce identity pool. * `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workload identity pool. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool group. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All identities in a workload identity pool with a certain attribute. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`: All identities in a workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: Deleted single identity in a workforce identity pool. For example, `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.",
           items = {
             type = "string",
           },
           type = "array",
         },
         role = {
-          description = "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          description = "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
           type = "string",
         },
       },
@@ -815,6 +1153,10 @@ return {
           description = "Optional. Email or URL of the primary point of contact of the data exchange. Max Length: 1000 bytes.",
           type = "string",
         },
+        sharingEnvironmentConfig = {
+          ["$ref"] = "SharingEnvironmentConfig",
+          description = "Optional. Configurable data sharing environment option for a data exchange.",
+        },
       },
       type = "object",
     },
@@ -831,6 +1173,29 @@ return {
           type = "string",
         },
       },
+      type = "object",
+    },
+    DcrExchangeConfig = {
+      description = "Data Clean Room (DCR), used for privacy-safe and secured data sharing.",
+      id = "DcrExchangeConfig",
+      properties = {
+        singleLinkedDatasetPerCleanroom = {
+          description = "Output only. If True, when subscribing to this DCR, it will create only one linked dataset containing all resources shared within the cleanroom. If False, when subscribing to this DCR, it will create 1 linked dataset per listing. This is not configurable, and by default, all new DCRs will have the restriction set to True.",
+          readOnly = true,
+          type = "boolean",
+        },
+        singleSelectedResourceSharingRestriction = {
+          description = "Output only. If True, this DCR restricts the contributors to sharing only a single resource in a Listing. And no two resources should have the same IDs. So if a contributor adds a view with a conflicting name, the CreateListing API will reject the request. if False, the data contributor can publish an entire dataset (as before). This is not configurable, and by default, all new DCRs will have the restriction set to True.",
+          readOnly = true,
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    DefaultExchangeConfig = {
+      description = "Default Analytics Hub data exchange, used for secured data sharing.",
+      id = "DefaultExchangeConfig",
+      properties = {},
       type = "object",
     },
     DestinationDataset = {
@@ -930,6 +1295,18 @@ return {
       },
       type = "object",
     },
+    LinkedResource = {
+      description = "Reference to a linked resource tracked by this Subscription.",
+      id = "LinkedResource",
+      properties = {
+        linkedDataset = {
+          description = "Output only. Name of the linked dataset, e.g. projects/subscriberproject/datasets/linked_dataset",
+          readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     ListDataExchangesResponse = {
       description = "Message for response to the list of data exchanges.",
       id = "ListDataExchangesResponse",
@@ -980,6 +1357,42 @@ return {
         nextPageToken = {
           description = "A token to request the next page of results.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    ListSharedResourceSubscriptionsResponse = {
+      description = "Message for response to the listing of shared resource subscriptions.",
+      id = "ListSharedResourceSubscriptionsResponse",
+      properties = {
+        nextPageToken = {
+          description = "Next page token.",
+          type = "string",
+        },
+        sharedResourceSubscriptions = {
+          description = "The list of subscriptions.",
+          items = {
+            ["$ref"] = "Subscription",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    ListSubscriptionsResponse = {
+      description = "Message for response to the listing of subscriptions.",
+      id = "ListSubscriptionsResponse",
+      properties = {
+        nextPageToken = {
+          description = "Next page token.",
+          type = "string",
+        },
+        subscriptions = {
+          description = "The list of subscriptions.",
+          items = {
+            ["$ref"] = "Subscription",
+          },
+          type = "array",
         },
       },
       type = "object",
@@ -1081,6 +1494,10 @@ return {
           description = "Optional. Email or URL of the request access of the listing. Subscribers can use this reference to request access. Max Length: 1000 bytes.",
           type = "string",
         },
+        restrictedExportConfig = {
+          ["$ref"] = "RestrictedExportConfig",
+          description = "Optional. If set, restricted export configuration will be propagated and enforced on the linked dataset.",
+        },
         state = {
           description = "Output only. Current state of the listing.",
           enum = {
@@ -1097,19 +1514,49 @@ return {
       },
       type = "object",
     },
+    Operation = {
+      description = "This resource represents a long-running operation that is the result of a network API call.",
+      id = "Operation",
+      properties = {
+        done = {
+          description = "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
+          type = "boolean",
+        },
+        error = {
+          ["$ref"] = "Status",
+          description = "The error result of the operation in case of failure or cancellation.",
+        },
+        metadata = {
+          additionalProperties = {
+            description = "Properties of the object. Contains field @type with type URL.",
+            type = "any",
+          },
+          description = "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+          type = "object",
+        },
+        name = {
+          description = "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
+          type = "string",
+        },
+        response = {
+          additionalProperties = {
+            description = "Properties of the object. Contains field @type with type URL.",
+            type = "any",
+          },
+          description = "The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          type = "object",
+        },
+      },
+      type = "object",
+    },
     OperationMetadata = {
-      description = "Represents the metadata of the long-running operation.",
+      description = "Represents the metadata of a long-running operation in Analytics Hub.",
       id = "OperationMetadata",
       properties = {
         apiVersion = {
           description = "Output only. API version used to start the operation.",
           readOnly = true,
           type = "string",
-        },
-        cancelRequested = {
-          description = "Output only. Identifies whether the user has requested cancellation of the operation. Operations that have been cancelled successfully have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-          readOnly = true,
-          type = "boolean",
         },
         createTime = {
           description = "Output only. The time the operation was created.",
@@ -1123,7 +1570,12 @@ return {
           readOnly = true,
           type = "string",
         },
-        statusDetail = {
+        requestedCancellation = {
+          description = "Output only. Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          readOnly = true,
+          type = "boolean",
+        },
+        statusMessage = {
           description = "Output only. Human-readable status of the operation, if any.",
           readOnly = true,
           type = "string",
@@ -1142,7 +1594,7 @@ return {
       type = "object",
     },
     Policy = {
-      description = "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time < timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      description = "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** ``` { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time < timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } ``` **YAML example:** ``` bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       id = "Policy",
       properties = {
         auditConfigs = {
@@ -1187,6 +1639,85 @@ return {
       },
       type = "object",
     },
+    RefreshSubscriptionRequest = {
+      description = "Message for refreshing a subscription.",
+      id = "RefreshSubscriptionRequest",
+      properties = {},
+      type = "object",
+    },
+    RefreshSubscriptionResponse = {
+      description = "Message for response when you refresh a subscription.",
+      id = "RefreshSubscriptionResponse",
+      properties = {
+        subscription = {
+          ["$ref"] = "Subscription",
+          description = "The refreshed subscription resource.",
+        },
+      },
+      type = "object",
+    },
+    RestrictedExportConfig = {
+      description = "Restricted export config, used to configure restricted export on linked dataset.",
+      id = "RestrictedExportConfig",
+      properties = {
+        enabled = {
+          description = "Optional. If true, enable restricted export.",
+          type = "boolean",
+        },
+        restrictDirectTableAccess = {
+          description = "Output only. If true, restrict direct table access(read api/tabledata.list) on linked table.",
+          readOnly = true,
+          type = "boolean",
+        },
+        restrictQueryResult = {
+          description = "Optional. If true, restrict export of query result derived from restricted linked dataset table.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    RestrictedExportPolicy = {
+      description = "Restricted export policy used to configure restricted export on linked dataset.",
+      id = "RestrictedExportPolicy",
+      properties = {
+        enabled = {
+          description = "Optional. If true, enable restricted export.",
+          type = "boolean",
+        },
+        restrictDirectTableAccess = {
+          description = "Optional. If true, restrict direct table access (read api/tabledata.list) on linked table.",
+          type = "boolean",
+        },
+        restrictQueryResult = {
+          description = "Optional. If true, restrict export of query result derived from restricted linked dataset table.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    RevokeSubscriptionRequest = {
+      description = "Message for revoking a subscription.",
+      id = "RevokeSubscriptionRequest",
+      properties = {},
+      type = "object",
+    },
+    RevokeSubscriptionResponse = {
+      description = "Message for response when you revoke a subscription.",
+      id = "RevokeSubscriptionResponse",
+      properties = {},
+      type = "object",
+    },
+    SelectedResource = {
+      description = "Resource in this dataset that are selectively shared.",
+      id = "SelectedResource",
+      properties = {
+        table = {
+          description = "Optional. Format: For table: `projects/{projectId}/datasets/{datasetId}/tables/{tableId}` Example:\"projects/test_project/datasets/test_dataset/tables/test_table\"",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     SetIamPolicyRequest = {
       description = "Request message for `SetIamPolicy` method.",
       id = "SetIamPolicyRequest",
@@ -1203,13 +1734,85 @@ return {
       },
       type = "object",
     },
+    SharingEnvironmentConfig = {
+      description = "Sharing environment is a behavior model for sharing data within a data exchange. This option is configurable for a data exchange.",
+      id = "SharingEnvironmentConfig",
+      properties = {
+        dcrExchangeConfig = {
+          ["$ref"] = "DcrExchangeConfig",
+          description = "Data Clean Room (DCR), used for privacy-safe and secured data sharing.",
+        },
+        defaultExchangeConfig = {
+          ["$ref"] = "DefaultExchangeConfig",
+          description = "Default Analytics Hub data exchange, used for secured data sharing.",
+        },
+      },
+      type = "object",
+    },
+    Status = {
+      description = "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      id = "Status",
+      properties = {
+        code = {
+          description = "The status code, which should be an enum value of google.rpc.Code.",
+          format = "int32",
+          type = "integer",
+        },
+        details = {
+          description = "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          items = {
+            additionalProperties = {
+              description = "Properties of the object. Contains field @type with type URL.",
+              type = "any",
+            },
+            type = "object",
+          },
+          type = "array",
+        },
+        message = {
+          description = "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    SubscribeDataExchangeRequest = {
+      description = "Message for subscribing to a Data Exchange.",
+      id = "SubscribeDataExchangeRequest",
+      properties = {
+        destination = {
+          description = "Required. The parent resource path of the Subscription. e.g. `projects/subscriberproject/locations/US`",
+          type = "string",
+        },
+        subscriberContact = {
+          description = "Email of the subscriber.",
+          type = "string",
+        },
+        subscription = {
+          description = "Required. Name of the subscription to create. e.g. `subscription1`",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    SubscribeDataExchangeResponse = {
+      description = "Message for response when you subscribe to a Data Exchange.",
+      id = "SubscribeDataExchangeResponse",
+      properties = {
+        subscription = {
+          ["$ref"] = "Subscription",
+          description = "Subscription object created from this subscribe action.",
+        },
+      },
+      type = "object",
+    },
     SubscribeListingRequest = {
       description = "Message for subscribing to a listing.",
       id = "SubscribeListingRequest",
       properties = {
         destinationDataset = {
           ["$ref"] = "DestinationDataset",
-          description = "BigQuery destination dataset to create for the subscriber.",
+          description = "Input only. BigQuery destination dataset to create for the subscriber.",
         },
       },
       type = "object",
@@ -1217,7 +1820,86 @@ return {
     SubscribeListingResponse = {
       description = "Message for response when you subscribe to a listing.",
       id = "SubscribeListingResponse",
-      properties = {},
+      properties = {
+        subscription = {
+          ["$ref"] = "Subscription",
+          description = "Subscription object created from this subscribe action.",
+        },
+      },
+      type = "object",
+    },
+    Subscription = {
+      description = "A subscription represents a subscribers' access to a particular set of published data. It contains references to associated listings, data exchanges, and linked datasets.",
+      id = "Subscription",
+      properties = {
+        creationTime = {
+          description = "Output only. Timestamp when the subscription was created.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        dataExchange = {
+          description = "Output only. Resource name of the source Data Exchange. e.g. projects/123/locations/US/dataExchanges/456",
+          readOnly = true,
+          type = "string",
+        },
+        lastModifyTime = {
+          description = "Output only. Timestamp when the subscription was last modified.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        linkedDatasetMap = {
+          additionalProperties = {
+            ["$ref"] = "LinkedResource",
+          },
+          description = "Output only. Map of listing resource names to associated linked resource, e.g. projects/123/locations/US/dataExchanges/456/listings/789 -> projects/123/datasets/my_dataset For listing-level subscriptions, this is a map of size 1. Only contains values if state == STATE_ACTIVE.",
+          readOnly = true,
+          type = "object",
+        },
+        listing = {
+          description = "Output only. Resource name of the source Listing. e.g. projects/123/locations/US/dataExchanges/456/listings/789",
+          readOnly = true,
+          type = "string",
+        },
+        name = {
+          description = "Output only. The resource name of the subscription. e.g. `projects/myproject/locations/US/subscriptions/123`.",
+          readOnly = true,
+          type = "string",
+        },
+        organizationDisplayName = {
+          description = "Output only. Display name of the project of this subscription.",
+          readOnly = true,
+          type = "string",
+        },
+        organizationId = {
+          description = "Output only. Organization of the project this subscription belongs to.",
+          readOnly = true,
+          type = "string",
+        },
+        state = {
+          description = "Output only. Current state of the subscription.",
+          enum = {
+            "STATE_UNSPECIFIED",
+            "STATE_ACTIVE",
+            "STATE_STALE",
+            "STATE_INACTIVE",
+          },
+          enumDescriptions = {
+            "Default value. This value is unused.",
+            "This subscription is active and the data is accessible.",
+            "The data referenced by this subscription is out of date and should be refreshed. This can happen when a data provider adds or removes datasets.",
+            "This subscription has been cancelled or revoked and the data is no longer accessible.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+        subscriberContact = {
+          description = "Output only. Email of the subscriber.",
+          readOnly = true,
+          type = "string",
+        },
+      },
       type = "object",
     },
     TestIamPermissionsRequest = {

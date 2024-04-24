@@ -294,6 +294,37 @@ return {
                     "https://www.googleapis.com/auth/dialogflow",
                   },
                 },
+                getGenerativeSettings = {
+                  description = "Gets the generative settings for the agent.",
+                  flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generativeSettings",
+                  httpMethod = "GET",
+                  id = "dialogflow.projects.locations.agents.getGenerativeSettings",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    languageCode = {
+                      description = "Required. Language code of the generative settings.",
+                      location = "query",
+                      type = "string",
+                    },
+                    name = {
+                      description = "Required. Format: `projects//locations//agents//generativeSettings`.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generativeSettings$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v3/{+name}",
+                  response = {
+                    ["$ref"] = "GoogleCloudDialogflowCxV3GenerativeSettings",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow",
+                  },
+                },
                 getValidationResult = {
                   description = "Gets the latest agent validation result. Agent validation is performed when ValidateAgent is called.",
                   flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/validationResult",
@@ -420,6 +451,41 @@ return {
                   },
                   response = {
                     ["$ref"] = "GoogleLongrunningOperation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow",
+                  },
+                },
+                updateGenerativeSettings = {
+                  description = "Updates the generative settings for the agent.",
+                  flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generativeSettings",
+                  httpMethod = "PATCH",
+                  id = "dialogflow.projects.locations.agents.updateGenerativeSettings",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Format: `projects//locations//agents//generativeSettings`.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generativeSettings$",
+                      required = true,
+                      type = "string",
+                    },
+                    updateMask = {
+                      description = "Optional. The mask to control which fields get updated. If the mask is not present, all fields will be updated.",
+                      format = "google-fieldmask",
+                      location = "query",
+                      type = "string",
+                    },
+                  },
+                  path = "v3/{+name}",
+                  request = {
+                    ["$ref"] = "GoogleCloudDialogflowCxV3GenerativeSettings",
+                  },
+                  response = {
+                    ["$ref"] = "GoogleCloudDialogflowCxV3GenerativeSettings",
                   },
                   scopes = {
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -596,6 +662,35 @@ return {
                         "https://www.googleapis.com/auth/dialogflow",
                       },
                     },
+                    export = {
+                      description = "Exports the selected entity types.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/entityTypes:export",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.entityTypes.export",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        parent = {
+                          description = "Required. The name of the parent agent to export entity types. Format: `projects//locations//agents/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/entityTypes:export",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3ExportEntityTypesRequest",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleLongrunningOperation",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
                     get = {
                       description = "Retrieves the specified entity type.",
                       flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/entityTypes/{entityTypesId}",
@@ -621,6 +716,35 @@ return {
                       path = "v3/{+name}",
                       response = {
                         ["$ref"] = "GoogleCloudDialogflowCxV3EntityType",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    import = {
+                      description = "Imports the specified entitytypes into the agent.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/entityTypes:import",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.entityTypes.import",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        parent = {
+                          description = "Required. The agent to import the entity types into. Format: `projects//locations//agents/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/entityTypes:import",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3ImportEntityTypesRequest",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleLongrunningOperation",
                       },
                       scopes = {
                         "https://www.googleapis.com/auth/cloud-platform",
@@ -1375,6 +1499,35 @@ return {
                             "https://www.googleapis.com/auth/dialogflow",
                           },
                         },
+                        serverStreamingDetectIntent = {
+                          description = "Processes a natural language query and returns structured, actionable data as a result through server-side streaming. Server-side streaming allows Dialogflow to send [partial responses](https://cloud.google.com/dialogflow/cx/docs/concept/fulfillment#partial-response) earlier in a single request.",
+                          flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/sessions/{sessionsId}:serverStreamingDetectIntent",
+                          httpMethod = "POST",
+                          id = "dialogflow.projects.locations.agents.environments.sessions.serverStreamingDetectIntent",
+                          parameterOrder = {
+                            "session",
+                          },
+                          parameters = {
+                            session = {
+                              description = "Required. The name of the session this query is sent to. Format: `projects//locations//agents//sessions/` or `projects//locations//agents//environments//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. It's up to the API caller to choose an appropriate `Session ID`. It can be a random number or some type of session identifiers (preferably hashed). The length of the `Session ID` must not exceed 36 characters. For more information, see the [sessions guide](https://cloud.google.com/dialogflow/cx/docs/concept/session). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/cx/docs/concept/version).",
+                              location = "path",
+                              pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/sessions/[^/]+$",
+                              required = true,
+                              type = "string",
+                            },
+                          },
+                          path = "v3/{+session}:serverStreamingDetectIntent",
+                          request = {
+                            ["$ref"] = "GoogleCloudDialogflowCxV3DetectIntentRequest",
+                          },
+                          response = {
+                            ["$ref"] = "GoogleCloudDialogflowCxV3DetectIntentResponse",
+                          },
+                          scopes = {
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow",
+                          },
+                        },
                       },
                       resources = {
                         entityTypes = {
@@ -2066,7 +2219,7 @@ return {
                               type = "string",
                             },
                             parent = {
-                              description = "Required. The flow to create an TransitionRouteGroup for. Format: `projects//locations//agents//flows/`.",
+                              description = "Required. The flow to create an TransitionRouteGroup for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/` for agent-level groups.",
                               location = "path",
                               pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+$",
                               required = true,
@@ -2100,7 +2253,7 @@ return {
                               type = "boolean",
                             },
                             name = {
-                              description = "Required. The name of the TransitionRouteGroup to delete. Format: `projects//locations//agents//flows//transitionRouteGroups/`.",
+                              description = "Required. The name of the TransitionRouteGroup to delete. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
                               location = "path",
                               pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/transitionRouteGroups/[^/]+$",
                               required = true,
@@ -2131,7 +2284,7 @@ return {
                               type = "string",
                             },
                             name = {
-                              description = "Required. The name of the TransitionRouteGroup. Format: `projects//locations//agents//flows//transitionRouteGroups/`.",
+                              description = "Required. The name of the TransitionRouteGroup. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
                               location = "path",
                               pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/transitionRouteGroups/[^/]+$",
                               required = true,
@@ -2173,7 +2326,7 @@ return {
                               type = "string",
                             },
                             parent = {
-                              description = "Required. The flow to list all transition route groups for. Format: `projects//locations//agents//flows/`.",
+                              description = "Required. The flow to list all transition route groups for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/.",
                               location = "path",
                               pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+$",
                               required = true,
@@ -2204,7 +2357,7 @@ return {
                               type = "string",
                             },
                             name = {
-                              description = "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/`.",
+                              description = "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .",
                               location = "path",
                               pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/transitionRouteGroups/[^/]+$",
                               required = true,
@@ -2448,6 +2601,188 @@ return {
                     },
                   },
                 },
+                generators = {
+                  methods = {
+                    create = {
+                      description = "Creates a generator in the specified agent.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.generators.create",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language to create generators for the following fields: * `Generator.prompt_text.text` If not specified, the agent's default language is used.",
+                          location = "query",
+                          type = "string",
+                        },
+                        parent = {
+                          description = "Required. The agent to create a generator for. Format: `projects//locations//agents/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/generators",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3Generator",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3Generator",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    delete = {
+                      description = "Deletes the specified generators.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators/{generatorsId}",
+                      httpMethod = "DELETE",
+                      id = "dialogflow.projects.locations.agents.generators.delete",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        force = {
+                          description = "This field has no effect for generators not being used. For generators that are used by pages/flows/transition route groups: * If `force` is set to false, an error will be returned with message indicating the referenced resources. * If `force` is set to true, Dialogflow will remove the generator, as well as any references to the generator (i.e. Generator) in fulfillments.",
+                          location = "query",
+                          type = "boolean",
+                        },
+                        name = {
+                          description = "Required. The name of the generator to delete. Format: `projects//locations//agents//generators/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generators/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+name}",
+                      response = {
+                        ["$ref"] = "GoogleProtobufEmpty",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    get = {
+                      description = "Retrieves the specified generator.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators/{generatorsId}",
+                      httpMethod = "GET",
+                      id = "dialogflow.projects.locations.agents.generators.get",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language to list generators for.",
+                          location = "query",
+                          type = "string",
+                        },
+                        name = {
+                          description = "Required. The name of the generator. Format: `projects//locations//agents//generators/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generators/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+name}",
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3Generator",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    list = {
+                      description = "Returns the list of all generators in the specified agent.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators",
+                      httpMethod = "GET",
+                      id = "dialogflow.projects.locations.agents.generators.list",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language to list generators for.",
+                          location = "query",
+                          type = "string",
+                        },
+                        pageSize = {
+                          description = "The maximum number of items to return in a single page. By default 100 and at most 1000.",
+                          format = "int32",
+                          location = "query",
+                          type = "integer",
+                        },
+                        pageToken = {
+                          description = "The next_page_token value returned from a previous list request.",
+                          location = "query",
+                          type = "string",
+                        },
+                        parent = {
+                          description = "Required. The agent to list all generators for. Format: `projects//locations//agents/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/generators",
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3ListGeneratorsResponse",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    patch = {
+                      description = "Update the specified generator.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/generators/{generatorsId}",
+                      httpMethod = "PATCH",
+                      id = "dialogflow.projects.locations.agents.generators.patch",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language to list generators for.",
+                          location = "query",
+                          type = "string",
+                        },
+                        name = {
+                          description = "The unique identifier of the generator. Must be set for the Generators.UpdateGenerator method. Generators.CreateGenerate populates the name automatically. Format: `projects//locations//agents//generators/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/generators/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                        updateMask = {
+                          description = "The mask to control which fields get updated. If the mask is not present, all fields will be updated.",
+                          format = "google-fieldmask",
+                          location = "query",
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+name}",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3Generator",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3Generator",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                  },
+                },
                 intents = {
                   methods = {
                     create = {
@@ -2510,6 +2845,35 @@ return {
                         "https://www.googleapis.com/auth/dialogflow",
                       },
                     },
+                    export = {
+                      description = "Exports the selected intents. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ExportIntentsMetadata - `response`: ExportIntentsResponse",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents:export",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.intents.export",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        parent = {
+                          description = "Required. The name of the parent agent to export intents. Format: `projects//locations//agents/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/intents:export",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3ExportIntentsRequest",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleLongrunningOperation",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
                     get = {
                       description = "Retrieves the specified intent.",
                       flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents/{intentsId}",
@@ -2535,6 +2899,35 @@ return {
                       path = "v3/{+name}",
                       response = {
                         ["$ref"] = "GoogleCloudDialogflowCxV3Intent",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    import = {
+                      description = "Imports the specified intents into the agent. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportIntentsMetadata - `response`: ImportIntentsResponse",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents:import",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.intents.import",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        parent = {
+                          description = "Required. The agent to import the intents into. Format: `projects//locations//agents/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/intents:import",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3ImportIntentsRequest",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleLongrunningOperation",
                       },
                       scopes = {
                         "https://www.googleapis.com/auth/cloud-platform",
@@ -2723,6 +3116,64 @@ return {
                       },
                       response = {
                         ["$ref"] = "GoogleCloudDialogflowCxV3MatchIntentResponse",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    serverStreamingDetectIntent = {
+                      description = "Processes a natural language query and returns structured, actionable data as a result through server-side streaming. Server-side streaming allows Dialogflow to send [partial responses](https://cloud.google.com/dialogflow/cx/docs/concept/fulfillment#partial-response) earlier in a single request.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/sessions/{sessionsId}:serverStreamingDetectIntent",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.sessions.serverStreamingDetectIntent",
+                      parameterOrder = {
+                        "session",
+                      },
+                      parameters = {
+                        session = {
+                          description = "Required. The name of the session this query is sent to. Format: `projects//locations//agents//sessions/` or `projects//locations//agents//environments//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. It's up to the API caller to choose an appropriate `Session ID`. It can be a random number or some type of session identifiers (preferably hashed). The length of the `Session ID` must not exceed 36 characters. For more information, see the [sessions guide](https://cloud.google.com/dialogflow/cx/docs/concept/session). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/cx/docs/concept/version).",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/sessions/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+session}:serverStreamingDetectIntent",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3DetectIntentRequest",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3DetectIntentResponse",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    submitAnswerFeedback = {
+                      description = "Updates the feedback received from the user for a single turn of the bot response.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/sessions/{sessionsId}:submitAnswerFeedback",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.sessions.submitAnswerFeedback",
+                      parameterOrder = {
+                        "session",
+                      },
+                      parameters = {
+                        session = {
+                          description = "Required. The name of the session the feedback was sent to.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/sessions/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+session}:submitAnswerFeedback",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3SubmitAnswerFeedbackRequest",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3AnswerFeedback",
                       },
                       scopes = {
                         "https://www.googleapis.com/auth/cloud-platform",
@@ -3253,7 +3704,7 @@ return {
                           },
                         },
                         list = {
-                          description = "Fetches a list of results for a given test case.",
+                          description = "Fetches the list of run results for the given test case. A maximum of 100 results are kept for each test case.",
                           flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases/{testCasesId}/results",
                           httpMethod = "GET",
                           id = "dialogflow.projects.locations.agents.testCases.results.list",
@@ -3294,6 +3745,188 @@ return {
                             "https://www.googleapis.com/auth/dialogflow",
                           },
                         },
+                      },
+                    },
+                  },
+                },
+                transitionRouteGroups = {
+                  methods = {
+                    create = {
+                      description = "Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups",
+                      httpMethod = "POST",
+                      id = "dialogflow.projects.locations.agents.transitionRouteGroups.create",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language of the following fields in `TransitionRouteGroup`: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+                          location = "query",
+                          type = "string",
+                        },
+                        parent = {
+                          description = "Required. The flow to create an TransitionRouteGroup for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/` for agent-level groups.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/transitionRouteGroups",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3TransitionRouteGroup",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3TransitionRouteGroup",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    delete = {
+                      description = "Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups/{transitionRouteGroupsId}",
+                      httpMethod = "DELETE",
+                      id = "dialogflow.projects.locations.agents.transitionRouteGroups.delete",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        force = {
+                          description = "This field has no effect for transition route group that no page is using. If the transition route group is referenced by any page: * If `force` is set to false, an error will be returned with message indicating pages that reference the transition route group. * If `force` is set to true, Dialogflow will remove the transition route group, as well as any reference to it.",
+                          location = "query",
+                          type = "boolean",
+                        },
+                        name = {
+                          description = "Required. The name of the TransitionRouteGroup to delete. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/transitionRouteGroups/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+name}",
+                      response = {
+                        ["$ref"] = "GoogleProtobufEmpty",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    get = {
+                      description = "Retrieves the specified TransitionRouteGroup.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups/{transitionRouteGroupsId}",
+                      httpMethod = "GET",
+                      id = "dialogflow.projects.locations.agents.transitionRouteGroups.get",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language to retrieve the transition route group for. The following fields are language dependent: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+                          location = "query",
+                          type = "string",
+                        },
+                        name = {
+                          description = "Required. The name of the TransitionRouteGroup. Format: `projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/`.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/transitionRouteGroups/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+name}",
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3TransitionRouteGroup",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    list = {
+                      description = "Returns the list of all transition route groups in the specified flow.",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups",
+                      httpMethod = "GET",
+                      id = "dialogflow.projects.locations.agents.transitionRouteGroups.list",
+                      parameterOrder = {
+                        "parent",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language to list transition route groups for. The following fields are language dependent: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+                          location = "query",
+                          type = "string",
+                        },
+                        pageSize = {
+                          description = "The maximum number of items to return in a single page. By default 100 and at most 1000.",
+                          format = "int32",
+                          location = "query",
+                          type = "integer",
+                        },
+                        pageToken = {
+                          description = "The next_page_token value returned from a previous list request.",
+                          location = "query",
+                          type = "string",
+                        },
+                        parent = {
+                          description = "Required. The flow to list all transition route groups for. Format: `projects//locations//agents//flows/` or `projects//locations//agents/.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+parent}/transitionRouteGroups",
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3ListTransitionRouteGroupsResponse",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
+                      },
+                    },
+                    patch = {
+                      description = "Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
+                      flatPath = "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/transitionRouteGroups/{transitionRouteGroupsId}",
+                      httpMethod = "PATCH",
+                      id = "dialogflow.projects.locations.agents.transitionRouteGroups.patch",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        languageCode = {
+                          description = "The language of the following fields in `TransitionRouteGroup`: * `TransitionRouteGroup.transition_routes.trigger_fulfillment.messages` * `TransitionRouteGroup.transition_routes.trigger_fulfillment.conditional_cases` If not specified, the agent's default language is used. [Many languages](https://cloud.google.com/dialogflow/cx/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+                          location = "query",
+                          type = "string",
+                        },
+                        name = {
+                          description = "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/agents/[^/]+/transitionRouteGroups/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                        updateMask = {
+                          description = "The mask to control which fields get updated.",
+                          format = "google-fieldmask",
+                          location = "query",
+                          type = "string",
+                        },
+                      },
+                      path = "v3/{+name}",
+                      request = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3TransitionRouteGroup",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleCloudDialogflowCxV3TransitionRouteGroup",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow",
                       },
                     },
                   },
@@ -3517,7 +4150,7 @@ return {
                   },
                 },
                 list = {
-                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
                   flatPath = "v3/projects/{projectsId}/locations/{locationsId}/operations",
                   httpMethod = "GET",
                   id = "dialogflow.projects.locations.operations.list",
@@ -3774,7 +4407,7 @@ return {
               },
             },
             list = {
-              description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+              description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
               flatPath = "v3/projects/{projectsId}/operations",
               httpMethod = "GET",
               id = "dialogflow.projects.operations.list",
@@ -3820,16 +4453,48 @@ return {
       },
     },
   },
-  revision = "20230110",
+  revision = "20240412",
   rootUrl = "https://dialogflow.googleapis.com/",
   schemas = {
     GoogleCloudDialogflowCxV3AdvancedSettings = {
       description = "Hierarchical advanced settings for agent/flow/page/fulfillment/parameter. Settings exposed at lower level overrides the settings exposed at higher level. Overriding occurs at the sub-setting level. For example, the playback_interruption_settings at fulfillment level only overrides the playback_interruption_settings at the agent level, leaving other settings at the agent level unchanged. DTMF settings does not override each other. DTMF settings set at different levels define DTMF detections running in parallel. Hierarchy: Agent->Flow->Page->Fulfillment/Parameter.",
       id = "GoogleCloudDialogflowCxV3AdvancedSettings",
       properties = {
+        audioExportGcsDestination = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3GcsDestination",
+          description = "If present, incoming audio is exported by Dialogflow to the configured Google Cloud Storage destination. Exposed at the following levels: - Agent level - Flow level",
+        },
+        dtmfSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings",
+          description = "Settings for DTMF. Exposed at the following levels: - Agent level - Flow level - Page level - Parameter level.",
+        },
         loggingSettings = {
           ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings",
           description = "Settings for logging. Settings for Dialogflow History, Contact Center messages, StackDriver logs, and speech logging. Exposed at the following levels: - Agent level.",
+        },
+        speechSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings",
+          description = "Settings for speech to text detection. Exposed at the following levels: - Agent level - Flow level - Page level - Parameter level",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings = {
+      description = "Define behaviors for DTMF (dual tone multi frequency).",
+      id = "GoogleCloudDialogflowCxV3AdvancedSettingsDtmfSettings",
+      properties = {
+        enabled = {
+          description = "If true, incoming audio is processed for DTMF (dual tone multi frequency) events. For example, if the caller presses a button on their telephone keypad and DTMF processing is enabled, Dialogflow will detect the event (e.g. a \"3\" was pressed) in the incoming audio and pass the event to the bot to drive business logic (e.g. when 3 is pressed, return the account balance).",
+          type = "boolean",
+        },
+        finishDigit = {
+          description = "The digit that terminates a DTMF digit sequence.",
+          type = "string",
+        },
+        maxDigits = {
+          description = "Max length of DTMF digits.",
+          format = "int32",
+          type = "integer",
         },
       },
       type = "object",
@@ -3849,13 +4514,45 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings = {
+      description = "Define behaviors of speech to text detection.",
+      id = "GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings",
+      properties = {
+        endpointerSensitivity = {
+          description = "Sensitivity of the speech model that detects the end of speech. Scale from 0 to 100.",
+          format = "int32",
+          type = "integer",
+        },
+        models = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Mapping from language to Speech-to-Text model. The mapped Speech-to-Text model will be selected for requests from its corresponding language. For more information, see [Speech models](https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).",
+          type = "object",
+        },
+        noSpeechTimeout = {
+          description = "Timeout before detecting no speech.",
+          format = "google-duration",
+          type = "string",
+        },
+        useTimeoutBasedEndpointing = {
+          description = "Use timeout based endpointing, interpreting endpointer sensitivy as seconds of timeout value.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3Agent = {
-      description = "Agents are best described as Natural Language Understanding (NLU) modules that transform user requests into actionable data. You can include agents in your app, product, or service to determine user intent and respond to the user in a natural way. After you create an agent, you can add Intents, Entity Types, Flows, Fulfillments, Webhooks, and so on to manage the conversation flows..",
+      description = "Agents are best described as Natural Language Understanding (NLU) modules that transform user requests into actionable data. You can include agents in your app, product, or service to determine user intent and respond to the user in a natural way. After you create an agent, you can add Intents, Entity Types, Flows, Fulfillments, Webhooks, TransitionRouteGroups and so on to manage the conversation flows.",
       id = "GoogleCloudDialogflowCxV3Agent",
       properties = {
         advancedSettings = {
           ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettings",
           description = "Hierarchical advanced settings for this agent. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
+        answerFeedbackSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AgentAnswerFeedbackSettings",
+          description = "Optional. Answer feedback collection settings.",
         },
         avatarUri = {
           description = "The URI of the agent's avatar. Avatars are used throughout the Dialogflow console and in the self-hosted [Web Demo](https://cloud.google.com/dialogflow/docs/integrations/web-demo) integration.",
@@ -3873,13 +4570,26 @@ return {
           description = "Required. The human-readable name of the agent, unique within the location.",
           type = "string",
         },
+        enableMultiLanguageTraining = {
+          description = "Optional. Enable training multi-lingual models for this agent. These models will be trained on all the languages supported by the agent.",
+          type = "boolean",
+        },
         enableSpellCorrection = {
           description = "Indicates if automatic spell correction is enabled in detect intent requests.",
           type = "boolean",
         },
         enableStackdriverLogging = {
+          deprecated = true,
           description = "Indicates if stackdriver logging is enabled for the agent. Please use agent.advanced_settings instead.",
           type = "boolean",
+        },
+        genAppBuilderSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AgentGenAppBuilderSettings",
+          description = "Gen App Builder-related agent-level settings.",
+        },
+        gitIntegrationSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AgentGitIntegrationSettings",
+          description = "Git integration settings for this agent.",
         },
         locked = {
           description = "Indicates whether the agent is locked for changes. If the agent is locked, modifications to the agent will be rejected except for RestoreAgent.",
@@ -3888,6 +4598,10 @@ return {
         name = {
           description = "The unique identifier of the agent. Required for the Agents.UpdateAgent method. Agents.CreateAgent populates the name automatically. Format: `projects//locations//agents/`.",
           type = "string",
+        },
+        personalizationSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AgentPersonalizationSettings",
+          description = "Optional. Settings for end user personalization.",
         },
         securitySettings = {
           description = "Name of the SecuritySettings reference for the agent. Format: `projects//locations//securitySettings/`.",
@@ -3908,9 +4622,91 @@ return {
           },
           type = "array",
         },
+        textToSpeechSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3TextToSpeechSettings",
+          description = "Settings on instructing the speech synthesizer on how to generate the output audio content.",
+        },
         timeZone = {
           description = "Required. The time zone of the agent from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3AgentAnswerFeedbackSettings = {
+      description = "Settings for answer feedback collection.",
+      id = "GoogleCloudDialogflowCxV3AgentAnswerFeedbackSettings",
+      properties = {
+        enableAnswerFeedback = {
+          description = "Optional. If enabled, end users will be able to provide answer feedback to Dialogflow responses. Feature works only if interaction logging is enabled in the Dialogflow agent.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3AgentGenAppBuilderSettings = {
+      description = "Settings for Gen App Builder.",
+      id = "GoogleCloudDialogflowCxV3AgentGenAppBuilderSettings",
+      properties = {
+        engine = {
+          description = "Required. The full name of the Gen App Builder engine related to this agent if there is one. Format: `projects/{Project ID}/locations/{Location ID}/collections/{Collection ID}/engines/{Engine ID}`",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3AgentGitIntegrationSettings = {
+      description = "Settings for connecting to Git repository for an agent.",
+      id = "GoogleCloudDialogflowCxV3AgentGitIntegrationSettings",
+      properties = {
+        githubSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AgentGitIntegrationSettingsGithubSettings",
+          description = "GitHub settings.",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3AgentGitIntegrationSettingsGithubSettings = {
+      description = "Settings of integration with GitHub.",
+      id = "GoogleCloudDialogflowCxV3AgentGitIntegrationSettingsGithubSettings",
+      properties = {
+        accessToken = {
+          description = "The access token used to authenticate the access to the GitHub repository.",
+          type = "string",
+        },
+        branches = {
+          description = "A list of branches configured to be used from Dialogflow.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        displayName = {
+          description = "The unique repository display name for the GitHub repository.",
+          type = "string",
+        },
+        repositoryUri = {
+          description = "The GitHub repository URI related to the agent.",
+          type = "string",
+        },
+        trackingBranch = {
+          description = "The branch of the GitHub repository tracked for this agent.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3AgentPersonalizationSettings = {
+      description = "Settings for end user personalization.",
+      id = "GoogleCloudDialogflowCxV3AgentPersonalizationSettings",
+      properties = {
+        defaultEndUserMetadata = {
+          additionalProperties = {
+            description = "Properties of the object.",
+            type = "any",
+          },
+          description = "Optional. Default end user metadata, used when processing DetectIntent requests. Recommended to be filled as a template instead of hard-coded value, for example { \"age\": \"$session.params.age\" }. The data will be merged with the QueryParameters.end_user_metadata in DetectIntentRequest.query_params during query processing.",
+          type = "object",
         },
       },
       type = "object",
@@ -3933,18 +4729,82 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3AnswerFeedback = {
+      description = "Stores information about feedback provided by users about a response.",
+      id = "GoogleCloudDialogflowCxV3AnswerFeedback",
+      properties = {
+        customRating = {
+          description = "Optional. Custom rating from the user about the provided answer, with maximum length of 1024 characters. For example, client could use a customized JSON object to indicate the rating.",
+          type = "string",
+        },
+        rating = {
+          description = "Optional. Rating from user for the specific Dialogflow response.",
+          enum = {
+            "RATING_UNSPECIFIED",
+            "THUMBS_UP",
+            "THUMBS_DOWN",
+          },
+          enumDescriptions = {
+            "Rating not specified.",
+            "Thumbs up feedback from user.",
+            "Thumbs down feedback from user.",
+          },
+          type = "string",
+        },
+        ratingReason = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AnswerFeedbackRatingReason",
+          description = "Optional. In case of thumbs down rating provided, users can optionally provide context about the rating.",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3AnswerFeedbackRatingReason = {
+      description = "Stores extra information about why users provided thumbs down rating.",
+      id = "GoogleCloudDialogflowCxV3AnswerFeedbackRatingReason",
+      properties = {
+        feedback = {
+          description = "Optional. Additional feedback about the rating. This field can be populated without choosing a predefined `reason`.",
+          type = "string",
+        },
+        reasonLabels = {
+          description = "Optional. Custom reason labels for thumbs down rating provided by the user. The maximum number of labels allowed is 10 and the maximum length of a single label is 128 characters.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3AudioInput = {
       description = "Represents the natural speech audio to be processed.",
       id = "GoogleCloudDialogflowCxV3AudioInput",
       properties = {
         audio = {
-          description = "The natural language speech audio to be processed. A single request can contain up to 1 minute of speech audio data. The transcribed text cannot contain more than 256 bytes. For non-streaming audio detect intent, both `config` and `audio` must be provided. For streaming audio detect intent, `config` must be provided in the first request and `audio` must be provided in all following requests.",
+          description = "The natural language speech audio to be processed. A single request can contain up to 2 minutes of speech audio data. The transcribed text cannot contain more than 256 bytes. For non-streaming audio detect intent, both `config` and `audio` must be provided. For streaming audio detect intent, `config` must be provided in the first request and `audio` must be provided in all following requests.",
           format = "byte",
           type = "string",
         },
         config = {
           ["$ref"] = "GoogleCloudDialogflowCxV3InputAudioConfig",
           description = "Required. Instructs the speech recognizer how to process the speech audio.",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3BargeInConfig = {
+      description = "Configuration of the barge-in behavior. Barge-in instructs the API to return a detected utterance at a proper time while the client is playing back the response audio from a previous request. When the client sees the utterance, it should stop the playback and immediately get ready for receiving the responses for the current request. The barge-in handling requires the client to start streaming audio input as soon as it starts playing back the audio from the previous response. The playback is modeled into two phases: * No barge-in phase: which goes first and during which speech detection should not be carried out. * Barge-in phase: which follows the no barge-in phase and during which the API starts speech detection and may inform the client that an utterance has been detected. Note that no-speech event is not expected in this phase. The client provides this configuration in terms of the durations of those two phases. The durations are measured in terms of the audio length from the the start of the input audio. No-speech event is a response with END_OF_UTTERANCE without any transcript following up.",
+      id = "GoogleCloudDialogflowCxV3BargeInConfig",
+      properties = {
+        noBargeInDuration = {
+          description = "Duration that is not eligible for barge-in at the beginning of the input audio.",
+          format = "google-duration",
+          type = "string",
+        },
+        totalDuration = {
+          description = "Total duration for the playback at the beginning of the input audio.",
+          format = "google-duration",
+          type = "string",
         },
       },
       type = "object",
@@ -4009,6 +4869,57 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3BoostSpec = {
+      description = "Boost specification to boost certain documents. A copy of google.cloud.discoveryengine.v1main.BoostSpec, field documentation is available at https://cloud.google.com/generative-ai-app-builder/docs/reference/rest/v1alpha/BoostSpec",
+      id = "GoogleCloudDialogflowCxV3BoostSpec",
+      properties = {
+        conditionBoostSpecs = {
+          description = "Optional. Condition boost specifications. If a document matches multiple conditions in the specifictions, boost scores from these specifications are all applied and combined in a non-linear way. Maximum number of specifications is 20.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3BoostSpecConditionBoostSpec",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3BoostSpecConditionBoostSpec = {
+      description = "Boost applies to documents which match a condition.",
+      id = "GoogleCloudDialogflowCxV3BoostSpecConditionBoostSpec",
+      properties = {
+        boost = {
+          description = "Optional. Strength of the condition boost, which should be in [-1, 1]. Negative boost means demotion. Default is 0.0. Setting to 1.0 gives the document a big promotion. However, it does not necessarily mean that the boosted document will be the top result at all times, nor that other documents will be excluded. Results could still be shown even when none of them matches the condition. And results that are significantly more relevant to the search query can still trump your heavily favored but irrelevant documents. Setting to -1.0 gives the document a big demotion. However, results that are deeply relevant might still be shown. The document will have an upstream battle to get a fairly high ranking, but it is not blocked out completely. Setting to 0.0 means no boost applied. The boosting condition is ignored.",
+          format = "float",
+          type = "number",
+        },
+        condition = {
+          description = "Optional. An expression which specifies a boost condition. The syntax and supported fields are the same as a filter expression. Examples: * To boost documents with document ID \"doc_1\" or \"doc_2\", and color \"Red\" or \"Blue\": * (id: ANY(\"doc_1\", \"doc_2\")) AND (color: ANY(\"Red\",\"Blue\"))",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3BoostSpecs = {
+      description = "Boost specifications for data stores.",
+      id = "GoogleCloudDialogflowCxV3BoostSpecs",
+      properties = {
+        dataStores = {
+          description = "Optional. Data Stores where the boosting configuration is applied. The full names of the referenced data stores. Formats: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}` `projects/{project}/locations/{location}/dataStores/{data_store}`",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        spec = {
+          description = "Optional. A list of boosting specifications.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3BoostSpec",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3CalculateCoverageResponse = {
       description = "The response message for TestCases.CalculateCoverage.",
       id = "GoogleCloudDialogflowCxV3CalculateCoverageResponse",
@@ -4047,6 +4958,10 @@ return {
         },
         displayName = {
           description = "The affected resource display name of the change.",
+          type = "string",
+        },
+        languageCode = {
+          description = "The affected language code of the change.",
           type = "string",
         },
         name = {
@@ -4265,6 +5180,251 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3DataStoreConnection = {
+      description = "A data store connection. It represents a data store in Discovery Engine and the type of the contents it contains.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnection",
+      properties = {
+        dataStore = {
+          description = "The full name of the referenced data store. Formats: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}` `projects/{project}/locations/{location}/dataStores/{data_store}`",
+          type = "string",
+        },
+        dataStoreType = {
+          description = "The type of the connected data store.",
+          enum = {
+            "DATA_STORE_TYPE_UNSPECIFIED",
+            "PUBLIC_WEB",
+            "UNSTRUCTURED",
+            "STRUCTURED",
+          },
+          enumDescriptions = {
+            "Not specified. This value indicates that the data store type is not specified, so it will not be used during search.",
+            "A data store that contains public web content.",
+            "A data store that contains unstructured private data.",
+            "A data store that contains structured data (for example FAQ).",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignals = {
+      description = "Data store connection feature output signals. Might be only partially field if processing stop before the final answer. Reasons for this can be, but are not limited to: empty UCS search results, positive RAI check outcome, grounding failure, ...",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignals",
+      properties = {
+        answer = {
+          description = "Optional. The final compiled answer.",
+          type = "string",
+        },
+        answerGenerationModelCallSignals = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsAnswerGenerationModelCallSignals",
+          description = "Optional. Diagnostic info related to the answer generation model call.",
+        },
+        answerParts = {
+          description = "Optional. Answer parts with relevant citations. Concatenation of texts should add up the `answer` (not counting whitespaces).",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsAnswerPart",
+          },
+          type = "array",
+        },
+        citedSnippets = {
+          description = "Optional. Snippets cited by the answer generation model from the most to least relevant.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsCitedSnippet",
+          },
+          type = "array",
+        },
+        groundingSignals = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsGroundingSignals",
+          description = "Optional. Grounding signals.",
+        },
+        rewriterModelCallSignals = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsRewriterModelCallSignals",
+          description = "Optional. Diagnostic info related to the rewriter model call.",
+        },
+        rewrittenQuery = {
+          description = "Optional. Rewritten string query used for search.",
+          type = "string",
+        },
+        safetySignals = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSafetySignals",
+          description = "Optional. Safety check result.",
+        },
+        searchSnippets = {
+          description = "Optional. Search snippets included in the answer generation prompt.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSearchSnippet",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignalsAnswerGenerationModelCallSignals = {
+      description = "Diagnostic info related to the answer generation model call.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsAnswerGenerationModelCallSignals",
+      properties = {
+        modelOutput = {
+          description = "Output of the generative model.",
+          type = "string",
+        },
+        renderedPrompt = {
+          description = "Prompt as sent to the model.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignalsAnswerPart = {
+      description = "Answer part with citation.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsAnswerPart",
+      properties = {
+        supportingIndices = {
+          description = "Citations for this answer part. Indices of `search_snippets`.",
+          items = {
+            format = "int32",
+            type = "integer",
+          },
+          type = "array",
+        },
+        text = {
+          description = "Substring of the answer.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignalsCitedSnippet = {
+      description = "Snippet cited by the answer generation model.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsCitedSnippet",
+      properties = {
+        searchSnippet = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSearchSnippet",
+          description = "Details of the snippet.",
+        },
+        snippetIndex = {
+          description = "Index of the snippet in `search_snippets` field.",
+          format = "int32",
+          type = "integer",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignalsGroundingSignals = {
+      description = "Grounding signals.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsGroundingSignals",
+      properties = {
+        decision = {
+          description = "Represents the decision of the grounding check.",
+          enum = {
+            "GROUNDING_DECISION_UNSPECIFIED",
+            "ACCEPTED_BY_GROUNDING",
+            "REJECTED_BY_GROUNDING",
+          },
+          enumDescriptions = {
+            "Decision not specified.",
+            "Grounding have accepted the answer.",
+            "Grounding have rejected the answer.",
+          },
+          type = "string",
+        },
+        score = {
+          description = "Grounding score bucket setting.",
+          enum = {
+            "GROUNDING_SCORE_BUCKET_UNSPECIFIED",
+            "VERY_LOW",
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "VERY_HIGH",
+          },
+          enumDescriptions = {
+            "Score not specified.",
+            "We have very low confidence that the answer is grounded.",
+            "We have low confidence that the answer is grounded.",
+            "We have medium confidence that the answer is grounded.",
+            "We have high confidence that the answer is grounded.",
+            "We have very high confidence that the answer is grounded.",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignalsRewriterModelCallSignals = {
+      description = "Diagnostic info related to the rewriter model call.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsRewriterModelCallSignals",
+      properties = {
+        modelOutput = {
+          description = "Output of the generative model.",
+          type = "string",
+        },
+        renderedPrompt = {
+          description = "Prompt as sent to the model.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSafetySignals = {
+      description = "Safety check results.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSafetySignals",
+      properties = {
+        bannedPhraseMatch = {
+          description = "Specifies banned phrase match subject.",
+          enum = {
+            "BANNED_PHRASE_MATCH_UNSPECIFIED",
+            "BANNED_PHRASE_MATCH_NONE",
+            "BANNED_PHRASE_MATCH_QUERY",
+            "BANNED_PHRASE_MATCH_RESPONSE",
+          },
+          enumDescriptions = {
+            "No banned phrase check was executed.",
+            "All banned phrase checks led to no match.",
+            "A banned phrase matched the query.",
+            "A banned phrase matched the response.",
+          },
+          type = "string",
+        },
+        decision = {
+          description = "Safety decision.",
+          enum = {
+            "SAFETY_DECISION_UNSPECIFIED",
+            "ACCEPTED_BY_SAFETY_CHECK",
+            "REJECTED_BY_SAFETY_CHECK",
+          },
+          enumDescriptions = {
+            "Decision not specified.",
+            "No manual or automatic safety check fired.",
+            "One ore more safety checks fired.",
+          },
+          type = "string",
+        },
+        matchedBannedPhrase = {
+          description = "The matched banned phrase if there was a match.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSearchSnippet = {
+      description = "Search snippet details.",
+      id = "GoogleCloudDialogflowCxV3DataStoreConnectionSignalsSearchSnippet",
+      properties = {
+        documentTitle = {
+          description = "Title of the enclosing document.",
+          type = "string",
+        },
+        documentUri = {
+          description = "Uri for the document. Present if specified for the document.",
+          type = "string",
+        },
+        text = {
+          description = "Text included in the prompt.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata = {
       description = "Metadata for DeleteDocument operation.",
       id = "GoogleCloudDialogflowCxV3DeleteDocumentOperationMetadata",
@@ -4317,7 +5477,7 @@ return {
       type = "object",
     },
     GoogleCloudDialogflowCxV3Deployment = {
-      description = "Represents an deployment in an environment. A deployment happens when a flow version configured to be active in the environment. You can configure running pre-deployment steps, e.g. running validation test cases, experiment auto-rollout, etc.",
+      description = "Represents a deployment in an environment. A deployment happens when a flow version configured to be active in the environment. You can configure running pre-deployment steps, e.g. running validation test cases, experiment auto-rollout, etc.",
       id = "GoogleCloudDialogflowCxV3Deployment",
       properties = {
         endTime = {
@@ -4576,7 +5736,7 @@ return {
           type = "string",
         },
         versionConfigs = {
-          description = "Required. A list of configurations for flow versions. You should include version configs for all flows that are reachable from `Start Flow` in the agent. Otherwise, an error will be returned.",
+          description = "A list of configurations for flow versions. You should include version configs for all flows that are reachable from `Start Flow` in the agent. Otherwise, an error will be returned.",
           items = {
             ["$ref"] = "GoogleCloudDialogflowCxV3EnvironmentVersionConfig",
           },
@@ -4918,15 +6078,40 @@ return {
           enum = {
             "DATA_FORMAT_UNSPECIFIED",
             "BLOB",
+            "JSON_PACKAGE",
           },
           enumDescriptions = {
             "Unspecified format.",
             "Agent content will be exported as raw bytes.",
+            "Agent content will be exported in JSON Package format.",
           },
           type = "string",
         },
         environment = {
           description = "Optional. Environment name. If not set, draft environment is assumed. Format: `projects//locations//agents//environments/`.",
+          type = "string",
+        },
+        gitDestination = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3ExportAgentRequestGitDestination",
+          description = "Optional. The Git branch to export the agent to.",
+        },
+        includeBigqueryExportSettings = {
+          description = "Optional. Whether to include BigQuery Export setting.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ExportAgentRequestGitDestination = {
+      description = "Settings for exporting to a git branch.",
+      id = "GoogleCloudDialogflowCxV3ExportAgentRequestGitDestination",
+      properties = {
+        commitMessage = {
+          description = "Commit message for the git push.",
+          type = "string",
+        },
+        trackingBranch = {
+          description = "Tracking branch for the git push.",
           type = "string",
         },
       },
@@ -4937,12 +6122,77 @@ return {
       id = "GoogleCloudDialogflowCxV3ExportAgentResponse",
       properties = {
         agentContent = {
-          description = "Uncompressed raw byte content for agent.",
+          description = "Uncompressed raw byte content for agent. This field is populated if none of `agent_uri` and `git_destination` are specified in ExportAgentRequest.",
           format = "byte",
           type = "string",
         },
         agentUri = {
-          description = "The URI to a file containing the exported agent. This field is populated only if `agent_uri` is specified in ExportAgentRequest.",
+          description = "The URI to a file containing the exported agent. This field is populated if `agent_uri` is specified in ExportAgentRequest.",
+          type = "string",
+        },
+        commitSha = {
+          description = "Commit SHA of the git push. This field is populated if `git_destination` is specified in ExportAgentRequest.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ExportEntityTypesMetadata = {
+      description = "Metadata returned for the EntityTypes.ExportEntityTypes long running operation.",
+      id = "GoogleCloudDialogflowCxV3ExportEntityTypesMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ExportEntityTypesRequest = {
+      description = "The request message for EntityTypes.ExportEntityTypes.",
+      id = "GoogleCloudDialogflowCxV3ExportEntityTypesRequest",
+      properties = {
+        dataFormat = {
+          description = "Optional. The data format of the exported entity types. If not specified, `BLOB` is assumed.",
+          enum = {
+            "DATA_FORMAT_UNSPECIFIED",
+            "BLOB",
+            "JSON_PACKAGE",
+          },
+          enumDescriptions = {
+            "Unspecified format. Treated as `BLOB`.",
+            "EntityTypes will be exported as raw bytes.",
+            "EntityTypes will be exported in JSON Package format.",
+          },
+          type = "string",
+        },
+        entityTypes = {
+          description = "Required. The name of the entity types to export. Format: `projects//locations//agents//entityTypes/`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        entityTypesContentInline = {
+          description = "Optional. The option to return the serialized entity types inline.",
+          type = "boolean",
+        },
+        entityTypesUri = {
+          description = "Optional. The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to export the entity types to. The format of this URI must be `gs:///`. Dialogflow performs a write operation for the Cloud Storage object on the caller's behalf, so your request authentication must have write permissions for the object. For more information, see [Dialogflow access control](https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).",
+          type = "string",
+        },
+        languageCode = {
+          description = "Optional. The language to retrieve the entity type for. The following fields are language dependent: * `EntityType.entities.value` * `EntityType.entities.synonyms` * `EntityType.excluded_phrases.value` If not specified, all language dependent fields will be retrieved. [Many languages](https://cloud.google.com/dialogflow/docs/reference/language) are supported. Note: languages must be enabled in the agent before they can be used.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ExportEntityTypesResponse = {
+      description = "The response message for EntityTypes.ExportEntityTypes.",
+      id = "GoogleCloudDialogflowCxV3ExportEntityTypesResponse",
+      properties = {
+        entityTypesContent = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3InlineDestination",
+          description = "Uncompressed byte content for entity types. This field is populated only if `entity_types_content_inline` is set to true in ExportEntityTypesRequest.",
+        },
+        entityTypesUri = {
+          description = "The URI to a file containing the exported entity types. This field is populated only if `entity_types_uri` is specified in ExportEntityTypesRequest.",
           type = "string",
         },
       },
@@ -4974,6 +6224,65 @@ return {
         },
         flowUri = {
           description = "The URI to a file containing the exported flow. This field is populated only if `flow_uri` is specified in ExportFlowRequest.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ExportIntentsMetadata = {
+      description = "Metadata returned for the Intents.ExportIntents long running operation.",
+      id = "GoogleCloudDialogflowCxV3ExportIntentsMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ExportIntentsRequest = {
+      description = "The request message for Intents.ExportIntents.",
+      id = "GoogleCloudDialogflowCxV3ExportIntentsRequest",
+      properties = {
+        dataFormat = {
+          description = "Optional. The data format of the exported intents. If not specified, `BLOB` is assumed.",
+          enum = {
+            "DATA_FORMAT_UNSPECIFIED",
+            "BLOB",
+            "JSON",
+            "CSV",
+          },
+          enumDescriptions = {
+            "Unspecified format. Treated as `BLOB`.",
+            "Intents will be exported as raw bytes.",
+            "Intents will be exported in JSON format.",
+            "Intents will be exported in CSV format.",
+          },
+          type = "string",
+        },
+        intents = {
+          description = "Required. The name of the intents to export. Format: `projects//locations//agents//intents/`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        intentsContentInline = {
+          description = "Optional. The option to return the serialized intents inline.",
+          type = "boolean",
+        },
+        intentsUri = {
+          description = "Optional. The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to export the intents to. The format of this URI must be `gs:///`. Dialogflow performs a write operation for the Cloud Storage object on the caller's behalf, so your request authentication must have write permissions for the object. For more information, see [Dialogflow access control](https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ExportIntentsResponse = {
+      description = "The response message for Intents.ExportIntents.",
+      id = "GoogleCloudDialogflowCxV3ExportIntentsResponse",
+      properties = {
+        intentsContent = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3InlineDestination",
+          description = "Uncompressed byte content for intents. This field is populated only if `intents_content_inline` is set to true in ExportIntentsRequest.",
+        },
+        intentsUri = {
+          description = "The URI to a file containing the exported intents. This field is populated only if `intents_uri` is specified in ExportIntentsRequest.",
           type = "string",
         },
       },
@@ -5030,10 +6339,32 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3FilterSpecs = {
+      description = "Filter specifications for data stores.",
+      id = "GoogleCloudDialogflowCxV3FilterSpecs",
+      properties = {
+        dataStores = {
+          description = "Optional. Data Stores where the boosting configuration is applied. The full names of the referenced data stores. Formats: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}` `projects/{project}/locations/{location}/dataStores/{data_store}`",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        filter = {
+          description = "Optional. The filter expression to be applied. Expression syntax is documented at https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata#filter-expression-syntax",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3Flow = {
       description = "Flows represents the conversation flows when you build your chatbot agent. A flow consists of many pages connected by the transition routes. Conversations always start with the built-in Start Flow (with an all-0 ID). Transition routes can direct the conversation session from the current flow (parent flow) to another flow (sub flow). When the sub flow is finished, Dialogflow will bring the session back to the parent flow, where the sub flow is started. Usually, when a transition route is followed by a matched intent, the intent will be \"consumed\". This means the intent won't activate more transition routes. However, when the followed transition route moves the conversation session into a different flow, the matched intent can be carried over and to be consumed in the target flow.",
       id = "GoogleCloudDialogflowCxV3Flow",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettings",
+          description = "Hierarchical advanced settings for this flow. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
         description = {
           description = "The description of the flow. The maximum length is 500 characters. If exceeded, the request is rejected.",
           type = "string",
@@ -5049,6 +6380,14 @@ return {
           },
           type = "array",
         },
+        knowledgeConnectorSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3KnowledgeConnectorSettings",
+          description = "Optional. Knowledge connector configuration.",
+        },
+        multiLanguageSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3FlowMultiLanguageSettings",
+          description = "Optional. Multi-lingual agent settings for this flow.",
+        },
         name = {
           description = "The unique identifier of the flow. Format: `projects//locations//agents//flows/`.",
           type = "string",
@@ -5058,7 +6397,7 @@ return {
           description = "NLU related settings of the flow.",
         },
         transitionRouteGroups = {
-          description = "A flow's transition route group serve two purposes: * They are responsible for matching the user's first utterances in the flow. * They are inherited by every page's transition route groups. Transition route groups defined in the page have higher priority than those defined in the flow. Format:`projects//locations//agents//flows//transitionRouteGroups/`.",
+          description = "A flow's transition route group serve two purposes: * They are responsible for matching the user's first utterances in the flow. * They are inherited by every page's transition route groups. Transition route groups defined in the page have higher priority than those defined in the flow. Format:`projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/` for agent-level groups.",
           items = {
             type = "string",
           },
@@ -5068,6 +6407,51 @@ return {
           description = "A flow's transition routes serve two purposes: * They are responsible for matching the user's first utterances in the flow. * They are inherited by every page's transition routes and can support use cases such as the user saying \"help\" or \"can I talk to a human?\", which can be handled in a common way regardless of the current page. Transition routes defined in the page have higher priority than those defined in the flow. TransitionRoutes are evalauted in the following order: * TransitionRoutes with intent specified. * TransitionRoutes with only condition specified. TransitionRoutes with intent specified are inherited by pages in the flow.",
           items = {
             ["$ref"] = "GoogleCloudDialogflowCxV3TransitionRoute",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3FlowImportStrategy = {
+      description = "The flow import strategy used for resource conflict resolution associated with an ImportFlowRequest.",
+      id = "GoogleCloudDialogflowCxV3FlowImportStrategy",
+      properties = {
+        globalImportStrategy = {
+          description = "Optional. Import strategy for resource conflict resolution, applied globally throughout the flow. It will be applied for all display name conflicts in the imported content. If not specified, 'CREATE_NEW' is assumed.",
+          enum = {
+            "IMPORT_STRATEGY_UNSPECIFIED",
+            "IMPORT_STRATEGY_CREATE_NEW",
+            "IMPORT_STRATEGY_REPLACE",
+            "IMPORT_STRATEGY_KEEP",
+            "IMPORT_STRATEGY_MERGE",
+            "IMPORT_STRATEGY_THROW_ERROR",
+          },
+          enumDescriptions = {
+            "Unspecified. Treated as 'CREATE_NEW'.",
+            "Create a new resource with a numeric suffix appended to the end of the existing display name.",
+            "Replace existing resource with incoming resource in the content to be imported.",
+            "Keep existing resource and discard incoming resource in the content to be imported.",
+            "Combine existing and incoming resources when a conflict is encountered.",
+            "Throw error if a conflict is encountered.",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3FlowMultiLanguageSettings = {
+      description = "Settings for multi-lingual agents.",
+      id = "GoogleCloudDialogflowCxV3FlowMultiLanguageSettings",
+      properties = {
+        enableMultiLanguageDetection = {
+          description = "Optional. Enable multi-language detection for this flow. This can be set only if agent level multi language setting is enabled.",
+          type = "boolean",
+        },
+        supportedResponseLanguageCodes = {
+          description = "Optional. Agent will respond in the detected language if the detected language code is in the supported resolved languages for this flow. This will be used only if multi-language training is enabled in the agent and multi-language detection is enabled in the flow. The supported languages must be a subset of the languages supported by the agent.",
+          items = {
+            type = "string",
           },
           type = "array",
         },
@@ -5115,6 +6499,10 @@ return {
       description = "Represents a form parameter.",
       id = "GoogleCloudDialogflowCxV3FormParameter",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettings",
+          description = "Hierarchical advanced settings for this parameter. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
         defaultValue = {
           description = "The default value of an optional parameter. If the parameter is required, the default value will be ignored.",
           type = "any",
@@ -5211,12 +6599,20 @@ return {
       description = "A fulfillment can do one or more of the following actions at the same time: * Generate rich message responses. * Set parameter values. * Call the webhook. Fulfillments can be called at various stages in the Page or Form lifecycle. For example, when a DetectIntentRequest drives a session to enter a new page, the page's entry fulfillment can add a static response to the QueryResult in the returning DetectIntentResponse, call the webhook (for example, to load user data from a database), or both.",
       id = "GoogleCloudDialogflowCxV3Fulfillment",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettings",
+          description = "Hierarchical advanced settings for this fulfillment. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
         conditionalCases = {
           description = "Conditional cases for this fulfillment.",
           items = {
             ["$ref"] = "GoogleCloudDialogflowCxV3FulfillmentConditionalCases",
           },
           type = "array",
+        },
+        enableGenerativeFallback = {
+          description = "If the flag is true, the agent will utilize LLM to generate a text response. If LLM generation fails, the defined responses in the fulfillment will be respected. This flag is only useful for fulfillments associated with no-match event handlers.",
+          type = "boolean",
         },
         messages = {
           description = "The list of rich message responses to present to the user.",
@@ -5309,6 +6705,153 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3GcsDestination = {
+      description = "Google Cloud Storage location for a Dialogflow operation that writes or exports objects (e.g. exported agent or transcripts) outside of Dialogflow.",
+      id = "GoogleCloudDialogflowCxV3GcsDestination",
+      properties = {
+        uri = {
+          description = "Required. The Google Cloud Storage URI for the exported objects. A URI is of the form: `gs://bucket/object-name-or-prefix` Whether a full object name, or just a prefix, its usage depends on the Dialogflow operation.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3GenerativeSettings = {
+      description = "Settings for Generative AI.",
+      id = "GoogleCloudDialogflowCxV3GenerativeSettings",
+      properties = {
+        fallbackSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettings",
+          description = "Settings for Generative Fallback.",
+        },
+        generativeSafetySettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3SafetySettings",
+          description = "Settings for Generative Safety.",
+        },
+        knowledgeConnectorSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3GenerativeSettingsKnowledgeConnectorSettings",
+          description = "Settings for knowledge connector.",
+        },
+        languageCode = {
+          description = "Language for this settings.",
+          type = "string",
+        },
+        name = {
+          description = "Format: `projects//locations//agents//generativeSettings`.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettings = {
+      description = "Settings for Generative Fallback.",
+      id = "GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettings",
+      properties = {
+        promptTemplates = {
+          description = "Stored prompts that can be selected, for example default templates like \"conservative\" or \"chatty\", or user defined ones.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettingsPromptTemplate",
+          },
+          type = "array",
+        },
+        selectedPrompt = {
+          description = "Display name of the selected prompt.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettingsPromptTemplate = {
+      description = "Prompt template.",
+      id = "GoogleCloudDialogflowCxV3GenerativeSettingsFallbackSettingsPromptTemplate",
+      properties = {
+        displayName = {
+          description = "Prompt name.",
+          type = "string",
+        },
+        frozen = {
+          description = "If the flag is true, the prompt is frozen and cannot be modified by users.",
+          type = "boolean",
+        },
+        promptText = {
+          description = "Prompt text that is sent to a LLM on no-match default, placeholders are filled downstream. For example: \"Here is a conversation $conversation, a response is: \"",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3GenerativeSettingsKnowledgeConnectorSettings = {
+      description = "Settings for knowledge connector. These parameters are used for LLM prompt like \"You are . You are a helpful and verbose at , . Your task is to help humans on \".",
+      id = "GoogleCloudDialogflowCxV3GenerativeSettingsKnowledgeConnectorSettings",
+      properties = {
+        agent = {
+          description = "Name of the virtual agent. Used for LLM prompt. Can be left empty.",
+          type = "string",
+        },
+        agentIdentity = {
+          description = "Identity of the agent, e.g. \"virtual agent\", \"AI assistant\".",
+          type = "string",
+        },
+        agentScope = {
+          description = "Agent scope, e.g. \"Example company website\", \"internal Example company website for employees\", \"manual of car owner\".",
+          type = "string",
+        },
+        business = {
+          description = "Name of the company, organization or other entity that the agent represents. Used for knowledge connector LLM prompt and for knowledge search.",
+          type = "string",
+        },
+        businessDescription = {
+          description = "Company description, used for LLM prompt, e.g. \"a family company selling freshly roasted coffee beans\".",
+          type = "string",
+        },
+        disableDataStoreFallback = {
+          description = "Whether to disable fallback to Data Store search results (in case the LLM couldn't pick a proper answer). Per default the feature is enabled.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3Generator = {
+      description = "Generators contain prompt to be sent to the LLM model to generate text. The prompt can contain parameters which will be resolved before calling the model. It can optionally contain banned phrases to ensure the model responses are safe.",
+      id = "GoogleCloudDialogflowCxV3Generator",
+      properties = {
+        displayName = {
+          description = "Required. The human-readable name of the generator, unique within the agent. The prompt contains pre-defined parameters such as $conversation, $last-user-utterance, etc. populated by Dialogflow. It can also contain custom placeholders which will be resolved during fulfillment.",
+          type = "string",
+        },
+        name = {
+          description = "The unique identifier of the generator. Must be set for the Generators.UpdateGenerator method. Generators.CreateGenerate populates the name automatically. Format: `projects//locations//agents//generators/`.",
+          type = "string",
+        },
+        placeholders = {
+          description = "Optional. List of custom placeholders in the prompt text.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3GeneratorPlaceholder",
+          },
+          type = "array",
+        },
+        promptText = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3Phrase",
+          description = "Required. Prompt for the LLM model.",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3GeneratorPlaceholder = {
+      description = "Represents a custom placeholder in the prompt text.",
+      id = "GoogleCloudDialogflowCxV3GeneratorPlaceholder",
+      properties = {
+        id = {
+          description = "Unique ID used to map custom placeholder to parameters in fulfillment.",
+          type = "string",
+        },
+        name = {
+          description = "Custom placeholder value in the prompt text.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata = {
       description = "Metadata in google::longrunning::Operation for Knowledge operations.",
       id = "GoogleCloudDialogflowCxV3GenericKnowledgeOperationMetadata",
@@ -5358,6 +6901,90 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3ImportEntityTypesMetadata = {
+      description = "Metadata returned for the EntityTypes.ImportEntityTypes long running operation.",
+      id = "GoogleCloudDialogflowCxV3ImportEntityTypesMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ImportEntityTypesRequest = {
+      description = "The request message for EntityTypes.ImportEntityTypes.",
+      id = "GoogleCloudDialogflowCxV3ImportEntityTypesRequest",
+      properties = {
+        entityTypesContent = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3InlineSource",
+          description = "Uncompressed byte content of entity types.",
+        },
+        entityTypesUri = {
+          description = "The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to import entity types from. The format of this URI must be `gs:///`. Dialogflow performs a read operation for the Cloud Storage object on the caller's behalf, so your request authentication must have read permissions for the object. For more information, see [Dialogflow access control](https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).",
+          type = "string",
+        },
+        mergeOption = {
+          description = "Required. Merge option for importing entity types.",
+          enum = {
+            "MERGE_OPTION_UNSPECIFIED",
+            "REPLACE",
+            "MERGE",
+            "RENAME",
+            "REPORT_CONFLICT",
+            "KEEP",
+          },
+          enumDescriptions = {
+            "Unspecified. If used, system uses REPORT_CONFLICT as default.",
+            "Replace the original entity type in the agent with the new entity type when display name conflicts exist.",
+            "Merge the original entity type with the new entity type when display name conflicts exist.",
+            "Create new entity types with new display names to differentiate them from the existing entity types when display name conflicts exist.",
+            "Report conflict information if display names conflict is detected. Otherwise, import entity types.",
+            "Keep the original entity type and discard the conflicting new entity type when display name conflicts exist.",
+          },
+          type = "string",
+        },
+        targetEntityType = {
+          description = "Optional. The target entity type to import into. Format: `projects//locations//agents//entity_types/`. If set, there should be only one entity type included in entity_types, of which the type should match the type of the target entity type. All entities in the imported entity type will be added to the target entity type.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ImportEntityTypesResponse = {
+      description = "The response message for EntityTypes.ImportEntityTypes.",
+      id = "GoogleCloudDialogflowCxV3ImportEntityTypesResponse",
+      properties = {
+        conflictingResources = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources",
+          description = "Info which resources have conflicts when REPORT_CONFLICT merge_option is set in ImportEntityTypesRequest.",
+        },
+        entityTypes = {
+          description = "The unique identifier of the imported entity types. Format: `projects//locations//agents//entity_types/`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources = {
+      description = "Conflicting resources detected during the import process. Only filled when REPORT_CONFLICT is set in the request and there are conflicts in the display names.",
+      id = "GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources",
+      properties = {
+        entityDisplayNames = {
+          description = "Display names of conflicting entities.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        entityTypeDisplayNames = {
+          description = "Display names of conflicting entity types.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3ImportFlowRequest = {
       description = "The request message for Flows.ImportFlow.",
       id = "GoogleCloudDialogflowCxV3ImportFlowRequest",
@@ -5366,6 +6993,10 @@ return {
           description = "Uncompressed raw byte content for flow.",
           format = "byte",
           type = "string",
+        },
+        flowImportStrategy = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3FlowImportStrategy",
+          description = "Optional. Specifies the import strategy used when resolving resource conflicts.",
         },
         flowUri = {
           description = "The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to import flow from. The format of this URI must be `gs:///`. Dialogflow performs a read operation for the Cloud Storage object on the caller's behalf, so your request authentication must have read permissions for the object. For more information, see [Dialogflow access control](https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).",
@@ -5395,6 +7026,97 @@ return {
         flow = {
           description = "The unique identifier of the new flow. Format: `projects//locations//agents//flows/`.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ImportIntentsMetadata = {
+      description = "Metadata returned for the Intents.ImportIntents long running operation.",
+      id = "GoogleCloudDialogflowCxV3ImportIntentsMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ImportIntentsRequest = {
+      description = "The request message for Intents.ImportIntents.",
+      id = "GoogleCloudDialogflowCxV3ImportIntentsRequest",
+      properties = {
+        intentsContent = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3InlineSource",
+          description = "Uncompressed byte content of intents.",
+        },
+        intentsUri = {
+          description = "The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to import intents from. The format of this URI must be `gs:///`. Dialogflow performs a read operation for the Cloud Storage object on the caller's behalf, so your request authentication must have read permissions for the object. For more information, see [Dialogflow access control](https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).",
+          type = "string",
+        },
+        mergeOption = {
+          description = "Merge option for importing intents. If not specified, `REJECT` is assumed.",
+          enum = {
+            "MERGE_OPTION_UNSPECIFIED",
+            "REJECT",
+            "REPLACE",
+            "MERGE",
+            "RENAME",
+            "REPORT_CONFLICT",
+            "KEEP",
+          },
+          enumDeprecated = {
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+          },
+          enumDescriptions = {
+            "Unspecified. Should not be used.",
+            "DEPRECATED: Please use REPORT_CONFLICT instead. Fail the request if there are intents whose display names conflict with the display names of intents in the agent.",
+            "Replace the original intent in the agent with the new intent when display name conflicts exist.",
+            "Merge the original intent with the new intent when display name conflicts exist.",
+            "Create new intents with new display names to differentiate them from the existing intents when display name conflicts exist.",
+            "Report conflict information if display names conflict is detected. Otherwise, import intents.",
+            "Keep the original intent and discard the conflicting new intent when display name conflicts exist.",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ImportIntentsResponse = {
+      description = "The response message for Intents.ImportIntents.",
+      id = "GoogleCloudDialogflowCxV3ImportIntentsResponse",
+      properties = {
+        conflictingResources = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources",
+          description = "Info which resources have conflicts when REPORT_CONFLICT merge_option is set in ImportIntentsRequest.",
+        },
+        intents = {
+          description = "The unique identifier of the imported intents. Format: `projects//locations//agents//intents/`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources = {
+      description = "Conflicting resources detected during the import process. Only filled when REPORT_CONFLICT is set in the request and there are conflicts in the display names.",
+      id = "GoogleCloudDialogflowCxV3ImportIntentsResponseConflictingResources",
+      properties = {
+        entityDisplayNames = {
+          description = "Display names of conflicting entities.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        intentDisplayNames = {
+          description = "Display names of conflicting intents.",
+          items = {
+            type = "string",
+          },
+          type = "array",
         },
       },
       type = "object",
@@ -5443,6 +7165,31 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3InlineDestination = {
+      description = "Inline destination for a Dialogflow operation that writes or exports objects (e.g. intents) outside of Dialogflow.",
+      id = "GoogleCloudDialogflowCxV3InlineDestination",
+      properties = {
+        content = {
+          description = "Output only. The uncompressed byte content for the objects. Only populated in responses.",
+          format = "byte",
+          readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3InlineSource = {
+      description = "Inline source for a Dialogflow operation that reads or imports objects (e.g. intents) into Dialogflow.",
+      id = "GoogleCloudDialogflowCxV3InlineSource",
+      properties = {
+        content = {
+          description = "The uncompressed byte content for the objects.",
+          format = "byte",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3InputAudioConfig = {
       description = "Instructs the speech recognizer on how to process the audio content.",
       id = "GoogleCloudDialogflowCxV3InputAudioConfig",
@@ -5471,12 +7218,16 @@ return {
           },
           type = "string",
         },
+        bargeInConfig = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3BargeInConfig",
+          description = "Configuration of barge-in behavior during the streaming of input audio.",
+        },
         enableWordInfo = {
           description = "Optional. If `true`, Dialogflow returns SpeechWordInfo in StreamingRecognitionResult with information about the recognized speech words, e.g. start and end time offsets. If false or unspecified, Speech doesn't return any word-level information.",
           type = "boolean",
         },
         model = {
-          description = "Optional. Which Speech model to select for the given request. Select the model best suited to your domain to get best results. If a model is not explicitly specified, then we auto-select a model based on the parameters in the InputAudioConfig. If enhanced speech model is enabled for the agent and an enhanced version of the specified model for the language does not exist, then the speech is recognized using the standard version of the specified model. Refer to [Cloud Speech API documentation](https://cloud.google.com/speech-to-text/docs/basics#select-model) for more details.",
+          description = "Optional. Which Speech model to select for the given request. For more information, see [Speech models](https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).",
           type = "string",
         },
         modelVariant = {
@@ -5489,11 +7240,15 @@ return {
           },
           enumDescriptions = {
             "No model variant specified. In this case Dialogflow defaults to USE_BEST_AVAILABLE.",
-            "Use the best available variant of the Speech model that the caller is eligible for. Please see the [Dialogflow docs](https://cloud.google.com/dialogflow/docs/data-logging) for how to make your project eligible for enhanced models.",
+            "Use the best available variant of the Speech model that the caller is eligible for.",
             "Use standard model variant even if an enhanced model is available. See the [Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models) for details about enhanced models.",
-            "Use an enhanced model variant: * If an enhanced variant does not exist for the given model and request language, Dialogflow falls back to the standard variant. The [Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models) describes which models have enhanced variants. * If the API caller isn't eligible for enhanced models, Dialogflow returns an error. Please see the [Dialogflow docs](https://cloud.google.com/dialogflow/docs/data-logging) for how to make your project eligible.",
+            "Use an enhanced model variant: * If an enhanced variant does not exist for the given model and request language, Dialogflow falls back to the standard variant. The [Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models) describes which models have enhanced variants.",
           },
           type = "string",
+        },
+        optOutConformerModelMigration = {
+          description = "If `true`, the request will opt out for STT conformer model migration. This field will be deprecated once force migration takes place in June 2024. Please refer to [Dialogflow CX Speech model migration](https://cloud.google.com/dialogflow/cx/docs/concept/speech-model-migration).",
+          type = "boolean",
         },
         phraseHints = {
           description = "Optional. A list of strings containing words and phrases that the speech recognizer should recognize with higher likelihood. See [the Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/basics#phrase-hints) for more details.",
@@ -5587,7 +7342,7 @@ return {
       id = "GoogleCloudDialogflowCxV3IntentCoverageIntent",
       properties = {
         covered = {
-          description = "Whether or not the intent is covered by at least one of the agent's test cases.",
+          description = "Whether the intent is covered by at least one of the agent's test cases.",
           type = "boolean",
         },
         intent = {
@@ -5665,6 +7420,36 @@ return {
         text = {
           description = "Required. The text for this part.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3KnowledgeConnectorSettings = {
+      description = "The Knowledge Connector settings for this page or flow. This includes information such as the attached Knowledge Bases, and the way to execute fulfillment.",
+      id = "GoogleCloudDialogflowCxV3KnowledgeConnectorSettings",
+      properties = {
+        dataStoreConnections = {
+          description = "Optional. List of related data store connections.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnection",
+          },
+          type = "array",
+        },
+        enabled = {
+          description = "Whether Knowledge Connector is enabled or not.",
+          type = "boolean",
+        },
+        targetFlow = {
+          description = "The target flow to transition to. Format: `projects//locations//agents//flows/`.",
+          type = "string",
+        },
+        targetPage = {
+          description = "The target page to transition to. Format: `projects//locations//agents//flows//pages/`.",
+          type = "string",
+        },
+        triggerFulfillment = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3Fulfillment",
+          description = "The fulfillment to be triggered. When the answers from the Knowledge Connector are selected by Dialogflow, you can utitlize the request scoped parameter `$request.knowledge.answers` (contains up to the 5 highest confidence answers) and `$request.knowledge.questions` (contains the corresponding questions) to construct the fulfillment.",
         },
       },
       type = "object",
@@ -5803,6 +7588,24 @@ return {
           description = "The list of flows. There will be a maximum number of items returned based on the page_size field in the request.",
           items = {
             ["$ref"] = "GoogleCloudDialogflowCxV3Flow",
+          },
+          type = "array",
+        },
+        nextPageToken = {
+          description = "Token to retrieve the next page of results, or empty if there are no more results in the list.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ListGeneratorsResponse = {
+      description = "The response message for Generators.ListGenerators.",
+      id = "GoogleCloudDialogflowCxV3ListGeneratorsResponse",
+      properties = {
+        generators = {
+          description = "The list of generators. There will be a maximum number of items returned based on the page_size field in the request.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3Generator",
           },
           type = "array",
         },
@@ -6062,6 +7865,10 @@ return {
       description = "Request of MatchIntent.",
       id = "GoogleCloudDialogflowCxV3MatchIntentRequest",
       properties = {
+        persistParameterChanges = {
+          description = "Persist session parameter changes from `query_params`.",
+          type = "boolean",
+        },
         queryInput = {
           ["$ref"] = "GoogleCloudDialogflowCxV3QueryInput",
           description = "Required. The input specification.",
@@ -6178,7 +7985,7 @@ return {
         },
         synthesizeSpeechConfig = {
           ["$ref"] = "GoogleCloudDialogflowCxV3SynthesizeSpeechConfig",
-          description = "Optional. Configuration of how speech should be synthesized.",
+          description = "Optional. Configuration of how speech should be synthesized. If not specified, Agent.text_to_speech_settings is applied.",
         },
       },
       type = "object",
@@ -6187,6 +7994,14 @@ return {
       description = "A Dialogflow CX conversation (session) can be described and visualized as a state machine. The states of a CX session are represented by pages. For each flow, you define many pages, where your combined pages can handle a complete conversation on the topics the flow is designed for. At any given moment, exactly one page is the current page, the current page is considered active, and the flow associated with that page is considered active. Every flow has a special start page. When a flow initially becomes active, the start page page becomes the current page. For each conversational turn, the current page will either stay the same or transition to another page. You configure each page to collect information from the end-user that is relevant for the conversational state represented by the page. For more information, see the [Page guide](https://cloud.google.com/dialogflow/cx/docs/concept/page).",
       id = "GoogleCloudDialogflowCxV3Page",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettings",
+          description = "Hierarchical advanced settings for this page. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
+        description = {
+          description = "The description of the page. The maximum length is 500 characters.",
+          type = "string",
+        },
         displayName = {
           description = "Required. The human-readable name of the page, unique within the flow.",
           type = "string",
@@ -6206,12 +8021,16 @@ return {
           ["$ref"] = "GoogleCloudDialogflowCxV3Form",
           description = "The form associated with the page, used for collecting parameters relevant to the page.",
         },
+        knowledgeConnectorSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3KnowledgeConnectorSettings",
+          description = "Optional. Knowledge connector configuration.",
+        },
         name = {
           description = "The unique identifier of the page. Required for the Pages.UpdatePage method. Pages.CreatePage populates the name automatically. Format: `projects//locations//agents//flows//pages/`.",
           type = "string",
         },
         transitionRouteGroups = {
-          description = "Ordered list of `TransitionRouteGroups` associated with the page. Transition route groups must be unique within a page. * If multiple transition routes within a page scope refer to the same intent, then the precedence order is: page's transition route -> page's transition route group -> flow's transition routes. * If multiple transition route groups within a page contain the same intent, then the first group in the ordered list takes precedence. Format:`projects//locations//agents//flows//transitionRouteGroups/`.",
+          description = "Ordered list of `TransitionRouteGroups` added to the page. Transition route groups must be unique within a page. If the page links both flow-level transition route groups and agent-level transition route groups, the flow-level ones will have higher priority and will be put before the agent-level ones. * If multiple transition routes within a page scope refer to the same intent, then the precedence order is: page's transition route -> page's transition route group -> flow's transition routes. * If multiple transition route groups within a page contain the same intent, then the first group in the ordered list takes precedence. Format:`projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/` for agent-level groups.",
           items = {
             type = "string",
           },
@@ -6299,8 +8118,19 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3Phrase = {
+      description = "Text input which can be used for prompt or banned phrases.",
+      id = "GoogleCloudDialogflowCxV3Phrase",
+      properties = {
+        text = {
+          description = "Required. Text input which can be used for prompt or banned phrases.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3QueryInput = {
-      description = "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. ",
+      description = "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. 5. DTMF digits to invoke an intent and fill in parameter value. 6. The results of a tool executed by the client.",
       id = "GoogleCloudDialogflowCxV3QueryInput",
       properties = {
         audio = {
@@ -6350,6 +8180,14 @@ return {
           description = "Whether to disable webhook calls for this request.",
           type = "boolean",
         },
+        endUserMetadata = {
+          additionalProperties = {
+            description = "Properties of the object.",
+            type = "any",
+          },
+          description = "Optional. Information about the end-user to improve the relevance and accuracy of generative answers. This will be interpreted and used by a language model, so, for good results, the data should be self-descriptive, and in a simple structure. Example: ```json { \"subscription plan\": \"Business Premium Plus\", \"devices owned\": [ {\"model\": \"Google Pixel 7\"}, {\"model\": \"Google Pixel Tablet\"} ] } ```",
+          type = "object",
+        },
         flowVersions = {
           description = "A list of flow versions to override for the request. Format: `projects//locations//agents//flows//versions/`. If version 1 of flow X is included in this list, the traffic of flow X will go through version 1 regardless of the version configuration in the environment. Each flow can have at most one version specified in this list.",
           items = {
@@ -6377,12 +8215,25 @@ return {
           description = "This field can be used to pass custom data into the webhook associated with the agent. Arbitrary JSON objects are supported. Some integrations that query a Dialogflow agent may provide additional information in the payload. In particular, for the Dialogflow Phone Gateway integration, this field has the form: ``` { \"telephony\": { \"caller_id\": \"+18558363987\" } } ```",
           type = "object",
         },
+        populateDataStoreConnectionSignals = {
+          description = "Optional. If set to true and data stores are involved in serving the request then DetectIntentResponse.query_result.data_store_connection_signals will be filled with data that can help evaluations.",
+          type = "boolean",
+        },
+        searchConfig = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3SearchConfig",
+          description = "Optional. Search configuration for UCS search queries.",
+        },
         sessionEntityTypes = {
           description = "Additional session entity types to replace or extend developer entity types with. The entity synonyms apply to all languages and persist for the session of this query.",
           items = {
             ["$ref"] = "GoogleCloudDialogflowCxV3SessionEntityType",
           },
           type = "array",
+        },
+        sessionTtl = {
+          description = "Optional. Configure lifetime of the Dialogflow session. By default, a Dialogflow session remains active and its data is stored for 30 minutes after the last request is sent for the session. This value should be no longer than 1 day.",
+          format = "google-duration",
+          type = "string",
         },
         timeZone = {
           description = "The time zone of this conversational query from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris. If not provided, the time zone specified in the agent is used.",
@@ -6402,9 +8253,21 @@ return {
       description = "Represents the result of a conversational query.",
       id = "GoogleCloudDialogflowCxV3QueryResult",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AdvancedSettings",
+          description = "Returns the current advanced settings including IVR settings. Even though the operations configured by these settings are performed by Dialogflow, the client may need to perform special logic at the moment. For example, if Dialogflow exports audio to Google Cloud Storage, then the client may need to wait for the resulting object to appear in the bucket before proceeding.",
+        },
+        allowAnswerFeedback = {
+          description = "Indicates whether the Thumbs up/Thumbs down rating controls are need to be shown for the response in the Dialogflow Messenger widget.",
+          type = "boolean",
+        },
         currentPage = {
           ["$ref"] = "GoogleCloudDialogflowCxV3Page",
           description = "The current Page. Some, not all fields are filled in this message, including but not limited to `name` and `display_name`.",
+        },
+        dataStoreConnectionSignals = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3DataStoreConnectionSignals",
+          description = "Optional. Data store connection feature output signals. Filled only when data stores are involved in serving the query and DetectIntentRequest.populate data_store_connection_quality_signals is set to true in the request.",
         },
         diagnosticInfo = {
           additionalProperties = {
@@ -6416,13 +8279,15 @@ return {
         },
         dtmf = {
           ["$ref"] = "GoogleCloudDialogflowCxV3DtmfInput",
-          description = "If a DTMF was provided as input, this field will contain a copy of the DTMFInput.",
+          description = "If a DTMF was provided as input, this field will contain a copy of the DtmfInput.",
         },
         intent = {
           ["$ref"] = "GoogleCloudDialogflowCxV3Intent",
+          deprecated = true,
           description = "The Intent that matched the conversational query. Some, not all fields are filled in this message, including but not limited to: `name` and `display_name`. This field is deprecated, please use QueryResult.match instead.",
         },
         intentDetectionConfidence = {
+          deprecated = true,
           description = "The intent detection confidence. Values range from 0.0 (completely uncertain) to 1.0 (completely certain). This value is for informational purpose only and is only used to help match the best intent within the classification threshold. This value may change for the same end-user expression at any time due to a model retraining or change in implementation. This field is deprecated, please use QueryResult.match instead.",
           format = "float",
           type = "number",
@@ -6534,6 +8399,10 @@ return {
           description = "Output only. A signal that indicates the interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only when the conversation reaches `END_SESSION` page. It is not supposed to be defined by the user. It's guaranteed that there is at most one such message in each response.",
           readOnly = true,
         },
+        knowledgeInfoCard = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3ResponseMessageKnowledgeInfoCard",
+          description = "Represents info card for knowledge answers, to be better rendered in Dialogflow Messenger.",
+        },
         liveAgentHandoff = {
           ["$ref"] = "GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff",
           description = "Hands off conversation to a human agent.",
@@ -6558,6 +8427,22 @@ return {
         playAudio = {
           ["$ref"] = "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
           description = "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way.",
+        },
+        responseType = {
+          description = "Response type.",
+          enum = {
+            "RESPONSE_TYPE_UNSPECIFIED",
+            "ENTRY_PROMPT",
+            "PARAMETER_PROMPT",
+            "HANDLER_PROMPT",
+          },
+          enumDescriptions = {
+            "Not specified.",
+            "The response is from an entry prompt in the page.",
+            "The response is from form-filling prompt in the page.",
+            "The response is from a transition route or an event handler in the page or flow or transition route group.",
+          },
+          type = "string",
         },
         telephonyTransferCall = {
           ["$ref"] = "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall",
@@ -6588,6 +8473,12 @@ return {
     GoogleCloudDialogflowCxV3ResponseMessageEndInteraction = {
       description = "Indicates that interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only and not supposed to be defined by the user.",
       id = "GoogleCloudDialogflowCxV3ResponseMessageEndInteraction",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3ResponseMessageKnowledgeInfoCard = {
+      description = "Represents info card response. If the response contains generative knowledge prediction, Dialogflow will return a payload with Infobot Messenger compatible info card. Otherwise, the info card response is skipped.",
+      id = "GoogleCloudDialogflowCxV3ResponseMessageKnowledgeInfoCard",
       properties = {},
       type = "object",
     },
@@ -6720,6 +8611,10 @@ return {
           description = "The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to restore agent from. The format of this URI must be `gs:///`. Dialogflow performs a read operation for the Cloud Storage object on the caller's behalf, so your request authentication must have read permissions for the object. For more information, see [Dialogflow access control](https://cloud.google.com/dialogflow/cx/docs/concept/access-control#storage).",
           type = "string",
         },
+        gitSource = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3RestoreAgentRequestGitSource",
+          description = "Setting for restoring from a git branch",
+        },
         restoreOption = {
           description = "Agent restore mode. If not specified, `KEEP` is assumed.",
           enum = {
@@ -6732,6 +8627,17 @@ return {
             "Always respect the settings from the exported agent file. It may cause a restoration failure if some settings (e.g. model type) are not supported in the target agent.",
             "Fallback to default settings if some settings are not supported in the target agent.",
           },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3RestoreAgentRequestGitSource = {
+      description = "Settings for restoring from a git branch",
+      id = "GoogleCloudDialogflowCxV3RestoreAgentRequestGitSource",
+      properties = {
+        trackingBranch = {
+          description = "tracking branch for the git pull",
           type = "string",
         },
       },
@@ -6860,6 +8766,56 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3SafetySettings = {
+      description = "Settings for Generative Safety.",
+      id = "GoogleCloudDialogflowCxV3SafetySettings",
+      properties = {
+        bannedPhrases = {
+          description = "Banned phrases for generated text.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3SafetySettingsPhrase",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3SafetySettingsPhrase = {
+      description = "Text input which can be used for prompt or banned phrases.",
+      id = "GoogleCloudDialogflowCxV3SafetySettingsPhrase",
+      properties = {
+        languageCode = {
+          description = "Required. Language code of the phrase.",
+          type = "string",
+        },
+        text = {
+          description = "Required. Text input which can be used for prompt or banned phrases.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3SearchConfig = {
+      description = "Search configuration for UCS search queries.",
+      id = "GoogleCloudDialogflowCxV3SearchConfig",
+      properties = {
+        boostSpecs = {
+          description = "Optional. Boosting configuration for the datastores.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3BoostSpecs",
+          },
+          type = "array",
+        },
+        filterSpecs = {
+          description = "Optional. Filter configuration for the datastores.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3FilterSpecs",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3SecuritySettings = {
       description = "Represents the settings related to security issues, such as data redaction and data retention. It may take hours for updates on the settings to propagate to all the related components and take effect.",
       id = "GoogleCloudDialogflowCxV3SecuritySettings",
@@ -6927,8 +8883,20 @@ return {
           },
           type = "string",
         },
+        retentionStrategy = {
+          description = "Specifies the retention behavior defined by SecuritySettings.RetentionStrategy.",
+          enum = {
+            "RETENTION_STRATEGY_UNSPECIFIED",
+            "REMOVE_AFTER_CONVERSATION",
+          },
+          enumDescriptions = {
+            "Retains the persisted data with Dialogflow's internal default 365d TTLs.",
+            "Removes data when the conversation ends. If there is no Conversation explicitly established, a default conversation ends when the corresponding Dialogflow session ends.",
+          },
+          type = "string",
+        },
         retentionWindowDays = {
-          description = "Retains the data for the specified number of days. User must set a value lower than Dialogflow's default 365d TTL (30 days for Agent Assist traffic), higher value will be ignored and use default. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use default TTL.",
+          description = "Retains the data for the specified number of days. User must set a value lower than Dialogflow's default 365d TTL (30 days for Agent Assist traffic), higher value will be ignored and use default. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use default TTL. When data retention configuration is changed, it only applies to the data created after the change; the TTL of existing data created before the change stays intact.",
           format = "int32",
           type = "integer",
         },
@@ -6960,7 +8928,7 @@ return {
           type = "string",
         },
         enableAudioRedaction = {
-          description = "Enable audio redaction if it is true.",
+          description = "Enable audio redaction if it is true. Note that this only redacts end-user audio data; Synthesised audio from the virtual agent is not redacted.",
           type = "boolean",
         },
         gcsBucket = {
@@ -7069,6 +9037,26 @@ return {
       description = "The request message for Experiments.StopExperiment.",
       id = "GoogleCloudDialogflowCxV3StopExperimentRequest",
       properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3SubmitAnswerFeedbackRequest = {
+      description = "The request to set the feedback for a bot answer.",
+      id = "GoogleCloudDialogflowCxV3SubmitAnswerFeedbackRequest",
+      properties = {
+        answerFeedback = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3AnswerFeedback",
+          description = "Required. Feedback provided for a bot answer.",
+        },
+        responseId = {
+          description = "Required. ID of the response to update its feedback. This is the same as DetectIntentResponse.response_id.",
+          type = "string",
+        },
+        updateMask = {
+          description = "Optional. The mask to control which fields to update. If the mask is not present, all fields will be updated.",
+          format = "google-fieldmask",
+          type = "string",
+        },
+      },
       type = "object",
     },
     GoogleCloudDialogflowCxV3SynthesizeSpeechConfig = {
@@ -7254,7 +9242,7 @@ return {
       id = "GoogleCloudDialogflowCxV3TestRunDifference",
       properties = {
         description = {
-          description = "A description of the diff, showing the actual output vs expected output.",
+          description = "A human readable description of the diff, showing the actual output vs expected output.",
           type = "string",
         },
         type = {
@@ -7265,6 +9253,7 @@ return {
             "PAGE",
             "PARAMETERS",
             "UTTERANCE",
+            "FLOW",
           },
           enumDescriptions = {
             "Should never be used.",
@@ -7272,6 +9261,7 @@ return {
             "The page.",
             "The parameters.",
             "The message utterance.",
+            "The flow.",
           },
           type = "string",
         },
@@ -7283,8 +9273,22 @@ return {
       id = "GoogleCloudDialogflowCxV3TextInput",
       properties = {
         text = {
-          description = "Required. The UTF-8 encoded natural language text to be processed. Text length must not exceed 256 characters.",
+          description = "Required. The UTF-8 encoded natural language text to be processed.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3TextToSpeechSettings = {
+      description = "Settings related to speech synthesizing.",
+      id = "GoogleCloudDialogflowCxV3TextToSpeechSettings",
+      properties = {
+        synthesizeSpeechConfigs = {
+          additionalProperties = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3SynthesizeSpeechConfig",
+          },
+          description = "Configuration of how speech should be synthesized, mapping from language (https://cloud.google.com/dialogflow/cx/docs/reference/language) to SynthesizeSpeechConfig. These settings affect: - The [phone gateway](https://cloud.google.com/dialogflow/cx/docs/concept/integration/phone-gateway) synthesize configuration set via Agent.text_to_speech_settings. - How speech is synthesized when invoking session APIs. Agent.text_to_speech_settings only applies if OutputAudioConfig.synthesize_speech_config is not specified.",
+          type = "object",
         },
       },
       type = "object",
@@ -7319,7 +9323,7 @@ return {
       id = "GoogleCloudDialogflowCxV3TransitionCoverageTransition",
       properties = {
         covered = {
-          description = "Whether or not the transition is covered by at least one of the agent's test cases.",
+          description = "Whether the transition is covered by at least one of the agent's test cases.",
           type = "boolean",
         },
         eventHandler = {
@@ -7369,6 +9373,10 @@ return {
           description = "The condition to evaluate against form parameters or session parameters. See the [conditions reference](https://cloud.google.com/dialogflow/cx/docs/reference/condition). At least one of `intent` or `condition` must be specified. When both `intent` and `condition` are specified, the transition can only happen when both are fulfilled.",
           type = "string",
         },
+        description = {
+          description = "Optional. The description of the transition route. The maximum length is 500 characters.",
+          type = "string",
+        },
         intent = {
           description = "The unique identifier of an Intent. Format: `projects//locations//agents//intents/`. Indicates that the transition can only happen when the given intent is matched. At least one of `intent` or `condition` must be specified. When both `intent` and `condition` are specified, the transition can only happen when both are fulfilled.",
           type = "string",
@@ -7394,7 +9402,7 @@ return {
       type = "object",
     },
     GoogleCloudDialogflowCxV3TransitionRouteGroup = {
-      description = "An TransitionRouteGroup represents a group of `TransitionRoutes` to be used by a Page.",
+      description = "A TransitionRouteGroup represents a group of `TransitionRoutes` to be used by a Page.",
       id = "GoogleCloudDialogflowCxV3TransitionRouteGroup",
       properties = {
         displayName = {
@@ -7402,7 +9410,7 @@ return {
           type = "string",
         },
         name = {
-          description = "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/`.",
+          description = "The unique identifier of the transition route group. TransitionRouteGroups.CreateTransitionRouteGroup populates the name automatically. Format: `projects//locations//agents//flows//transitionRouteGroups/` .",
           type = "string",
         },
         transitionRoutes = {
@@ -7462,7 +9470,7 @@ return {
       id = "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverageCoverageTransition",
       properties = {
         covered = {
-          description = "Whether or not the transition route is covered by at least one of the agent's test cases.",
+          description = "Whether the transition route is covered by at least one of the agent's test cases.",
           type = "boolean",
         },
         transitionRoute = {
@@ -7512,6 +9520,16 @@ return {
         reachedEndPage = {
           description = "Whether turn resulted in End Session page.",
           type = "boolean",
+        },
+        sentimentMagnitude = {
+          description = "Sentiment magnitude of the user utterance if [sentiment](https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was enabled.",
+          format = "float",
+          type = "number",
+        },
+        sentimentScore = {
+          description = "Sentiment score of the user utterance if [sentiment](https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was enabled.",
+          format = "float",
+          type = "number",
         },
         userEscalated = {
           description = "Whether user was specifically asking for a live agent.",
@@ -7592,6 +9610,7 @@ return {
             "PAGE",
             "PAGES",
             "TRANSITION_ROUTE_GROUP",
+            "AGENT_TRANSITION_ROUTE_GROUP",
           },
           enumDescriptions = {
             "Unspecified.",
@@ -7608,10 +9627,12 @@ return {
             "Page.",
             "Multiple pages.",
             "Transition route group.",
+            "Agent transition route group.",
           },
           type = "string",
         },
         resources = {
+          deprecated = true,
           description = "The names of the resources where the message is found.",
           items = {
             type = "string",
@@ -7805,8 +9826,48 @@ return {
           },
           type = "array",
         },
+        httpMethod = {
+          description = "Optional. HTTP method for the flexible webhook calls. Standard webhook always uses POST.",
+          enum = {
+            "HTTP_METHOD_UNSPECIFIED",
+            "POST",
+            "GET",
+            "HEAD",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS",
+          },
+          enumDescriptions = {
+            "HTTP method not specified.",
+            "HTTP POST Method.",
+            "HTTP GET Method.",
+            "HTTP HEAD Method.",
+            "HTTP PUT Method.",
+            "HTTP DELETE Method.",
+            "HTTP PATCH Method.",
+            "HTTP OPTIONS Method.",
+          },
+          type = "string",
+        },
+        oauthConfig = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig",
+          description = "Optional. The OAuth configuration of the webhook. If specified, Dialogflow will initiate the OAuth client credential flow to exchange an access token from the 3rd party platform and put it in the auth header.",
+        },
+        parameterMapping = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Optional. Maps the values extracted from specific fields of the flexible webhook response into session parameters. - Key: session parameter name - Value: field path in the webhook response",
+          type = "object",
+        },
         password = {
+          deprecated = true,
           description = "The password for HTTP Basic authentication.",
+          type = "string",
+        },
+        requestBody = {
+          description = "Optional. Defines a custom JSON object as request body to send to flexible webhook.",
           type = "string",
         },
         requestHeaders = {
@@ -7816,12 +9877,69 @@ return {
           description = "The HTTP request headers to send together with webhook requests.",
           type = "object",
         },
+        serviceAgentAuth = {
+          description = "Optional. Indicate the auth token type generated from the [Diglogflow service agent](https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent). The generated token is sent in the Authorization header.",
+          enum = {
+            "SERVICE_AGENT_AUTH_UNSPECIFIED",
+            "NONE",
+            "ID_TOKEN",
+            "ACCESS_TOKEN",
+          },
+          enumDescriptions = {
+            "Service agent auth type unspecified. Default to ID_TOKEN.",
+            "No token used.",
+            "Use [ID token](https://cloud.google.com/docs/authentication/token-types#id) generated from service agent. This can be used to access Cloud Function and Cloud Run after you grant Invoker role to `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.",
+            "Use [access token](https://cloud.google.com/docs/authentication/token-types#access) generated from service agent. This can be used to access other Google Cloud APIs after you grant required roles to `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.",
+          },
+          type = "string",
+        },
         uri = {
           description = "Required. The webhook URI for receiving POST requests. It must use https protocol.",
           type = "string",
         },
         username = {
+          deprecated = true,
           description = "The user name for HTTP Basic authentication.",
+          type = "string",
+        },
+        webhookType = {
+          description = "Optional. Type of the webhook.",
+          enum = {
+            "WEBHOOK_TYPE_UNSPECIFIED",
+            "STANDARD",
+            "FLEXIBLE",
+          },
+          enumDescriptions = {
+            "Default value. This value is unused.",
+            "Represents a standard webhook.",
+            "Represents a flexible webhook.",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig = {
+      description = "Represents configuration of OAuth client credential flow for 3rd party API authentication.",
+      id = "GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig",
+      properties = {
+        clientId = {
+          description = "Required. The client ID provided by the 3rd party platform.",
+          type = "string",
+        },
+        clientSecret = {
+          description = "Required. The client secret provided by the 3rd party platform.",
+          type = "string",
+        },
+        scopes = {
+          description = "Optional. The OAuth scopes to grant.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        tokenEndpoint = {
+          description = "Required. The token endpoint provided by the 3rd party platform to exchange an access token.",
           type = "string",
         },
       },
@@ -7833,6 +9951,10 @@ return {
       properties = {
         detectIntentResponseId = {
           description = "Always present. The unique identifier of the DetectIntentResponse that will be returned to the API caller.",
+          type = "string",
+        },
+        dtmfDigits = {
+          description = "If DTMF was provided as input, this field will contain the DTMF digits.",
           type = "string",
         },
         fulfillmentInfo = {
@@ -8041,18 +10163,121 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3beta1AdvancedSettings = {
+      description = "Hierarchical advanced settings for agent/flow/page/fulfillment/parameter. Settings exposed at lower level overrides the settings exposed at higher level. Overriding occurs at the sub-setting level. For example, the playback_interruption_settings at fulfillment level only overrides the playback_interruption_settings at the agent level, leaving other settings at the agent level unchanged. DTMF settings does not override each other. DTMF settings set at different levels define DTMF detections running in parallel. Hierarchy: Agent->Flow->Page->Fulfillment/Parameter.",
+      id = "GoogleCloudDialogflowCxV3beta1AdvancedSettings",
+      properties = {
+        audioExportGcsDestination = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1GcsDestination",
+          description = "If present, incoming audio is exported by Dialogflow to the configured Google Cloud Storage destination. Exposed at the following levels: - Agent level - Flow level",
+        },
+        dtmfSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings",
+          description = "Settings for DTMF. Exposed at the following levels: - Agent level - Flow level - Page level - Parameter level.",
+        },
+        loggingSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings",
+          description = "Settings for logging. Settings for Dialogflow History, Contact Center messages, StackDriver logs, and speech logging. Exposed at the following levels: - Agent level.",
+        },
+        speechSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings",
+          description = "Settings for speech to text detection. Exposed at the following levels: - Agent level - Flow level - Page level - Parameter level",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings = {
+      description = "Define behaviors for DTMF (dual tone multi frequency).",
+      id = "GoogleCloudDialogflowCxV3beta1AdvancedSettingsDtmfSettings",
+      properties = {
+        enabled = {
+          description = "If true, incoming audio is processed for DTMF (dual tone multi frequency) events. For example, if the caller presses a button on their telephone keypad and DTMF processing is enabled, Dialogflow will detect the event (e.g. a \"3\" was pressed) in the incoming audio and pass the event to the bot to drive business logic (e.g. when 3 is pressed, return the account balance).",
+          type = "boolean",
+        },
+        finishDigit = {
+          description = "The digit that terminates a DTMF digit sequence.",
+          type = "string",
+        },
+        maxDigits = {
+          description = "Max length of DTMF digits.",
+          format = "int32",
+          type = "integer",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings = {
+      description = "Define behaviors on logging.",
+      id = "GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings",
+      properties = {
+        enableInteractionLogging = {
+          description = "If true, DF Interaction logging is currently enabled.",
+          type = "boolean",
+        },
+        enableStackdriverLogging = {
+          description = "If true, StackDriver logging is currently enabled.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings = {
+      description = "Define behaviors of speech to text detection.",
+      id = "GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings",
+      properties = {
+        endpointerSensitivity = {
+          description = "Sensitivity of the speech model that detects the end of speech. Scale from 0 to 100.",
+          format = "int32",
+          type = "integer",
+        },
+        models = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Mapping from language to Speech-to-Text model. The mapped Speech-to-Text model will be selected for requests from its corresponding language. For more information, see [Speech models](https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).",
+          type = "object",
+        },
+        noSpeechTimeout = {
+          description = "Timeout before detecting no speech.",
+          format = "google-duration",
+          type = "string",
+        },
+        useTimeoutBasedEndpointing = {
+          description = "Use timeout based endpointing, interpreting endpointer sensitivy as seconds of timeout value.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3beta1AudioInput = {
       description = "Represents the natural speech audio to be processed.",
       id = "GoogleCloudDialogflowCxV3beta1AudioInput",
       properties = {
         audio = {
-          description = "The natural language speech audio to be processed. A single request can contain up to 1 minute of speech audio data. The transcribed text cannot contain more than 256 bytes. For non-streaming audio detect intent, both `config` and `audio` must be provided. For streaming audio detect intent, `config` must be provided in the first request and `audio` must be provided in all following requests.",
+          description = "The natural language speech audio to be processed. A single request can contain up to 2 minutes of speech audio data. The transcribed text cannot contain more than 256 bytes. For non-streaming audio detect intent, both `config` and `audio` must be provided. For streaming audio detect intent, `config` must be provided in the first request and `audio` must be provided in all following requests.",
           format = "byte",
           type = "string",
         },
         config = {
           ["$ref"] = "GoogleCloudDialogflowCxV3beta1InputAudioConfig",
           description = "Required. Instructs the speech recognizer how to process the speech audio.",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1BargeInConfig = {
+      description = "Configuration of the barge-in behavior. Barge-in instructs the API to return a detected utterance at a proper time while the client is playing back the response audio from a previous request. When the client sees the utterance, it should stop the playback and immediately get ready for receiving the responses for the current request. The barge-in handling requires the client to start streaming audio input as soon as it starts playing back the audio from the previous response. The playback is modeled into two phases: * No barge-in phase: which goes first and during which speech detection should not be carried out. * Barge-in phase: which follows the no barge-in phase and during which the API starts speech detection and may inform the client that an utterance has been detected. Note that no-speech event is not expected in this phase. The client provides this configuration in terms of the durations of those two phases. The durations are measured in terms of the audio length from the the start of the input audio. No-speech event is a response with END_OF_UTTERANCE without any transcript following up.",
+      id = "GoogleCloudDialogflowCxV3beta1BargeInConfig",
+      properties = {
+        noBargeInDuration = {
+          description = "Duration that is not eligible for barge-in at the beginning of the input audio.",
+          format = "google-duration",
+          type = "string",
+        },
+        totalDuration = {
+          description = "Total duration for the playback at the beginning of the input audio.",
+          format = "google-duration",
+          type = "string",
         },
       },
       type = "object",
@@ -8247,6 +10472,33 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3beta1DataStoreConnection = {
+      description = "A data store connection. It represents a data store in Discovery Engine and the type of the contents it contains.",
+      id = "GoogleCloudDialogflowCxV3beta1DataStoreConnection",
+      properties = {
+        dataStore = {
+          description = "The full name of the referenced data store. Formats: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}` `projects/{project}/locations/{location}/dataStores/{data_store}`",
+          type = "string",
+        },
+        dataStoreType = {
+          description = "The type of the connected data store.",
+          enum = {
+            "DATA_STORE_TYPE_UNSPECIFIED",
+            "PUBLIC_WEB",
+            "UNSTRUCTURED",
+            "STRUCTURED",
+          },
+          enumDescriptions = {
+            "Not specified. This value indicates that the data store type is not specified, so it will not be used during search.",
+            "A data store that contains public web content.",
+            "A data store that contains unstructured private data.",
+            "A data store that contains structured data (for example FAQ).",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata = {
       description = "Metadata for DeleteDocument operation.",
       id = "GoogleCloudDialogflowCxV3beta1DeleteDocumentOperationMetadata",
@@ -8329,7 +10581,7 @@ return {
           type = "string",
         },
         versionConfigs = {
-          description = "Required. A list of configurations for flow versions. You should include version configs for all flows that are reachable from `Start Flow` in the agent. Otherwise, an error will be returned.",
+          description = "A list of configurations for flow versions. You should include version configs for all flows that are reachable from `Start Flow` in the agent. Otherwise, an error will be returned.",
           items = {
             ["$ref"] = "GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig",
           },
@@ -8433,12 +10685,37 @@ return {
       id = "GoogleCloudDialogflowCxV3beta1ExportAgentResponse",
       properties = {
         agentContent = {
-          description = "Uncompressed raw byte content for agent.",
+          description = "Uncompressed raw byte content for agent. This field is populated if none of `agent_uri` and `git_destination` are specified in ExportAgentRequest.",
           format = "byte",
           type = "string",
         },
         agentUri = {
-          description = "The URI to a file containing the exported agent. This field is populated only if `agent_uri` is specified in ExportAgentRequest.",
+          description = "The URI to a file containing the exported agent. This field is populated if `agent_uri` is specified in ExportAgentRequest.",
+          type = "string",
+        },
+        commitSha = {
+          description = "Commit SHA of the git push. This field is populated if `git_destination` is specified in ExportAgentRequest.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ExportEntityTypesMetadata = {
+      description = "Metadata returned for the EntityTypes.ExportEntityTypes long running operation.",
+      id = "GoogleCloudDialogflowCxV3beta1ExportEntityTypesMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse = {
+      description = "The response message for EntityTypes.ExportEntityTypes.",
+      id = "GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse",
+      properties = {
+        entityTypesContent = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1InlineDestination",
+          description = "Uncompressed byte content for entity types. This field is populated only if `entity_types_content_inline` is set to true in ExportEntityTypesRequest.",
+        },
+        entityTypesUri = {
+          description = "The URI to a file containing the exported entity types. This field is populated only if `entity_types_uri` is specified in ExportEntityTypesRequest.",
           type = "string",
         },
       },
@@ -8455,6 +10732,27 @@ return {
         },
         flowUri = {
           description = "The URI to a file containing the exported flow. This field is populated only if `flow_uri` is specified in ExportFlowRequest.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ExportIntentsMetadata = {
+      description = "Metadata returned for the Intents.ExportIntents long running operation.",
+      id = "GoogleCloudDialogflowCxV3beta1ExportIntentsMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ExportIntentsResponse = {
+      description = "The response message for Intents.ExportIntents.",
+      id = "GoogleCloudDialogflowCxV3beta1ExportIntentsResponse",
+      properties = {
+        intentsContent = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1InlineDestination",
+          description = "Uncompressed byte content for intents. This field is populated only if `intents_content_inline` is set to true in ExportIntentsRequest.",
+        },
+        intentsUri = {
+          description = "The URI to a file containing the exported intents. This field is populated only if `intents_uri` is specified in ExportIntentsRequest.",
           type = "string",
         },
       },
@@ -8500,6 +10798,10 @@ return {
       description = "Represents a form parameter.",
       id = "GoogleCloudDialogflowCxV3beta1FormParameter",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1AdvancedSettings",
+          description = "Hierarchical advanced settings for this parameter. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
         defaultValue = {
           description = "The default value of an optional parameter. If the parameter is required, the default value will be ignored.",
           type = "any",
@@ -8553,12 +10855,20 @@ return {
       description = "A fulfillment can do one or more of the following actions at the same time: * Generate rich message responses. * Set parameter values. * Call the webhook. Fulfillments can be called at various stages in the Page or Form lifecycle. For example, when a DetectIntentRequest drives a session to enter a new page, the page's entry fulfillment can add a static response to the QueryResult in the returning DetectIntentResponse, call the webhook (for example, to load user data from a database), or both.",
       id = "GoogleCloudDialogflowCxV3beta1Fulfillment",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1AdvancedSettings",
+          description = "Hierarchical advanced settings for this fulfillment. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
         conditionalCases = {
           description = "Conditional cases for this fulfillment.",
           items = {
             ["$ref"] = "GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCases",
           },
           type = "array",
+        },
+        enableGenerativeFallback = {
+          description = "If the flag is true, the agent will utilize LLM to generate a text response. If LLM generation fails, the defined responses in the fulfillment will be respected. This flag is only useful for fulfillments associated with no-match event handlers.",
+          type = "boolean",
         },
         messages = {
           description = "The list of rich message responses to present to the user.",
@@ -8651,6 +10961,17 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3beta1GcsDestination = {
+      description = "Google Cloud Storage location for a Dialogflow operation that writes or exports objects (e.g. exported agent or transcripts) outside of Dialogflow.",
+      id = "GoogleCloudDialogflowCxV3beta1GcsDestination",
+      properties = {
+        uri = {
+          description = "Required. The Google Cloud Storage URI for the exported objects. A URI is of the form: `gs://bucket/object-name-or-prefix` Whether a full object name, or just a prefix, its usage depends on the Dialogflow operation.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata = {
       description = "Metadata in google::longrunning::Operation for Knowledge operations.",
       id = "GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata",
@@ -8700,6 +11021,51 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3beta1ImportEntityTypesMetadata = {
+      description = "Metadata returned for the EntityTypes.ImportEntityTypes long running operation.",
+      id = "GoogleCloudDialogflowCxV3beta1ImportEntityTypesMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse = {
+      description = "The response message for EntityTypes.ImportEntityTypes.",
+      id = "GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse",
+      properties = {
+        conflictingResources = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources",
+          description = "Info which resources have conflicts when REPORT_CONFLICT merge_option is set in ImportEntityTypesRequest.",
+        },
+        entityTypes = {
+          description = "The unique identifier of the imported entity types. Format: `projects//locations//agents//entity_types/`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources = {
+      description = "Conflicting resources detected during the import process. Only filled when REPORT_CONFLICT is set in the request and there are conflicts in the display names.",
+      id = "GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources",
+      properties = {
+        entityDisplayNames = {
+          description = "Display names of conflicting entities.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        entityTypeDisplayNames = {
+          description = "Display names of conflicting entity types.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3beta1ImportFlowResponse = {
       description = "The response message for Flows.ImportFlow.",
       id = "GoogleCloudDialogflowCxV3beta1ImportFlowResponse",
@@ -8707,6 +11073,51 @@ return {
         flow = {
           description = "The unique identifier of the new flow. Format: `projects//locations//agents//flows/`.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ImportIntentsMetadata = {
+      description = "Metadata returned for the Intents.ImportIntents long running operation.",
+      id = "GoogleCloudDialogflowCxV3beta1ImportIntentsMetadata",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ImportIntentsResponse = {
+      description = "The response message for Intents.ImportIntents.",
+      id = "GoogleCloudDialogflowCxV3beta1ImportIntentsResponse",
+      properties = {
+        conflictingResources = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources",
+          description = "Info which resources have conflicts when REPORT_CONFLICT merge_option is set in ImportIntentsRequest.",
+        },
+        intents = {
+          description = "The unique identifier of the imported intents. Format: `projects//locations//agents//intents/`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources = {
+      description = "Conflicting resources detected during the import process. Only filled when REPORT_CONFLICT is set in the request and there are conflicts in the display names.",
+      id = "GoogleCloudDialogflowCxV3beta1ImportIntentsResponseConflictingResources",
+      properties = {
+        entityDisplayNames = {
+          description = "Display names of conflicting entities.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        intentDisplayNames = {
+          description = "Display names of conflicting intents.",
+          items = {
+            type = "string",
+          },
+          type = "array",
         },
       },
       type = "object",
@@ -8739,6 +11150,19 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3beta1InlineDestination = {
+      description = "Inline destination for a Dialogflow operation that writes or exports objects (e.g. intents) outside of Dialogflow.",
+      id = "GoogleCloudDialogflowCxV3beta1InlineDestination",
+      properties = {
+        content = {
+          description = "Output only. The uncompressed byte content for the objects. Only populated in responses.",
+          format = "byte",
+          readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3beta1InputAudioConfig = {
       description = "Instructs the speech recognizer on how to process the audio content.",
       id = "GoogleCloudDialogflowCxV3beta1InputAudioConfig",
@@ -8767,12 +11191,16 @@ return {
           },
           type = "string",
         },
+        bargeInConfig = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1BargeInConfig",
+          description = "Configuration of barge-in behavior during the streaming of input audio.",
+        },
         enableWordInfo = {
           description = "Optional. If `true`, Dialogflow returns SpeechWordInfo in StreamingRecognitionResult with information about the recognized speech words, e.g. start and end time offsets. If false or unspecified, Speech doesn't return any word-level information.",
           type = "boolean",
         },
         model = {
-          description = "Optional. Which Speech model to select for the given request. Select the model best suited to your domain to get best results. If a model is not explicitly specified, then we auto-select a model based on the parameters in the InputAudioConfig. If enhanced speech model is enabled for the agent and an enhanced version of the specified model for the language does not exist, then the speech is recognized using the standard version of the specified model. Refer to [Cloud Speech API documentation](https://cloud.google.com/speech-to-text/docs/basics#select-model) for more details.",
+          description = "Optional. Which Speech model to select for the given request. For more information, see [Speech models](https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).",
           type = "string",
         },
         modelVariant = {
@@ -8785,11 +11213,15 @@ return {
           },
           enumDescriptions = {
             "No model variant specified. In this case Dialogflow defaults to USE_BEST_AVAILABLE.",
-            "Use the best available variant of the Speech model that the caller is eligible for. Please see the [Dialogflow docs](https://cloud.google.com/dialogflow/docs/data-logging) for how to make your project eligible for enhanced models.",
+            "Use the best available variant of the Speech model that the caller is eligible for.",
             "Use standard model variant even if an enhanced model is available. See the [Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models) for details about enhanced models.",
-            "Use an enhanced model variant: * If an enhanced variant does not exist for the given model and request language, Dialogflow falls back to the standard variant. The [Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models) describes which models have enhanced variants. * If the API caller isn't eligible for enhanced models, Dialogflow returns an error. Please see the [Dialogflow docs](https://cloud.google.com/dialogflow/docs/data-logging) for how to make your project eligible.",
+            "Use an enhanced model variant: * If an enhanced variant does not exist for the given model and request language, Dialogflow falls back to the standard variant. The [Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models) describes which models have enhanced variants.",
           },
           type = "string",
+        },
+        optOutConformerModelMigration = {
+          description = "If `true`, the request will opt out for STT conformer model migration. This field will be deprecated once force migration takes place in June 2024. Please refer to [Dialogflow CX Speech model migration](https://cloud.google.com/dialogflow/cx/docs/concept/speech-model-migration).",
+          type = "boolean",
         },
         phraseHints = {
           description = "Optional. A list of strings containing words and phrases that the speech recognizer should recognize with higher likelihood. See [the Cloud Speech documentation](https://cloud.google.com/speech-to-text/docs/basics#phrase-hints) for more details.",
@@ -8931,10 +11363,48 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings = {
+      description = "The Knowledge Connector settings for this page or flow. This includes information such as the attached Knowledge Bases, and the way to execute fulfillment.",
+      id = "GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings",
+      properties = {
+        dataStoreConnections = {
+          description = "Optional. List of related data store connections.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowCxV3beta1DataStoreConnection",
+          },
+          type = "array",
+        },
+        enabled = {
+          description = "Whether Knowledge Connector is enabled or not.",
+          type = "boolean",
+        },
+        targetFlow = {
+          description = "The target flow to transition to. Format: `projects//locations//agents//flows/`.",
+          type = "string",
+        },
+        targetPage = {
+          description = "The target page to transition to. Format: `projects//locations//agents//flows//pages/`.",
+          type = "string",
+        },
+        triggerFulfillment = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1Fulfillment",
+          description = "The fulfillment to be triggered. When the answers from the Knowledge Connector are selected by Dialogflow, you can utitlize the request scoped parameter `$request.knowledge.answers` (contains up to the 5 highest confidence answers) and `$request.knowledge.questions` (contains the corresponding questions) to construct the fulfillment.",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowCxV3beta1Page = {
       description = "A Dialogflow CX conversation (session) can be described and visualized as a state machine. The states of a CX session are represented by pages. For each flow, you define many pages, where your combined pages can handle a complete conversation on the topics the flow is designed for. At any given moment, exactly one page is the current page, the current page is considered active, and the flow associated with that page is considered active. Every flow has a special start page. When a flow initially becomes active, the start page page becomes the current page. For each conversational turn, the current page will either stay the same or transition to another page. You configure each page to collect information from the end-user that is relevant for the conversational state represented by the page. For more information, see the [Page guide](https://cloud.google.com/dialogflow/cx/docs/concept/page).",
       id = "GoogleCloudDialogflowCxV3beta1Page",
       properties = {
+        advancedSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1AdvancedSettings",
+          description = "Hierarchical advanced settings for this page. The settings exposed at the lower level overrides the settings exposed at the higher level.",
+        },
+        description = {
+          description = "The description of the page. The maximum length is 500 characters.",
+          type = "string",
+        },
         displayName = {
           description = "Required. The human-readable name of the page, unique within the flow.",
           type = "string",
@@ -8954,12 +11424,16 @@ return {
           ["$ref"] = "GoogleCloudDialogflowCxV3beta1Form",
           description = "The form associated with the page, used for collecting parameters relevant to the page.",
         },
+        knowledgeConnectorSettings = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings",
+          description = "Optional. Knowledge connector configuration.",
+        },
         name = {
           description = "The unique identifier of the page. Required for the Pages.UpdatePage method. Pages.CreatePage populates the name automatically. Format: `projects//locations//agents//flows//pages/`.",
           type = "string",
         },
         transitionRouteGroups = {
-          description = "Ordered list of `TransitionRouteGroups` associated with the page. Transition route groups must be unique within a page. * If multiple transition routes within a page scope refer to the same intent, then the precedence order is: page's transition route -> page's transition route group -> flow's transition routes. * If multiple transition route groups within a page contain the same intent, then the first group in the ordered list takes precedence. Format:`projects//locations//agents//flows//transitionRouteGroups/`.",
+          description = "Ordered list of `TransitionRouteGroups` added to the page. Transition route groups must be unique within a page. If the page links both flow-level transition route groups and agent-level transition route groups, the flow-level ones will have higher priority and will be put before the agent-level ones. * If multiple transition routes within a page scope refer to the same intent, then the precedence order is: page's transition route -> page's transition route group -> flow's transition routes. * If multiple transition route groups within a page contain the same intent, then the first group in the ordered list takes precedence. Format:`projects//locations//agents//flows//transitionRouteGroups/` or `projects//locations//agents//transitionRouteGroups/` for agent-level groups.",
           items = {
             type = "string",
           },
@@ -9048,7 +11522,7 @@ return {
       type = "object",
     },
     GoogleCloudDialogflowCxV3beta1QueryInput = {
-      description = "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. ",
+      description = "Represents the query input. It can contain one of: 1. A conversational query in the form of text. 2. An intent query that specifies which intent to trigger. 3. Natural language speech audio to be processed. 4. An event to be triggered. 5. DTMF digits to invoke an intent and fill in parameter value. 6. The results of a tool executed by the client.",
       id = "GoogleCloudDialogflowCxV3beta1QueryInput",
       properties = {
         audio = {
@@ -9106,6 +11580,10 @@ return {
           description = "Output only. A signal that indicates the interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only when the conversation reaches `END_SESSION` page. It is not supposed to be defined by the user. It's guaranteed that there is at most one such message in each response.",
           readOnly = true,
         },
+        knowledgeInfoCard = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1ResponseMessageKnowledgeInfoCard",
+          description = "Represents info card for knowledge answers, to be better rendered in Dialogflow Messenger.",
+        },
         liveAgentHandoff = {
           ["$ref"] = "GoogleCloudDialogflowCxV3beta1ResponseMessageLiveAgentHandoff",
           description = "Hands off conversation to a human agent.",
@@ -9160,6 +11638,12 @@ return {
     GoogleCloudDialogflowCxV3beta1ResponseMessageEndInteraction = {
       description = "Indicates that interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only and not supposed to be defined by the user.",
       id = "GoogleCloudDialogflowCxV3beta1ResponseMessageEndInteraction",
+      properties = {},
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1ResponseMessageKnowledgeInfoCard = {
+      description = "Represents info card response. If the response contains generative knowledge prediction, Dialogflow will return a payload with Infobot Messenger compatible info card. Otherwise, the info card response is skipped.",
+      id = "GoogleCloudDialogflowCxV3beta1ResponseMessageKnowledgeInfoCard",
       properties = {},
       type = "object",
     },
@@ -9489,7 +11973,7 @@ return {
       id = "GoogleCloudDialogflowCxV3beta1TestRunDifference",
       properties = {
         description = {
-          description = "A description of the diff, showing the actual output vs expected output.",
+          description = "A human readable description of the diff, showing the actual output vs expected output.",
           type = "string",
         },
         type = {
@@ -9500,6 +11984,7 @@ return {
             "PAGE",
             "PARAMETERS",
             "UTTERANCE",
+            "FLOW",
           },
           enumDescriptions = {
             "Should never be used.",
@@ -9507,6 +11992,7 @@ return {
             "The page.",
             "The parameters.",
             "The message utterance.",
+            "The flow.",
           },
           type = "string",
         },
@@ -9518,7 +12004,7 @@ return {
       id = "GoogleCloudDialogflowCxV3beta1TextInput",
       properties = {
         text = {
-          description = "Required. The UTF-8 encoded natural language text to be processed. Text length must not exceed 256 characters.",
+          description = "Required. The UTF-8 encoded natural language text to be processed.",
           type = "string",
         },
       },
@@ -9530,6 +12016,10 @@ return {
       properties = {
         condition = {
           description = "The condition to evaluate against form parameters or session parameters. See the [conditions reference](https://cloud.google.com/dialogflow/cx/docs/reference/condition). At least one of `intent` or `condition` must be specified. When both `intent` and `condition` are specified, the transition can only happen when both are fulfilled.",
+          type = "string",
+        },
+        description = {
+          description = "Optional. The description of the transition route. The maximum length is 500 characters.",
           type = "string",
         },
         intent = {
@@ -9596,6 +12086,16 @@ return {
         reachedEndPage = {
           description = "Whether turn resulted in End Session page.",
           type = "boolean",
+        },
+        sentimentMagnitude = {
+          description = "Sentiment magnitude of the user utterance if [sentiment](https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was enabled.",
+          format = "float",
+          type = "number",
+        },
+        sentimentScore = {
+          description = "Sentiment score of the user utterance if [sentiment](https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was enabled.",
+          format = "float",
+          type = "number",
         },
         userEscalated = {
           description = "Whether user was specifically asking for a live agent.",
@@ -9666,8 +12166,48 @@ return {
           },
           type = "array",
         },
+        httpMethod = {
+          description = "Optional. HTTP method for the flexible webhook calls. Standard webhook always uses POST.",
+          enum = {
+            "HTTP_METHOD_UNSPECIFIED",
+            "POST",
+            "GET",
+            "HEAD",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS",
+          },
+          enumDescriptions = {
+            "HTTP method not specified.",
+            "HTTP POST Method.",
+            "HTTP GET Method.",
+            "HTTP HEAD Method.",
+            "HTTP PUT Method.",
+            "HTTP DELETE Method.",
+            "HTTP PATCH Method.",
+            "HTTP OPTIONS Method.",
+          },
+          type = "string",
+        },
+        oauthConfig = {
+          ["$ref"] = "GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig",
+          description = "Optional. The OAuth configuration of the webhook. If specified, Dialogflow will initiate the OAuth client credential flow to exchange an access token from the 3rd party platform and put it in the auth header.",
+        },
+        parameterMapping = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Optional. Maps the values extracted from specific fields of the flexible webhook response into session parameters. - Key: session parameter name - Value: field path in the webhook response",
+          type = "object",
+        },
         password = {
+          deprecated = true,
           description = "The password for HTTP Basic authentication.",
+          type = "string",
+        },
+        requestBody = {
+          description = "Optional. Defines a custom JSON object as request body to send to flexible webhook.",
           type = "string",
         },
         requestHeaders = {
@@ -9677,12 +12217,69 @@ return {
           description = "The HTTP request headers to send together with webhook requests.",
           type = "object",
         },
+        serviceAgentAuth = {
+          description = "Optional. Indicate the auth token type generated from the [Diglogflow service agent](https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent). The generated token is sent in the Authorization header.",
+          enum = {
+            "SERVICE_AGENT_AUTH_UNSPECIFIED",
+            "NONE",
+            "ID_TOKEN",
+            "ACCESS_TOKEN",
+          },
+          enumDescriptions = {
+            "Service agent auth type unspecified. Default to ID_TOKEN.",
+            "No token used.",
+            "Use [ID token](https://cloud.google.com/docs/authentication/token-types#id) generated from service agent. This can be used to access Cloud Function and Cloud Run after you grant Invoker role to `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.",
+            "Use [access token](https://cloud.google.com/docs/authentication/token-types#access) generated from service agent. This can be used to access other Google Cloud APIs after you grant required roles to `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.",
+          },
+          type = "string",
+        },
         uri = {
           description = "Required. The webhook URI for receiving POST requests. It must use https protocol.",
           type = "string",
         },
         username = {
+          deprecated = true,
           description = "The user name for HTTP Basic authentication.",
+          type = "string",
+        },
+        webhookType = {
+          description = "Optional. Type of the webhook.",
+          enum = {
+            "WEBHOOK_TYPE_UNSPECIFIED",
+            "STANDARD",
+            "FLEXIBLE",
+          },
+          enumDescriptions = {
+            "Default value. This value is unused.",
+            "Represents a standard webhook.",
+            "Represents a flexible webhook.",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig = {
+      description = "Represents configuration of OAuth client credential flow for 3rd party API authentication.",
+      id = "GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig",
+      properties = {
+        clientId = {
+          description = "Required. The client ID provided by the 3rd party platform.",
+          type = "string",
+        },
+        clientSecret = {
+          description = "Required. The client secret provided by the 3rd party platform.",
+          type = "string",
+        },
+        scopes = {
+          description = "Optional. The OAuth scopes to grant.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        tokenEndpoint = {
+          description = "Required. The token endpoint provided by the 3rd party platform to exchange an access token.",
           type = "string",
         },
       },
@@ -9694,6 +12291,10 @@ return {
       properties = {
         detectIntentResponseId = {
           description = "Always present. The unique identifier of the DetectIntentResponse that will be returned to the API caller.",
+          type = "string",
+        },
+        dtmfDigits = {
+          description = "If DTMF was provided as input, this field will contain the DTMF digits.",
           type = "string",
         },
         fulfillmentInfo = {
@@ -10044,12 +12645,14 @@ return {
             "ARTICLE_SUGGESTION",
             "FAQ",
             "SMART_REPLY",
+            "KNOWLEDGE_SEARCH",
           },
           enumDescriptions = {
             "Unspecified feature type.",
             "Run article suggestion model for chat.",
             "Run FAQ model for chat.",
             "Run smart reply model for chat.",
+            "Run knowledge search with text input from agent or text generated query.",
           },
           type = "string",
         },
@@ -10066,7 +12669,7 @@ return {
           type = "integer",
         },
         name = {
-          description = "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+          description = "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
           type = "string",
         },
         parameters = {
@@ -10074,7 +12677,7 @@ return {
             description = "Properties of the object.",
             type = "any",
           },
-          description = "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          description = "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: * MapKey type: string * MapKey value: parameter name * MapValue type: If parameter's entity type is a composite entity then use map, otherwise, depending on the parameter value type, it could be one of string, number, boolean, null, list or map. * MapValue value: If parameter's entity type is a composite entity then use map from composite entity property names to property values, otherwise, use parameter value.",
           type = "object",
         },
       },
@@ -10402,7 +13005,7 @@ return {
             description = "Properties of the object.",
             type = "any",
           },
-          description = "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          description = "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: * MapKey type: string * MapKey value: parameter name * MapValue type: If parameter's entity type is a composite entity then use map, otherwise, depending on the parameter value type, it could be one of string, number, boolean, null, list or map. * MapValue value: If parameter's entity type is a composite entity then use map from composite entity property names to property values, otherwise, use parameter value.",
           type = "object",
         },
       },
@@ -10475,7 +13078,7 @@ return {
       id = "GoogleCloudDialogflowV2GcsDestination",
       properties = {
         uri = {
-          description = "The Google Cloud Storage URIs for the output. A URI is of the form: gs://bucket/object-prefix-or-name Whether a prefix or name is used depends on the use case. The requesting user must have \"write-permission\" to the bucket.",
+          description = "The Google Cloud Storage URIs for the output. A URI is of the form: `gs://bucket/object-prefix-or-name` Whether a prefix or name is used depends on the use case. The requesting user must have \"write-permission\" to the bucket.",
           type = "string",
         },
       },
@@ -11444,6 +14047,11 @@ return {
             "EXAMPLE",
             "TEMPLATE",
           },
+          enumDeprecated = {
+            false,
+            false,
+            true,
+          },
           enumDescriptions = {
             "Not specified. This value should never be used.",
             "Examples do not contain @-prefixed entity type names, but example parts can be annotated with entity types.",
@@ -11672,7 +14280,7 @@ return {
             description = "Properties of the object.",
             type = "any",
           },
-          description = "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          description = "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: * MapKey type: string * MapKey value: parameter name * MapValue type: If parameter's entity type is a composite entity then use map, otherwise, depending on the parameter value type, it could be one of string, number, boolean, null, list or map. * MapValue value: If parameter's entity type is a composite entity then use map from composite entity property names to property values, otherwise, use parameter value.",
           type = "object",
         },
         queryText = {
@@ -11799,12 +14407,14 @@ return {
             "ARTICLE_SUGGESTION",
             "FAQ",
             "SMART_REPLY",
+            "KNOWLEDGE_SEARCH",
           },
           enumDescriptions = {
             "Unspecified feature type.",
             "Run article suggestion model for chat.",
             "Run FAQ model for chat.",
             "Run smart reply model for chat.",
+            "Run knowledge search with text input from agent or text generated query.",
           },
           type = "string",
         },
@@ -12148,14 +14758,18 @@ return {
             "ARTICLE_SUGGESTION",
             "FAQ",
             "SMART_REPLY",
+            "DIALOGFLOW_ASSIST",
             "CONVERSATION_SUMMARIZATION",
+            "KNOWLEDGE_SEARCH",
           },
           enumDescriptions = {
             "Unspecified feature type.",
             "Run article suggestion model for chat.",
             "Run FAQ model.",
             "Run smart reply model for chat.",
+            "Run Dialogflow assist model for chat, which will return automated agent response as suggestion.",
             "Run conversation summarization model for chat.",
+            "Run knowledge search with text input from agent or text generated query.",
           },
           type = "string",
         },
@@ -12172,7 +14786,7 @@ return {
           type = "integer",
         },
         name = {
-          description = "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+          description = "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in `a-zA-Z0-9_-%` and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
           type = "string",
         },
         parameters = {
@@ -12180,7 +14794,7 @@ return {
             description = "Properties of the object.",
             type = "any",
           },
-          description = "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          description = "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: * MapKey type: string * MapKey value: parameter name * MapValue type: If parameter's entity type is a composite entity then use map, otherwise, depending on the parameter value type, it could be one of string, number, boolean, null, list or map. * MapValue value: If parameter's entity type is a composite entity then use map from composite entity property names to property values, otherwise, use parameter value.",
           type = "object",
         },
       },
@@ -12221,6 +14835,25 @@ return {
             "Unrecoverable error during a telephone call. In general non-recoverable errors only occur if something was misconfigured in the ConversationProfile corresponding to the call. After a non-recoverable error, Dialogflow may stop responding. We don't fire this event: * in an API call because we can directly return the error, or, * when we can recover from an error.",
           },
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowV2beta1DialogflowAssistAnswer = {
+      description = "Represents a Dialogflow assist answer.",
+      id = "GoogleCloudDialogflowV2beta1DialogflowAssistAnswer",
+      properties = {
+        answerRecord = {
+          description = "The name of answer record, in the format of \"projects//locations//answerRecords/\"",
+          type = "string",
+        },
+        intentSuggestion = {
+          ["$ref"] = "GoogleCloudDialogflowV2beta1IntentSuggestion",
+          description = "An intent suggestion generated from conversation.",
+        },
+        queryResult = {
+          ["$ref"] = "GoogleCloudDialogflowV2beta1QueryResult",
+          description = "Result from v2 agent.",
         },
       },
       type = "object",
@@ -12314,7 +14947,7 @@ return {
             description = "Properties of the object.",
             type = "any",
           },
-          description = "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          description = "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: * MapKey type: string * MapKey value: parameter name * MapValue type: If parameter's entity type is a composite entity then use map, otherwise, depending on the parameter value type, it could be one of string, number, boolean, null, list or map. * MapValue value: If parameter's entity type is a composite entity then use map from composite entity property names to property values, otherwise, use parameter value.",
           type = "object",
         },
       },
@@ -12387,7 +15020,7 @@ return {
       id = "GoogleCloudDialogflowV2beta1GcsDestination",
       properties = {
         uri = {
-          description = "Required. The Google Cloud Storage URIs for the output. A URI is of the form: gs://bucket/object-prefix-or-name Whether a prefix or name is used depends on the use case. The requesting user must have \"write-permission\" to the bucket.",
+          description = "Required. The Google Cloud Storage URIs for the output. A URI is of the form: `gs://bucket/object-prefix-or-name` Whether a prefix or name is used depends on the use case. The requesting user must have \"write-permission\" to the bucket.",
           type = "string",
         },
       },
@@ -12520,6 +15153,7 @@ return {
           type = "boolean",
         },
         mlEnabled = {
+          deprecated = true,
           description = "Optional. Indicates whether Machine Learning is enabled for the intent. Note: If `ml_enabled` setting is set to false, then this intent is not taken into account during inference in `ML ONLY` match mode. Also, auto-markup in the UI is turned off. DEPRECATED! Please use `ml_disabled` field instead. NOTE: If both `ml_enabled` and `ml_disabled` are either not set or false, then the default value is determined as follows: - Before April 15th, 2018 the default is: ml_enabled = false / ml_disabled = true. - After April 15th, 2018 the default is: ml_enabled = true / ml_disabled = false.",
           type = "boolean",
         },
@@ -13575,6 +16209,25 @@ return {
       },
       type = "object",
     },
+    GoogleCloudDialogflowV2beta1IntentSuggestion = {
+      description = "Represents an intent suggestion.",
+      id = "GoogleCloudDialogflowV2beta1IntentSuggestion",
+      properties = {
+        description = {
+          description = "Human readable description for better understanding an intent like its scope, content, result etc. Maximum character limit: 140 characters.",
+          type = "string",
+        },
+        displayName = {
+          description = "The display name of the intent.",
+          type = "string",
+        },
+        intentV2 = {
+          description = "The unique identifier of this intent. Format: `projects//locations//agent/intents/`.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudDialogflowV2beta1IntentTrainingPhrase = {
       description = "Represents an example that the agent is trained on.",
       id = "GoogleCloudDialogflowV2beta1IntentTrainingPhrase",
@@ -13601,6 +16254,11 @@ return {
             "TYPE_UNSPECIFIED",
             "EXAMPLE",
             "TEMPLATE",
+          },
+          enumDeprecated = {
+            false,
+            false,
+            true,
           },
           enumDescriptions = {
             "Not specified. This value should never be used.",
@@ -13888,7 +16546,7 @@ return {
             description = "Properties of the object.",
             type = "any",
           },
-          description = "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          description = "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: * MapKey type: string * MapKey value: parameter name * MapValue type: If parameter's entity type is a composite entity then use map, otherwise, depending on the parameter value type, it could be one of string, number, boolean, null, list or map. * MapValue value: If parameter's entity type is a composite entity then use map from composite entity property names to property values, otherwise, use parameter value.",
           type = "object",
         },
         queryText = {
@@ -14015,14 +16673,18 @@ return {
             "ARTICLE_SUGGESTION",
             "FAQ",
             "SMART_REPLY",
+            "DIALOGFLOW_ASSIST",
             "CONVERSATION_SUMMARIZATION",
+            "KNOWLEDGE_SEARCH",
           },
           enumDescriptions = {
             "Unspecified feature type.",
             "Run article suggestion model for chat.",
             "Run FAQ model.",
             "Run smart reply model for chat.",
+            "Run Dialogflow assist model for chat, which will return automated agent response as suggestion.",
             "Run conversation summarization model for chat.",
+            "Run knowledge search with text input from agent or text generated query.",
           },
           type = "string",
         },
@@ -14067,6 +16729,29 @@ return {
         },
         latestMessage = {
           description = "The name of the latest conversation message used to compile suggestion for. Format: `projects//locations//conversations//messages/`.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse = {
+      description = "The response message for Participants.SuggestDialogflowAssists.",
+      id = "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
+      properties = {
+        contextSize = {
+          description = "Number of messages prior to and including latest_message to compile the suggestion. It may be smaller than the SuggestDialogflowAssistsRequest.context_size field in the request if there aren't that many messages in the conversation.",
+          format = "int32",
+          type = "integer",
+        },
+        dialogflowAssistAnswers = {
+          description = "Output only. Multiple reply options provided by Dialogflow assist service. The order is based on the rank of the model prediction.",
+          items = {
+            ["$ref"] = "GoogleCloudDialogflowV2beta1DialogflowAssistAnswer",
+          },
+          type = "array",
+        },
+        latestMessage = {
+          description = "The name of the latest conversation message used to suggest answer. Format: `projects//locations//conversations//messages/`.",
           type = "string",
         },
       },
@@ -14129,6 +16814,14 @@ return {
         suggestArticlesResponse = {
           ["$ref"] = "GoogleCloudDialogflowV2beta1SuggestArticlesResponse",
           description = "SuggestArticlesResponse if request is for ARTICLE_SUGGESTION.",
+        },
+        suggestDialogflowAssistsResponse = {
+          ["$ref"] = "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
+          description = "SuggestDialogflowAssistsResponse if request is for DIALOGFLOW_ASSIST.",
+        },
+        suggestEntityExtractionResponse = {
+          ["$ref"] = "GoogleCloudDialogflowV2beta1SuggestDialogflowAssistsResponse",
+          description = "SuggestDialogflowAssistsResponse if request is for ENTITY_EXTRACTION.",
         },
         suggestFaqAnswersResponse = {
           ["$ref"] = "GoogleCloudDialogflowV2beta1SuggestFaqAnswersResponse",
@@ -14361,6 +17054,16 @@ return {
           description = "Whether turn resulted in End Session page.",
           type = "boolean",
         },
+        sentimentMagnitude = {
+          description = "Sentiment magnitude of the user utterance if [sentiment](https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was enabled.",
+          format = "float",
+          type = "number",
+        },
+        sentimentScore = {
+          description = "Sentiment score of the user utterance if [sentiment](https://cloud.google.com/dialogflow/cx/docs/concept/sentiment) was enabled.",
+          format = "float",
+          type = "number",
+        },
         triggeredAbandonmentEvent = {
           description = "Whether agent has triggered the event corresponding to user abandoning the conversation.",
           type = "boolean",
@@ -14409,7 +17112,7 @@ return {
       type = "object",
     },
     GoogleCloudLocationLocation = {
-      description = "A resource that represents Google Cloud Platform location.",
+      description = "A resource that represents a Google Cloud location.",
       id = "GoogleCloudLocationLocation",
       properties = {
         displayName = {
@@ -14489,7 +17192,7 @@ return {
             description = "Properties of the object. Contains field @type with type URL.",
             type = "any",
           },
-          description = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          description = "The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
           type = "object",
         },
       },

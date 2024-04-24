@@ -323,7 +323,7 @@ return {
       },
     },
   },
-  revision = "20230117",
+  revision = "20240423",
   rootUrl = "https://mybusinessqanda.googleapis.com/",
   schemas = {
     Answer = {

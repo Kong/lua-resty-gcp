@@ -477,7 +477,7 @@ return {
       },
     },
   },
-  revision = "20221228",
+  revision = "20240410",
   rootUrl = "https://firebaserules.googleapis.com/",
   schemas = {
     Arg = {
@@ -767,6 +767,10 @@ return {
       description = "`Ruleset` is an immutable copy of `Source` with a globally unique identifier and a creation time.",
       id = "Ruleset",
       properties = {
+        attachmentPoint = {
+          description = "Immutable. Intended resource to which this Ruleset should be released. May be left blank to signify the resource associated with the default release. Expected format: firestore.googleapis.com/projects//databases/",
+          type = "string",
+        },
         createTime = {
           description = "Output only. Time the `Ruleset` was created.",
           format = "google-datetime",

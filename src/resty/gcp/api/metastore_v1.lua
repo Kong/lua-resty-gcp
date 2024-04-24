@@ -105,38 +105,6 @@ return {
   },
   protocol = "rest",
   resources = {
-    operations = {
-      methods = {
-        cancel = {
-          description = "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.",
-          flatPath = "v1/operations/{operationsId}:cancel",
-          httpMethod = "POST",
-          id = "metastore.operations.cancel",
-          parameterOrder = {
-            "name",
-          },
-          parameters = {
-            name = {
-              description = "The name of the operation resource to be cancelled.",
-              location = "path",
-              pattern = "^operations/.*$",
-              required = true,
-              type = "string",
-            },
-          },
-          path = "v1/{+name}:cancel",
-          request = {
-            ["$ref"] = "CancelOperationRequest",
-          },
-          response = {
-            ["$ref"] = "Empty",
-          },
-          scopes = {
-            "https://www.googleapis.com/auth/cloud-platform",
-          },
-        },
-      },
-    },
     projects = {
       resources = {
         locations = {
@@ -480,6 +448,34 @@ return {
             },
             operations = {
               methods = {
+                cancel = {
+                  description = "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+                  httpMethod = "POST",
+                  id = "metastore.projects.locations.operations.cancel",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "The name of the operation resource to be cancelled.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+name}:cancel",
+                  request = {
+                    ["$ref"] = "CancelOperationRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Empty",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
                 delete = {
                   description = "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
@@ -531,7 +527,7 @@ return {
                   },
                 },
                 list = {
-                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.NOTE: the name binding allows API services to override the binding to use different resource name schemes, such as users/*/operations. To override the binding, API services can add a binding such as \"/v1/{name=users/*}/operations\" to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/operations",
                   httpMethod = "GET",
                   id = "metastore.projects.locations.operations.list",
@@ -575,6 +571,62 @@ return {
             },
             services = {
               methods = {
+                alterLocation = {
+                  description = "Alter metadata resource location. The metadata resource can be a database, table, or partition. This functionality only updates the parent directory for the respective metadata resource and does not transfer any existing data to the new location.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterLocation",
+                  httpMethod = "POST",
+                  id = "metastore.projects.locations.services.alterLocation",
+                  parameterOrder = {
+                    "service",
+                  },
+                  parameters = {
+                    service = {
+                      description = "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+service}:alterLocation",
+                  request = {
+                    ["$ref"] = "AlterMetadataResourceLocationRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                alterTableProperties = {
+                  description = "Alter metadata table properties.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterTableProperties",
+                  httpMethod = "POST",
+                  id = "metastore.projects.locations.services.alterTableProperties",
+                  parameterOrder = {
+                    "service",
+                  },
+                  parameters = {
+                    service = {
+                      description = "Required. The relative resource name of the Dataproc Metastore service that's being used to mutate metadata table properties, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+service}:alterTableProperties",
+                  request = {
+                    ["$ref"] = "AlterTablePropertiesRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
                 create = {
                   description = "Creates a metastore service in a project and location.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/services",
@@ -773,6 +825,34 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                   },
                 },
+                moveTableToDatabase = {
+                  description = "Move a table to another database.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:moveTableToDatabase",
+                  httpMethod = "POST",
+                  id = "metastore.projects.locations.services.moveTableToDatabase",
+                  parameterOrder = {
+                    "service",
+                  },
+                  parameters = {
+                    service = {
+                      description = "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+service}:moveTableToDatabase",
+                  request = {
+                    ["$ref"] = "MoveTableToDatabaseRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
                 patch = {
                   description = "Updates the parameters of a single service.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}",
@@ -804,6 +884,34 @@ return {
                   path = "v1/{+name}",
                   request = {
                     ["$ref"] = "Service",
+                  },
+                  response = {
+                    ["$ref"] = "Operation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                queryMetadata = {
+                  description = "Query Dataproc Metastore metadata.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:queryMetadata",
+                  httpMethod = "POST",
+                  id = "metastore.projects.locations.services.queryMetadata",
+                  parameterOrder = {
+                    "service",
+                  },
+                  parameters = {
+                    service = {
+                      description = "Required. The relative resource name of the metastore service to query metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+service}:queryMetadata",
+                  request = {
+                    ["$ref"] = "QueryMetadataRequest",
                   },
                   response = {
                     ["$ref"] = "Operation",
@@ -1259,9 +1367,53 @@ return {
       },
     },
   },
-  revision = "20230106",
+  revision = "20240411",
   rootUrl = "https://metastore.googleapis.com/",
   schemas = {
+    AlterMetadataResourceLocationRequest = {
+      description = "Request message for DataprocMetastore.AlterMetadataResourceLocation.",
+      id = "AlterMetadataResourceLocationRequest",
+      properties = {
+        locationUri = {
+          description = "Required. The new location URI for the metadata resource.",
+          type = "string",
+        },
+        resourceName = {
+          description = "Required. The relative metadata resource name in the following format.databases/{database_id} or databases/{database_id}/tables/{table_id} or databases/{database_id}/tables/{table_id}/partitions/{partition_id}",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    AlterMetadataResourceLocationResponse = {
+      description = "Response message for DataprocMetastore.AlterMetadataResourceLocation.",
+      id = "AlterMetadataResourceLocationResponse",
+      properties = {},
+      type = "object",
+    },
+    AlterTablePropertiesRequest = {
+      description = "Request message for DataprocMetastore.AlterTableProperties.",
+      id = "AlterTablePropertiesRequest",
+      properties = {
+        properties = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "A map that describes the desired values to mutate. If update_mask is empty, the properties will not update. Otherwise, the properties only alters the value whose associated paths exist in the update mask",
+          type = "object",
+        },
+        tableName = {
+          description = "Required. The name of the table containing the properties you're altering in the following format.databases/{database_id}/tables/{table_id}",
+          type = "string",
+        },
+        updateMask = {
+          description = "A field mask that specifies the metadata table properties that are overwritten by the update. Fields specified in the update_mask are relative to the resource (not to the full request). A field is overwritten if it is in the mask.For example, given the target properties: properties { a: 1 b: 2 } And an update properties: properties { a: 2 b: 3 c: 4 } then if the field mask is:paths: \"properties.b\", \"properties.c\"then the result will be: properties { a: 1 b: 3 c: 4 } ",
+          format = "google-fieldmask",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     AuditConfig = {
       description = "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConfig must have one or more AuditLogConfigs.If there are AuditConfigs for both allServices and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditLogConfig are exempted.Example Policy with multiple AuditConfigs: { \"audit_configs\": [ { \"service\": \"allServices\", \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:jose@example.com\" ] }, { \"log_type\": \"DATA_WRITE\" }, { \"log_type\": \"ADMIN_READ\" } ] }, { \"service\": \"sampleservice.googleapis.com\", \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\" }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:aliya@example.com\" ] } ] } ] } For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts jose@example.com from DATA_READ logging, and aliya@example.com from DATA_WRITE logging.",
       id = "AuditConfig",
@@ -1310,6 +1462,29 @@ return {
       },
       type = "object",
     },
+    AuxiliaryVersionConfig = {
+      description = "Configuration information for the auxiliary service versions.",
+      id = "AuxiliaryVersionConfig",
+      properties = {
+        configOverrides = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "A mapping of Hive metastore configuration key-value pairs to apply to the auxiliary Hive metastore (configured in hive-site.xml) in addition to the primary version's overrides. If keys are present in both the auxiliary version's overrides and the primary version's overrides, the value from the auxiliary version's overrides takes precedence.",
+          type = "object",
+        },
+        networkConfig = {
+          ["$ref"] = "NetworkConfig",
+          description = "Output only. The network configuration contains the endpoint URI(s) of the auxiliary Hive metastore service.",
+          readOnly = true,
+        },
+        version = {
+          description = "The Hive metastore version of the auxiliary service. It must be less than the primary Hive metastore service's version.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     BackendMetastore = {
       description = "Represents a backend metastore for the federation.",
       id = "BackendMetastore",
@@ -1318,16 +1493,18 @@ return {
           description = "The type of the backend metastore.",
           enum = {
             "METASTORE_TYPE_UNSPECIFIED",
+            "BIGQUERY",
             "DATAPROC_METASTORE",
           },
           enumDescriptions = {
             "The metastore type is not set.",
+            "The backend metastore is BigQuery.",
             "The backend metastore is Dataproc Metastore.",
           },
           type = "string",
         },
         name = {
-          description = "The relative resource name of the metastore that is being federated. The formats of the relative resource names for the currently supported metastores are listed below: Dataplex projects/{project_id}/locations/{location}/lakes/{lake_id} BigQuery projects/{project_id} Dataproc Metastore projects/{project_id}/locations/{location}/services/{service_id}",
+          description = "The relative resource name of the metastore that is being federated. The formats of the relative resource names for the currently supported metastores are listed below: BigQuery projects/{project_id} Dataproc Metastore projects/{project_id}/locations/{location}/services/{service_id}",
           type = "string",
         },
       },
@@ -1403,14 +1580,14 @@ return {
           description = "The condition that is associated with this binding.If the condition evaluates to true, then this binding applies to the current request.If the condition evaluates to false, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
         },
         members = {
-          description = "Specifies the principals requesting access for a Google Cloud resource. members can have the following values: allUsers: A special identifier that represents anyone who is on the internet; with or without a Google account. allAuthenticatedUsers: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. user:{emailid}: An email address that represents a specific Google account. For example, alice@example.com . serviceAccount:{emailid}: An email address that represents a Google service account. For example, my-other-app@appspot.gserviceaccount.com. serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]: An identifier for a Kubernetes service account (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa]. group:{emailid}: An email address that represents a Google group. For example, admins@example.com. deleted:user:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a user that has been recently deleted. For example, alice@example.com?uid=123456789012345678901. If the user is recovered, this value reverts to user:{emailid} and the recovered user retains the role in the binding. deleted:serviceAccount:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901. If the service account is undeleted, this value reverts to serviceAccount:{emailid} and the undeleted service account retains the role in the binding. deleted:group:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, admins@example.com?uid=123456789012345678901. If the group is recovered, this value reverts to group:{emailid} and the recovered group retains the role in the binding. domain:{domain}: The G Suite domain (primary) that represents all the users of that domain. For example, google.com or example.com.",
+          description = "Specifies the principals requesting access for a Google Cloud resource. members can have the following values: allUsers: A special identifier that represents anyone who is on the internet; with or without a Google account. allAuthenticatedUsers: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. user:{emailid}: An email address that represents a specific Google account. For example, alice@example.com . serviceAccount:{emailid}: An email address that represents a Google service account. For example, my-other-app@appspot.gserviceaccount.com. serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]: An identifier for a Kubernetes service account (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa]. group:{emailid}: An email address that represents a Google group. For example, admins@example.com. domain:{domain}: The G Suite domain (primary) that represents all the users of that domain. For example, google.com or example.com. principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}: A single identity in a workforce identity pool. principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}: All workforce identities in a group. principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}: All workforce identities with a specific attribute value. principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*: All identities in a workforce identity pool. principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}: A single identity in a workload identity pool. principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}: A workload identity pool group. principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}: All identities in a workload identity pool with a certain attribute. principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*: All identities in a workload identity pool. deleted:user:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a user that has been recently deleted. For example, alice@example.com?uid=123456789012345678901. If the user is recovered, this value reverts to user:{emailid} and the recovered user retains the role in the binding. deleted:serviceAccount:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901. If the service account is undeleted, this value reverts to serviceAccount:{emailid} and the undeleted service account retains the role in the binding. deleted:group:{emailid}?uid={uniqueid}: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, admins@example.com?uid=123456789012345678901. If the group is recovered, this value reverts to group:{emailid} and the recovered group retains the role in the binding. deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}: Deleted single identity in a workforce identity pool. For example, deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value.",
           items = {
             type = "string",
           },
           type = "array",
         },
         role = {
-          description = "Role that is assigned to the list of members, or principals. For example, roles/viewer, roles/editor, or roles/owner.",
+          description = "Role that is assigned to the list of members, or principals. For example, roles/viewer, roles/editor, or roles/owner.For an overview of the IAM roles and permissions, see the IAM documentation (https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see here (https://cloud.google.com/iam/docs/understanding-roles).",
           type = "string",
         },
       },
@@ -1426,6 +1603,11 @@ return {
       description = "Contains information of the customer's network configurations.",
       id = "Consumer",
       properties = {
+        endpointLocation = {
+          description = "Output only. The location of the endpoint URI. Format: projects/{project}/locations/{location}.",
+          readOnly = true,
+          type = "string",
+        },
         endpointUri = {
           description = "Output only. The URI of the endpoint used to access the metastore service.",
           readOnly = true,
@@ -1438,11 +1620,23 @@ return {
       },
       type = "object",
     },
+    DataCatalogConfig = {
+      description = "Specifies how metastore metadata should be integrated with the Data Catalog service.",
+      id = "DataCatalogConfig",
+      properties = {
+        enabled = {
+          description = "Optional. Defines whether the metastore metadata should be synced to Data Catalog. The default value is to disable syncing metastore metadata to Data Catalog.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
     DatabaseDump = {
       description = "A specification of the location of and metadata about a database dump from a relational database management system.",
       id = "DatabaseDump",
       properties = {
         databaseType = {
+          deprecated = true,
           description = "The type of the database.",
           enum = {
             "DATABASE_TYPE_UNSPECIFIED",
@@ -1459,6 +1653,7 @@ return {
           type = "string",
         },
         sourceDatabase = {
+          deprecated = true,
           description = "The name of the source database.",
           type = "string",
         },
@@ -1490,8 +1685,22 @@ return {
       id = "EncryptionConfig",
       properties = {
         kmsKey = {
-          description = "The fully qualified customer provided Cloud KMS key name to use for customer data encryption, in the following form:projects/{project_number}/locations/{location_id}/keyRings/{key_ring_id}/cryptoKeys/{crypto_key_id}.",
+          description = "The fully qualified customer provided Cloud KMS key name to use for customer data encryption, in the following format:projects/{project_number}/locations/{location_id}/keyRings/{key_ring_id}/cryptoKeys/{crypto_key_id}.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    ErrorDetails = {
+      description = "Error details in public error message for DataprocMetastore.QueryMetadata.",
+      id = "ErrorDetails",
+      properties = {
+        details = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Additional structured details about this error.Keys define the failure items. Value describes the exception or details of the item.",
+          type = "object",
         },
       },
       type = "object",
@@ -1629,12 +1838,33 @@ return {
       description = "Specifies configuration information specific to running Hive metastore software as the metastore service.",
       id = "HiveMetastoreConfig",
       properties = {
+        auxiliaryVersions = {
+          additionalProperties = {
+            ["$ref"] = "AuxiliaryVersionConfig",
+          },
+          description = "A mapping of Hive metastore version to the auxiliary version configuration. When specified, a secondary Hive metastore service is created along with the primary service. All auxiliary versions must be less than the service's primary version. The key is the auxiliary service name and it must match the regular expression a-z?. This means that the first character must be a lowercase letter, and all the following characters must be hyphens, lowercase letters, or digits, except the last character, which cannot be a hyphen.",
+          type = "object",
+        },
         configOverrides = {
           additionalProperties = {
             type = "string",
           },
           description = "A mapping of Hive metastore configuration key-value pairs to apply to the Hive metastore (configured in hive-site.xml). The mappings override system defaults (some keys cannot be overridden). These overrides are also applied to auxiliary versions and can be further customized in the auxiliary version's AuxiliaryVersionConfig.",
           type = "object",
+        },
+        endpointProtocol = {
+          description = "The protocol to use for the metastore service endpoint. If unspecified, defaults to THRIFT.",
+          enum = {
+            "ENDPOINT_PROTOCOL_UNSPECIFIED",
+            "THRIFT",
+            "GRPC",
+          },
+          enumDescriptions = {
+            "The protocol is not set.",
+            "Use the legacy Apache Thrift protocol for the metastore service endpoint.",
+            "Use the modernized gRPC protocol for the metastore service endpoint.",
+          },
+          type = "string",
         },
         kerberosConfig = {
           ["$ref"] = "KerberosConfig",
@@ -1676,6 +1906,47 @@ return {
         },
         principal = {
           description = "A Kerberos principal that exists in the both the keytab the KDC to authenticate as. A typical principal is of the form primary/instance@REALM, but there is no exact format.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    LatestBackup = {
+      description = "The details of the latest scheduled backup.",
+      id = "LatestBackup",
+      properties = {
+        backupId = {
+          description = "Output only. The ID of an in-progress scheduled backup. Empty if no backup is in progress.",
+          readOnly = true,
+          type = "string",
+        },
+        duration = {
+          description = "Output only. The duration of the backup completion.",
+          format = "google-duration",
+          readOnly = true,
+          type = "string",
+        },
+        startTime = {
+          description = "Output only. The time when the backup was started.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        state = {
+          description = "Output only. The current state of the backup.",
+          enum = {
+            "STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "SUCCEEDED",
+            "FAILED",
+          },
+          enumDescriptions = {
+            "The state of the backup is unknown.",
+            "The backup is in progress.",
+            "The backup completed.",
+            "The backup failed.",
+          },
+          readOnly = true,
           type = "string",
         },
       },
@@ -1818,7 +2089,7 @@ return {
       type = "object",
     },
     Location = {
-      description = "A resource that represents Google Cloud Platform location.",
+      description = "A resource that represents a Google Cloud location.",
       id = "Location",
       properties = {
         displayName = {
@@ -1855,6 +2126,10 @@ return {
       description = "Metadata about the service in a location.",
       id = "LocationMetadata",
       properties = {
+        multiRegionMetadata = {
+          ["$ref"] = "MultiRegionMetadata",
+          description = "The multi-region metadata if the current region is a multi-region.",
+        },
         supportedHiveMetastoreVersions = {
           description = "The versions of Hive Metastore that can be used when creating a new metastore service in this location. The server guarantees that exactly one HiveMetastoreVersion in the list will set is_default.",
           items = {
@@ -2015,6 +2290,17 @@ return {
       },
       type = "object",
     },
+    MetadataIntegration = {
+      description = "Specifies how metastore metadata should be integrated with external services.",
+      id = "MetadataIntegration",
+      properties = {
+        dataCatalogConfig = {
+          ["$ref"] = "DataCatalogConfig",
+          description = "Optional. The integration config for the Data Catalog service.",
+        },
+      },
+      type = "object",
+    },
     MetadataManagementActivity = {
       description = "The metadata management activities of the metastore service.",
       id = "MetadataManagementActivity",
@@ -2033,6 +2319,45 @@ return {
             ["$ref"] = "Restore",
           },
           readOnly = true,
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    MoveTableToDatabaseRequest = {
+      description = "Request message for DataprocMetastore.MoveTableToDatabase.",
+      id = "MoveTableToDatabaseRequest",
+      properties = {
+        dbName = {
+          description = "Required. The name of the database where the table resides.",
+          type = "string",
+        },
+        destinationDbName = {
+          description = "Required. The name of the database where the table should be moved.",
+          type = "string",
+        },
+        tableName = {
+          description = "Required. The name of the table to be moved.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    MoveTableToDatabaseResponse = {
+      description = "Response message for DataprocMetastore.MoveTableToDatabase.",
+      id = "MoveTableToDatabaseResponse",
+      properties = {},
+      type = "object",
+    },
+    MultiRegionMetadata = {
+      description = "The metadata for the multi-region that includes the constituent regions. The metadata is only populated if the region is multi-region. For single region, it will be empty.",
+      id = "MultiRegionMetadata",
+      properties = {
+        constituentRegions = {
+          description = "The regions constituting the multi-region.",
+          items = {
+            type = "string",
+          },
           type = "array",
         },
       },
@@ -2081,7 +2406,7 @@ return {
             description = "Properties of the object. Contains field @type with type URL.",
             type = "any",
           },
-          description = "The normal response of the operation in case of success. If the original method returns no data on success, such as Delete, the response is google.protobuf.Empty. If the original method is standard Get/Create/Update, the response should be the resource. For other methods, the response should have the type XxxResponse, where Xxx is the original method name. For example, if the original method name is TakeSnapshot(), the inferred response type is TakeSnapshotResponse.",
+          description = "The normal, successful response of the operation. If the original method returns no data on success, such as Delete, the response is google.protobuf.Empty. If the original method is standard Get/Create/Update, the response should be the resource. For other methods, the response should have the type XxxResponse, where Xxx is the original method name. For example, if the original method name is TakeSnapshot(), the inferred response type is TakeSnapshotResponse.",
           type = "object",
         },
       },
@@ -2162,6 +2487,28 @@ return {
       },
       type = "object",
     },
+    QueryMetadataRequest = {
+      description = "Request message for DataprocMetastore.QueryMetadata.",
+      id = "QueryMetadataRequest",
+      properties = {
+        query = {
+          description = "Required. A read-only SQL query to execute against the metadata database. The query cannot change or mutate the data.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    QueryMetadataResponse = {
+      description = "Response message for DataprocMetastore.QueryMetadata.",
+      id = "QueryMetadataResponse",
+      properties = {
+        resultManifestUri = {
+          description = "The manifest URI is link to a JSON instance in Cloud Storage. This instance manifests immediately along with QueryMetadataResponse. The content of the URI is not retriable until the long-running operation query against the metadata finishes.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     Restore = {
       description = "The details of a metadata restore operation.",
       id = "Restore",
@@ -2169,6 +2516,10 @@ return {
         backup = {
           description = "Output only. The relative resource name of the metastore service backup to restore from, in the following form:projects/{project_id}/locations/{location_id}/services/{service_id}/backups/{backup_id}.",
           readOnly = true,
+          type = "string",
+        },
+        backupLocation = {
+          description = "Optional. A Cloud Storage URI specifying where the backup artifacts are stored, in the format gs:///.",
           type = "string",
         },
         details = {
@@ -2230,7 +2581,11 @@ return {
       id = "RestoreServiceRequest",
       properties = {
         backup = {
-          description = "Required. The relative resource name of the metastore service backup to restore from, in the following form:projects/{project_id}/locations/{location_id}/services/{service_id}/backups/{backup_id}.",
+          description = "Optional. The relative resource name of the metastore service backup to restore from, in the following form:projects/{project_id}/locations/{location_id}/services/{service_id}/backups/{backup_id}. Mutually exclusive with backup_location, and exactly one of the two must be set.",
+          type = "string",
+        },
+        backupLocation = {
+          description = "Optional. A Cloud Storage URI specifying the location of the backup artifacts, namely - backup avro files under \"avro/\", backup_metastore.json and service.json, in the following form:gs://. Mutually exclusive with backup, and exactly one of the two must be set.",
           type = "string",
         },
         requestId = {
@@ -2249,6 +2604,72 @@ return {
             "The service's metadata and configuration are restored.",
             "Only the service's metadata is restored.",
           },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    ScalingConfig = {
+      description = "Represents the scaling configuration of a metastore service.",
+      id = "ScalingConfig",
+      properties = {
+        instanceSize = {
+          description = "An enum of readable instance sizes, with each instance size mapping to a float value (e.g. InstanceSize.EXTRA_SMALL = scaling_factor(0.1))",
+          enum = {
+            "INSTANCE_SIZE_UNSPECIFIED",
+            "EXTRA_SMALL",
+            "SMALL",
+            "MEDIUM",
+            "LARGE",
+            "EXTRA_LARGE",
+          },
+          enumDescriptions = {
+            "Unspecified instance size",
+            "Extra small instance size, maps to a scaling factor of 0.1.",
+            "Small instance size, maps to a scaling factor of 0.5.",
+            "Medium instance size, maps to a scaling factor of 1.0.",
+            "Large instance size, maps to a scaling factor of 3.0.",
+            "Extra large instance size, maps to a scaling factor of 6.0.",
+          },
+          type = "string",
+        },
+        scalingFactor = {
+          description = "Scaling factor, increments of 0.1 for values less than 1.0, and increments of 1.0 for values greater than 1.0.",
+          format = "float",
+          type = "number",
+        },
+      },
+      type = "object",
+    },
+    ScheduledBackup = {
+      description = "This specifies the configuration of scheduled backup.",
+      id = "ScheduledBackup",
+      properties = {
+        backupLocation = {
+          description = "Optional. A Cloud Storage URI of a folder, in the format gs:///. A sub-folder containing backup files will be stored below it.",
+          type = "string",
+        },
+        cronSchedule = {
+          description = "Optional. The scheduled interval in Cron format, see https://en.wikipedia.org/wiki/Cron The default is empty: scheduled backup is not enabled. Must be specified to enable scheduled backups.",
+          type = "string",
+        },
+        enabled = {
+          description = "Optional. Defines whether the scheduled backup is enabled. The default value is false.",
+          type = "boolean",
+        },
+        latestBackup = {
+          ["$ref"] = "LatestBackup",
+          description = "Output only. The details of the latest scheduled backup.",
+          readOnly = true,
+        },
+        nextScheduledTime = {
+          description = "Output only. The time when the next backups execution is scheduled to start.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        timeZone = {
+          description = "Optional. Specifies the time zone to be used when interpreting cron_schedule. Must be a time zone name from the time zone database (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g. America/Los_Angeles or Africa/Abidjan. If left unspecified, the default is UTC.",
           type = "string",
         },
       },
@@ -2318,6 +2739,10 @@ return {
           ["$ref"] = "MaintenanceWindow",
           description = "The one hour maintenance window of the metastore service. This specifies when the service can be restarted for maintenance purposes in UTC time. Maintenance window is not needed for services with the SPANNER database type.",
         },
+        metadataIntegration = {
+          ["$ref"] = "MetadataIntegration",
+          description = "Optional. The setting that defines how metastore metadata should be integrated with external services and systems.",
+        },
         metadataManagementActivity = {
           ["$ref"] = "MetadataManagementActivity",
           description = "Output only. The metadata management activities of the metastore service.",
@@ -2353,6 +2778,14 @@ return {
             "The STABLE release channel contains features that are considered stable and have been validated for production use.",
           },
           type = "string",
+        },
+        scalingConfig = {
+          ["$ref"] = "ScalingConfig",
+          description = "Scaling configuration of the metastore service.",
+        },
+        scheduledBackup = {
+          ["$ref"] = "ScheduledBackup",
+          description = "Optional. The configuration of scheduled backup for the metastore service.",
         },
         state = {
           description = "Output only. The current state of the metastore service.",

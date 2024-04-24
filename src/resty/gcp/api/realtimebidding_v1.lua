@@ -885,7 +885,7 @@ return {
           },
         },
         getRemarketingTag = {
-          description = "Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
+          description = "This has been sunset as of October 2023, and will return an error response if called. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
           flatPath = "v1/buyers/{buyersId}:getRemarketingTag",
           httpMethod = "GET",
           id = "realtimebidding.buyers.getRemarketingTag",
@@ -894,7 +894,7 @@ return {
           },
           parameters = {
             name = {
-              description = "Required. To fetch remarketing tag for an account, name must follow the pattern `buyers/{accountId}` where `{accountId}` represents ID of a buyer that owns the remarketing tag. For a bidder accessing remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch remarketing tag for a specific user list, name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
+              description = "Required. To fetch the remarketing tag for an account, the name must follow the pattern `buyers/{accountId}`, where `{accountId}` represents the ID of the buyer that owns the remarketing tag. For a bidder accessing the remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch the remarketing tag for a specific user list, the name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
               location = "path",
               pattern = "^buyers/[^/]+$",
               required = true,
@@ -1103,7 +1103,7 @@ return {
         userLists = {
           methods = {
             close = {
-              description = "Change the status of a user list to CLOSED. This prevents new users from being added to the user list.",
+              description = "Changes the status of a user list to CLOSED. This prevents new users from being added to the user list.",
               flatPath = "v1/buyers/{buyersId}/userLists/{userListsId}:close",
               httpMethod = "POST",
               id = "realtimebidding.buyers.userLists.close",
@@ -1131,7 +1131,7 @@ return {
               },
             },
             create = {
-              description = "Create a new user list.",
+              description = "Creates a new user list.",
               flatPath = "v1/buyers/{buyersId}/userLists",
               httpMethod = "POST",
               id = "realtimebidding.buyers.userLists.create",
@@ -1140,7 +1140,7 @@ return {
               },
               parameters = {
                 parent = {
-                  description = "Required. The name of the parent buyer of the user list to be retrieved that must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns user lists. For a bidder accessing user lists on behalf of a child seat buyer , `{buyerAccountId}` should represent the account ID of the child seat buyer.",
+                  description = "Required. The name of the parent buyer of the user list to be retrieved, which must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns the user list. For a bidder accessing user lists on behalf of a child seat buyer, `{buyerAccountId}` should represent the account ID of the child seat buyer.",
                   location = "path",
                   pattern = "^buyers/[^/]+$",
                   required = true,
@@ -1184,7 +1184,7 @@ return {
               },
             },
             getRemarketingTag = {
-              description = "Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
+              description = "This has been sunset as of October 2023, and will return an error response if called. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Gets remarketing tag for a buyer. A remarketing tag is a piece of JavaScript code that can be placed on a web page. When a user visits a page containing a remarketing tag, Google adds the user to a user list.",
               flatPath = "v1/buyers/{buyersId}/userLists/{userListsId}:getRemarketingTag",
               httpMethod = "GET",
               id = "realtimebidding.buyers.userLists.getRemarketingTag",
@@ -1193,7 +1193,7 @@ return {
               },
               parameters = {
                 name = {
-                  description = "Required. To fetch remarketing tag for an account, name must follow the pattern `buyers/{accountId}` where `{accountId}` represents ID of a buyer that owns the remarketing tag. For a bidder accessing remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch remarketing tag for a specific user list, name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
+                  description = "Required. To fetch the remarketing tag for an account, the name must follow the pattern `buyers/{accountId}`, where `{accountId}` represents the ID of the buyer that owns the remarketing tag. For a bidder accessing the remarketing tag on behalf of a child seat buyer, `{accountId}` should represent the ID of the child seat buyer. To fetch the remarketing tag for a specific user list, the name must follow the pattern `buyers/{accountId}/userLists/{userListId}`. See UserList.name.",
                   location = "path",
                   pattern = "^buyers/[^/]+/userLists/[^/]+$",
                   required = true,
@@ -1224,7 +1224,7 @@ return {
                   type = "integer",
                 },
                 pageToken = {
-                  description = "Continuation page token (as received from a previous response).",
+                  description = "Continuation page token as received from a previous response.",
                   location = "query",
                   type = "string",
                 },
@@ -1245,7 +1245,7 @@ return {
               },
             },
             open = {
-              description = "Change the status of a user list to OPEN. This allows new users to be added to the user list.",
+              description = "Changes the status of a user list to OPEN. This allows new users to be added to the user list.",
               flatPath = "v1/buyers/{buyersId}/userLists/{userListsId}:open",
               httpMethod = "POST",
               id = "realtimebidding.buyers.userLists.open",
@@ -1273,7 +1273,7 @@ return {
               },
             },
             update = {
-              description = "Update the given user list. Only user lists with URLRestrictions can be updated.",
+              description = "Updates the given user list. Only user lists with URLRestrictions can be updated.",
               flatPath = "v1/buyers/{buyersId}/userLists/{userListsId}",
               httpMethod = "PUT",
               id = "realtimebidding.buyers.userLists.update",
@@ -1305,7 +1305,7 @@ return {
       },
     },
   },
-  revision = "20230113",
+  revision = "20240422",
   rootUrl = "https://realtimebidding.googleapis.com/",
   schemas = {
     ActivatePretargetingConfigRequest = {
@@ -1709,6 +1709,7 @@ return {
               "IN_BANNER_VIDEO",
               "RENDERING_SIZELESS_ADX",
               "OMSDK_1_0",
+              "RENDERING_PLAYABLE",
             },
             enumDescriptions = {
               "Do not use. This is a placeholder value only.",
@@ -1749,6 +1750,7 @@ return {
               "The video type is in-banner video.",
               "The creative can dynamically resize to fill a variety of slot sizes.",
               "The open measurement SDK is supported.",
+              "The creative is considered a playable display creative.",
             },
             type = "string",
           },
@@ -1805,10 +1807,11 @@ return {
           description = "A native creative.",
         },
         renderUrl = {
-          description = "Experimental field that can be used during the [FLEDGE Origin Trial](/authorized-buyers/rtb/fledge-origin-trial). The URL to fetch an interest group ad used in [TURTLEDOVE on-device auction](https://github.com/WICG/turtledove/blob/main/FLEDGE.md#1-browsers-record-interest-groups\"). This should be unique among all creatives for a given `accountId`.",
+          description = "Experimental field that can be used during the [FLEDGE Origin Trial](/authorized-buyers/rtb/fledge-origin-trial). The URL to fetch an interest group ad used in [TURTLEDOVE on-device auction](https://github.com/WICG/turtledove/blob/main/FLEDGE.md#1-browsers-record-interest-groups\"). This should be unique among all creatives for a given `accountId`. This URL should be the same as the URL returned by [generateBid()](https://github.com/WICG/turtledove/blob/main/FLEDGE.md#32-on-device-bidding).",
           type = "string",
         },
         restrictedCategories = {
+          deprecated = true,
           description = "All restricted categories for the ads that may be shown from this creative.",
           items = {
             enum = {
@@ -1824,6 +1827,7 @@ return {
           type = "array",
         },
         version = {
+          deprecated = true,
           description = "Output only. The version of the creative. Version for a new creative is 1 and it increments during subsequent creative updates.",
           format = "int32",
           readOnly = true,
@@ -1918,6 +1922,7 @@ return {
               "IN_BANNER_VIDEO",
               "RENDERING_SIZELESS_ADX",
               "OMSDK_1_0",
+              "RENDERING_PLAYABLE",
             },
             enumDescriptions = {
               "Do not use. This is a placeholder value only.",
@@ -1958,6 +1963,7 @@ return {
               "The video type is in-banner video.",
               "The creative can dynamically resize to fill a variety of slot sizes.",
               "The open measurement SDK is supported.",
+              "The creative is considered a playable display creative.",
             },
             type = "string",
           },
@@ -2263,26 +2269,12 @@ return {
             "GOOGLE_RTB",
             "OPENRTB_JSON",
             "OPENRTB_PROTOBUF",
-            "OPENRTB_2_2",
-            "OPENRTB_2_3",
-            "OPENRTB_PROTOBUF_2_3",
-            "OPENRTB_2_4",
-            "OPENRTB_PROTOBUF_2_4",
-            "OPENRTB_2_5",
-            "OPENRTB_PROTOBUF_2_5",
           },
           enumDescriptions = {
             "Placeholder for undefined bid protocol. This value should not be used.",
             "Google RTB protocol / Protobuf encoding.",
             "OpenRTB / JSON encoding (unversioned/latest).",
             "OpenRTB / Protobuf encoding (unversioned/latest).",
-            "Deprecated: Use OPENRTB_JSON.",
-            "Deprecated: Use OPENRTB_JSON.",
-            "Deprecated: Use OPENRTB_PROTOBUF.",
-            "Deprecated: Use OPENRTB_JSON.",
-            "Deprecated: Use OPENRTB_PROTOBUF.",
-            "Deprecated: Use OPENRTB_JSON.",
-            "Deprecated: Use OPENRTB_PROTOBUF.",
           },
           type = "string",
         },
@@ -2323,11 +2315,11 @@ return {
       type = "object",
     },
     GetRemarketingTagResponse = {
-      description = "Response for a request to get remarketing tag.",
+      description = "This has been sunset as of October 2023, and will return an error response if called. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Response for a request to get remarketing tag.",
       id = "GetRemarketingTagResponse",
       properties = {
         snippet = {
-          description = "A HTML tag that can be placed on the advertiser's page to add users to a user list. For more information and code samples on using snippet on your website refer to [Tag your site for remarketing]( https://support.google.com/google-ads/answer/2476688).",
+          description = "An HTML tag that can be placed on the advertiser's page to add users to a user list. For more information and code samples on using snippets on your website, refer to [Tag your site for remarketing](https://support.google.com/google-ads/answer/2476688).",
           type = "string",
         },
       },
@@ -2521,7 +2513,7 @@ return {
       id = "ListUserListsResponse",
       properties = {
         nextPageToken = {
-          description = "The continuation page token to send back to the server in a subsequent request. Due to a currently known issue, it is recommended that the caller keep invoking the list method till the time a next page token is not returned (even if the result set is empty).",
+          description = "The continuation page token to send back to the server in a subsequent request. Due to a currently known issue, it is recommended that the caller keep invoking the list method until the time a next page token is not returned, even if the result set is empty.",
           type = "string",
         },
         userLists = {
@@ -2726,6 +2718,10 @@ return {
           description = "URL of the help center article describing this policy topic.",
           type = "string",
         },
+        missingCertificate = {
+          description = "Whether or not the policy topic is missing a certificate. Some policy topics require a certificate to unblock serving in some regions. For more information about creative certification, refer to: https://support.google.com/authorizedbuyers/answer/7450776",
+          type = "boolean",
+        },
         policyTopic = {
           description = "Policy topic this entry refers to. For example, \"ALCOHOL\", \"TRADEMARKS_IN_AD_TEXT\", or \"DESTINATION_NOT_WORKING\". The set of possible policy topics is not fixed for a particular API version and may change at any time. Can be used to filter the response of the creatives.list method",
           type = "string",
@@ -2902,12 +2898,14 @@ return {
               "HOSTED_MATCH_DATA",
               "GOOGLE_COOKIE",
               "DEVICE_ID",
+              "PUBLISHER_PROVIDED_ID",
             },
             enumDescriptions = {
               "Placeholder for unspecified user identifier.",
               "Hosted match data, referring to hosted_match_data in the bid request.",
               "Google cookie, referring to google_user_id in the bid request.",
               "Mobile device advertising ID.",
+              "The request has a publisher-provided ID available to the bidder.",
             },
             type = "string",
           },
@@ -3132,7 +3130,7 @@ return {
       type = "object",
     },
     UrlRestriction = {
-      description = "Represents the URL restriction (for the URL captured by the pixel callback) for a user list.",
+      description = "Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Represents the URL restriction (for the URL captured by the pixel callback) for a user list.",
       id = "UrlRestriction",
       properties = {
         endDate = {
@@ -3215,7 +3213,7 @@ return {
         },
         urlRestriction = {
           ["$ref"] = "UrlRestriction",
-          description = "Required. The URL restriction for the user list.",
+          description = "Required. Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api The URL restriction for the user list.",
         },
       },
       type = "object",

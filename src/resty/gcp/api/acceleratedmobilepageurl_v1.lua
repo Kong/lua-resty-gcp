@@ -115,7 +115,7 @@ return {
       },
     },
   },
-  revision = "20230116",
+  revision = "20240423",
   rootUrl = "https://acceleratedmobilepageurl.googleapis.com/",
   schemas = {
     AmpUrl = {
@@ -150,6 +150,14 @@ return {
             "APPLICATION_ERROR",
             "URL_IS_VALID_AMP",
             "URL_IS_INVALID_AMP",
+          },
+          enumDeprecated = {
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
           },
           enumDescriptions = {
             "Not specified error.",

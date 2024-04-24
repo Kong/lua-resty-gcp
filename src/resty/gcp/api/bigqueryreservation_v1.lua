@@ -18,6 +18,33 @@ return {
   description = "A service to modify your BigQuery flat-rate reservations.",
   discoveryVersion = "v1",
   documentationLink = "https://cloud.google.com/bigquery/",
+  endpoints = {
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigqueryreservation.me-central2.rep.googleapis.com/",
+      location = "me-central2",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigqueryreservation.europe-west3.rep.googleapis.com/",
+      location = "europe-west3",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigqueryreservation.europe-west9.rep.googleapis.com/",
+      location = "europe-west9",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigqueryreservation.us-east4.rep.googleapis.com/",
+      location = "us-east4",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigqueryreservation.us-west1.rep.googleapis.com/",
+      location = "us-west1",
+    },
+  },
   fullyEncodeReservedExpansion = true,
   icons = {
     x16 = "http://www.google.com/images/icons/product/search-16.gif",
@@ -181,6 +208,7 @@ return {
               },
             },
             searchAssignments = {
+              deprecated = true,
               description = "Deprecated: Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project->folder->organization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`. **Note** \"-\" cannot be used for projects nor locations.",
               flatPath = "v1/projects/{projectsId}/locations/{locationsId}:searchAssignments",
               httpMethod = "GET",
@@ -551,6 +579,35 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                   },
                 },
+                failoverReservation = {
+                  description = "Failover a reservation to the secondary location. The operation should be done in the current secondary location, which will be promoted to the new primary location for the reservation. Attempting to failover a reservation in the current primary location will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.",
+                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}:failoverReservation",
+                  httpMethod = "POST",
+                  id = "bigqueryreservation.projects.locations.reservations.failoverReservation",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "Required. Resource name of the reservation to failover. E.g., `projects/myproject/locations/US/reservations/team1-prod`",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v1/{+name}:failoverReservation",
+                  request = {
+                    ["$ref"] = "FailoverReservationRequest",
+                  },
+                  response = {
+                    ["$ref"] = "Reservation",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/bigquery",
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
                 get = {
                   description = "Returns information about the reservation.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}",
@@ -823,7 +880,7 @@ return {
       },
     },
   },
-  revision = "20230109",
+  revision = "20240328",
   rootUrl = "https://bigqueryreservation.googleapis.com/",
   schemas = {
     Assignment = {
@@ -842,6 +899,7 @@ return {
             "QUERY",
             "ML_EXTERNAL",
             "BACKGROUND",
+            "CONTINUOUS",
           },
           enumDescriptions = {
             "Invalid type. Requests with this value will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.",
@@ -849,6 +907,7 @@ return {
             "Query jobs from the project will use the reservation.",
             "BigQuery ML jobs that use services external to BigQuery for model training. These jobs will not utilize idle slots from other reservations.",
             "Background jobs that BigQuery runs for the customers in the background.",
+            "Continuous SQL jobs will use this reservation. Reservations with continuous assignments cannot be mixed with non-continuous assignments.",
           },
           type = "string",
         },
@@ -870,6 +929,24 @@ return {
             "Assignment is ready.",
           },
           readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    Autoscale = {
+      description = "Auto scaling settings.",
+      id = "Autoscale",
+      properties = {
+        currentSlots = {
+          description = "Output only. The slot capacity added to this reservation when autoscale happens. Will be between [0, max_slots].",
+          format = "int64",
+          readOnly = true,
+          type = "string",
+        },
+        maxSlots = {
+          description = "Number of slots to be scaled when needed.",
+          format = "int64",
           type = "string",
         },
       },
@@ -920,13 +997,34 @@ return {
           readOnly = true,
           type = "string",
         },
+        edition = {
+          description = "Edition of the capacity commitment.",
+          enum = {
+            "EDITION_UNSPECIFIED",
+            "STANDARD",
+            "ENTERPRISE",
+            "ENTERPRISE_PLUS",
+          },
+          enumDescriptions = {
+            "Default value, which will be treated as ENTERPRISE.",
+            "Standard edition.",
+            "Enterprise edition.",
+            "Enterprise plus edition.",
+          },
+          type = "string",
+        },
         failureStatus = {
           ["$ref"] = "Status",
           description = "Output only. For FAILED commitment plan, provides the reason of failure.",
           readOnly = true,
         },
+        isFlatRate = {
+          description = "Output only. If true, the commitment is a flat-rate commitment, otherwise, it's an edition commitment.",
+          readOnly = true,
+          type = "boolean",
+        },
         multiRegionAuxiliary = {
-          description = "Applicable only for commitments located within one of the BigQuery multi-regions (US or EU). If set to true, this commitment is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this commitment is placed in the organization's default region.",
+          description = "Applicable only for commitments located within one of the BigQuery multi-regions (US or EU). If set to true, this commitment is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this commitment is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.",
           type = "boolean",
         },
         name = {
@@ -939,16 +1037,38 @@ return {
           enum = {
             "COMMITMENT_PLAN_UNSPECIFIED",
             "FLEX",
+            "FLEX_FLAT_RATE",
             "TRIAL",
             "MONTHLY",
+            "MONTHLY_FLAT_RATE",
             "ANNUAL",
+            "ANNUAL_FLAT_RATE",
+            "THREE_YEAR",
+            "NONE",
+          },
+          enumDeprecated = {
+            false,
+            false,
+            true,
+            true,
+            false,
+            true,
+            false,
+            true,
+            false,
+            false,
           },
           enumDescriptions = {
             "Invalid plan value. Requests with this value will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.",
             "Flex commitments have committed period of 1 minute after becoming ACTIVE. After that, they are not in a committed period anymore and can be removed any time.",
+            "Same as FLEX, should only be used if flat-rate commitments are still available.",
             "Trial commitments have a committed period of 182 days after becoming ACTIVE. After that, they are converted to a new commitment based on the `renewal_plan`. Default `renewal_plan` for Trial commitment is Flex so that it can be deleted right after committed period ends.",
             "Monthly commitments have a committed period of 30 days after becoming ACTIVE. After that, they are not in a committed period anymore and can be removed any time.",
+            "Same as MONTHLY, should only be used if flat-rate commitments are still available.",
             "Annual commitments have a committed period of 365 days after becoming ACTIVE. After that they are converted to a new commitment based on the renewal_plan.",
+            "Same as ANNUAL, should only be used if flat-rate commitments are still available.",
+            "3-year commitments have a committed period of 1095(3 * 365) days after becoming ACTIVE. After that they are converted to a new commitment based on the renewal_plan.",
+            "Should only be used for `renewal_plan` and is only meaningful if edition is specified to values other than EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or UpdateCapacityCommitmentRequest will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE, capacity commitment will be removed at the end of its commitment period.",
           },
           type = "string",
         },
@@ -957,16 +1077,38 @@ return {
           enum = {
             "COMMITMENT_PLAN_UNSPECIFIED",
             "FLEX",
+            "FLEX_FLAT_RATE",
             "TRIAL",
             "MONTHLY",
+            "MONTHLY_FLAT_RATE",
             "ANNUAL",
+            "ANNUAL_FLAT_RATE",
+            "THREE_YEAR",
+            "NONE",
+          },
+          enumDeprecated = {
+            false,
+            false,
+            true,
+            true,
+            false,
+            true,
+            false,
+            true,
+            false,
+            false,
           },
           enumDescriptions = {
             "Invalid plan value. Requests with this value will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`.",
             "Flex commitments have committed period of 1 minute after becoming ACTIVE. After that, they are not in a committed period anymore and can be removed any time.",
+            "Same as FLEX, should only be used if flat-rate commitments are still available.",
             "Trial commitments have a committed period of 182 days after becoming ACTIVE. After that, they are converted to a new commitment based on the `renewal_plan`. Default `renewal_plan` for Trial commitment is Flex so that it can be deleted right after committed period ends.",
             "Monthly commitments have a committed period of 30 days after becoming ACTIVE. After that, they are not in a committed period anymore and can be removed any time.",
+            "Same as MONTHLY, should only be used if flat-rate commitments are still available.",
             "Annual commitments have a committed period of 365 days after becoming ACTIVE. After that they are converted to a new commitment based on the renewal_plan.",
+            "Same as ANNUAL, should only be used if flat-rate commitments are still available.",
+            "3-year commitments have a committed period of 1095(3 * 365) days after becoming ACTIVE. After that they are converted to a new commitment based on the renewal_plan.",
+            "Should only be used for `renewal_plan` and is only meaningful if edition is specified to values other than EDITION_UNSPECIFIED. Otherwise CreateCapacityCommitmentRequest or UpdateCapacityCommitmentRequest will be rejected with error code `google.rpc.Code.INVALID_ARGUMENT`. If the renewal_plan is NONE, capacity commitment will be removed at the end of its commitment period.",
           },
           type = "string",
         },
@@ -998,6 +1140,12 @@ return {
     Empty = {
       description = "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       id = "Empty",
+      properties = {},
+      type = "object",
+    },
+    FailoverReservationRequest = {
+      description = "The request for ReservationService.FailoverReservation.",
+      id = "FailoverReservationRequest",
       properties = {},
       type = "object",
     },
@@ -1073,6 +1221,10 @@ return {
       description = "The request for ReservationService.MoveAssignment. **Note**: \"bigquery.reservationAssignments.create\" permission is required on the destination_id. **Note**: \"bigquery.reservationAssignments.create\" and \"bigquery.reservationAssignments.delete\" permission are required on the related assignee.",
       id = "MoveAssignmentRequest",
       properties = {
+        assignmentId = {
+          description = "The optional assignment ID. A new assignment name is generated if this field is empty. This field can contain only lowercase alphanumeric characters or dashes. Max length is 64 characters.",
+          type = "string",
+        },
         destinationId = {
           description = "The new reservation ID, e.g.: `projects/myotherproject/locations/US/reservations/team2-prod`",
           type = "string",
@@ -1084,8 +1236,12 @@ return {
       description = "A reservation is a mechanism used to guarantee slots to users.",
       id = "Reservation",
       properties = {
+        autoscale = {
+          ["$ref"] = "Autoscale",
+          description = "The configuration parameters for the auto scaling feature.",
+        },
         concurrency = {
-          description = "Job concurrency target which sets a soft upper bound on the number of jobs that can run concurrently in this reservation. This is a soft target due to asynchronous nature of the system and various optimizations for small queries. Default value is 0 which means that concurrency target will be automatically computed by the system. NOTE: this field is exposed as `target_job_concurrency` in the Information Schema, DDL and BQ CLI.",
+          description = "Job concurrency target which sets a soft upper bound on the number of jobs that can run concurrently in this reservation. This is a soft target due to asynchronous nature of the system and various optimizations for small queries. Default value is 0 which means that concurrency target will be automatically computed by the system. NOTE: this field is exposed as target job concurrency in the Information Schema, DDL and BQ CLI.",
           format = "int64",
           type = "string",
         },
@@ -1095,20 +1251,48 @@ return {
           readOnly = true,
           type = "string",
         },
+        edition = {
+          description = "Edition of the reservation.",
+          enum = {
+            "EDITION_UNSPECIFIED",
+            "STANDARD",
+            "ENTERPRISE",
+            "ENTERPRISE_PLUS",
+          },
+          enumDescriptions = {
+            "Default value, which will be treated as ENTERPRISE.",
+            "Standard edition.",
+            "Enterprise edition.",
+            "Enterprise plus edition.",
+          },
+          type = "string",
+        },
         ignoreIdleSlots = {
           description = "If false, any query or pipeline job using this reservation will use idle slots from other reservations within the same admin project. If true, a query or pipeline job using this reservation will execute with the slot capacity specified in the slot_capacity field at most.",
           type = "boolean",
         },
         multiRegionAuxiliary = {
-          description = "Applicable only for reservations located within one of the BigQuery multi-regions (US or EU). If set to true, this reservation is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this reservation is placed in the organization's default region.",
+          description = "Applicable only for reservations located within one of the BigQuery multi-regions (US or EU). If set to true, this reservation is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this reservation is placed in the organization's default region. NOTE: this is a preview feature. Project must be allow-listed in order to set this field.",
           type = "boolean",
         },
         name = {
           description = "The resource name of the reservation, e.g., `projects/*/locations/*/reservations/team1-prod`. The reservation_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.",
           type = "string",
         },
+        originalPrimaryLocation = {
+          description = "Optional. The original primary location of the reservation which is set only during its creation and remains unchanged afterwards. It can be used by the customer to answer questions about disaster recovery billing. The field is output only for customers and should not be specified, however, the google.api.field_behavior is not set to OUTPUT_ONLY since these fields are set in rerouted requests sent across regions.",
+          type = "string",
+        },
+        primaryLocation = {
+          description = "Optional. The primary location of the reservation. The field is only meaningful for reservation used for cross region disaster recovery. The field is output only for customers and should not be specified, however, the google.api.field_behavior is not set to OUTPUT_ONLY since these fields are set in rerouted requests sent across regions.",
+          type = "string",
+        },
+        secondaryLocation = {
+          description = "Optional. The secondary location of the reservation which is used for cross region disaster recovery purposes. Customer can set this in create/update reservation calls to create a failover reservation or convert a non-failover reservation to a failover reservation.",
+          type = "string",
+        },
         slotCapacity = {
-          description = "Minimum slots available to this reservation. A slot is a unit of computational power in BigQuery, and serves as the unit of parallelism. Queries using this reservation might use more slots during runtime if ignore_idle_slots is set to false. If total slot_capacity of the reservation and its siblings exceeds the total slot_count of all capacity commitments, the request will fail with `google.rpc.Code.RESOURCE_EXHAUSTED`. NOTE: for reservations in US or EU multi-regions, slot capacity constraints are checked separately for default and auxiliary regions. See multi_region_auxiliary flag for more details.",
+          description = "Baseline slots available to this reservation. A slot is a unit of computational power in BigQuery, and serves as the unit of parallelism. Queries using this reservation might use more slots during runtime if ignore_idle_slots is set to false, or autoscaling is enabled. If edition is EDITION_UNSPECIFIED and total slot_capacity of the reservation and its siblings exceeds the total slot_count of all capacity commitments, the request will fail with `google.rpc.Code.RESOURCE_EXHAUSTED`. If edition is any value but EDITION_UNSPECIFIED, then the above requirement is not needed. The total slot_capacity of the reservation and its siblings may exceed the total slot_count of capacity commitments. In that case, the exceeding slots will be charged with the autoscale SKU. You can increase the number of baseline slots in a reservation every few minutes. If you want to decrease your baseline slots, you are limited to once an hour if you have recently changed your baseline slot capacity and your baseline slots exceed your committed slots. Otherwise, you can decrease your baseline slots every few minutes.",
           format = "int64",
           type = "string",
         },

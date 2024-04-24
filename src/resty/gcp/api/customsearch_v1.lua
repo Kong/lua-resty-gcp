@@ -303,7 +303,8 @@ return {
               type = "string",
             },
             relatedSite = {
-              description = "Specifies that all search results should be pages that are related to the specified URL.",
+              deprecated = true,
+              description = "Deprecated.",
               location = "query",
               type = "string",
             },
@@ -320,6 +321,13 @@ return {
                 "high",
                 "medium",
                 "off",
+              },
+              enumDeprecated = {
+                false,
+                false,
+                true,
+                true,
+                false,
               },
               enumDescriptions = {
                 "SafeSearch mode unspecified. (Falls back to engine's configuration.)",
@@ -363,6 +371,12 @@ return {
               },
               location = "query",
               type = "string",
+            },
+            snippetLength = {
+              description = "Optional. Maximum length of snippet text, in characters, to be returned with results. Note: this feature is limited to specific engines. * Valid values are integers between 161 and 1000, inclusive.",
+              format = "int32",
+              location = "query",
+              type = "integer",
             },
             sort = {
               description = "The sort expression to apply to the results. The sort parameter specifies that the results be sorted according to the specified expression i.e. sort by date. [Example: sort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
@@ -591,7 +605,8 @@ return {
                   type = "string",
                 },
                 relatedSite = {
-                  description = "Specifies that all search results should be pages that are related to the specified URL.",
+                  deprecated = true,
+                  description = "Deprecated.",
                   location = "query",
                   type = "string",
                 },
@@ -608,6 +623,13 @@ return {
                     "high",
                     "medium",
                     "off",
+                  },
+                  enumDeprecated = {
+                    false,
+                    false,
+                    true,
+                    true,
+                    false,
                   },
                   enumDescriptions = {
                     "SafeSearch mode unspecified. (Falls back to engine's configuration.)",
@@ -652,6 +674,12 @@ return {
                   location = "query",
                   type = "string",
                 },
+                snippetLength = {
+                  description = "Optional. Maximum length of snippet text, in characters, to be returned with results. Note: this feature is limited to specific engines. * Valid values are integers between 161 and 1000, inclusive.",
+                  format = "int32",
+                  location = "query",
+                  type = "integer",
+                },
                 sort = {
                   description = "The sort expression to apply to the results. The sort parameter specifies that the results be sorted according to the specified expression i.e. sort by date. [Example: sort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
                   location = "query",
@@ -674,7 +702,7 @@ return {
       },
     },
   },
-  revision = "20230116",
+  revision = "20240423",
   rootUrl = "https://customsearch.googleapis.com/",
   schemas = {
     Promotion = {
@@ -782,7 +810,7 @@ return {
           description = "Image belonging to a custom search result.",
           properties = {
             byteSize = {
-              description = "The size of the image, in pixels.",
+              description = "The size of the image, in bytes.",
               format = "int32",
               type = "integer",
             },

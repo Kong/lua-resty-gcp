@@ -400,7 +400,7 @@ return {
       },
     },
   },
-  revision = "20230117",
+  revision = "20240420",
   rootUrl = "https://searchconsole.googleapis.com/",
   schemas = {
     AmpInspectionResult = {
@@ -1115,8 +1115,10 @@ return {
             "AUTO",
             "BY_PROPERTY",
             "BY_PAGE",
+            "BY_NEWS_SHOWCASE_PANEL",
           },
           enumDescriptions = {
+            "",
             "",
             "",
             "",
@@ -1238,8 +1240,10 @@ return {
             "AUTO",
             "BY_PROPERTY",
             "BY_PAGE",
+            "BY_NEWS_SHOWCASE_PANEL",
           },
           enumDescriptions = {
+            "",
             "",
             "",
             "",
@@ -1416,6 +1420,15 @@ return {
             "PATTERN_SITEMAP",
             "OCEANFRONT",
           },
+          enumDeprecated = {
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            true,
+          },
           enumDescriptions = {
             "",
             "",
@@ -1440,6 +1453,7 @@ return {
       id = "WmxSitemapContent",
       properties = {
         indexed = {
+          deprecated = true,
           description = "*Deprecated; do not use.*",
           format = "int64",
           type = "string",
@@ -1461,6 +1475,17 @@ return {
             "PATTERN",
             "IOS_APP",
             "DATA_FEED_ELEMENT",
+          },
+          enumDeprecated = {
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            true,
           },
           enumDescriptions = {
             "",
