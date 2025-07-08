@@ -1,4 +1,3 @@
-local fmt = string.format
 local restore = require "spec.helpers"
 
 describe("access token", function ()
