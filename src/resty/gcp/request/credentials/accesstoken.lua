@@ -63,7 +63,6 @@ local function GetAccessTokenByJwt(jwtToken)
 end
 
 local function GetAccessTokenBySA(serviceAccount)
-
     ngx.log(ngx.DEBUG, "[accesstoken] Using Envrionment Service Account to get Access Token")
 
     if not serviceAccount then
@@ -106,17 +105,37 @@ end
 
 local AccessToken = {}
 AccessToken.__index = AccessToken
-function AccessToken:new(gcpServiceAccount)
+function AccessToken:new(gcpServiceAccount, opts)
     local self = {}
+    opts = opts or {}
+
     setmetatable(self, AccessToken)
 
+    local auth_method_order = opts.auth_method_order or "legacy"
     gcpServiceAccount = gcpServiceAccount or os.getenv("GCP_SERVICE_ACCOUNT")
 
-    -- First try via Workload Identity and then via Service Account
-
-    local accessToken, authMethod = GetAccessTokenByWI()
-    if not accessToken then
+    local accessToken, authMethod
+    -- To avoid breaking changes we keep the legacy behavior of WI, SA
+    -- and add the ADC (Application Default Credentials) option.
+    if auth_method_order == "legacy" then
+      -- First try via Workload Identity and then via Service Account
+      accessToken, authMethod = GetAccessTokenByWI()
+      if not accessToken then
         accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+      end
+
+    -- This simulates the official behavior of Application Default Credentials
+    -- See https://cloud.google.com/docs/authentication/application-default-credentials#order
+    -- for more details.
+    -- The implementation is not exactly the same but a similar order of precedence is followed.
+    elseif auth_method_order == "adc" then
+      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+      if not accessToken then
+          accessToken, authMethod = GetAccessTokenByWI()
+      end
+
+    else
+        ngx.log(ngx.ERR, "[accesstoken] Invalid auth_method_order specified: ", auth_method_order)
     end
 
     if (accessToken) then
