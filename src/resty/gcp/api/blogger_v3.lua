@@ -1710,7 +1710,7 @@ return {
       },
     },
   },
-  revision = "20230112",
+  revision = "20240423",
   rootUrl = "https://blogger.googleapis.com/",
   schemas = {
     Blog = {

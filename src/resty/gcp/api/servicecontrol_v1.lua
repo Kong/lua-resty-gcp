@@ -197,7 +197,7 @@ return {
       },
     },
   },
-  revision = "20230109",
+  revision = "20240412",
   rootUrl = "https://servicecontrol.googleapis.com/",
   schemas = {
     AllocateInfo = {
@@ -377,6 +377,7 @@ return {
             description = "Properties of the object. Contains field @type with type URL.",
             type = "any",
           },
+          deprecated = true,
           description = "Deprecated. Use the `metadata` field instead. Other service-specific data about the request, response, and other activities.",
           type = "object",
         },
@@ -455,6 +456,10 @@ return {
           description = "The name of the service account key used to create or exchange credentials for authenticating the service account making the request. This is a scheme-less URI full resource name. For example: \"//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}\"",
           type = "string",
         },
+        serviceDelegationHistory = {
+          ["$ref"] = "ServiceDelegationHistory",
+          description = "Records the history of delegated resource access across Google services.",
+        },
         thirdPartyPrincipal = {
           additionalProperties = {
             description = "Properties of the object.",
@@ -476,6 +481,24 @@ return {
         },
         permission = {
           description = "The required IAM permission.",
+          type = "string",
+        },
+        permissionType = {
+          description = "The type of the permission that was checked. For data access audit logs this corresponds with the permission type that must be enabled in the project/folder/organization IAM policy in order for the log to be written.",
+          enum = {
+            "PERMISSION_TYPE_UNSPECIFIED",
+            "ADMIN_READ",
+            "ADMIN_WRITE",
+            "DATA_READ",
+            "DATA_WRITE",
+          },
+          enumDescriptions = {
+            "Default. Should not be used.",
+            "Permissions that gate reading resource configuration or metadata.",
+            "Permissions that gate modification of resource configuration or metadata.",
+            "Permissions that gate reading user-provided data.",
+            "Permissions that gate writing user-provided data.",
+          },
           type = "string",
         },
         resource = {
@@ -594,6 +617,10 @@ return {
       description = "Contains additional information about the check operation.",
       id = "CheckInfo",
       properties = {
+        apiKeyUid = {
+          description = "The unique id of the api key in the format of \"apikey:\". This field will be populated when the consumer passed to Chemist is an API key and all the API key related validations are successful.",
+          type = "string",
+        },
         consumerInfo = {
           ["$ref"] = "ConsumerInfo",
           description = "Consumer info of this check.",
@@ -1177,11 +1204,13 @@ return {
             "LOW",
             "HIGH",
             "DEBUG",
+            "PROMOTED",
           },
           enumDescriptions = {
             "Allows data caching, batching, and aggregation. It provides higher performance with higher data loss risk.",
             "Disables data aggregation to minimize data loss. It is for operations that contains significant monetary value or audit trail. This feature only applies to the client libraries.",
             "Deprecated. Do not use. Disables data aggregation and enables additional validation logic. It should only be used during the onboarding process. It is only available to Google internal services, and the service must be approved by chemist-dev@google.com in order to use this level.",
+            "Used internally by Chemist.",
           },
           type = "string",
         },
@@ -1382,6 +1411,7 @@ return {
       id = "QuotaInfo",
       properties = {
         limitExceeded = {
+          deprecated = true,
           description = "Quota Metrics that have exceeded quota limits. For QuotaGroup-based quota, this is QuotaGroup.name For QuotaLimit-based quota, this is QuotaLimit.name See: google.api.Quota Deprecated: Use quota_metrics to get per quota group limit exceeded status.",
           items = {
             type = "string",
@@ -1628,7 +1658,7 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/user-guide/annotations",
+          description = "Annotations is an unstructured key-value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/",
           type = "object",
         },
         createTime = {
@@ -1743,6 +1773,47 @@ return {
         thirdPartyPrincipal = {
           ["$ref"] = "ThirdPartyPrincipal",
           description = "Third party identity as the real authority.",
+        },
+      },
+      type = "object",
+    },
+    ServiceDelegationHistory = {
+      description = "The history of delegation across multiple services as the result of the original user's action. Such as \"service A uses its own account to do something for user B\". This differs from ServiceAccountDelegationInfo, which only tracks the history of direct token exchanges (impersonation).",
+      id = "ServiceDelegationHistory",
+      properties = {
+        originalPrincipal = {
+          description = "The original end user who initiated the request to GCP.",
+          type = "string",
+        },
+        serviceMetadata = {
+          description = "Data identifying the service specific jobs or units of work that were involved in a chain of service calls.",
+          items = {
+            ["$ref"] = "ServiceMetadata",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    ServiceMetadata = {
+      description = "Metadata describing the service and additional service specific information used to identify the job or unit of work at hand.",
+      id = "ServiceMetadata",
+      properties = {
+        jobMetadata = {
+          additionalProperties = {
+            description = "Properties of the object.",
+            type = "any",
+          },
+          description = "Additional metadata provided by service teams to describe service specific job information that was triggered by the original principal.",
+          type = "object",
+        },
+        principalSubject = {
+          description = "A string representing the principal_subject associated with the identity. For most identities, the format will be `principal://iam.googleapis.com/{identity pool name}/subject/{subject)` except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the legacy format `serviceAccount:{identity pool name}[{subject}]` If the identity is a Google account (e.g. workspace user account or service account), this will be the email of the prefixed by `serviceAccount:`. For example: `serviceAccount:my-service-account@project-1.iam.gserviceaccount.com`. If the identity is an individual user, the identity will be formatted as: `user:user_ABC@email.com`.",
+          type = "string",
+        },
+        serviceDomain = {
+          description = "The service's fully qualified domain name, e.g. \"dataproc.googleapis.com\".",
+          type = "string",
         },
       },
       type = "object",

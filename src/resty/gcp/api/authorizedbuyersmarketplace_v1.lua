@@ -107,6 +107,51 @@ return {
   resources = {
     bidders = {
       resources = {
+        auctionPackages = {
+          methods = {
+            list = {
+              description = "List the auction packages. Buyers can use the URL path \"/v1/buyers/{accountId}/auctionPackages\" to list auction packages for the current buyer and its clients. Bidders can use the URL path \"/v1/bidders/{accountId}/auctionPackages\" to list auction packages for the bidder, its media planners, its buyers, and all their clients.",
+              flatPath = "v1/bidders/{biddersId}/auctionPackages",
+              httpMethod = "GET",
+              id = "authorizedbuyersmarketplace.bidders.auctionPackages.list",
+              parameterOrder = {
+                "parent",
+              },
+              parameters = {
+                filter = {
+                  description = "Optional. Optional query string using the [Cloud API list filtering syntax](/authorized-buyers/apis/guides/list-filters). Only supported when parent is bidder. Supported columns for filtering are: * displayName * createTime * updateTime * eligibleSeatIds",
+                  location = "query",
+                  type = "string",
+                },
+                pageSize = {
+                  description = "Requested page size. The server may return fewer results than requested. Max allowed page size is 500.",
+                  format = "int32",
+                  location = "query",
+                  type = "integer",
+                },
+                pageToken = {
+                  description = "The page token as returned. ListAuctionPackagesResponse.nextPageToken",
+                  location = "query",
+                  type = "string",
+                },
+                parent = {
+                  description = "Required. Name of the parent buyer that can access the auction package. Format: `buyers/{accountId}`. When used with a bidder account, the auction packages that the bidder, its media planners, its buyers and clients are subscribed to will be listed, in the format `bidders/{accountId}`.",
+                  location = "path",
+                  pattern = "^bidders/[^/]+$",
+                  required = true,
+                  type = "string",
+                },
+              },
+              path = "v1/{+parent}/auctionPackages",
+              response = {
+                ["$ref"] = "ListAuctionPackagesResponse",
+              },
+              scopes = {
+                "https://www.googleapis.com/auth/authorized-buyers-marketplace",
+              },
+            },
+          },
+        },
         finalizedDeals = {
           methods = {
             list = {
@@ -119,7 +164,7 @@ return {
               },
               parameters = {
                 filter = {
-                  description = "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
+                  description = "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * deal.eligibleSeatIds * dealServingStatus",
                   location = "query",
                   type = "string",
                 },
@@ -189,7 +234,7 @@ return {
               },
             },
             list = {
-              description = "List the auction packages subscribed by a buyer and its clients.",
+              description = "List the auction packages. Buyers can use the URL path \"/v1/buyers/{accountId}/auctionPackages\" to list auction packages for the current buyer and its clients. Bidders can use the URL path \"/v1/bidders/{accountId}/auctionPackages\" to list auction packages for the bidder, its media planners, its buyers, and all their clients.",
               flatPath = "v1/buyers/{buyersId}/auctionPackages",
               httpMethod = "GET",
               id = "authorizedbuyersmarketplace.buyers.auctionPackages.list",
@@ -197,6 +242,11 @@ return {
                 "parent",
               },
               parameters = {
+                filter = {
+                  description = "Optional. Optional query string using the [Cloud API list filtering syntax](/authorized-buyers/apis/guides/list-filters). Only supported when parent is bidder. Supported columns for filtering are: * displayName * createTime * updateTime * eligibleSeatIds",
+                  location = "query",
+                  type = "string",
+                },
                 pageSize = {
                   description = "Requested page size. The server may return fewer results than requested. Max allowed page size is 500.",
                   format = "int32",
@@ -209,7 +259,7 @@ return {
                   type = "string",
                 },
                 parent = {
-                  description = "Required. Name of the parent buyer that can access the auction package. Format: `buyers/{accountId}`",
+                  description = "Required. Name of the parent buyer that can access the auction package. Format: `buyers/{accountId}`. When used with a bidder account, the auction packages that the bidder, its media planners, its buyers and clients are subscribed to will be listed, in the format `bidders/{accountId}`.",
                   location = "path",
                   pattern = "^buyers/[^/]+$",
                   required = true,
@@ -459,7 +509,7 @@ return {
               },
               parameters = {
                 filter = {
-                  description = "Query string using the [Filtering Syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported fields for filtering are: * partnerClientId Use this field to filter the clients by the partnerClientId. For example, if the partnerClientId of the client is \"1234\", the value of this field should be `partnerClientId = \"1234\"`, in order to get only the client whose partnerClientId is \"1234\" in the response.",
+                  description = "Query string using the [Filtering Syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported fields for filtering are: * partnerClientId Use this field to filter the clients by the partnerClientId. For example, if the partnerClientId of the client is \"1234\", the value of this field should be `partnerClientId = \"1234\"`, in order to get only the client whose partnerClientId is \"1234\" in the response.",
                   location = "query",
                   type = "string",
                 },
@@ -767,7 +817,7 @@ return {
               },
               parameters = {
                 filter = {
-                  description = "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * dealServingStatus",
+                  description = "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * deal.displayName * deal.dealType * deal.createTime * deal.updateTime * deal.flightStartTime * deal.flightEndTime * deal.eligibleSeatIds * dealServingStatus",
                   location = "query",
                   type = "string",
                 },
@@ -976,7 +1026,7 @@ return {
               },
             },
             get = {
-              description = "Gets a proposal using its name. The proposal is returned at most recent revision. revision.",
+              description = "Gets a proposal using its resource name. The proposal is returned at the latest revision.",
               flatPath = "v1/buyers/{buyersId}/proposals/{proposalsId}",
               httpMethod = "GET",
               id = "authorizedbuyersmarketplace.buyers.proposals.get",
@@ -1001,7 +1051,7 @@ return {
               },
             },
             list = {
-              description = "Lists proposals. A filter expression (list filter syntax) may be specified to filter the results. This will not list finalized versions of proposals that are being renegotiated; to retrieve these use the finalizedProposals resource.",
+              description = "Lists proposals. A filter expression using [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) may be specified to filter the results.",
               flatPath = "v1/buyers/{buyersId}/proposals",
               httpMethod = "GET",
               id = "authorizedbuyersmarketplace.buyers.proposals.list",
@@ -1010,7 +1060,7 @@ return {
               },
               parameters = {
                 filter = {
-                  description = "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) Supported columns for filtering are: * displayName * dealType * updateTime * state",
+                  description = "Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * displayName * dealType * updateTime * state",
                   location = "query",
                   type = "string",
                 },
@@ -1042,7 +1092,7 @@ return {
               },
             },
             patch = {
-              description = "Updates the proposal at the given revision number. If the revision number in the request is behind the latest from the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as 'Immutable' or 'Output only' yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is not allowed and will result in an error.",
+              description = "Updates the proposal at the given revision number. If the revision number in the request is behind the latest one kept in the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as 'Immutable' or 'Output only' yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is not allowed and will result in an error.",
               flatPath = "v1/buyers/{buyersId}/proposals/{proposalsId}",
               httpMethod = "PATCH",
               id = "authorizedbuyersmarketplace.buyers.proposals.patch",
@@ -1271,7 +1321,7 @@ return {
               },
               parameters = {
                 filter = {
-                  description = "Optional query string using the [Cloud API list filtering] (https://developers.google.com/authorized-buyers/apis/guides/v2/list-filters) syntax.",
+                  description = "Optional query string using the [Cloud API list filtering] (https://developers.google.com/authorized-buyers/apis/guides/list-filters) syntax.",
                   location = "query",
                   type = "string",
                 },
@@ -1307,7 +1357,7 @@ return {
       },
     },
   },
-  revision = "20230113",
+  revision = "20240422",
   rootUrl = "https://authorizedbuyersmarketplace.googleapis.com/",
   schemas = {
     AcceptProposalRequest = {
@@ -1415,14 +1465,38 @@ return {
           description = "The display_name assigned to the auction package.",
           type = "string",
         },
+        eligibleSeatIds = {
+          description = "Output only. If set, this field contains the list of DSP specific seat ids set by media planners that are eligible to transact on this deal. The seat ID is in the calling DSP's namespace.",
+          items = {
+            type = "string",
+          },
+          readOnly = true,
+          type = "array",
+        },
         name = {
           description = "Immutable. The unique identifier for the auction package. Format: `buyers/{accountId}/auctionPackages/{auctionPackageId}` The auction_package_id part of name is sent in the BidRequest to all RTB bidders and is returned as deal_id by the bidder in the BidResponse.",
           type = "string",
         },
-        subscribedClients = {
-          description = "Output only. The list of clients of the current buyer that are subscribed to the AuctionPackage. Format: `buyers/{buyerAccountId}/clients/{clientAccountId}`",
+        subscribedBuyers = {
+          description = "Output only. The list of buyers that are subscribed to the AuctionPackage. This field is only populated when calling as a bidder. Format: `buyers/{buyerAccountId}`",
           items = {
             type = "string",
+          },
+          readOnly = true,
+          type = "array",
+        },
+        subscribedClients = {
+          description = "Output only. When calling as a buyer, the list of clients of the current buyer that are subscribed to the AuctionPackage. When calling as a bidder, the list of clients that are subscribed to the AuctionPackage owned by the bidder or its buyers. Format: `buyers/{buyerAccountId}/clients/{clientAccountId}`",
+          items = {
+            type = "string",
+          },
+          readOnly = true,
+          type = "array",
+        },
+        subscribedMediaPlanners = {
+          description = "Output only. The list of media planners that are subscribed to the AuctionPackage. This field is only populated when calling as a bidder.",
+          items = {
+            ["$ref"] = "MediaPlanner",
           },
           readOnly = true,
           type = "array",
@@ -1583,11 +1657,13 @@ return {
             "CREATIVE_FORMAT_UNSPECIFIED",
             "DISPLAY",
             "VIDEO",
+            "AUDIO",
           },
           enumDescriptions = {
             "A placeholder for an unspecified creative format.",
             "Banner creatives such as image or HTML5 assets.",
             "Video creatives that can be played in a video player.",
+            "Audio creatives that can play during audio content or point to a third party ad server.",
           },
           readOnly = true,
           type = "string",
@@ -1772,12 +1848,12 @@ return {
       id = "Deal",
       properties = {
         billedBuyer = {
-          description = "Output only. When the client field is populated, this field refers to the buyer who creates and manages the client buyer and gets billed on behalf of the client buyer; when the buyer field is populated, this field is the same value as buyer. Format : `buyers/{buyerAccountId}`",
+          description = "Output only. When the client field is populated, this field refers to the buyer who creates and manages the client buyer and gets billed on behalf of the client buyer; when the buyer field is populated, this field is the same value as buyer; when the deal belongs to a media planner account, this field will be empty. Format : `buyers/{buyerAccountId}`",
           readOnly = true,
           type = "string",
         },
         buyer = {
-          description = "Output only. Refers to a buyer in The Realtime-bidding API. Format: `buyers/{buyerAccountId}`",
+          description = "Output only. Refers to a buyer in Real-time Bidding API's Buyer resource. Format: `buyers/{buyerAccountId}`",
           readOnly = true,
           type = "string",
         },
@@ -1829,6 +1905,14 @@ return {
           readOnly = true,
           type = "string",
         },
+        eligibleSeatIds = {
+          description = "Output only. If set, this field contains the list of DSP specific seat ids set by media planners that are eligible to transact on this deal. The seat ID is in the calling DSP's namespace.",
+          items = {
+            type = "string",
+          },
+          readOnly = true,
+          type = "array",
+        },
         estimatedGrossSpend = {
           ["$ref"] = "Money",
           description = "Specified by buyers in request for proposal (RFP) to notify publisher the total estimated spend for the proposal. Publishers will receive this information and send back proposed deals accordingly.",
@@ -1842,6 +1926,11 @@ return {
           description = "Proposed flight start time of the deal. This will generally be stored in the granularity of one second since deal serving starts at seconds boundary. Any time specified with more granularity (for example, in milliseconds) will be truncated towards the start of time in seconds.",
           format = "google-datetime",
           type = "string",
+        },
+        mediaPlanner = {
+          ["$ref"] = "MediaPlanner",
+          description = "Output only. Refers to a buyer in Real-time Bidding API's Buyer resource. This field represents a media planner (For example, agency or big advertiser).",
+          readOnly = true,
         },
         name = {
           description = "Immutable. The unique identifier of the deal. Auto-generated by the server when a deal is created. Format: buyers/{accountId}/proposals/{proposalId}/deals/{dealId}",
@@ -2042,7 +2131,7 @@ return {
           type = "string",
         },
         name = {
-          description = "The resource name of the finalized deal. Format: `buyers/{accountId}/finalizeddeals/{finalizedDealId}`",
+          description = "The resource name of the finalized deal. Format: `buyers/{accountId}/finalizedDeals/{finalizedDealId}`",
           type = "string",
         },
         readyToServe = {
@@ -2338,6 +2427,18 @@ return {
       },
       type = "object",
     },
+    MediaPlanner = {
+      description = "Describes a single Media Planner account.",
+      id = "MediaPlanner",
+      properties = {
+        accountId = {
+          description = "Output only. Account ID of the media planner.",
+          readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     MobileApplicationTargeting = {
       description = "Mobile application targeting settings.",
       id = "MobileApplicationTargeting",
@@ -2515,7 +2616,7 @@ return {
           description = "Fixed price for the deal.",
         },
         guaranteedLooks = {
-          description = "Count of guaranteed looks.",
+          description = "Count of guaranteed looks. For CPD deals, buyer changes to guaranteed_looks will be ignored.",
           format = "int64",
           type = "string",
         },
@@ -2525,7 +2626,7 @@ return {
           type = "string",
         },
         minimumDailyLooks = {
-          description = "Daily minimum looks for CPD deal types.",
+          description = "Daily minimum looks for CPD deal types. For CPD deals, buyer should negotiate on this field instead of guaranteed_looks.",
           format = "int64",
           type = "string",
         },
@@ -2802,6 +2903,7 @@ return {
             "SAMSUNG",
             "VIVO",
             "XIAOMI",
+            "LG_TV",
           },
           enumDescriptions = {
             "A placeholder for an unknown app store.",
@@ -2817,6 +2919,7 @@ return {
             "Samsung Galaxy Store",
             "VIVO App Store",
             "Xiaomi GetApps",
+            "LG TV",
           },
           type = "string",
         },

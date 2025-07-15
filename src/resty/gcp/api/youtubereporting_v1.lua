@@ -411,7 +411,7 @@ return {
       },
     },
   },
-  revision = "20230117",
+  revision = "20240423",
   rootUrl = "https://youtubereporting.googleapis.com/",
   schemas = {
     Empty = {
@@ -455,6 +455,7 @@ return {
       id = "GdataCompositeMedia",
       properties = {
         blobRef = {
+          deprecated = true,
           description = "gdata",
           format = "byte",
           type = "string",
@@ -659,15 +660,18 @@ return {
       id = "GdataMedia",
       properties = {
         algorithm = {
+          deprecated = true,
           description = "gdata",
           type = "string",
         },
         bigstoreObjectRef = {
+          deprecated = true,
           description = "gdata",
           format = "byte",
           type = "string",
         },
         blobRef = {
+          deprecated = true,
           description = "gdata",
           format = "byte",
           type = "string",
@@ -730,6 +734,7 @@ return {
           type = "string",
         },
         hash = {
+          deprecated = true,
           description = "gdata",
           type = "string",
         },

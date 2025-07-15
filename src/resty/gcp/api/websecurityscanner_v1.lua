@@ -526,7 +526,7 @@ return {
       },
     },
   },
-  revision = "20230107",
+  revision = "20240414",
   rootUrl = "https://websecurityscanner.googleapis.com/",
   schemas = {
     Authentication = {
@@ -539,6 +539,7 @@ return {
         },
         googleAccount = {
           ["$ref"] = "GoogleAccount",
+          deprecated = true,
           description = "Authentication using a Google account.",
         },
         iapCredential = {
@@ -722,6 +723,7 @@ return {
       type = "object",
     },
     GoogleAccount = {
+      deprecated = true,
       description = "Describes authentication configuration that uses a Google account.",
       id = "GoogleAccount",
       properties = {
@@ -1028,6 +1030,7 @@ return {
             "UNSUPPORTED_FILTER",
             "UNSUPPORTED_FINDING_TYPE",
             "UNSUPPORTED_URL_SCHEME",
+            "CLOUD_ASSET_INVENTORY_ASSET_NOT_FOUND",
           },
           enumDescriptions = {
             "There is no error.",
@@ -1072,6 +1075,7 @@ return {
             "The supplied filter is not supported.",
             "The supplied finding type is not supported. For example, we do not provide findings of the given finding type.",
             "The URL scheme of one or more of the supplied URLs is not supported.",
+            "CAI is not able to list assets.",
           },
           type = "string",
         },

@@ -154,6 +154,11 @@ return {
             "userId",
           },
           parameters = {
+            temporaryEeccBypass = {
+              default = "false",
+              location = "query",
+              type = "boolean",
+            },
             userId = {
               default = "me",
               description = "The user's email address. The special value `me` can be used to indicate the authenticated user.",
@@ -922,6 +927,11 @@ return {
                   repeated = true,
                   type = "string",
                 },
+                temporaryEeccBypass = {
+                  default = "false",
+                  location = "query",
+                  type = "boolean",
+                },
                 userId = {
                   default = "me",
                   description = "The user's email address. The special value `me` can be used to indicate the authenticated user.",
@@ -945,7 +955,7 @@ return {
               },
             },
             import = {
-              description = "Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. This method doesn't perform SPF checks, so it might not work for some spam messages, such as those attempting to perform domain spoofing. This method does not send a message. Note: This function doesn't trigger forwarding rules or filters set up by the user.",
+              description = "Imports a message into only this user's mailbox, with standard email delivery scanning and classification similar to receiving via SMTP. This method doesn't perform SPF checks, so it might not work for some spam messages, such as those attempting to perform domain spoofing. This method does not send a message.",
               flatPath = "gmail/v1/users/{userId}/messages/import",
               httpMethod = "POST",
               id = "gmail.users.messages.import",
@@ -971,7 +981,7 @@ return {
               parameters = {
                 deleted = {
                   default = "false",
-                  description = "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
+                  description = "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for Google Workspace accounts.",
                   location = "query",
                   type = "boolean",
                 },
@@ -1050,7 +1060,7 @@ return {
               parameters = {
                 deleted = {
                   default = "false",
-                  description = "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for G Suite accounts.",
+                  description = "Mark the email as permanently deleted (not TRASH) and only visible in Google Vault to a Vault administrator. Only used for Google Workspace accounts.",
                   location = "query",
                   type = "boolean",
                 },
@@ -1106,7 +1116,7 @@ return {
                   type = "boolean",
                 },
                 labelIds = {
-                  description = "Only return messages with labels that match all of the specified label IDs.",
+                  description = "Only return messages with labels that match all of the specified label IDs. Messages in a thread might have labels that other messages in the same thread don't have. To learn more, see [Manage labels on messages and threads](https://developers.google.com/gmail/api/guides/labels#manage_labels_on_messages_threads).",
                   location = "query",
                   repeated = true,
                   type = "string",
@@ -1127,6 +1137,11 @@ return {
                   description = "Only return messages matching the specified query. Supports the same query format as the Gmail search box. For example, `\"from:someuser@example.com rfc822msgid: is:unread\"`. Parameter cannot be used when accessing the api using the gmail.metadata scope.",
                   location = "query",
                   type = "string",
+                },
+                temporaryEeccBypass = {
+                  default = "false",
+                  location = "query",
+                  type = "boolean",
                 },
                 userId = {
                   default = "me",
@@ -1184,7 +1199,7 @@ return {
               },
             },
             send = {
-              description = "Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc` headers.",
+              description = "Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc` headers. For example usage, see [Sending email](https://developers.google.com/gmail/api/guides/sending).",
               flatPath = "gmail/v1/users/{userId}/messages/send",
               httpMethod = "POST",
               id = "gmail.users.messages.send",
@@ -1324,6 +1339,11 @@ return {
                       location = "path",
                       required = true,
                       type = "string",
+                    },
+                    temporaryEeccBypass = {
+                      default = "false",
+                      location = "query",
+                      type = "boolean",
                     },
                     userId = {
                       default = "me",
@@ -1638,7 +1658,7 @@ return {
                 identities = {
                   methods = {
                     create = {
-                      description = "Creates and configures a client-side encryption identity that's authorized to send mail from the user account. Google publishes the S/MIME certificate to a shared domain-wide directory so that people within a Google Workspace organization can encrypt and send mail to the identity. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Creates and configures a client-side encryption identity that's authorized to send mail from the user account. Google publishes the S/MIME certificate to a shared domain-wide directory so that people within a Google Workspace organization can encrypt and send mail to the identity.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/identities",
                       httpMethod = "POST",
                       id = "gmail.users.settings.cse.identities.create",
@@ -1667,7 +1687,7 @@ return {
                       },
                     },
                     delete = {
-                      description = "Deletes a client-side encryption identity. The authenticated user can no longer use the identity to send encrypted messages. You cannot restore the identity after you delete it. Instead, use the CreateCseIdentity method to create another identity with the same configuration. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Deletes a client-side encryption identity. The authenticated user can no longer use the identity to send encrypted messages. You cannot restore the identity after you delete it. Instead, use the CreateCseIdentity method to create another identity with the same configuration.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
                       httpMethod = "DELETE",
                       id = "gmail.users.settings.cse.identities.delete",
@@ -1697,7 +1717,7 @@ return {
                       },
                     },
                     get = {
-                      description = "Retrieves a client-side encryption identity configuration. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Retrieves a client-side encryption identity configuration.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}",
                       httpMethod = "GET",
                       id = "gmail.users.settings.cse.identities.get",
@@ -1733,7 +1753,7 @@ return {
                       },
                     },
                     list = {
-                      description = "Lists the client-side encrypted identities for an authenticated user. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Lists the client-side encrypted identities for an authenticated user.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/identities",
                       httpMethod = "GET",
                       id = "gmail.users.settings.cse.identities.list",
@@ -1774,7 +1794,7 @@ return {
                       },
                     },
                     patch = {
-                      description = "Associates a different key pair with an existing client-side encryption identity. The updated key pair must validate against Google's [S/MIME certificate profiles](https://support.google.com/a/answer/7300887). [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Associates a different key pair with an existing client-side encryption identity. The updated key pair must validate against Google's [S/MIME certificate profiles](https://support.google.com/a/answer/7300887).",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/identities/{emailAddress}",
                       httpMethod = "PATCH",
                       id = "gmail.users.settings.cse.identities.patch",
@@ -1814,7 +1834,7 @@ return {
                 keypairs = {
                   methods = {
                     create = {
-                      description = "Creates and uploads a client-side encryption S/MIME public key certificate chain and private key metadata for the authenticated user. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Creates and uploads a client-side encryption S/MIME public key certificate chain and private key metadata for the authenticated user.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/keypairs",
                       httpMethod = "POST",
                       id = "gmail.users.settings.cse.keypairs.create",
@@ -1843,7 +1863,7 @@ return {
                       },
                     },
                     disable = {
-                      description = "Turns off a client-side encryption key pair. The authenticated user can no longer use the key pair to decrypt incoming CSE message texts or sign outgoing CSE mail. To regain access, use the EnableCseKeyPair to turn on the key pair. After 30 days, you can permanently delete the key pair by using the ObliterateCseKeyPair method. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Turns off a client-side encryption key pair. The authenticated user can no longer use the key pair to decrypt incoming CSE message texts or sign outgoing CSE mail. To regain access, use the EnableCseKeyPair to turn on the key pair. After 30 days, you can permanently delete the key pair by using the ObliterateCseKeyPair method.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:disable",
                       httpMethod = "POST",
                       id = "gmail.users.settings.cse.keypairs.disable",
@@ -1879,7 +1899,7 @@ return {
                       },
                     },
                     enable = {
-                      description = "Turns on a client-side encryption key pair that was turned off. The key pair becomes active again for any associated client-side encryption identities. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Turns on a client-side encryption key pair that was turned off. The key pair becomes active again for any associated client-side encryption identities.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:enable",
                       httpMethod = "POST",
                       id = "gmail.users.settings.cse.keypairs.enable",
@@ -1915,7 +1935,7 @@ return {
                       },
                     },
                     get = {
-                      description = "Retrieves an existing client-side encryption key pair. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Retrieves an existing client-side encryption key pair.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}",
                       httpMethod = "GET",
                       id = "gmail.users.settings.cse.keypairs.get",
@@ -1951,7 +1971,7 @@ return {
                       },
                     },
                     list = {
-                      description = "Lists client-side encryption key pairs for an authenticated user. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Lists client-side encryption key pairs for an authenticated user.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/keypairs",
                       httpMethod = "GET",
                       id = "gmail.users.settings.cse.keypairs.list",
@@ -1992,7 +2012,7 @@ return {
                       },
                     },
                     obliterate = {
-                      description = "Deletes a client-side encryption key pair permanently and immediately. You can only permanently delete key pairs that have been turned off for more than 30 days. To turn off a key pair, use the DisableCseKeyPair method. Gmail can't restore or decrypt any messages that were encrypted by an obliterated key. Authenticated users and Google Workspace administrators lose access to reading the encrypted messages. [Beta](https://workspace.google.com/terms/service-terms/index.html).",
+                      description = "Deletes a client-side encryption key pair permanently and immediately. You can only permanently delete key pairs that have been turned off for more than 30 days. To turn off a key pair, use the DisableCseKeyPair method. Gmail can't restore or decrypt any messages that were encrypted by an obliterated key. Authenticated users and Google Workspace administrators lose access to reading the encrypted messages.",
                       flatPath = "gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:obliterate",
                       httpMethod = "POST",
                       id = "gmail.users.settings.cse.keypairs.obliterate",
@@ -2031,7 +2051,7 @@ return {
             delegates = {
               methods = {
                 create = {
-                  description = "Adds a delegate with its verification status set directly to `accepted`, without sending any verification email. The delegate user must be a member of the same G Suite organization as the delegator user. Gmail imposes limitations on the number of delegates and delegators each user in a G Suite organization can have. These limits depend on your organization, but in general each user can have up to 25 delegates and up to 10 delegators. Note that a delegate user must be referred to by their primary email address, and not an email alias. Also note that when a new delegate is created, there may be up to a one minute delay before the new delegate is available for use. This method is only available to service account clients that have been delegated domain-wide authority.",
+                  description = "Adds a delegate with its verification status set directly to `accepted`, without sending any verification email. The delegate user must be a member of the same Google Workspace organization as the delegator user. Gmail imposes limitations on the number of delegates and delegators each user in a Google Workspace organization can have. These limits depend on your organization, but in general each user can have up to 25 delegates and up to 10 delegators. Note that a delegate user must be referred to by their primary email address, and not an email alias. Also note that when a new delegate is created, there may be up to a one minute delay before the new delegate is available for use. This method is only available to service account clients that have been delegated domain-wide authority.",
                   flatPath = "gmail/v1/users/{userId}/settings/delegates",
                   httpMethod = "POST",
                   id = "gmail.users.settings.delegates.create",
@@ -2891,6 +2911,11 @@ return {
                   repeated = true,
                   type = "string",
                 },
+                temporaryEeccBypass = {
+                  default = "false",
+                  location = "query",
+                  type = "boolean",
+                },
                 userId = {
                   default = "me",
                   description = "The user's email address. The special value `me` can be used to indicate the authenticated user.",
@@ -2950,6 +2975,11 @@ return {
                   description = "Only return threads matching the specified query. Supports the same query format as the Gmail search box. For example, `\"from:someuser@example.com rfc822msgid: is:unread\"`. Parameter cannot be used when accessing the api using the gmail.metadata scope.",
                   location = "query",
                   type = "string",
+                },
+                temporaryEeccBypass = {
+                  default = "false",
+                  location = "query",
+                  type = "boolean",
                 },
                 userId = {
                   default = "me",
@@ -3077,7 +3107,7 @@ return {
       },
     },
   },
-  revision = "20230102",
+  revision = "20240422",
   rootUrl = "https://gmail.googleapis.com/",
   schemas = {
     AutoForwarding = {
@@ -3154,7 +3184,7 @@ return {
       type = "object",
     },
     CseIdentity = {
-      description = "[Beta](https://workspace.google.com/terms/service-terms/index.html). The client-side encryption (CSE) configuration for the email address of an authenticated user. Gmail uses CSE configurations to save drafts of client-side encrypted email messages, and to sign and send encrypted email messages.",
+      description = "The client-side encryption (CSE) configuration for the email address of an authenticated user. Gmail uses CSE configurations to save drafts of client-side encrypted email messages, and to sign and send encrypted email messages.",
       id = "CseIdentity",
       properties = {
         emailAddress = {
@@ -3162,14 +3192,18 @@ return {
           type = "string",
         },
         primaryKeyPairId = {
-          description = "If a key pair is associated, the identifier of the key pair, CseKeyPair.",
+          description = "If a key pair is associated, the ID of the key pair, CseKeyPair.",
           type = "string",
+        },
+        signAndEncryptKeyPairs = {
+          ["$ref"] = "SignAndEncryptKeyPairs",
+          description = "The configuration of a CSE identity that uses different key pairs for signing and encryption.",
         },
       },
       type = "object",
     },
     CseKeyPair = {
-      description = "[Beta](https://workspace.google.com/terms/service-terms/index.html). A client-side encryption S/MIME key pair, which is comprised of a public key, its certificate chain, and metadata for its paired private key. Gmail uses the key pair to complete the following tasks: - Sign outgoing client-side encrypted messages. - Save and reopen drafts of client-side encrypted messages. - Save and reopen sent messages. - Decrypt incoming or archived S/MIME messages.",
+      description = "A client-side encryption S/MIME key pair, which is comprised of a public key, its certificate chain, and metadata for its paired private key. Gmail uses the key pair to complete the following tasks: - Sign outgoing client-side encrypted messages. - Save and reopen drafts of client-side encrypted messages. - Save and reopen sent messages. - Decrypt incoming or archived S/MIME messages.",
       id = "CseKeyPair",
       properties = {
         disableTime = {
@@ -3229,6 +3263,10 @@ return {
       description = "Metadata for a private key instance.",
       id = "CsePrivateKeyMetadata",
       properties = {
+        hardwareKeyMetadata = {
+          ["$ref"] = "HardwareKeyMetadata",
+          description = "Metadata for hardware keys.",
+        },
         kaclsKeyMetadata = {
           ["$ref"] = "KaclsKeyMetadata",
           description = "Metadata for a private key instance managed by an external key access control list service.",
@@ -3420,6 +3458,17 @@ return {
             "The address is ready to use for forwarding.",
             "The address is awaiting verification by the owner.",
           },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    HardwareKeyMetadata = {
+      description = "Metadata for hardware keys.",
+      id = "HardwareKeyMetadata",
+      properties = {
+        description = {
+          description = "Description about the hardware key.",
           type = "string",
         },
       },
@@ -4198,6 +4247,21 @@ return {
       },
       type = "object",
     },
+    SignAndEncryptKeyPairs = {
+      description = "The configuration of a CSE identity that uses different key pairs for signing and encryption.",
+      id = "SignAndEncryptKeyPairs",
+      properties = {
+        encryptionKeyPairId = {
+          description = "The ID of the CseKeyPair that encrypts signed outgoing mail.",
+          type = "string",
+        },
+        signingKeyPairId = {
+          description = "The ID of the CseKeyPair that signs outgoing mail.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     SmimeInfo = {
       description = "An S/MIME email config.",
       id = "SmimeInfo",
@@ -4332,7 +4396,7 @@ return {
           type = "boolean",
         },
         restrictToDomain = {
-          description = "Flag that determines whether responses are sent to recipients who are outside of the user's domain. This feature is only available for G Suite users.",
+          description = "Flag that determines whether responses are sent to recipients who are outside of the user's domain. This feature is only available for Google Workspace users.",
           type = "boolean",
         },
         startTime = {
@@ -4348,7 +4412,20 @@ return {
       id = "WatchRequest",
       properties = {
         labelFilterAction = {
-          description = "Filtering behavior of labelIds list specified.",
+          deprecated = true,
+          description = "Filtering behavior of `labelIds list` specified. This field is deprecated because it caused incorrect behavior in some cases; use `label_filter_behavior` instead.",
+          enum = {
+            "include",
+            "exclude",
+          },
+          enumDescriptions = {
+            "Only get push notifications for message changes relating to labelIds specified.",
+            "Get push notifications for all message changes except those relating to labelIds specified.",
+          },
+          type = "string",
+        },
+        labelFilterBehavior = {
+          description = "Filtering behavior of `labelIds list` specified. This field replaces `label_filter_action`; if set, `label_filter_action` is ignored.",
           enum = {
             "include",
             "exclude",

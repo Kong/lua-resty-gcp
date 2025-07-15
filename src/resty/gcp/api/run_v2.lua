@@ -15,6 +15,208 @@ return {
   description = "Deploy and manage user provided container images that scale automatically based on incoming requests. The Cloud Run Admin API v1 follows the Knative Serving API specification, while v2 is aligned with Google Cloud AIP-based API standards, as described in https://google.aip.dev/.",
   discoveryVersion = "v1",
   documentationLink = "https://cloud.google.com/run/",
+  endpoints = {
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://africa-south1-run.googleapis.com/",
+      location = "africa-south1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-east1-run.googleapis.com/",
+      location = "asia-east1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-east2-run.googleapis.com/",
+      location = "asia-east2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-northeast1-run.googleapis.com/",
+      location = "asia-northeast1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-northeast2-run.googleapis.com/",
+      location = "asia-northeast2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-northeast3-run.googleapis.com/",
+      location = "asia-northeast3",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-south1-run.googleapis.com/",
+      location = "asia-south1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-south2-run.googleapis.com/",
+      location = "asia-south2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-southeast1-run.googleapis.com/",
+      location = "asia-southeast1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://asia-southeast2-run.googleapis.com/",
+      location = "asia-southeast2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://australia-southeast1-run.googleapis.com/",
+      location = "australia-southeast1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://australia-southeast2-run.googleapis.com/",
+      location = "australia-southeast2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-central2-run.googleapis.com/",
+      location = "europe-central2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-north1-run.googleapis.com/",
+      location = "europe-north1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-southwest1-run.googleapis.com/",
+      location = "europe-southwest1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west1-run.googleapis.com/",
+      location = "europe-west1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west10-run.googleapis.com/",
+      location = "europe-west10",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west12-run.googleapis.com/",
+      location = "europe-west12",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west2-run.googleapis.com/",
+      location = "europe-west2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west3-run.googleapis.com/",
+      location = "europe-west3",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west4-run.googleapis.com/",
+      location = "europe-west4",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west6-run.googleapis.com/",
+      location = "europe-west6",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west8-run.googleapis.com/",
+      location = "europe-west8",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://europe-west9-run.googleapis.com/",
+      location = "europe-west9",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://me-central1-run.googleapis.com/",
+      location = "me-central1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://me-central2-run.googleapis.com/",
+      location = "me-central2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://me-west1-run.googleapis.com/",
+      location = "me-west1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://northamerica-northeast1-run.googleapis.com/",
+      location = "northamerica-northeast1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://northamerica-northeast2-run.googleapis.com/",
+      location = "northamerica-northeast2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://southamerica-east1-run.googleapis.com/",
+      location = "southamerica-east1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://southamerica-west1-run.googleapis.com/",
+      location = "southamerica-west1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-central1-run.googleapis.com/",
+      location = "us-central1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-east1-run.googleapis.com/",
+      location = "us-east1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-east4-run.googleapis.com/",
+      location = "us-east4",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-east5-run.googleapis.com/",
+      location = "us-east5",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-south1-run.googleapis.com/",
+      location = "us-south1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-west1-run.googleapis.com/",
+      location = "us-west1",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-west2-run.googleapis.com/",
+      location = "us-west2",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-west3-run.googleapis.com/",
+      location = "us-west3",
+    },
+    {
+      description = "Locational Endpoint",
+      endpointUrl = "https://us-west4-run.googleapis.com/",
+      location = "us-west4",
+    },
+  },
   fullyEncodeReservedExpansion = true,
   icons = {
     x16 = "http://www.google.com/images/icons/product/search-16.gif",
@@ -108,6 +310,86 @@ return {
     projects = {
       resources = {
         locations = {
+          methods = {
+            exportImage = {
+              description = "Export image for a given resource.",
+              flatPath = "v2/projects/{projectsId}/locations/{locationsId}/{locationsId1}:exportImage",
+              httpMethod = "POST",
+              id = "run.projects.locations.exportImage",
+              parameterOrder = {
+                "name",
+              },
+              parameters = {
+                name = {
+                  description = "Required. The name of the resource of which image metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+                  location = "path",
+                  pattern = "^projects/[^/]+/locations/[^/]+/.*$",
+                  required = true,
+                  type = "string",
+                },
+              },
+              path = "v2/{+name}:exportImage",
+              request = {
+                ["$ref"] = "GoogleCloudRunV2ExportImageRequest",
+              },
+              response = {
+                ["$ref"] = "GoogleCloudRunV2ExportImageResponse",
+              },
+              scopes = {
+                "https://www.googleapis.com/auth/cloud-platform",
+              },
+            },
+            exportImageMetadata = {
+              description = "Export image metadata for a given resource.",
+              flatPath = "v2/projects/{projectsId}/locations/{locationsId}/{locationsId1}:exportImageMetadata",
+              httpMethod = "GET",
+              id = "run.projects.locations.exportImageMetadata",
+              parameterOrder = {
+                "name",
+              },
+              parameters = {
+                name = {
+                  description = "Required. The name of the resource of which image metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+                  location = "path",
+                  pattern = "^projects/[^/]+/locations/[^/]+/.*$",
+                  required = true,
+                  type = "string",
+                },
+              },
+              path = "v2/{+name}:exportImageMetadata",
+              response = {
+                ["$ref"] = "GoogleCloudRunV2Metadata",
+              },
+              scopes = {
+                "https://www.googleapis.com/auth/cloud-platform",
+              },
+            },
+            exportMetadata = {
+              description = "Export generated customer metadata for a given resource.",
+              flatPath = "v2/projects/{projectsId}/locations/{locationsId}/{locationsId1}:exportMetadata",
+              httpMethod = "GET",
+              id = "run.projects.locations.exportMetadata",
+              parameterOrder = {
+                "name",
+              },
+              parameters = {
+                name = {
+                  description = "Required. The name of the resource of which metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}` for Service `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+                  location = "path",
+                  pattern = "^projects/[^/]+/locations/[^/]+/.*$",
+                  required = true,
+                  type = "string",
+                },
+              },
+              path = "v2/{+name}:exportMetadata",
+              response = {
+                ["$ref"] = "GoogleCloudRunV2Metadata",
+              },
+              scopes = {
+                "https://www.googleapis.com/auth/cloud-platform",
+              },
+            },
+          },
           resources = {
             jobs = {
               methods = {
@@ -291,7 +573,7 @@ return {
                   },
                   parameters = {
                     allowMissing = {
-                      description = "If set to true, and if the Job does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
+                      description = "Optional. If set to true, and if the Job does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
                       location = "query",
                       type = "boolean",
                     },
@@ -407,6 +689,34 @@ return {
               resources = {
                 executions = {
                   methods = {
+                    cancel = {
+                      description = "Cancels an Execution.",
+                      flatPath = "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}:cancel",
+                      httpMethod = "POST",
+                      id = "run.projects.locations.jobs.executions.cancel",
+                      parameterOrder = {
+                        "name",
+                      },
+                      parameters = {
+                        name = {
+                          description = "Required. The name of the Execution to cancel. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number.",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v2/{+name}:cancel",
+                      request = {
+                        ["$ref"] = "GoogleCloudRunV2CancelExecutionRequest",
+                      },
+                      response = {
+                        ["$ref"] = "GoogleLongrunningOperation",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
                     delete = {
                       description = "Deletes an Execution.",
                       flatPath = "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}",
@@ -422,7 +732,7 @@ return {
                           type = "string",
                         },
                         name = {
-                          description = "Required. The name of the Execution to delete. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}, where {project} can be project id or number.",
+                          description = "Required. The name of the Execution to delete. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number.",
                           location = "path",
                           pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
                           required = true,
@@ -442,6 +752,39 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                       },
                     },
+                    exportStatus = {
+                      description = "Read the status of an image export operation.",
+                      flatPath = "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}/{executionsId1}:exportStatus",
+                      httpMethod = "GET",
+                      id = "run.projects.locations.jobs.executions.exportStatus",
+                      parameterOrder = {
+                        "name",
+                        "operationId",
+                      },
+                      parameters = {
+                        name = {
+                          description = "Required. The name of the resource of which image export operation status has to be fetched. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                        operationId = {
+                          description = "Required. The operation id returned from ExportImage.",
+                          location = "path",
+                          pattern = "^[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v2/{+name}/{+operationId}:exportStatus",
+                      response = {
+                        ["$ref"] = "GoogleCloudRunV2ExportStatusResponse",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
                     get = {
                       description = "Gets information about an Execution.",
                       flatPath = "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}",
@@ -452,7 +795,7 @@ return {
                       },
                       parameters = {
                         name = {
-                          description = "Required. The full name of the Execution. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}, where {project} can be project id or number.",
+                          description = "Required. The full name of the Execution. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number.",
                           location = "path",
                           pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
                           required = true,
@@ -488,7 +831,7 @@ return {
                           type = "string",
                         },
                         parent = {
-                          description = "Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use \"-\" instead of Job name. Format: projects/{project}/locations/{location}/jobs/{job}, where {project} can be project id or number.",
+                          description = "Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use \"-\" instead of Job name. Format: `projects/{project}/locations/{location}/jobs/{job}`, where `{project}` can be project id or number.",
                           location = "path",
                           pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
                           required = true,
@@ -637,7 +980,7 @@ return {
                   },
                 },
                 list = {
-                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
                   flatPath = "v2/projects/{projectsId}/locations/{locationsId}/operations",
                   httpMethod = "GET",
                   id = "run.projects.locations.operations.list",
@@ -672,6 +1015,34 @@ return {
                   path = "v2/{+name}/operations",
                   response = {
                     ["$ref"] = "GoogleLongrunningListOperationsResponse",
+                  },
+                  scopes = {
+                    "https://www.googleapis.com/auth/cloud-platform",
+                  },
+                },
+                wait = {
+                  description = "Waits until the specified long-running operation is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
+                  flatPath = "v2/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:wait",
+                  httpMethod = "POST",
+                  id = "run.projects.locations.operations.wait",
+                  parameterOrder = {
+                    "name",
+                  },
+                  parameters = {
+                    name = {
+                      description = "The name of the operation resource to wait on.",
+                      location = "path",
+                      pattern = "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+                      required = true,
+                      type = "string",
+                    },
+                  },
+                  path = "v2/{+name}:wait",
+                  request = {
+                    ["$ref"] = "GoogleLongrunningWaitOperationRequest",
+                  },
+                  response = {
+                    ["$ref"] = "GoogleLongrunningOperation",
                   },
                   scopes = {
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -861,7 +1232,7 @@ return {
                   },
                   parameters = {
                     allowMissing = {
-                      description = "If set to true, and if the Service does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
+                      description = "Optional. If set to true, and if the Service does not exist, it will create a new one. The caller must have 'run.services.create' permissions if this is set to true and the Service does not exist.",
                       location = "query",
                       type = "boolean",
                     },
@@ -870,6 +1241,12 @@ return {
                       location = "path",
                       pattern = "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
                       required = true,
+                      type = "string",
+                    },
+                    updateMask = {
+                      description = "Optional. The list of fields to be updated.",
+                      format = "google-fieldmask",
+                      location = "query",
                       type = "string",
                     },
                     validateOnly = {
@@ -984,6 +1361,39 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                       },
                     },
+                    exportStatus = {
+                      description = "Read the status of an image export operation.",
+                      flatPath = "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions/{revisionsId}/{revisionsId1}:exportStatus",
+                      httpMethod = "GET",
+                      id = "run.projects.locations.services.revisions.exportStatus",
+                      parameterOrder = {
+                        "name",
+                        "operationId",
+                      },
+                      parameters = {
+                        name = {
+                          description = "Required. The name of the resource of which image export operation status has to be fetched. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+                          location = "path",
+                          pattern = "^projects/[^/]+/locations/[^/]+/services/[^/]+/revisions/[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                        operationId = {
+                          description = "Required. The operation id returned from ExportImage.",
+                          location = "path",
+                          pattern = "^[^/]+$",
+                          required = true,
+                          type = "string",
+                        },
+                      },
+                      path = "v2/{+name}/{+operationId}:exportStatus",
+                      response = {
+                        ["$ref"] = "GoogleCloudRunV2ExportStatusResponse",
+                      },
+                      scopes = {
+                        "https://www.googleapis.com/auth/cloud-platform",
+                      },
+                    },
                     get = {
                       description = "Gets information about a Revision.",
                       flatPath = "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions/{revisionsId}",
@@ -1059,7 +1469,7 @@ return {
       },
     },
   },
-  revision = "20230108",
+  revision = "20240419",
   rootUrl = "https://run.googleapis.com/",
   schemas = {
     GoogleCloudRunV2BinaryAuthorization = {
@@ -1067,11 +1477,30 @@ return {
       id = "GoogleCloudRunV2BinaryAuthorization",
       properties = {
         breakglassJustification = {
-          description = "If present, indicates to use Breakglass using this justification. If use_default is False, then it must be empty. For more information on breakglass, see https://cloud.google.com/binary-authorization/docs/using-breakglass",
+          description = "Optional. If present, indicates to use Breakglass using this justification. If use_default is False, then it must be empty. For more information on breakglass, see https://cloud.google.com/binary-authorization/docs/using-breakglass",
+          type = "string",
+        },
+        policy = {
+          description = "Optional. The path to a binary authorization policy. Format: projects/{project}/platforms/cloudRun/{policy-name}",
           type = "string",
         },
         useDefault = {
-          description = "If True, indicates to use the default project's binary authorization policy. If False, binary authorization will be disabled.",
+          description = "Optional. If True, indicates to use the default project's binary authorization policy. If False, binary authorization will be disabled.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2CancelExecutionRequest = {
+      description = "Request message for deleting an Execution.",
+      id = "GoogleCloudRunV2CancelExecutionRequest",
+      properties = {
+        etag = {
+          description = "A system-generated fingerprint for this version of the resource. This may be used to detect modification conflict during updates.",
+          type = "string",
+        },
+        validateOnly = {
+          description = "Indicates that the request should be validated without actually cancelling any resources.",
           type = "boolean",
         },
       },
@@ -1096,19 +1525,24 @@ return {
       id = "GoogleCloudRunV2Condition",
       properties = {
         executionReason = {
-          description = "A reason for the execution condition.",
+          description = "Output only. A reason for the execution condition.",
           enum = {
             "EXECUTION_REASON_UNDEFINED",
             "JOB_STATUS_SERVICE_POLLING_ERROR",
             "NON_ZERO_EXIT_CODE",
             "CANCELLED",
+            "CANCELLING",
+            "DELETED",
           },
           enumDescriptions = {
             "Default value.",
             "Internal system error getting execution status. System will retry.",
             "A task reached its retry limit and the last attempt failed due to the user container exiting with a non-zero exit code.",
             "The execution was cancelled by users.",
+            "The execution is in the process of being cancelled.",
+            "The execution was deleted.",
           },
+          readOnly = true,
           type = "string",
         },
         lastTransitionTime = {
@@ -1121,7 +1555,7 @@ return {
           type = "string",
         },
         reason = {
-          description = "A common (service-level) reason for this condition.",
+          description = "Output only. A common (service-level) reason for this condition.",
           enum = {
             "COMMON_REASON_UNDEFINED",
             "UNKNOWN",
@@ -1156,10 +1590,11 @@ return {
             "System will retry later; current attempt failed.",
             "An internal error occurred. Further information may be in the message.",
           },
+          readOnly = true,
           type = "string",
         },
         revisionReason = {
-          description = "A reason for the revision condition.",
+          description = "Output only. A reason for the revision condition.",
           enum = {
             "REVISION_REASON_UNDEFINED",
             "PENDING",
@@ -1190,6 +1625,7 @@ return {
             "A revision's container has no port specified since the revision is of a manually scaled service with 0 instance count",
             "A revision with min_instance_count > 0 was created and is waiting for enough instances to begin a traffic migration.",
           },
+          readOnly = true,
           type = "string",
         },
         severity = {
@@ -1234,18 +1670,25 @@ return {
       type = "object",
     },
     GoogleCloudRunV2Container = {
-      description = "A single application container. This specifies both the container to run, the command to run in the container and the arguments to supply to it. Note that additional arguments may be supplied by the system to the container at runtime.",
+      description = "A single application container. This specifies both the container to run, the command to run in the container and the arguments to supply to it. Note that additional arguments can be supplied by the system to the container at runtime.",
       id = "GoogleCloudRunV2Container",
       properties = {
         args = {
-          description = "Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell",
+          description = "Arguments to the entrypoint. The docker image's CMD is used if this is not provided.",
           items = {
             type = "string",
           },
           type = "array",
         },
         command = {
-          description = "Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell",
+          description = "Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        dependsOn = {
+          description = "Names of the containers that must start before this container.",
           items = {
             type = "string",
           },
@@ -1259,12 +1702,12 @@ return {
           type = "array",
         },
         image = {
-          description = "Required. URL of the Container image in Google Container Registry or Google Artifact Registry. More info: https://kubernetes.io/docs/concepts/containers/images",
+          description = "Required. Name of the container image in Dockerhub, Google Artifact Registry, or Google Container Registry. If the host is not provided, Dockerhub is assumed.",
           type = "string",
         },
         livenessProbe = {
           ["$ref"] = "GoogleCloudRunV2Probe",
-          description = "Periodic probe of container liveness. Container will be restarted if the probe fails. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+          description = "Periodic probe of container liveness. Container will be restarted if the probe fails.",
         },
         name = {
           description = "Name of the container specified as a DNS_LABEL (RFC 1123).",
@@ -1279,11 +1722,11 @@ return {
         },
         resources = {
           ["$ref"] = "GoogleCloudRunV2ResourceRequirements",
-          description = "Compute Resource requirements by this container. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources",
+          description = "Compute Resource requirements by this container.",
         },
         startupProbe = {
           ["$ref"] = "GoogleCloudRunV2Probe",
-          description = "Startup probe of application within the container. All other probes are disabled if a startup probe is provided, until it succeeds. Container will not be added to service endpoints if the probe fails. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+          description = "Startup probe of application within the container. All other probes are disabled if a startup probe is provided, until it succeeds. Container will not be added to service endpoints if the probe fails.",
         },
         volumeMounts = {
           description = "Volume to mount into the container's filesystem.",
@@ -1294,6 +1737,35 @@ return {
         },
         workingDir = {
           description = "Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2ContainerOverride = {
+      description = "Per-container override specification.",
+      id = "GoogleCloudRunV2ContainerOverride",
+      properties = {
+        args = {
+          description = "Optional. Arguments to the entrypoint. Will replace existing args for override.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        clearArgs = {
+          description = "Optional. True if the intention is to clear out existing args list.",
+          type = "boolean",
+        },
+        env = {
+          description = "List of environment variables to set in the container. Will be merged with existing env for override.",
+          items = {
+            ["$ref"] = "GoogleCloudRunV2EnvVar",
+          },
+          type = "array",
+        },
+        name = {
+          description = "The name of the container specified as a DNS_LABEL.",
           type = "string",
         },
       },
@@ -1315,12 +1787,35 @@ return {
       },
       type = "object",
     },
+    GoogleCloudRunV2EmptyDirVolumeSource = {
+      description = "In memory (tmpfs) ephemeral storage. It is ephemeral in the sense that when the sandbox is taken down, the data is destroyed with it (it does not persist across sandbox runs).",
+      id = "GoogleCloudRunV2EmptyDirVolumeSource",
+      properties = {
+        medium = {
+          description = "The medium on which the data is stored. Acceptable values today is only MEMORY or none. When none, the default will currently be backed by memory but could change over time. +optional",
+          enum = {
+            "MEDIUM_UNSPECIFIED",
+            "MEMORY",
+          },
+          enumDescriptions = {
+            "When not specified, falls back to the default implementation which is currently in memory (this may change over time).",
+            "Explicitly set the EmptyDir to be in memory. Uses tmpfs.",
+          },
+          type = "string",
+        },
+        sizeLimit = {
+          description = "Limit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers. The default is nil which means that the limit is undefined. More info: https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume. Info in Kubernetes: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudRunV2EnvVar = {
       description = "EnvVar represents an environment variable present in a Container.",
       id = "GoogleCloudRunV2EnvVar",
       properties = {
         name = {
-          description = "Required. Name of the environment variable. Must be a C_IDENTIFIER, and mnay not exceed 32768 characters.",
+          description = "Required. Name of the environment variable. Must not exceed 32768 characters.",
           type = "string",
         },
         value = {
@@ -1353,7 +1848,8 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style annotations for the resource.",
+          description = "Output only. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.",
+          readOnly = true,
           type = "object",
         },
         cancelledCount = {
@@ -1420,11 +1916,12 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style labels for the resource. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels",
+          description = "Output only. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels",
+          readOnly = true,
           type = "object",
         },
         launchStage = {
-          description = "Set the launch stage to a preview stage on write to allow use of preview features in that stage. On read, describes whether the resource uses preview features. Launch Stages are defined at [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages).",
+          description = "The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are were, this field will be BETA.",
           enum = {
             "LAUNCH_STAGE_UNSPECIFIED",
             "UNIMPLEMENTED",
@@ -1464,7 +1961,7 @@ return {
           type = "string",
         },
         parallelism = {
-          description = "Output only. Specifies the maximum desired number of tasks the execution should run at any given time. Must be <= task_count. The actual number of tasks running in steady state will be less than this number when ((.spec.task_count - .status.successful) < .spec.parallelism), i.e. when the work left to do is less than max parallelism. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/",
+          description = "Output only. Specifies the maximum desired number of tasks the execution should run at any given time. Must be <= task_count. The actual number of tasks running in steady state will be less than this number when ((.spec.task_count - .status.successful) < .spec.parallelism), i.e. when the work left to do is less than max parallelism.",
           format = "int32",
           readOnly = true,
           type = "integer",
@@ -1486,6 +1983,11 @@ return {
           readOnly = true,
           type = "integer",
         },
+        satisfiesPzs = {
+          description = "Output only. Reserved for future use.",
+          readOnly = true,
+          type = "boolean",
+        },
         startTime = {
           description = "Output only. Represents time when the execution started to run. It is not guaranteed to be set in happens-before order across separate operations.",
           format = "google-datetime",
@@ -1499,7 +2001,7 @@ return {
           type = "integer",
         },
         taskCount = {
-          description = "Output only. Specifies the desired number of tasks the execution should run. Setting to 1 means that parallelism is limited to 1 and the success of that task signals the success of the execution. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/",
+          description = "Output only. Specifies the desired number of tasks the execution should run. Setting to 1 means that parallelism is limited to 1 and the success of that task signals the success of the execution.",
           format = "int32",
           readOnly = true,
           type = "integer",
@@ -1552,14 +2054,14 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style annotations for the resource. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system annotations in v1 now have a corresponding field in v2 ExecutionTemplate.",
+          description = "Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system annotations in v1 now have a corresponding field in v2 ExecutionTemplate. This field follows Kubernetes annotations' namespacing, limits, and rules.",
           type = "object",
         },
         labels = {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style labels for the resource. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 ExecutionTemplate.",
+          description = "Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 ExecutionTemplate.",
           type = "object",
         },
         parallelism = {
@@ -1568,7 +2070,7 @@ return {
           type = "integer",
         },
         taskCount = {
-          description = "Specifies the desired number of tasks the execution should run. Setting to 1 means that parallelism is limited to 1 and the success of that task signals the success of the execution. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/",
+          description = "Specifies the desired number of tasks the execution should run. Setting to 1 means that parallelism is limited to 1 and the success of that task signals the success of the execution. Defaults to 1.",
           format = "int32",
           type = "integer",
         },
@@ -1579,17 +2081,87 @@ return {
       },
       type = "object",
     },
+    GoogleCloudRunV2ExportImageRequest = {
+      description = "Request message for exporting Cloud Run image.",
+      id = "GoogleCloudRunV2ExportImageRequest",
+      properties = {
+        destinationRepo = {
+          description = "Required. The export destination url (the Artifact Registry repo).",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2ExportImageResponse = {
+      description = "ExportImageResponse contains an operation Id to track the image export operation.",
+      id = "GoogleCloudRunV2ExportImageResponse",
+      properties = {
+        operationId = {
+          description = "An operation ID used to track the status of image exports tied to the original pod ID in the request.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2ExportStatusResponse = {
+      description = "ExportStatusResponse contains the status of image export operation, with the status of each image export job.",
+      id = "GoogleCloudRunV2ExportStatusResponse",
+      properties = {
+        imageExportStatuses = {
+          description = "The status of each image export job.",
+          items = {
+            ["$ref"] = "GoogleCloudRunV2ImageExportStatus",
+          },
+          type = "array",
+        },
+        operationId = {
+          description = "The operation id.",
+          type = "string",
+        },
+        operationState = {
+          description = "Output only. The state of the overall export operation.",
+          enum = {
+            "OPERATION_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "FINISHED",
+          },
+          enumDescriptions = {
+            "State unspecified.",
+            "Operation still in progress.",
+            "Operation finished.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2GCSVolumeSource = {
+      description = "Represents a volume backed by a Cloud Storage bucket using Cloud Storage FUSE.",
+      id = "GoogleCloudRunV2GCSVolumeSource",
+      properties = {
+        bucket = {
+          description = "Cloud Storage Bucket name.",
+          type = "string",
+        },
+        readOnly = {
+          description = "If true, the volume will be mounted as read only for all mounts.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudRunV2GRPCAction = {
       description = "GRPCAction describes an action involving a GRPC port.",
       id = "GoogleCloudRunV2GRPCAction",
       properties = {
         port = {
-          description = "Port number of the gRPC service. Number must be in the range 1 to 65535. If not specified, defaults to 8080.",
+          description = "Optional. Port number of the gRPC service. Number must be in the range 1 to 65535. If not specified, defaults to the exposed port of the container, which is the value of container.ports[0].containerPort.",
           format = "int32",
           type = "integer",
         },
         service = {
-          description = "Service is the name of the service to place in the gRPC HealthCheckRequest (see https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If this is not specified, the default behavior is defined by gRPC.",
+          description = "Optional. Service is the name of the service to place in the gRPC HealthCheckRequest (see https://github.com/grpc/grpc/blob/master/doc/health-checking.md ). If this is not specified, the default behavior is defined by gRPC.",
           type = "string",
         },
       },
@@ -1600,15 +2172,20 @@ return {
       id = "GoogleCloudRunV2HTTPGetAction",
       properties = {
         httpHeaders = {
-          description = "Custom headers to set in the request. HTTP allows repeated headers.",
+          description = "Optional. Custom headers to set in the request. HTTP allows repeated headers.",
           items = {
             ["$ref"] = "GoogleCloudRunV2HTTPHeader",
           },
           type = "array",
         },
         path = {
-          description = "Path to access on the HTTP server. Defaults to '/'.",
+          description = "Optional. Path to access on the HTTP server. Defaults to '/'.",
           type = "string",
+        },
+        port = {
+          description = "Optional. Port number to access on the container. Must be in the range 1 to 65535. If not specified, defaults to the exposed port of the container, which is the value of container.ports[0].containerPort.",
+          format = "int32",
+          type = "integer",
         },
       },
       type = "object",
@@ -1622,7 +2199,41 @@ return {
           type = "string",
         },
         value = {
-          description = "The header field value",
+          description = "Optional. The header field value",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2ImageExportStatus = {
+      description = "The status of an image export job.",
+      id = "GoogleCloudRunV2ImageExportStatus",
+      properties = {
+        exportJobState = {
+          description = "Output only. Has the image export job finished (regardless of successful or failure).",
+          enum = {
+            "EXPORT_JOB_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "FINISHED",
+          },
+          enumDescriptions = {
+            "State unspecified.",
+            "Job still in progress.",
+            "Job finished.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+        exportedImageDigest = {
+          description = "The exported image ID as it will appear in Artifact Registry.",
+          type = "string",
+        },
+        status = {
+          ["$ref"] = "UtilStatusProto",
+          description = "The status of the export task if done.",
+        },
+        tag = {
+          description = "The image tag as it will appear in Artifact Registry.",
           type = "string",
         },
       },
@@ -1636,7 +2247,7 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style annotations for the resource. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system annotations in v1 now have a corresponding field in v2 Job. This field follows Kubernetes annotations' namespacing, limits, and rules. More info: https://kubernetes.io/docs/user-guide/annotations",
+          description = "Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected on new resources. All system annotations in v1 now have a corresponding field in v2 Job. This field follows Kubernetes annotations' namespacing, limits, and rules.",
           type = "object",
         },
         binaryAuthorization = {
@@ -1703,7 +2314,7 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style labels for the resource. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Job.",
+          description = "Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Job.",
           type = "object",
         },
         lastModifier = {
@@ -1717,7 +2328,7 @@ return {
           readOnly = true,
         },
         launchStage = {
-          description = "The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed.",
+          description = "The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.",
           enum = {
             "LAUNCH_STAGE_UNSPECIFIED",
             "UNIMPLEMENTED",
@@ -1754,6 +2365,15 @@ return {
           description = "Output only. Returns true if the Job is currently being acted upon by the system to bring it into the desired state. When a new Job is created, or an existing one is updated, Cloud Run will asynchronously perform all necessary steps to bring the Job to the desired state. This process is called reconciliation. While reconciliation is in process, `observed_generation` and `latest_succeeded_execution`, will have transient values that might mismatch the intended state: Once reconciliation is over (and this field is false), there are two possible outcomes: reconciliation succeeded and the state matches the Job, or there was an error, and reconciliation failed. This state can be found in `terminal_condition.state`. If reconciliation succeeded, the following fields will match: `observed_generation` and `generation`, `latest_succeeded_execution` and `latest_created_execution`. If reconciliation failed, `observed_generation` and `latest_succeeded_execution` will have the state of the last succeeded execution or empty for newly created Job. Additional information on the failure can be found in `terminal_condition` and `conditions`.",
           readOnly = true,
           type = "boolean",
+        },
+        satisfiesPzs = {
+          description = "Output only. Reserved for future use.",
+          readOnly = true,
+          type = "boolean",
+        },
+        startExecutionToken = {
+          description = "A unique string used as a suffix creating a new execution. The Job will become ready when the execution is successfully started. The sum of job name and token length must be fewer than 63 characters.",
+          type = "string",
         },
         template = {
           ["$ref"] = "GoogleCloudRunV2ExecutionTemplate",
@@ -1868,39 +2488,115 @@ return {
       },
       type = "object",
     },
+    GoogleCloudRunV2Metadata = {
+      description = "Metadata represents the JSON encoded generated customer metadata.",
+      id = "GoogleCloudRunV2Metadata",
+      properties = {
+        metadata = {
+          description = "JSON encoded Google-generated Customer Metadata for a given resource/project.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2NFSVolumeSource = {
+      description = "Represents an NFS mount.",
+      id = "GoogleCloudRunV2NFSVolumeSource",
+      properties = {
+        path = {
+          description = "Path that is exported by the NFS server.",
+          type = "string",
+        },
+        readOnly = {
+          description = "If true, the volume will be mounted as read only for all mounts.",
+          type = "boolean",
+        },
+        server = {
+          description = "Hostname or IP address of the NFS server",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2NetworkInterface = {
+      description = "Direct VPC egress settings.",
+      id = "GoogleCloudRunV2NetworkInterface",
+      properties = {
+        network = {
+          description = "Optional. The VPC network that the Cloud Run resource will be able to send traffic to. At least one of network or subnetwork must be specified. If both network and subnetwork are specified, the given VPC subnetwork must belong to the given VPC network. If network is not specified, it will be looked up from the subnetwork.",
+          type = "string",
+        },
+        subnetwork = {
+          description = "Optional. The VPC subnetwork that the Cloud Run resource will get IPs from. At least one of network or subnetwork must be specified. If both network and subnetwork are specified, the given VPC subnetwork must belong to the given VPC network. If subnetwork is not specified, the subnetwork with the same name with the network will be used.",
+          type = "string",
+        },
+        tags = {
+          description = "Optional. Network tags applied to this Cloud Run resource.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2Overrides = {
+      description = "RunJob Overrides that contains Execution fields to be overridden.",
+      id = "GoogleCloudRunV2Overrides",
+      properties = {
+        containerOverrides = {
+          description = "Per container override specification.",
+          items = {
+            ["$ref"] = "GoogleCloudRunV2ContainerOverride",
+          },
+          type = "array",
+        },
+        taskCount = {
+          description = "Optional. The desired number of tasks the execution should run. Will replace existing task_count value.",
+          format = "int32",
+          type = "integer",
+        },
+        timeout = {
+          description = "Duration in seconds the task may be active before the system will actively try to mark it failed and kill associated containers. Will replace existing timeout_seconds value.",
+          format = "google-duration",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudRunV2Probe = {
       description = "Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.",
       id = "GoogleCloudRunV2Probe",
       properties = {
         failureThreshold = {
-          description = "Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
+          description = "Optional. Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.",
           format = "int32",
           type = "integer",
         },
         grpc = {
           ["$ref"] = "GoogleCloudRunV2GRPCAction",
-          description = "GRPC specifies an action involving a gRPC port. Exactly one of httpGet, tcpSocket, or grpc must be specified.",
+          description = "Optional. GRPC specifies an action involving a gRPC port. Exactly one of httpGet, tcpSocket, or grpc must be specified.",
         },
         httpGet = {
           ["$ref"] = "GoogleCloudRunV2HTTPGetAction",
-          description = "HTTPGet specifies the http request to perform. Exactly one of httpGet, tcpSocket, or grpc must be specified.",
+          description = "Optional. HTTPGet specifies the http request to perform. Exactly one of httpGet, tcpSocket, or grpc must be specified.",
         },
         initialDelaySeconds = {
-          description = "Number of seconds after the container has started before the probe is initiated. Defaults to 0 seconds. Minimum value is 0. Maximum value for liveness probe is 3600. Maximum value for startup probe is 240. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+          description = "Optional. Number of seconds after the container has started before the probe is initiated. Defaults to 0 seconds. Minimum value is 0. Maximum value for liveness probe is 3600. Maximum value for startup probe is 240.",
           format = "int32",
           type = "integer",
         },
         periodSeconds = {
-          description = "How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value for liveness probe is 3600. Maximum value for startup probe is 240. Must be greater or equal than timeout_seconds.",
+          description = "Optional. How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value for liveness probe is 3600. Maximum value for startup probe is 240. Must be greater or equal than timeout_seconds.",
           format = "int32",
           type = "integer",
         },
         tcpSocket = {
           ["$ref"] = "GoogleCloudRunV2TCPSocketAction",
-          description = "TCPSocket specifies an action involving a TCP port. Exactly one of httpGet, tcpSocket, or grpc must be specified.",
+          description = "Optional. TCPSocket specifies an action involving a TCP port. Exactly one of httpGet, tcpSocket, or grpc must be specified.",
         },
         timeoutSeconds = {
-          description = "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 3600. Must be smaller than period_seconds. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
+          description = "Optional. Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 3600. Must be smaller than period_seconds.",
           format = "int32",
           type = "integer",
         },
@@ -1912,15 +2608,19 @@ return {
       id = "GoogleCloudRunV2ResourceRequirements",
       properties = {
         cpuIdle = {
-          description = "Determines whether CPU should be throttled or not outside of requests.",
+          description = "Determines whether CPU is only allocated during requests (true by default). However, if ResourceRequirements is set, the caller must explicitly set this field to true to preserve the default behavior.",
           type = "boolean",
         },
         limits = {
           additionalProperties = {
             type = "string",
           },
-          description = "Only memory and CPU are supported. Note: The only supported values for CPU are '1', '2', '4', and '8'. Setting 4 CPU requires at least 2Gi of memory. The values of the map is string form of the 'quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
+          description = "Only `memory` and `cpu` keys in the map are supported. Notes: * The only supported values for CPU are '1', '2', '4', and '8'. Setting 4 CPU requires at least 2Gi of memory. For more information, go to https://cloud.google.com/run/docs/configuring/cpu. * For supported 'memory' values and syntax, go to https://cloud.google.com/run/docs/configuring/memory-limits",
           type = "object",
+        },
+        startupCpuBoost = {
+          description = "Determines whether CPU should be boosted on startup of a new container instance above the requested CPU threshold, this can help reduce cold-start latency.",
+          type = "boolean",
         },
       },
       type = "object",
@@ -1933,7 +2633,8 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style annotations for the resource.",
+          description = "Output only. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.",
+          readOnly = true,
           type = "object",
         },
         conditions = {
@@ -2021,11 +2722,12 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style labels for the resource. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels",
+          description = "Output only. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.",
+          readOnly = true,
           type = "object",
         },
         launchStage = {
-          description = "Set the launch stage to a preview stage on write to allow use of preview features in that stage. On read, describes whether the resource uses preview features. Launch Stages are defined at [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages).",
+          description = "The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are were, this field will be BETA.",
           enum = {
             "LAUNCH_STAGE_UNSPECIFIED",
             "UNIMPLEMENTED",
@@ -2074,9 +2776,19 @@ return {
           readOnly = true,
           type = "boolean",
         },
+        satisfiesPzs = {
+          description = "Output only. Reserved for future use.",
+          readOnly = true,
+          type = "boolean",
+        },
         scaling = {
           ["$ref"] = "GoogleCloudRunV2RevisionScaling",
           description = "Scaling settings for this revision.",
+        },
+        scalingStatus = {
+          ["$ref"] = "GoogleCloudRunV2RevisionScalingStatus",
+          description = "Output only. The current effective scaling settings for the revision.",
+          readOnly = true,
         },
         service = {
           description = "Output only. The name of the parent service.",
@@ -2086,6 +2798,10 @@ return {
         serviceAccount = {
           description = "Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has.",
           type = "string",
+        },
+        sessionAffinity = {
+          description = "Enable session affinity.",
+          type = "boolean",
         },
         timeout = {
           description = "Max allowed time for an instance to respond to a request.",
@@ -2122,12 +2838,24 @@ return {
       id = "GoogleCloudRunV2RevisionScaling",
       properties = {
         maxInstanceCount = {
-          description = "Maximum number of serving instances that this resource should have.",
+          description = "Optional. Maximum number of serving instances that this resource should have.",
           format = "int32",
           type = "integer",
         },
         minInstanceCount = {
-          description = "Minimum number of serving instances that this resource should have.",
+          description = "Optional. Minimum number of serving instances that this resource should have.",
+          format = "int32",
+          type = "integer",
+        },
+      },
+      type = "object",
+    },
+    GoogleCloudRunV2RevisionScalingStatus = {
+      description = "Effective settings for the current revision",
+      id = "GoogleCloudRunV2RevisionScalingStatus",
+      properties = {
+        desiredMinInstanceCount = {
+          description = "The current number of min instances provisioned for this revision.",
           format = "int32",
           type = "integer",
         },
@@ -2142,7 +2870,7 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style annotations for the resource. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system annotations in v1 now have a corresponding field in v2 RevisionTemplate.",
+          description = "Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system annotations in v1 now have a corresponding field in v2 RevisionTemplate. This field follows Kubernetes annotations' namespacing, limits, and rules.",
           type = "object",
         },
         containers = {
@@ -2157,7 +2885,7 @@ return {
           type = "string",
         },
         executionEnvironment = {
-          description = "The sandbox environment to host this Revision.",
+          description = "Optional. The sandbox environment to host this Revision.",
           enum = {
             "EXECUTION_ENVIRONMENT_UNSPECIFIED",
             "EXECUTION_ENVIRONMENT_GEN1",
@@ -2170,37 +2898,45 @@ return {
           },
           type = "string",
         },
+        healthCheckDisabled = {
+          description = "Optional. Disables health checking containers during deployment.",
+          type = "boolean",
+        },
         labels = {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style labels for the resource. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 RevisionTemplate.",
+          description = "Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 RevisionTemplate.",
           type = "object",
         },
         maxInstanceRequestConcurrency = {
-          description = "Sets the maximum number of requests that each serving instance can receive.",
+          description = "Optional. Sets the maximum number of requests that each serving instance can receive.",
           format = "int32",
           type = "integer",
         },
         revision = {
-          description = "The unique name for the revision. If this field is omitted, it will be automatically generated based on the Service name.",
+          description = "Optional. The unique name for the revision. If this field is omitted, it will be automatically generated based on the Service name.",
           type = "string",
         },
         scaling = {
           ["$ref"] = "GoogleCloudRunV2RevisionScaling",
-          description = "Scaling settings for this Revision.",
+          description = "Optional. Scaling settings for this Revision.",
         },
         serviceAccount = {
-          description = "Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has. If not provided, the revision will use the project's default service account.",
+          description = "Optional. Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has. If not provided, the revision will use the project's default service account.",
           type = "string",
         },
+        sessionAffinity = {
+          description = "Optional. Enable session affinity.",
+          type = "boolean",
+        },
         timeout = {
-          description = "Max allowed time for an instance to respond to a request.",
+          description = "Optional. Max allowed time for an instance to respond to a request.",
           format = "google-duration",
           type = "string",
         },
         volumes = {
-          description = "A list of Volumes to make available to containers.",
+          description = "Optional. A list of Volumes to make available to containers.",
           items = {
             ["$ref"] = "GoogleCloudRunV2Volume",
           },
@@ -2208,7 +2944,7 @@ return {
         },
         vpcAccess = {
           ["$ref"] = "GoogleCloudRunV2VpcAccess",
-          description = "VPC Access configuration to use for this Revision. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.",
+          description = "Optional. VPC Access configuration to use for this Revision. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.",
         },
       },
       type = "object",
@@ -2220,6 +2956,10 @@ return {
         etag = {
           description = "A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.",
           type = "string",
+        },
+        overrides = {
+          ["$ref"] = "GoogleCloudRunV2Overrides",
+          description = "Overrides specification for a given execution of a job. If provided, overrides will be applied to update the execution or task spec.",
         },
         validateOnly = {
           description = "Indicates that the request should be validated without actually deleting any resources.",
@@ -2274,12 +3014,12 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system annotations in v1 now have a corresponding field in v2 Service. This field follows Kubernetes annotations' namespacing, limits, and rules. More info: https://kubernetes.io/docs/user-guide/annotations",
+          description = "Optional. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects. Cloud Run API v2 does not support annotations with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected in new resources. All system annotations in v1 now have a corresponding field in v2 Service. This field follows Kubernetes annotations' namespacing, limits, and rules.",
           type = "object",
         },
         binaryAuthorization = {
           ["$ref"] = "GoogleCloudRunV2BinaryAuthorization",
-          description = "Settings for the Binary Authorization feature.",
+          description = "Optional. Settings for the Binary Authorization feature.",
         },
         client = {
           description = "Arbitrary identifier for the API client.",
@@ -2307,6 +3047,17 @@ return {
           description = "Output only. Email address of the authenticated creator.",
           readOnly = true,
           type = "string",
+        },
+        customAudiences = {
+          description = "One or more custom audiences that you want this service to support. Specify each custom audience as the full URL in a string. The custom audiences are encoded in the token and used to authenticate requests. For more information, see https://cloud.google.com/run/docs/configuring/custom-audiences.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        defaultUriDisabled = {
+          description = "Optional. Disables public resolution of the default URI of this service.",
+          type = "boolean",
         },
         deleteTime = {
           description = "Output only. The deletion time.",
@@ -2336,18 +3087,20 @@ return {
           type = "string",
         },
         ingress = {
-          description = "Provides the ingress settings for this Service. On output, returns the currently observed ingress settings, or INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.",
+          description = "Optional. Provides the ingress settings for this Service. On output, returns the currently observed ingress settings, or INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.",
           enum = {
             "INGRESS_TRAFFIC_UNSPECIFIED",
             "INGRESS_TRAFFIC_ALL",
             "INGRESS_TRAFFIC_INTERNAL_ONLY",
             "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER",
+            "INGRESS_TRAFFIC_NONE",
           },
           enumDescriptions = {
             "Unspecified",
             "All inbound traffic is allowed.",
             "Only internal traffic is allowed.",
             "Both internal and Google Cloud Load Balancer traffic is allowed.",
+            "No ingress traffic is allowed.",
           },
           type = "string",
         },
@@ -2355,7 +3108,7 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "Map of string keys and values that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Service.",
+          description = "Optional. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels. Cloud Run API v2 does not support labels with `run.googleapis.com`, `cloud.googleapis.com`, `serving.knative.dev`, or `autoscaling.knative.dev` namespaces, and they will be rejected. All system labels in v1 now have a corresponding field in v2 Service.",
           type = "object",
         },
         lastModifier = {
@@ -2374,7 +3127,7 @@ return {
           type = "string",
         },
         launchStage = {
-          description = "The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed.",
+          description = "Optional. The launch stage as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed. Set the launch stage to a preview stage on input to allow use of preview features in that stage. On read (or output), describes whether the resource uses preview features. For example, if ALPHA is provided as input, but only BETA and GA-level features are used, this field will be BETA on output.",
           enum = {
             "LAUNCH_STAGE_UNSPECIFIED",
             "UNIMPLEMENTED",
@@ -2412,6 +3165,15 @@ return {
           readOnly = true,
           type = "boolean",
         },
+        satisfiesPzs = {
+          description = "Output only. Reserved for future use.",
+          readOnly = true,
+          type = "boolean",
+        },
+        scaling = {
+          ["$ref"] = "GoogleCloudRunV2ServiceScaling",
+          description = "Optional. Specifies service-level scaling settings",
+        },
         template = {
           ["$ref"] = "GoogleCloudRunV2RevisionTemplate",
           description = "Required. The template used to create revisions for this Service.",
@@ -2422,7 +3184,7 @@ return {
           readOnly = true,
         },
         traffic = {
-          description = "Specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest `Ready` Revision.",
+          description = "Optional. Specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest `Ready` Revision.",
           items = {
             ["$ref"] = "GoogleCloudRunV2TrafficTarget",
           },
@@ -2455,12 +3217,24 @@ return {
       },
       type = "object",
     },
+    GoogleCloudRunV2ServiceScaling = {
+      description = "Scaling settings applied at the service level rather than at the revision level.",
+      id = "GoogleCloudRunV2ServiceScaling",
+      properties = {
+        minInstanceCount = {
+          description = "Optional. total min instances for the service. This number of instances is divided among all revisions with specified traffic based on the percent of traffic they are receiving. (BETA)",
+          format = "int32",
+          type = "integer",
+        },
+      },
+      type = "object",
+    },
     GoogleCloudRunV2TCPSocketAction = {
       description = "TCPSocketAction describes an action based on opening a socket",
       id = "GoogleCloudRunV2TCPSocketAction",
       properties = {
         port = {
-          description = "Port number to access on the container. Must be in the range 1 to 65535. If not specified, defaults to 8080.",
+          description = "Optional. Port number to access on the container. Must be in the range 1 to 65535. If not specified, defaults to the exposed port of the container, which is the value of container.ports[0].containerPort.",
           format = "int32",
           type = "integer",
         },
@@ -2475,7 +3249,8 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style annotations for the resource.",
+          description = "Output only. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.",
+          readOnly = true,
           type = "object",
         },
         completionTime = {
@@ -2500,7 +3275,7 @@ return {
           type = "array",
         },
         createTime = {
-          description = "Output only. Represents time when the task was created by the job controller. It is not guaranteed to be set in happens-before order across separate operations.",
+          description = "Output only. Represents time when the task was created by the system. It is not guaranteed to be set in happens-before order across separate operations.",
           format = "google-datetime",
           readOnly = true,
           type = "string",
@@ -2567,7 +3342,8 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "KRM-style labels for the resource. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels",
+          description = "Output only. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels",
+          readOnly = true,
           type = "object",
         },
         lastAttemptResult = {
@@ -2606,6 +3382,17 @@ return {
           format = "int32",
           readOnly = true,
           type = "integer",
+        },
+        satisfiesPzs = {
+          description = "Output only. Reserved for future use.",
+          readOnly = true,
+          type = "boolean",
+        },
+        scheduledTime = {
+          description = "Output only. Represents time when the task was scheduled to run by the system. It is not guaranteed to be set in happens-before order across separate operations.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
         },
         serviceAccount = {
           description = "Email address of the IAM service account associated with the Task of a Job. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project's default service account.",
@@ -2682,7 +3469,7 @@ return {
           type = "string",
         },
         executionEnvironment = {
-          description = "The execution environment being used to host this Task.",
+          description = "Optional. The execution environment being used to host this Task.",
           enum = {
             "EXECUTION_ENVIRONMENT_UNSPECIFIED",
             "EXECUTION_ENVIRONMENT_GEN1",
@@ -2696,21 +3483,21 @@ return {
           type = "string",
         },
         maxRetries = {
-          description = "Number of retries allowed per Task, before marking this Task failed.",
+          description = "Number of retries allowed per Task, before marking this Task failed. Defaults to 3.",
           format = "int32",
           type = "integer",
         },
         serviceAccount = {
-          description = "Email address of the IAM service account associated with the Task of a Job. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project's default service account.",
+          description = "Optional. Email address of the IAM service account associated with the Task of a Job. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project's default service account.",
           type = "string",
         },
         timeout = {
-          description = "Max allowed time duration the Task may be active before the system will actively try to mark it failed and kill associated containers. This applies per attempt of a task, meaning each retry can run for the full timeout.",
+          description = "Optional. Max allowed time duration the Task may be active before the system will actively try to mark it failed and kill associated containers. This applies per attempt of a task, meaning each retry can run for the full timeout. Defaults to 600 seconds.",
           format = "google-duration",
           type = "string",
         },
         volumes = {
-          description = "A list of Volumes to make available to containers.",
+          description = "Optional. A list of Volumes to make available to containers.",
           items = {
             ["$ref"] = "GoogleCloudRunV2Volume",
           },
@@ -2718,7 +3505,7 @@ return {
         },
         vpcAccess = {
           ["$ref"] = "GoogleCloudRunV2VpcAccess",
-          description = "VPC Access configuration to use for this Task. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.",
+          description = "Optional. VPC Access configuration to use for this Task. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.",
         },
       },
       type = "object",
@@ -2823,13 +3610,25 @@ return {
           ["$ref"] = "GoogleCloudRunV2CloudSqlInstance",
           description = "For Cloud SQL volumes, contains the specific instances that should be mounted. Visit https://cloud.google.com/sql/docs/mysql/connect-run for more information on how to connect Cloud SQL and Cloud Run.",
         },
+        emptyDir = {
+          ["$ref"] = "GoogleCloudRunV2EmptyDirVolumeSource",
+          description = "Ephemeral storage used as a shared volume.",
+        },
+        gcs = {
+          ["$ref"] = "GoogleCloudRunV2GCSVolumeSource",
+          description = "Persistent storage backed by a Google Cloud Storage bucket.",
+        },
         name = {
           description = "Required. Volume's name.",
           type = "string",
         },
+        nfs = {
+          ["$ref"] = "GoogleCloudRunV2NFSVolumeSource",
+          description = "For NFS Voumes, contains the path to the nfs Volume",
+        },
         secret = {
           ["$ref"] = "GoogleCloudRunV2SecretVolumeSource",
-          description = "Secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret",
+          description = "Secret represents a secret that should populate this volume.",
         },
       },
       type = "object",
@@ -2850,15 +3649,15 @@ return {
       type = "object",
     },
     GoogleCloudRunV2VpcAccess = {
-      description = "VPC Access settings. For more information on creating a VPC Connector, visit https://cloud.google.com/vpc/docs/configure-serverless-vpc-access For information on how to configure Cloud Run with an existing VPC Connector, visit https://cloud.google.com/run/docs/configuring/connecting-vpc",
+      description = "VPC Access settings. For more information on sending traffic to a VPC network, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.",
       id = "GoogleCloudRunV2VpcAccess",
       properties = {
         connector = {
-          description = "VPC Access connector name. Format: projects/{project}/locations/{location}/connectors/{connector}, where {project} can be project id or number.",
+          description = "VPC Access connector name. Format: projects/{project}/locations/{location}/connectors/{connector}, where {project} can be project id or number. For more information on sending traffic to a VPC network via a connector, visit https://cloud.google.com/run/docs/configuring/vpc-connectors.",
           type = "string",
         },
         egress = {
-          description = "Traffic VPC egress settings.",
+          description = "Optional. Traffic VPC egress settings. If not provided, it defaults to PRIVATE_RANGES_ONLY.",
           enum = {
             "VPC_EGRESS_UNSPECIFIED",
             "ALL_TRAFFIC",
@@ -2869,6 +3668,1285 @@ return {
             "All outbound traffic is routed through the VPC connector.",
             "Only private IP ranges are routed through the VPC connector.",
           },
+          type = "string",
+        },
+        networkInterfaces = {
+          description = "Optional. Direct VPC egress settings. Currently only single network interface is supported.",
+          items = {
+            ["$ref"] = "GoogleCloudRunV2NetworkInterface",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1ApprovalConfig = {
+      description = "ApprovalConfig describes configuration for manual approval of a build.",
+      id = "GoogleDevtoolsCloudbuildV1ApprovalConfig",
+      properties = {
+        approvalRequired = {
+          description = "Whether or not approval is needed. If this is set on a build, it will become pending when created, and will need to be explicitly approved to start.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1ApprovalResult = {
+      description = "ApprovalResult describes the decision and associated metadata of a manual approval of a build.",
+      id = "GoogleDevtoolsCloudbuildV1ApprovalResult",
+      properties = {
+        approvalTime = {
+          description = "Output only. The time when the approval decision was made.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        approverAccount = {
+          description = "Output only. Email of the user that called the ApproveBuild API to approve or reject a build at the time that the API was called.",
+          readOnly = true,
+          type = "string",
+        },
+        comment = {
+          description = "Optional. An optional comment for this manual approval result.",
+          type = "string",
+        },
+        decision = {
+          description = "Required. The decision of this manual approval.",
+          enum = {
+            "DECISION_UNSPECIFIED",
+            "APPROVED",
+            "REJECTED",
+          },
+          enumDescriptions = {
+            "Default enum type. This should not be used.",
+            "Build is approved.",
+            "Build is rejected.",
+          },
+          type = "string",
+        },
+        url = {
+          description = "Optional. An optional URL tied to this manual approval result. This field is essentially the same as comment, except that it will be rendered by the UI differently. An example use case is a link to an external job that approved this Build.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1ArtifactObjects = {
+      description = "Files in the workspace to upload to Cloud Storage upon successful completion of all build steps.",
+      id = "GoogleDevtoolsCloudbuildV1ArtifactObjects",
+      properties = {
+        location = {
+          description = "Cloud Storage bucket and optional object path, in the form \"gs://bucket/path/to/somewhere/\". (see [Bucket Name Requirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)). Files in the workspace matching any path pattern will be uploaded to Cloud Storage with this location as a prefix.",
+          type = "string",
+        },
+        paths = {
+          description = "Path globs used to match files in the build's workspace.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        timing = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Output only. Stores timing information for pushing all artifact objects.",
+          readOnly = true,
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Artifacts = {
+      description = "Artifacts produced by a build that should be uploaded upon successful completion of all build steps.",
+      id = "GoogleDevtoolsCloudbuildV1Artifacts",
+      properties = {
+        images = {
+          description = "A list of images to be pushed upon the successful completion of all build steps. The images will be pushed using the builder service account's credentials. The digests of the pushed images will be stored in the Build resource's results field. If any of the images fail to be pushed, the build is marked FAILURE.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        mavenArtifacts = {
+          description = "A list of Maven artifacts to be uploaded to Artifact Registry upon successful completion of all build steps. Artifacts in the workspace matching specified paths globs will be uploaded to the specified Artifact Registry repository using the builder service account's credentials. If any artifacts fail to be pushed, the build is marked FAILURE.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1MavenArtifact",
+          },
+          type = "array",
+        },
+        npmPackages = {
+          description = "A list of npm packages to be uploaded to Artifact Registry upon successful completion of all build steps. Npm packages in the specified paths will be uploaded to the specified Artifact Registry repository using the builder service account's credentials. If any packages fail to be pushed, the build is marked FAILURE.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1NpmPackage",
+          },
+          type = "array",
+        },
+        objects = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1ArtifactObjects",
+          description = "A list of objects to be uploaded to Cloud Storage upon successful completion of all build steps. Files in the workspace matching specified paths globs will be uploaded to the specified Cloud Storage location using the builder service account's credentials. The location and generation of the uploaded objects will be stored in the Build resource's results field. If any objects fail to be pushed, the build is marked FAILURE.",
+        },
+        pythonPackages = {
+          description = "A list of Python packages to be uploaded to Artifact Registry upon successful completion of all build steps. The build service account credentials will be used to perform the upload. If any objects fail to be pushed, the build is marked FAILURE.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1PythonPackage",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Build = {
+      description = "A build resource in the Cloud Build API. At a high level, a `Build` describes where to find source code, how to build it (for example, the builder image to run on the source), and where to store the built artifacts. Fields can include the following variables, which will be expanded when the build is created: - $PROJECT_ID: the project ID of the build. - $PROJECT_NUMBER: the project number of the build. - $LOCATION: the location/region of the build. - $BUILD_ID: the autogenerated ID of the build. - $REPO_NAME: the source repository name specified by RepoSource. - $BRANCH_NAME: the branch name specified by RepoSource. - $TAG_NAME: the tag name specified by RepoSource. - $REVISION_ID or $COMMIT_SHA: the commit SHA specified by RepoSource or resolved from the specified branch or tag. - $SHORT_SHA: first 7 characters of $REVISION_ID or $COMMIT_SHA.",
+      id = "GoogleDevtoolsCloudbuildV1Build",
+      properties = {
+        approval = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1BuildApproval",
+          description = "Output only. Describes this build's approval configuration, status, and result.",
+          readOnly = true,
+        },
+        artifacts = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1Artifacts",
+          description = "Artifacts produced by the build that should be uploaded upon successful completion of all build steps.",
+        },
+        availableSecrets = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1Secrets",
+          description = "Secrets and secret environment variables.",
+        },
+        buildTriggerId = {
+          description = "Output only. The ID of the `BuildTrigger` that triggered this build, if it was triggered automatically.",
+          readOnly = true,
+          type = "string",
+        },
+        createTime = {
+          description = "Output only. Time at which the request to create the build was received.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        failureInfo = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1FailureInfo",
+          description = "Output only. Contains information about the build when status=FAILURE.",
+          readOnly = true,
+        },
+        finishTime = {
+          description = "Output only. Time at which execution of the build was finished. The difference between finish_time and start_time is the duration of the build's execution.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        id = {
+          description = "Output only. Unique identifier of the build.",
+          readOnly = true,
+          type = "string",
+        },
+        images = {
+          description = "A list of images to be pushed upon the successful completion of all build steps. The images are pushed using the builder service account's credentials. The digests of the pushed images will be stored in the `Build` resource's results field. If any of the images fail to be pushed, the build status is marked `FAILURE`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        logUrl = {
+          description = "Output only. URL to logs for this build in Google Cloud Console.",
+          readOnly = true,
+          type = "string",
+        },
+        logsBucket = {
+          description = "Cloud Storage bucket where logs should be written (see [Bucket Name Requirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)). Logs file names will be of the format `${logs_bucket}/log-${build_id}.txt`.",
+          type = "string",
+        },
+        name = {
+          description = "Output only. The 'Build' name with format: `projects/{project}/locations/{location}/builds/{build}`, where {build} is a unique identifier generated by the service.",
+          readOnly = true,
+          type = "string",
+        },
+        options = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1BuildOptions",
+          description = "Special options for this build.",
+        },
+        projectId = {
+          description = "Output only. ID of the project.",
+          readOnly = true,
+          type = "string",
+        },
+        queueTtl = {
+          description = "TTL in queue for this build. If provided and the build is enqueued longer than this value, the build will expire and the build status will be `EXPIRED`. The TTL starts ticking from create_time.",
+          format = "google-duration",
+          type = "string",
+        },
+        results = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1Results",
+          description = "Output only. Results of the build.",
+          readOnly = true,
+        },
+        secrets = {
+          description = "Secrets to decrypt using Cloud Key Management Service. Note: Secret Manager is the recommended technique for managing sensitive data with Cloud Build. Use `available_secrets` to configure builds to access secrets from Secret Manager. For instructions, see: https://cloud.google.com/cloud-build/docs/securing-builds/use-secrets",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1Secret",
+          },
+          type = "array",
+        },
+        serviceAccount = {
+          description = "IAM service account whose credentials will be used at build runtime. Must be of the format `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. ACCOUNT can be email address or uniqueId of the service account. ",
+          type = "string",
+        },
+        source = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1Source",
+          description = "The location of the source files to build.",
+        },
+        sourceProvenance = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1SourceProvenance",
+          description = "Output only. A permanent fixed identifier for source.",
+          readOnly = true,
+        },
+        startTime = {
+          description = "Output only. Time at which execution of the build was started.",
+          format = "google-datetime",
+          readOnly = true,
+          type = "string",
+        },
+        status = {
+          description = "Output only. Status of the build.",
+          enum = {
+            "STATUS_UNKNOWN",
+            "PENDING",
+            "QUEUED",
+            "WORKING",
+            "SUCCESS",
+            "FAILURE",
+            "INTERNAL_ERROR",
+            "TIMEOUT",
+            "CANCELLED",
+            "EXPIRED",
+          },
+          enumDescriptions = {
+            "Status of the build is unknown.",
+            "Build has been created and is pending execution and queuing. It has not been queued.",
+            "Build or step is queued; work has not yet begun.",
+            "Build or step is being executed.",
+            "Build or step finished successfully.",
+            "Build or step failed to complete successfully.",
+            "Build or step failed due to an internal cause.",
+            "Build or step took longer than was allowed.",
+            "Build or step was canceled by a user.",
+            "Build was enqueued for longer than the value of `queue_ttl`.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+        statusDetail = {
+          description = "Output only. Customer-readable message about the current status.",
+          readOnly = true,
+          type = "string",
+        },
+        steps = {
+          description = "Required. The operations to be performed on the workspace.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1BuildStep",
+          },
+          type = "array",
+        },
+        substitutions = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Substitutions data for `Build` resource.",
+          type = "object",
+        },
+        tags = {
+          description = "Tags for annotation of a `Build`. These are not docker tags.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        timeout = {
+          description = "Amount of time that this build should be allowed to run, to second granularity. If this amount of time elapses, work on the build will cease and the build status will be `TIMEOUT`. `timeout` starts ticking from `startTime`. Default time is 60 minutes.",
+          format = "google-duration",
+          type = "string",
+        },
+        timing = {
+          additionalProperties = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          },
+          description = "Output only. Stores timing information for phases of the build. Valid keys are: * BUILD: time to execute all build steps. * PUSH: time to push all artifacts including docker images and non docker artifacts. * FETCHSOURCE: time to fetch source. * SETUPBUILD: time to set up build. If the build does not specify source or images, these keys will not be included.",
+          readOnly = true,
+          type = "object",
+        },
+        warnings = {
+          description = "Output only. Non-fatal problems encountered during the execution of the build.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1Warning",
+          },
+          readOnly = true,
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1BuildApproval = {
+      description = "BuildApproval describes a build's approval configuration, state, and result.",
+      id = "GoogleDevtoolsCloudbuildV1BuildApproval",
+      properties = {
+        config = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1ApprovalConfig",
+          description = "Output only. Configuration for manual approval of this build.",
+          readOnly = true,
+        },
+        result = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1ApprovalResult",
+          description = "Output only. Result of manual approval for this Build.",
+          readOnly = true,
+        },
+        state = {
+          description = "Output only. The state of this build's approval.",
+          enum = {
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "APPROVED",
+            "REJECTED",
+            "CANCELLED",
+          },
+          enumDescriptions = {
+            "Default enum type. This should not be used.",
+            "Build approval is pending.",
+            "Build approval has been approved.",
+            "Build approval has been rejected.",
+            "Build was cancelled while it was still pending approval.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1BuildOperationMetadata = {
+      description = "Metadata for build operations.",
+      id = "GoogleDevtoolsCloudbuildV1BuildOperationMetadata",
+      properties = {
+        build = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1Build",
+          description = "The build that the operation is tracking.",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1BuildOptions = {
+      description = "Optional arguments to enable specific features of builds.",
+      id = "GoogleDevtoolsCloudbuildV1BuildOptions",
+      properties = {
+        automapSubstitutions = {
+          description = "Option to include built-in and custom substitutions as env variables for all build steps.",
+          type = "boolean",
+        },
+        defaultLogsBucketBehavior = {
+          description = "Optional. Option to specify how default logs buckets are setup.",
+          enum = {
+            "DEFAULT_LOGS_BUCKET_BEHAVIOR_UNSPECIFIED",
+            "REGIONAL_USER_OWNED_BUCKET",
+          },
+          enumDescriptions = {
+            "Unspecified.",
+            "Bucket is located in user-owned project in the same region as the build. The builder service account must have access to create and write to Cloud Storage buckets in the build project.",
+          },
+          type = "string",
+        },
+        diskSizeGb = {
+          description = "Requested disk size for the VM that runs the build. Note that this is *NOT* \"disk free\"; some of the space will be used by the operating system and build utilities. Also note that this is the minimum disk size that will be allocated for the build -- the build may run with a larger disk than requested. At present, the maximum disk size is 2000GB; builds that request more than the maximum are rejected with an error.",
+          format = "int64",
+          type = "string",
+        },
+        dynamicSubstitutions = {
+          description = "Option to specify whether or not to apply bash style string operations to the substitutions. NOTE: this is always enabled for triggered builds and cannot be overridden in the build configuration file.",
+          type = "boolean",
+        },
+        env = {
+          description = "A list of global environment variable definitions that will exist for all build steps in this build. If a variable is defined in both globally and in a build step, the variable will use the build step value. The elements are of the form \"KEY=VALUE\" for the environment variable \"KEY\" being given the value \"VALUE\".",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        logStreamingOption = {
+          description = "Option to define build log streaming behavior to Cloud Storage.",
+          enum = {
+            "STREAM_DEFAULT",
+            "STREAM_ON",
+            "STREAM_OFF",
+          },
+          enumDescriptions = {
+            "Service may automatically determine build log streaming behavior.",
+            "Build logs should be streamed to Cloud Storage.",
+            "Build logs should not be streamed to Cloud Storage; they will be written when the build is completed.",
+          },
+          type = "string",
+        },
+        logging = {
+          description = "Option to specify the logging mode, which determines if and where build logs are stored.",
+          enum = {
+            "LOGGING_UNSPECIFIED",
+            "LEGACY",
+            "GCS_ONLY",
+            "STACKDRIVER_ONLY",
+            "CLOUD_LOGGING_ONLY",
+            "NONE",
+          },
+          enumDeprecated = {
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+          },
+          enumDescriptions = {
+            "The service determines the logging mode. The default is `LEGACY`. Do not rely on the default logging behavior as it may change in the future.",
+            "Build logs are stored in Cloud Logging and Cloud Storage.",
+            "Build logs are stored in Cloud Storage.",
+            "This option is the same as CLOUD_LOGGING_ONLY.",
+            "Build logs are stored in Cloud Logging. Selecting this option will not allow [logs streaming](https://cloud.google.com/sdk/gcloud/reference/builds/log).",
+            "Turn off all logging. No build logs will be captured.",
+          },
+          type = "string",
+        },
+        machineType = {
+          description = "Compute Engine machine type on which to run the build.",
+          enum = {
+            "UNSPECIFIED",
+            "N1_HIGHCPU_8",
+            "N1_HIGHCPU_32",
+            "E2_HIGHCPU_8",
+            "E2_HIGHCPU_32",
+            "E2_MEDIUM",
+          },
+          enumDeprecated = {
+            false,
+            true,
+            true,
+            false,
+            false,
+            false,
+          },
+          enumDescriptions = {
+            "Standard machine type.",
+            "Highcpu machine with 8 CPUs.",
+            "Highcpu machine with 32 CPUs.",
+            "Highcpu e2 machine with 8 CPUs.",
+            "Highcpu e2 machine with 32 CPUs.",
+            "E2 machine with 1 CPU.",
+          },
+          type = "string",
+        },
+        pool = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1PoolOption",
+          description = "Optional. Specification for execution on a `WorkerPool`. See [running builds in a private pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.",
+        },
+        requestedVerifyOption = {
+          description = "Requested verifiability options.",
+          enum = {
+            "NOT_VERIFIED",
+            "VERIFIED",
+          },
+          enumDescriptions = {
+            "Not a verifiable build (the default).",
+            "Build must be verified.",
+          },
+          type = "string",
+        },
+        secretEnv = {
+          description = "A list of global environment variables, which are encrypted using a Cloud Key Management Service crypto key. These values must be specified in the build's `Secret`. These variables will be available to all build steps in this build.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        sourceProvenanceHash = {
+          description = "Requested hash for SourceProvenance.",
+          items = {
+            enum = {
+              "NONE",
+              "SHA256",
+              "MD5",
+              "SHA512",
+            },
+            enumDescriptions = {
+              "No hash requested.",
+              "Use a sha256 hash.",
+              "Use a md5 hash.",
+              "Use a sha512 hash.",
+            },
+            type = "string",
+          },
+          type = "array",
+        },
+        substitutionOption = {
+          description = "Option to specify behavior when there is an error in the substitution checks. NOTE: this is always set to ALLOW_LOOSE for triggered builds and cannot be overridden in the build configuration file.",
+          enum = {
+            "MUST_MATCH",
+            "ALLOW_LOOSE",
+          },
+          enumDescriptions = {
+            "Fails the build if error in substitutions checks, like missing a substitution in the template or in the map.",
+            "Do not fail the build if error in substitutions checks.",
+          },
+          type = "string",
+        },
+        volumes = {
+          description = "Global list of volumes to mount for ALL build steps Each volume is created as an empty volume prior to starting the build process. Upon completion of the build, volumes and their contents are discarded. Global volume names and paths cannot conflict with the volumes defined a build step. Using a global volume in a build with only one step is not valid as it is indicative of a build request with an incorrect configuration.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1Volume",
+          },
+          type = "array",
+        },
+        workerPool = {
+          deprecated = true,
+          description = "This field deprecated; please use `pool.name` instead.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1BuildStep = {
+      description = "A step in the build pipeline.",
+      id = "GoogleDevtoolsCloudbuildV1BuildStep",
+      properties = {
+        allowExitCodes = {
+          description = "Allow this build step to fail without failing the entire build if and only if the exit code is one of the specified codes. If allow_failure is also specified, this field will take precedence.",
+          items = {
+            format = "int32",
+            type = "integer",
+          },
+          type = "array",
+        },
+        allowFailure = {
+          description = "Allow this build step to fail without failing the entire build. If false, the entire build will fail if this step fails. Otherwise, the build will succeed, but this step will still have a failure status. Error information will be reported in the failure_detail field.",
+          type = "boolean",
+        },
+        args = {
+          description = "A list of arguments that will be presented to the step when it is started. If the image used to run the step's container has an entrypoint, the `args` are used as arguments to that entrypoint. If the image does not define an entrypoint, the first element in args is used as the entrypoint, and the remainder will be used as arguments.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        automapSubstitutions = {
+          description = "Option to include built-in and custom substitutions as env variables for this build step. This option will override the global option in BuildOption.",
+          type = "boolean",
+        },
+        dir = {
+          description = "Working directory to use when running this step's container. If this value is a relative path, it is relative to the build's working directory. If this value is absolute, it may be outside the build's working directory, in which case the contents of the path may not be persisted across build step executions, unless a `volume` for that path is specified. If the build specifies a `RepoSource` with `dir` and a step with a `dir`, which specifies an absolute path, the `RepoSource` `dir` is ignored for the step's execution.",
+          type = "string",
+        },
+        entrypoint = {
+          description = "Entrypoint to be used instead of the build step image's default entrypoint. If unset, the image's default entrypoint is used.",
+          type = "string",
+        },
+        env = {
+          description = "A list of environment variable definitions to be used when running a step. The elements are of the form \"KEY=VALUE\" for the environment variable \"KEY\" being given the value \"VALUE\".",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        exitCode = {
+          description = "Output only. Return code from running the step.",
+          format = "int32",
+          readOnly = true,
+          type = "integer",
+        },
+        id = {
+          description = "Unique identifier for this build step, used in `wait_for` to reference this build step as a dependency.",
+          type = "string",
+        },
+        name = {
+          description = "Required. The name of the container image that will run this particular build step. If the image is available in the host's Docker daemon's cache, it will be run directly. If not, the host will attempt to pull the image first, using the builder service account's credentials if necessary. The Docker daemon's cache will already have the latest versions of all of the officially supported build steps ([https://github.com/GoogleCloudPlatform/cloud-builders](https://github.com/GoogleCloudPlatform/cloud-builders)). The Docker daemon will also have cached many of the layers for some popular images, like \"ubuntu\", \"debian\", but they will be refreshed at the time you attempt to use them. If you built an image in a previous build step, it will be stored in the host's Docker daemon's cache and is available to use as the name for a later build step.",
+          type = "string",
+        },
+        pullTiming = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Output only. Stores timing information for pulling this build step's builder image only.",
+          readOnly = true,
+        },
+        script = {
+          description = "A shell script to be executed in the step. When script is provided, the user cannot specify the entrypoint or args.",
+          type = "string",
+        },
+        secretEnv = {
+          description = "A list of environment variables which are encrypted using a Cloud Key Management Service crypto key. These values must be specified in the build's `Secret`.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        status = {
+          description = "Output only. Status of the build step. At this time, build step status is only updated on build completion; step status is not updated in real-time as the build progresses.",
+          enum = {
+            "STATUS_UNKNOWN",
+            "PENDING",
+            "QUEUED",
+            "WORKING",
+            "SUCCESS",
+            "FAILURE",
+            "INTERNAL_ERROR",
+            "TIMEOUT",
+            "CANCELLED",
+            "EXPIRED",
+          },
+          enumDescriptions = {
+            "Status of the build is unknown.",
+            "Build has been created and is pending execution and queuing. It has not been queued.",
+            "Build or step is queued; work has not yet begun.",
+            "Build or step is being executed.",
+            "Build or step finished successfully.",
+            "Build or step failed to complete successfully.",
+            "Build or step failed due to an internal cause.",
+            "Build or step took longer than was allowed.",
+            "Build or step was canceled by a user.",
+            "Build was enqueued for longer than the value of `queue_ttl`.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+        timeout = {
+          description = "Time limit for executing this build step. If not defined, the step has no time limit and will be allowed to continue to run until either it completes or the build itself times out.",
+          format = "google-duration",
+          type = "string",
+        },
+        timing = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Output only. Stores timing information for executing this build step.",
+          readOnly = true,
+        },
+        volumes = {
+          description = "List of volumes to mount into the build step. Each volume is created as an empty volume prior to execution of the build step. Upon completion of the build, volumes and their contents are discarded. Using a named volume in only one step is not valid as it is indicative of a build request with an incorrect configuration.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1Volume",
+          },
+          type = "array",
+        },
+        waitFor = {
+          description = "The ID(s) of the step(s) that this build step depends on. This build step will not start until all the build steps in `wait_for` have completed successfully. If `wait_for` is empty, this build step will start when all previous build steps in the `Build.Steps` list have completed successfully.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1BuiltImage = {
+      description = "An image built by the pipeline.",
+      id = "GoogleDevtoolsCloudbuildV1BuiltImage",
+      properties = {
+        digest = {
+          description = "Docker Registry 2.0 digest.",
+          type = "string",
+        },
+        name = {
+          description = "Name used to push the container image to Google Container Registry, as presented to `docker push`.",
+          type = "string",
+        },
+        pushTiming = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Output only. Stores timing information for pushing the specified image.",
+          readOnly = true,
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1ConnectedRepository = {
+      description = "Location of the source in a 2nd-gen Google Cloud Build repository resource.",
+      id = "GoogleDevtoolsCloudbuildV1ConnectedRepository",
+      properties = {
+        dir = {
+          description = "Directory, relative to the source root, in which to run the build.",
+          type = "string",
+        },
+        repository = {
+          description = "Required. Name of the Google Cloud Build repository, formatted as `projects/*/locations/*/connections/*/repositories/*`.",
+          type = "string",
+        },
+        revision = {
+          description = "The revision to fetch from the Git repository such as a branch, a tag, a commit SHA, or any Git ref.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1FailureInfo = {
+      description = "A fatal problem encountered during the execution of the build.",
+      id = "GoogleDevtoolsCloudbuildV1FailureInfo",
+      properties = {
+        detail = {
+          description = "Explains the failure issue in more detail using hard-coded text.",
+          type = "string",
+        },
+        type = {
+          description = "The name of the failure.",
+          enum = {
+            "FAILURE_TYPE_UNSPECIFIED",
+            "PUSH_FAILED",
+            "PUSH_IMAGE_NOT_FOUND",
+            "PUSH_NOT_AUTHORIZED",
+            "LOGGING_FAILURE",
+            "USER_BUILD_STEP",
+            "FETCH_SOURCE_FAILED",
+          },
+          enumDescriptions = {
+            "Type unspecified",
+            "Unable to push the image to the repository.",
+            "Final image not found.",
+            "Unauthorized push of the final image.",
+            "Backend logging failures. Should retry.",
+            "A build step has failed.",
+            "The source fetching has failed.",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1FileHashes = {
+      description = "Container message for hashes of byte content of files, used in SourceProvenance messages to verify integrity of source input to the build.",
+      id = "GoogleDevtoolsCloudbuildV1FileHashes",
+      properties = {
+        fileHash = {
+          description = "Collection of file hashes.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1Hash",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1GitSource = {
+      description = "Location of the source in any accessible Git repository.",
+      id = "GoogleDevtoolsCloudbuildV1GitSource",
+      properties = {
+        dir = {
+          description = "Directory, relative to the source root, in which to run the build. This must be a relative path. If a step's `dir` is specified and is an absolute path, this value is ignored for that step's execution.",
+          type = "string",
+        },
+        revision = {
+          description = "The revision to fetch from the Git repository such as a branch, a tag, a commit SHA, or any Git ref. Cloud Build uses `git fetch` to fetch the revision from the Git repository; therefore make sure that the string you provide for `revision` is parsable by the command. For information on string values accepted by `git fetch`, see https://git-scm.com/docs/gitrevisions#_specifying_revisions. For information on `git fetch`, see https://git-scm.com/docs/git-fetch.",
+          type = "string",
+        },
+        url = {
+          description = "Location of the Git repo to build. This will be used as a `git remote`, see https://git-scm.com/docs/git-remote.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Hash = {
+      description = "Container message for hash values.",
+      id = "GoogleDevtoolsCloudbuildV1Hash",
+      properties = {
+        type = {
+          description = "The type of hash that was performed.",
+          enum = {
+            "NONE",
+            "SHA256",
+            "MD5",
+            "SHA512",
+          },
+          enumDescriptions = {
+            "No hash requested.",
+            "Use a sha256 hash.",
+            "Use a md5 hash.",
+            "Use a sha512 hash.",
+          },
+          type = "string",
+        },
+        value = {
+          description = "The hash value.",
+          format = "byte",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1InlineSecret = {
+      description = "Pairs a set of secret environment variables mapped to encrypted values with the Cloud KMS key to use to decrypt the value.",
+      id = "GoogleDevtoolsCloudbuildV1InlineSecret",
+      properties = {
+        envMap = {
+          additionalProperties = {
+            format = "byte",
+            type = "string",
+          },
+          description = "Map of environment variable name to its encrypted value. Secret environment variables must be unique across all of a build's secrets, and must be used by at least one build step. Values can be at most 64 KB in size. There can be at most 100 secret values across all of a build's secrets.",
+          type = "object",
+        },
+        kmsKeyName = {
+          description = "Resource name of Cloud KMS crypto key to decrypt the encrypted value. In format: projects/*/locations/*/keyRings/*/cryptoKeys/*",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1MavenArtifact = {
+      description = "A Maven artifact to upload to Artifact Registry upon successful completion of all build steps.",
+      id = "GoogleDevtoolsCloudbuildV1MavenArtifact",
+      properties = {
+        artifactId = {
+          description = "Maven `artifactId` value used when uploading the artifact to Artifact Registry.",
+          type = "string",
+        },
+        groupId = {
+          description = "Maven `groupId` value used when uploading the artifact to Artifact Registry.",
+          type = "string",
+        },
+        path = {
+          description = "Path to an artifact in the build's workspace to be uploaded to Artifact Registry. This can be either an absolute path, e.g. /workspace/my-app/target/my-app-1.0.SNAPSHOT.jar or a relative path from /workspace, e.g. my-app/target/my-app-1.0.SNAPSHOT.jar.",
+          type = "string",
+        },
+        repository = {
+          description = "Artifact Registry repository, in the form \"https://$REGION-maven.pkg.dev/$PROJECT/$REPOSITORY\" Artifact in the workspace specified by path will be uploaded to Artifact Registry with this location as a prefix.",
+          type = "string",
+        },
+        version = {
+          description = "Maven `version` value used when uploading the artifact to Artifact Registry.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1NpmPackage = {
+      description = "Npm package to upload to Artifact Registry upon successful completion of all build steps.",
+      id = "GoogleDevtoolsCloudbuildV1NpmPackage",
+      properties = {
+        packagePath = {
+          description = "Path to the package.json. e.g. workspace/path/to/package",
+          type = "string",
+        },
+        repository = {
+          description = "Artifact Registry repository, in the form \"https://$REGION-npm.pkg.dev/$PROJECT/$REPOSITORY\" Npm package in the workspace specified by path will be zipped and uploaded to Artifact Registry with this location as a prefix.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1PoolOption = {
+      description = "Details about how a build should be executed on a `WorkerPool`. See [running builds in a private pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.",
+      id = "GoogleDevtoolsCloudbuildV1PoolOption",
+      properties = {
+        name = {
+          description = "The `WorkerPool` resource to execute the build on. You must have `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format projects/{project}/locations/{location}/workerPools/{workerPoolId}",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1PythonPackage = {
+      description = "Python package to upload to Artifact Registry upon successful completion of all build steps. A package can encapsulate multiple objects to be uploaded to a single repository.",
+      id = "GoogleDevtoolsCloudbuildV1PythonPackage",
+      properties = {
+        paths = {
+          description = "Path globs used to match files in the build's workspace. For Python/ Twine, this is usually `dist/*`, and sometimes additionally an `.asc` file.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        repository = {
+          description = "Artifact Registry repository, in the form \"https://$REGION-python.pkg.dev/$PROJECT/$REPOSITORY\" Files in the workspace matching any path pattern will be uploaded to Artifact Registry with this location as a prefix.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1RepoSource = {
+      description = "Location of the source in a Google Cloud Source Repository.",
+      id = "GoogleDevtoolsCloudbuildV1RepoSource",
+      properties = {
+        branchName = {
+          description = "Regex matching branches to build. The syntax of the regular expressions accepted is the syntax accepted by RE2 and described at https://github.com/google/re2/wiki/Syntax",
+          type = "string",
+        },
+        commitSha = {
+          description = "Explicit commit SHA to build.",
+          type = "string",
+        },
+        dir = {
+          description = "Directory, relative to the source root, in which to run the build. This must be a relative path. If a step's `dir` is specified and is an absolute path, this value is ignored for that step's execution.",
+          type = "string",
+        },
+        invertRegex = {
+          description = "Only trigger a build if the revision regex does NOT match the revision regex.",
+          type = "boolean",
+        },
+        projectId = {
+          description = "ID of the project that owns the Cloud Source Repository. If omitted, the project ID requesting the build is assumed.",
+          type = "string",
+        },
+        repoName = {
+          description = "Name of the Cloud Source Repository.",
+          type = "string",
+        },
+        substitutions = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Substitutions to use in a triggered build. Should only be used with RunBuildTrigger",
+          type = "object",
+        },
+        tagName = {
+          description = "Regex matching tags to build. The syntax of the regular expressions accepted is the syntax accepted by RE2 and described at https://github.com/google/re2/wiki/Syntax",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Results = {
+      description = "Artifacts created by the build pipeline.",
+      id = "GoogleDevtoolsCloudbuildV1Results",
+      properties = {
+        artifactManifest = {
+          description = "Path to the artifact manifest for non-container artifacts uploaded to Cloud Storage. Only populated when artifacts are uploaded to Cloud Storage.",
+          type = "string",
+        },
+        artifactTiming = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Time to push all non-container artifacts to Cloud Storage.",
+        },
+        buildStepImages = {
+          description = "List of build step digests, in the order corresponding to build step indices.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        buildStepOutputs = {
+          description = "List of build step outputs, produced by builder images, in the order corresponding to build step indices. [Cloud Builders](https://cloud.google.com/cloud-build/docs/cloud-builders) can produce this output by writing to `$BUILDER_OUTPUT/output`. Only the first 50KB of data is stored.",
+          items = {
+            format = "byte",
+            type = "string",
+          },
+          type = "array",
+        },
+        images = {
+          description = "Container images that were built as a part of the build.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1BuiltImage",
+          },
+          type = "array",
+        },
+        mavenArtifacts = {
+          description = "Maven artifacts uploaded to Artifact Registry at the end of the build.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1UploadedMavenArtifact",
+          },
+          type = "array",
+        },
+        npmPackages = {
+          description = "Npm packages uploaded to Artifact Registry at the end of the build.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1UploadedNpmPackage",
+          },
+          type = "array",
+        },
+        numArtifacts = {
+          description = "Number of non-container artifacts uploaded to Cloud Storage. Only populated when artifacts are uploaded to Cloud Storage.",
+          format = "int64",
+          type = "string",
+        },
+        pythonPackages = {
+          description = "Python artifacts uploaded to Artifact Registry at the end of the build.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1UploadedPythonPackage",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Secret = {
+      description = "Pairs a set of secret environment variables containing encrypted values with the Cloud KMS key to use to decrypt the value. Note: Use `kmsKeyName` with `available_secrets` instead of using `kmsKeyName` with `secret`. For instructions see: https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-credentials.",
+      id = "GoogleDevtoolsCloudbuildV1Secret",
+      properties = {
+        kmsKeyName = {
+          description = "Cloud KMS key name to use to decrypt these envs.",
+          type = "string",
+        },
+        secretEnv = {
+          additionalProperties = {
+            format = "byte",
+            type = "string",
+          },
+          description = "Map of environment variable name to its encrypted value. Secret environment variables must be unique across all of a build's secrets, and must be used by at least one build step. Values can be at most 64 KB in size. There can be at most 100 secret values across all of a build's secrets.",
+          type = "object",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1SecretManagerSecret = {
+      description = "Pairs a secret environment variable with a SecretVersion in Secret Manager.",
+      id = "GoogleDevtoolsCloudbuildV1SecretManagerSecret",
+      properties = {
+        env = {
+          description = "Environment variable name to associate with the secret. Secret environment variables must be unique across all of a build's secrets, and must be used by at least one build step.",
+          type = "string",
+        },
+        versionName = {
+          description = "Resource name of the SecretVersion. In format: projects/*/secrets/*/versions/*",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Secrets = {
+      description = "Secrets and secret environment variables.",
+      id = "GoogleDevtoolsCloudbuildV1Secrets",
+      properties = {
+        inline = {
+          description = "Secrets encrypted with KMS key and the associated secret environment variable.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1InlineSecret",
+          },
+          type = "array",
+        },
+        secretManager = {
+          description = "Secrets in Secret Manager and associated secret environment variable.",
+          items = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1SecretManagerSecret",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Source = {
+      description = "Location of the source in a supported storage service.",
+      id = "GoogleDevtoolsCloudbuildV1Source",
+      properties = {
+        connectedRepository = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1ConnectedRepository",
+          description = "Optional. If provided, get the source from this 2nd-gen Google Cloud Build repository resource.",
+        },
+        gitSource = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1GitSource",
+          description = "If provided, get the source from this Git repository.",
+        },
+        repoSource = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1RepoSource",
+          description = "If provided, get the source from this location in a Cloud Source Repository.",
+        },
+        storageSource = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1StorageSource",
+          description = "If provided, get the source from this location in Cloud Storage.",
+        },
+        storageSourceManifest = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1StorageSourceManifest",
+          description = "If provided, get the source from this manifest in Cloud Storage. This feature is in Preview; see description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1SourceProvenance = {
+      description = "Provenance of the source. Ways to find the original source, or verify that some source was used for this build.",
+      id = "GoogleDevtoolsCloudbuildV1SourceProvenance",
+      properties = {
+        fileHashes = {
+          additionalProperties = {
+            ["$ref"] = "GoogleDevtoolsCloudbuildV1FileHashes",
+          },
+          description = "Output only. Hash(es) of the build source, which can be used to verify that the original source integrity was maintained in the build. Note that `FileHashes` will only be populated if `BuildOptions` has requested a `SourceProvenanceHash`. The keys to this map are file paths used as build source and the values contain the hash values for those files. If the build source came in a single package such as a gzipped tarfile (`.tar.gz`), the `FileHash` will be for the single path to that file.",
+          readOnly = true,
+          type = "object",
+        },
+        resolvedConnectedRepository = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1ConnectedRepository",
+          description = "Output only. A copy of the build's `source.connected_repository`, if exists, with any revisions resolved.",
+          readOnly = true,
+        },
+        resolvedGitSource = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1GitSource",
+          description = "Output only. A copy of the build's `source.git_source`, if exists, with any revisions resolved.",
+          readOnly = true,
+        },
+        resolvedRepoSource = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1RepoSource",
+          description = "A copy of the build's `source.repo_source`, if exists, with any revisions resolved.",
+        },
+        resolvedStorageSource = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1StorageSource",
+          description = "A copy of the build's `source.storage_source`, if exists, with any generations resolved.",
+        },
+        resolvedStorageSourceManifest = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1StorageSourceManifest",
+          description = "A copy of the build's `source.storage_source_manifest`, if exists, with any revisions resolved. This feature is in Preview.",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1StorageSource = {
+      description = "Location of the source in an archive file in Cloud Storage.",
+      id = "GoogleDevtoolsCloudbuildV1StorageSource",
+      properties = {
+        bucket = {
+          description = "Cloud Storage bucket containing the source (see [Bucket Name Requirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).",
+          type = "string",
+        },
+        generation = {
+          description = "Cloud Storage generation for the object. If the generation is omitted, the latest generation will be used.",
+          format = "int64",
+          type = "string",
+        },
+        object = {
+          description = "Cloud Storage object containing the source. This object must be a zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing source to build.",
+          type = "string",
+        },
+        sourceFetcher = {
+          description = "Optional. Option to specify the tool to fetch the source file for the build.",
+          enum = {
+            "SOURCE_FETCHER_UNSPECIFIED",
+            "GSUTIL",
+            "GCS_FETCHER",
+          },
+          enumDescriptions = {
+            "Unspecified defaults to GSUTIL.",
+            "Use the \"gsutil\" tool to download the source file.",
+            "Use the Cloud Storage Fetcher tool to download the source file.",
+          },
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1StorageSourceManifest = {
+      description = "Location of the source manifest in Cloud Storage. This feature is in Preview; see description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).",
+      id = "GoogleDevtoolsCloudbuildV1StorageSourceManifest",
+      properties = {
+        bucket = {
+          description = "Cloud Storage bucket containing the source manifest (see [Bucket Name Requirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).",
+          type = "string",
+        },
+        generation = {
+          description = "Cloud Storage generation for the object. If the generation is omitted, the latest generation will be used.",
+          format = "int64",
+          type = "string",
+        },
+        object = {
+          description = "Cloud Storage object containing the source manifest. This object must be a JSON file.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1TimeSpan = {
+      description = "Start and end times for a build execution phase.",
+      id = "GoogleDevtoolsCloudbuildV1TimeSpan",
+      properties = {
+        endTime = {
+          description = "End of time span.",
+          format = "google-datetime",
+          type = "string",
+        },
+        startTime = {
+          description = "Start of time span.",
+          format = "google-datetime",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1UploadedMavenArtifact = {
+      description = "A Maven artifact uploaded using the MavenArtifact directive.",
+      id = "GoogleDevtoolsCloudbuildV1UploadedMavenArtifact",
+      properties = {
+        fileHashes = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1FileHashes",
+          description = "Hash types and values of the Maven Artifact.",
+        },
+        pushTiming = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Output only. Stores timing information for pushing the specified artifact.",
+          readOnly = true,
+        },
+        uri = {
+          description = "URI of the uploaded artifact.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1UploadedNpmPackage = {
+      description = "An npm package uploaded to Artifact Registry using the NpmPackage directive.",
+      id = "GoogleDevtoolsCloudbuildV1UploadedNpmPackage",
+      properties = {
+        fileHashes = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1FileHashes",
+          description = "Hash types and values of the npm package.",
+        },
+        pushTiming = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Output only. Stores timing information for pushing the specified artifact.",
+          readOnly = true,
+        },
+        uri = {
+          description = "URI of the uploaded npm package.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1UploadedPythonPackage = {
+      description = "Artifact uploaded using the PythonPackage directive.",
+      id = "GoogleDevtoolsCloudbuildV1UploadedPythonPackage",
+      properties = {
+        fileHashes = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1FileHashes",
+          description = "Hash types and values of the Python Artifact.",
+        },
+        pushTiming = {
+          ["$ref"] = "GoogleDevtoolsCloudbuildV1TimeSpan",
+          description = "Output only. Stores timing information for pushing the specified artifact.",
+          readOnly = true,
+        },
+        uri = {
+          description = "URI of the uploaded artifact.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Volume = {
+      description = "Volume describes a Docker container volume which is mounted into build steps in order to persist files across build step execution.",
+      id = "GoogleDevtoolsCloudbuildV1Volume",
+      properties = {
+        name = {
+          description = "Name of the volume to mount. Volume names must be unique per build step and must be valid names for Docker volumes. Each named volume must be used by at least two build steps.",
+          type = "string",
+        },
+        path = {
+          description = "Path at which to mount the volume. Paths must be absolute and cannot conflict with other volume paths on the same build step or with certain reserved volume paths.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    GoogleDevtoolsCloudbuildV1Warning = {
+      description = "A non-fatal problem encountered during the execution of the build.",
+      id = "GoogleDevtoolsCloudbuildV1Warning",
+      properties = {
+        priority = {
+          description = "The priority for this warning.",
+          enum = {
+            "PRIORITY_UNSPECIFIED",
+            "INFO",
+            "WARNING",
+            "ALERT",
+          },
+          enumDescriptions = {
+            "Should not be used.",
+            "e.g. deprecation warnings and alternative feature highlights.",
+            "e.g. automated detection of possible issues with the build.",
+            "e.g. alerts that a feature used in the build is pending removal",
+          },
+          type = "string",
+        },
+        text = {
+          description = "Explanation of the warning generated.",
           type = "string",
         },
       },
@@ -2931,21 +5009,21 @@ return {
           description = "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
         },
         members = {
-          description = "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
+          description = "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workforce identity pool. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`: All workforce identities in a group. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All workforce identities with a specific attribute value. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`: All identities in a workforce identity pool. * `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workload identity pool. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool group. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All identities in a workload identity pool with a certain attribute. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`: All identities in a workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: Deleted single identity in a workforce identity pool. For example, `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.",
           items = {
             type = "string",
           },
           type = "array",
         },
         role = {
-          description = "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          description = "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
           type = "string",
         },
       },
       type = "object",
     },
     GoogleIamV1Policy = {
-      description = "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time < timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      description = "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** ``` { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time < timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } ``` **YAML example:** ``` bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       id = "GoogleIamV1Policy",
       properties = {
         auditConfigs = {
@@ -3066,8 +5144,20 @@ return {
             description = "Properties of the object. Contains field @type with type URL.",
             type = "any",
           },
-          description = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          description = "The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
           type = "object",
+        },
+      },
+      type = "object",
+    },
+    GoogleLongrunningWaitOperationRequest = {
+      description = "The request message for Operations.WaitOperation.",
+      id = "GoogleLongrunningWaitOperationRequest",
+      properties = {
+        timeout = {
+          description = "The maximum duration to wait before timing out. If left blank, the wait will be at most the time permitted by the underlying HTTP/RPC protocol. If RPC context deadline is also specified, the shorter one will be used.",
+          format = "google-duration",
+          type = "string",
         },
       },
       type = "object",
@@ -3123,6 +5213,41 @@ return {
         },
         title = {
           description = "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    Proto2BridgeMessageSet = {
+      description = "This is proto2's version of MessageSet.",
+      id = "Proto2BridgeMessageSet",
+      properties = {},
+      type = "object",
+    },
+    UtilStatusProto = {
+      description = "Wire-format for a Status object",
+      id = "UtilStatusProto",
+      properties = {
+        canonicalCode = {
+          description = "The canonical error code (see codes.proto) that most closely corresponds to this status. This may be missing, and in the common case of the generic space, it definitely will be.",
+          format = "int32",
+          type = "integer",
+        },
+        code = {
+          description = "Numeric code drawn from the space specified below. Often, this is the canonical error space, and code is drawn from google3/util/task/codes.proto",
+          format = "int32",
+          type = "integer",
+        },
+        message = {
+          description = "Detail message",
+          type = "string",
+        },
+        messageSet = {
+          ["$ref"] = "Proto2BridgeMessageSet",
+          description = "message_set associates an arbitrary proto message with the status.",
+        },
+        space = {
+          description = "The following are usually only present when code != 0 Space to which this status belongs",
           type = "string",
         },
       },

@@ -314,7 +314,7 @@ return {
       },
     },
   },
-  revision = "20230110",
+  revision = "20240416",
   rootUrl = "https://keep.googleapis.com/",
   schemas = {
     Attachment = {

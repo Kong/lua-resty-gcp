@@ -12,7 +12,7 @@ return {
   baseUrl = "https://indexing.googleapis.com/",
   batchPath = "batch",
   canonicalName = "Indexing",
-  description = "Notifies Google when your web pages change.",
+  description = "Notifies Google Web Search when your web pages change.",
   discoveryVersion = "v1",
   documentationLink = "https://developers.google.com/search/apis/indexing-api/",
   fullyEncodeReservedExpansion = true,
@@ -149,7 +149,7 @@ return {
       },
     },
   },
-  revision = "20221220",
+  revision = "20240409",
   rootUrl = "https://indexing.googleapis.com/",
   schemas = {
     PublishUrlNotificationResponse = {
@@ -214,7 +214,7 @@ return {
     },
   },
   servicePath = "",
-  title = "Indexing API",
+  title = "Web Search Indexing API",
   version = "v3",
   version_module = true,
 }

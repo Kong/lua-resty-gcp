@@ -220,6 +220,7 @@ return {
                 "TIMED_OUT",
                 "UNKNOWN",
                 "DELAYED",
+                "EXECUTION_DISABLED",
               },
               enumDescriptions = {
                 "Unspecified status.",
@@ -231,6 +232,7 @@ return {
                 "The process timed out.",
                 "Process status unknown.",
                 "The process is delayed, waiting for quota.",
+                "AppsScript executions are disabled by Admin.",
               },
               location = "query",
               repeated = true,
@@ -352,6 +354,7 @@ return {
                 "TIMED_OUT",
                 "UNKNOWN",
                 "DELAYED",
+                "EXECUTION_DISABLED",
               },
               enumDescriptions = {
                 "Unspecified status.",
@@ -363,6 +366,7 @@ return {
                 "The process timed out.",
                 "Process status unknown.",
                 "The process is delayed, waiting for quota.",
+                "AppsScript executions are disabled by Admin.",
               },
               location = "query",
               repeated = true,
@@ -856,7 +860,7 @@ return {
           },
           parameters = {
             scriptId = {
-              description = "The script ID of the script to be executed. Find the script ID on the **Project settings** page under \"IDs.\"",
+              description = "The script ID of the script to be executed. Find the script ID on the **Project settings** page under \"IDs.\" As multiple executable APIs can be deployed in new IDE for same script, this field should be populated with DeploymentID generated while deploying in new IDE instead of script ID.",
               location = "path",
               required = true,
               type = "string",
@@ -887,7 +891,7 @@ return {
       },
     },
   },
-  revision = "20230110",
+  revision = "20240422",
   rootUrl = "https://script.googleapis.com/",
   schemas = {
     Content = {
@@ -1268,6 +1272,7 @@ return {
             "TIMED_OUT",
             "UNKNOWN",
             "DELAYED",
+            "EXECUTION_DISABLED",
           },
           enumDescriptions = {
             "Unspecified status.",
@@ -1279,6 +1284,7 @@ return {
             "The process timed out.",
             "Process status unknown.",
             "The process is delayed, waiting for quota.",
+            "AppsScript executions are disabled by Admin.",
           },
           type = "string",
         },
@@ -1312,6 +1318,20 @@ return {
         },
         projectName = {
           description = "Name of the script being executed.",
+          type = "string",
+        },
+        runtimeVersion = {
+          description = "Which version of maestro to use to execute the script.",
+          enum = {
+            "RUNTIME_VERSION_UNSPECIFIED",
+            "DEPRECATED_ES5",
+            "V8",
+          },
+          enumDescriptions = {
+            "Runtime version unset / unknown.",
+            "Legacy rhino version of the Apps script runtime",
+            "Current default V8 version of the apps script runtime.",
+          },
           type = "string",
         },
         startTime = {

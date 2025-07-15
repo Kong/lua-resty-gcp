@@ -216,7 +216,7 @@ return {
       },
     },
   },
-  revision = "20230106",
+  revision = "20240419",
   rootUrl = "https://homegraph.googleapis.com/",
   schemas = {
     AgentDeviceId = {
@@ -246,7 +246,7 @@ return {
       type = "object",
     },
     Device = {
-      description = "Third-party device definition. Next ID = 14",
+      description = "Third-party device definition.",
       id = "Device",
       properties = {
         attributes = {
@@ -484,6 +484,7 @@ return {
           type = "string",
         },
         followUpToken = {
+          deprecated = true,
           description = "Deprecated.",
           type = "string",
         },

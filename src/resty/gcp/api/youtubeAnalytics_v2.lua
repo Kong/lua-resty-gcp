@@ -421,7 +421,7 @@ return {
       },
     },
   },
-  revision = "20230117",
+  revision = "20240423",
   rootUrl = "https://youtubeanalytics.googleapis.com/",
   schemas = {
     EmptyResponse = {
@@ -487,6 +487,7 @@ return {
       id = "Errors",
       properties = {
         code = {
+          deprecated = true,
           description = "Global error code. Deprecated and ignored. Set custom error codes in ErrorProto.domain and ErrorProto.code instead.",
           enum = {
             "BAD_REQUEST",

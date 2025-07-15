@@ -11,9 +11,6 @@ return {
         ["https://www.googleapis.com/auth/compute.readonly"] = {
           description = "View your Google Compute Engine resources",
         },
-        ["https://www.googleapis.com/auth/userinfo.email"] = {
-          description = "See your primary Google Account email address",
-        },
       },
     },
   },
@@ -24,6 +21,23 @@ return {
   description = "Manages Google Cloud Dataflow projects on Google Cloud Platform.",
   discoveryVersion = "v1",
   documentationLink = "https://cloud.google.com/dataflow",
+  endpoints = {
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://dataflow.me-central2.rep.googleapis.com/",
+      location = "me-central2",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://dataflow.europe-west3.rep.googleapis.com/",
+      location = "europe-west3",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://dataflow.europe-west9.rep.googleapis.com/",
+      location = "europe-west9",
+    },
+  },
   fullyEncodeReservedExpansion = true,
   icons = {
     x16 = "http://www.google.com/images/icons/product/search-16.gif",
@@ -150,7 +164,6 @@ return {
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly",
-            "https://www.googleapis.com/auth/userinfo.email",
           },
         },
         workerMessages = {
@@ -180,7 +193,6 @@ return {
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly",
-            "https://www.googleapis.com/auth/userinfo.email",
           },
         },
       },
@@ -188,7 +200,7 @@ return {
         jobs = {
           methods = {
             aggregated = {
-              description = "List the jobs of a project across all regions.",
+              description = "List the jobs of a project across all regions. **Note:** This method doesn't support filtering the list of jobs by name.",
               flatPath = "v1b3/projects/{projectId}/jobs:aggregated",
               httpMethod = "GET",
               id = "dataflow.projects.jobs.aggregated",
@@ -219,7 +231,7 @@ return {
                   type = "string",
                 },
                 name = {
-                  description = "Optional. The job name. Optional.",
+                  description = "Optional. The job name.",
                   location = "query",
                   type = "string",
                 },
@@ -241,6 +253,7 @@ return {
                   type = "string",
                 },
                 view = {
+                  deprecated = true,
                   description = "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
                   enum = {
                     "JOB_VIEW_UNKNOWN",
@@ -251,7 +264,7 @@ return {
                   enumDescriptions = {
                     "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
                     "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-                    "Request all information available for this job.",
+                    "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
                     "Request summary info and limited job description data for steps, labels and environment.",
                   },
                   location = "query",
@@ -266,7 +279,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             create = {
@@ -305,7 +317,7 @@ return {
                   enumDescriptions = {
                     "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
                     "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-                    "Request all information available for this job.",
+                    "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
                     "Request summary info and limited job description data for steps, labels and environment.",
                   },
                   location = "query",
@@ -323,7 +335,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             get = {
@@ -364,7 +375,7 @@ return {
                   enumDescriptions = {
                     "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
                     "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-                    "Request all information available for this job.",
+                    "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
                     "Request summary info and limited job description data for steps, labels and environment.",
                   },
                   location = "query",
@@ -379,7 +390,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             getMetrics = {
@@ -424,11 +434,10 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             list = {
-              description = "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, as you can only get the list of jobs that are running in `us-central1`.",
+              description = "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, because you can only get the list of jobs that are running in `us-central1`. `projects.locations.jobs.list` and `projects.jobs.list` support filtering the list of jobs by name. Filtering by name isn't supported by `projects.jobs.aggregated`.",
               flatPath = "v1b3/projects/{projectId}/jobs",
               httpMethod = "GET",
               id = "dataflow.projects.jobs.list",
@@ -459,7 +468,7 @@ return {
                   type = "string",
                 },
                 name = {
-                  description = "Optional. The job name. Optional.",
+                  description = "Optional. The job name.",
                   location = "query",
                   type = "string",
                 },
@@ -481,6 +490,7 @@ return {
                   type = "string",
                 },
                 view = {
+                  deprecated = true,
                   description = "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
                   enum = {
                     "JOB_VIEW_UNKNOWN",
@@ -491,7 +501,7 @@ return {
                   enumDescriptions = {
                     "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
                     "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-                    "Request all information available for this job.",
+                    "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
                     "Request summary info and limited job description data for steps, labels and environment.",
                   },
                   location = "query",
@@ -506,7 +516,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             snapshot = {
@@ -543,7 +552,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             update = {
@@ -573,6 +581,12 @@ return {
                   required = true,
                   type = "string",
                 },
+                updateMask = {
+                  description = "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, an error will be returned as we cannot update both state and mask.",
+                  format = "google-fieldmask",
+                  location = "query",
+                  type = "string",
+                },
               },
               path = "v1b3/projects/{projectId}/jobs/{jobId}",
               request = {
@@ -585,7 +599,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
           },
@@ -626,7 +639,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 sendCapture = {
@@ -663,7 +675,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
               },
@@ -750,7 +761,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
               },
@@ -791,7 +801,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 reportStatus = {
@@ -828,7 +837,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
               },
@@ -871,7 +879,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
           },
@@ -912,7 +919,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
               },
@@ -957,7 +963,7 @@ return {
                       enumDescriptions = {
                         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
                         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-                        "Request all information available for this job.",
+                        "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
                         "Request summary info and limited job description data for steps, labels and environment.",
                       },
                       location = "query",
@@ -975,7 +981,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 get = {
@@ -1018,7 +1023,7 @@ return {
                       enumDescriptions = {
                         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
                         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-                        "Request all information available for this job.",
+                        "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
                         "Request summary info and limited job description data for steps, labels and environment.",
                       },
                       location = "query",
@@ -1033,7 +1038,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 getExecutionDetails = {
@@ -1085,7 +1089,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 getMetrics = {
@@ -1132,11 +1135,10 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 list = {
-                  description = "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, as you can only get the list of jobs that are running in `us-central1`.",
+                  description = "List the jobs of a project. To list the jobs of a project in a region, we recommend using `projects.locations.jobs.list` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). To list the all jobs across all regions, use `projects.jobs.aggregated`. Using `projects.jobs.list` is not recommended, because you can only get the list of jobs that are running in `us-central1`. `projects.locations.jobs.list` and `projects.jobs.list` support filtering the list of jobs by name. Filtering by name isn't supported by `projects.jobs.aggregated`.",
                   flatPath = "v1b3/projects/{projectId}/locations/{location}/jobs",
                   httpMethod = "GET",
                   id = "dataflow.projects.locations.jobs.list",
@@ -1169,7 +1171,7 @@ return {
                       type = "string",
                     },
                     name = {
-                      description = "Optional. The job name. Optional.",
+                      description = "Optional. The job name.",
                       location = "query",
                       type = "string",
                     },
@@ -1191,6 +1193,7 @@ return {
                       type = "string",
                     },
                     view = {
+                      deprecated = true,
                       description = "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
                       enum = {
                         "JOB_VIEW_UNKNOWN",
@@ -1201,7 +1204,7 @@ return {
                       enumDescriptions = {
                         "The job view to return isn't specified, or is unknown. Responses will contain at least the `JOB_VIEW_SUMMARY` information, and may contain additional information.",
                         "Request summary information only: Project ID, Job ID, job name, job type, job status, start/end time, and Cloud SDK version details.",
-                        "Request all information available for this job.",
+                        "Request all information available for this job. When the job is in `JOB_STATE_PENDING`, the job has been created but is not yet running, and not all job information is available. For complete job information, wait until the job in is `JOB_STATE_RUNNING`. For more information, see [JobState](https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.jobs#jobstate).",
                         "Request summary info and limited job description data for steps, labels and environment.",
                       },
                       location = "query",
@@ -1216,7 +1219,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 snapshot = {
@@ -1260,7 +1262,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 update = {
@@ -1292,6 +1293,12 @@ return {
                       required = true,
                       type = "string",
                     },
+                    updateMask = {
+                      description = "The list of fields to update relative to Job. If empty, only RequestedJobState will be considered for update. If the FieldMask is not empty and RequestedJobState is none/empty, The fields specified in the update mask will be the only ones considered for update. If both RequestedJobState and update_mask are specified, an error will be returned as we cannot update both state and mask.",
+                      format = "google-fieldmask",
+                      location = "query",
+                      type = "string",
+                    },
                   },
                   path = "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}",
                   request = {
@@ -1304,7 +1311,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
               },
@@ -1352,7 +1358,6 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/compute",
                         "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email",
                       },
                     },
                     sendCapture = {
@@ -1396,7 +1401,6 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/compute",
                         "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email",
                       },
                     },
                   },
@@ -1485,7 +1489,6 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/compute",
                         "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email",
                       },
                     },
                   },
@@ -1530,7 +1533,6 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/compute",
                         "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email",
                       },
                     },
                   },
@@ -1605,7 +1607,6 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/compute",
                         "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email",
                       },
                     },
                   },
@@ -1653,7 +1654,6 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/compute",
                         "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email",
                       },
                     },
                     reportStatus = {
@@ -1697,7 +1697,6 @@ return {
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/compute",
                         "https://www.googleapis.com/auth/compute.readonly",
-                        "https://www.googleapis.com/auth/userinfo.email",
                       },
                     },
                   },
@@ -1744,7 +1743,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 get = {
@@ -1785,7 +1783,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 list = {
@@ -1824,48 +1821,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
-                  },
-                },
-              },
-            },
-            sql = {
-              methods = {
-                validate = {
-                  description = "Validates a GoogleSQL query for Cloud Dataflow syntax. Will always confirm the given query parses correctly, and if able to look up schema information from DataCatalog, will validate that the query analyzes properly as well.",
-                  flatPath = "v1b3/projects/{projectId}/locations/{location}/sql:validate",
-                  httpMethod = "GET",
-                  id = "dataflow.projects.locations.sql.validate",
-                  parameterOrder = {
-                    "projectId",
-                    "location",
-                  },
-                  parameters = {
-                    location = {
-                      description = "The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.",
-                      location = "path",
-                      required = true,
-                      type = "string",
-                    },
-                    projectId = {
-                      description = "Required. The ID of the Cloud Platform project that the job belongs to.",
-                      location = "path",
-                      required = true,
-                      type = "string",
-                    },
-                    query = {
-                      description = "The sql query to validate.",
-                      location = "query",
-                      type = "string",
-                    },
-                  },
-                  path = "v1b3/projects/{projectId}/locations/{location}/sql:validate",
-                  response = {
-                    ["$ref"] = "ValidateResponse",
-                  },
-                  scopes = {
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
               },
@@ -1906,7 +1861,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 get = {
@@ -1956,7 +1910,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
                 launch = {
@@ -1970,7 +1923,7 @@ return {
                   },
                   parameters = {
                     ["dynamicTemplate.gcsPath"] = {
-                      description = "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
+                      description = "Path to the dynamic template specification file on Cloud Storage. The file must be a JSON serialized `DynamicTemplateFileSpec` object.",
                       location = "query",
                       type = "string",
                     },
@@ -1980,7 +1933,7 @@ return {
                       type = "string",
                     },
                     gcsPath = {
-                      description = "A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
+                      description = "A Cloud Storage path to the template to use to create the job. Must be valid Cloud Storage URL, beginning with `gs://`.",
                       location = "query",
                       type = "string",
                     },
@@ -2013,7 +1966,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/compute",
                     "https://www.googleapis.com/auth/compute.readonly",
-                    "https://www.googleapis.com/auth/userinfo.email",
                   },
                 },
               },
@@ -2058,7 +2010,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             list = {
@@ -2095,7 +2046,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
           },
@@ -2129,7 +2079,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             get = {
@@ -2177,7 +2126,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
             launch = {
@@ -2190,7 +2138,7 @@ return {
               },
               parameters = {
                 ["dynamicTemplate.gcsPath"] = {
-                  description = "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
+                  description = "Path to the dynamic template specification file on Cloud Storage. The file must be a JSON serialized `DynamicTemplateFileSpec` object.",
                   location = "query",
                   type = "string",
                 },
@@ -2200,7 +2148,7 @@ return {
                   type = "string",
                 },
                 gcsPath = {
-                  description = "A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
+                  description = "A Cloud Storage path to the template to use to create the job. Must be valid Cloud Storage URL, beginning with `gs://`.",
                   location = "query",
                   type = "string",
                 },
@@ -2232,7 +2180,6 @@ return {
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/compute",
                 "https://www.googleapis.com/auth/compute.readonly",
-                "https://www.googleapis.com/auth/userinfo.email",
               },
             },
           },
@@ -2240,7 +2187,7 @@ return {
       },
     },
   },
-  revision = "20230106",
+  revision = "20240415",
   rootUrl = "https://dataflow.googleapis.com/",
   schemas = {
     ApproximateProgress = {
@@ -2248,15 +2195,18 @@ return {
       id = "ApproximateProgress",
       properties = {
         percentComplete = {
+          deprecated = true,
           description = "Obsolete.",
           format = "float",
           type = "number",
         },
         position = {
           ["$ref"] = "Position",
+          deprecated = true,
           description = "Obsolete.",
         },
         remainingTime = {
+          deprecated = true,
           description = "Obsolete.",
           format = "google-duration",
           type = "string",
@@ -2383,6 +2333,23 @@ return {
       },
       type = "object",
     },
+    Base2Exponent = {
+      description = "Exponential buckets where the growth factor between buckets is `2**(2**-scale)`. e.g. for `scale=1` growth factor is `2**(2**(-1))=sqrt(2)`. `n` buckets will have the following boundaries. - 0th: [0, gf) - i in [1, n-1]: [gf^(i), gf^(i+1))",
+      id = "Base2Exponent",
+      properties = {
+        numberOfBuckets = {
+          description = "Must be greater than 0.",
+          format = "int32",
+          type = "integer",
+        },
+        scale = {
+          description = "Must be between -3 and 3. This forces the growth factor of the bucket boundaries to be between `2^(1/8)` and `256`.",
+          format = "int32",
+          type = "integer",
+        },
+      },
+      type = "object",
+    },
     BigQueryIODetails = {
       description = "Metadata for a BigQuery connector used by the job.",
       id = "BigQueryIODetails",
@@ -2421,6 +2388,21 @@ return {
         tableId = {
           description = "TableId accessed in the connection.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    BucketOptions = {
+      description = "`BucketOptions` describes the bucket boundaries used in the histogram.",
+      id = "BucketOptions",
+      properties = {
+        exponential = {
+          ["$ref"] = "Base2Exponent",
+          description = "Bucket boundaries grow exponentially.",
+        },
+        linear = {
+          ["$ref"] = "Linear",
+          description = "Bucket boundaries grow linearly.",
         },
       },
       type = "object",
@@ -2855,6 +2837,102 @@ return {
       },
       type = "object",
     },
+    DataSamplingConfig = {
+      description = "Configuration options for sampling elements.",
+      id = "DataSamplingConfig",
+      properties = {
+        behaviors = {
+          description = "List of given sampling behaviors to enable. For example, specifying behaviors = [ALWAYS_ON] samples in-flight elements but does not sample exceptions. Can be used to specify multiple behaviors like, behaviors = [ALWAYS_ON, EXCEPTIONS] for specifying periodic sampling and exception sampling. If DISABLED is in the list, then sampling will be disabled and ignore the other given behaviors. Ordering does not matter.",
+          items = {
+            enum = {
+              "DATA_SAMPLING_BEHAVIOR_UNSPECIFIED",
+              "DISABLED",
+              "ALWAYS_ON",
+              "EXCEPTIONS",
+            },
+            enumDescriptions = {
+              "If given, has no effect on sampling behavior. Used as an unknown or unset sentinel value.",
+              "When given, disables element sampling. Has same behavior as not setting the behavior.",
+              "When given, enables sampling in-flight from all PCollections.",
+              "When given, enables sampling input elements when a user-defined DoFn causes an exception.",
+            },
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    DataSamplingReport = {
+      description = "Contains per-worker telemetry about the data sampling feature.",
+      id = "DataSamplingReport",
+      properties = {
+        bytesWrittenDelta = {
+          description = "Optional. Delta of bytes written to file from previous report.",
+          format = "int64",
+          type = "string",
+        },
+        elementsSampledBytes = {
+          description = "Optional. Delta of bytes sampled from previous report.",
+          format = "int64",
+          type = "string",
+        },
+        elementsSampledCount = {
+          description = "Optional. Delta of number of elements sampled from previous report.",
+          format = "int64",
+          type = "string",
+        },
+        exceptionsSampledCount = {
+          description = "Optional. Delta of number of samples taken from user code exceptions from previous report.",
+          format = "int64",
+          type = "string",
+        },
+        pcollectionsSampledCount = {
+          description = "Optional. Delta of number of PCollections sampled from previous report.",
+          format = "int64",
+          type = "string",
+        },
+        persistenceErrorsCount = {
+          description = "Optional. Delta of errors counts from persisting the samples from previous report.",
+          format = "int64",
+          type = "string",
+        },
+        translationErrorsCount = {
+          description = "Optional. Delta of errors counts from retrieving, or translating the samples from previous report.",
+          format = "int64",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    DataflowHistogramValue = {
+      description = "Summary statistics for a population of values. HistogramValue contains a sequence of buckets and gives a count of values that fall into each bucket. Bucket boundares are defined by a formula and bucket widths are either fixed or exponentially increasing.",
+      id = "DataflowHistogramValue",
+      properties = {
+        bucketCounts = {
+          description = "Optional. The number of values in each bucket of the histogram, as described in `bucket_options`. `bucket_counts` should contain N values, where N is the number of buckets specified in `bucket_options`. If `bucket_counts` has fewer than N values, the remaining values are assumed to be 0.",
+          items = {
+            format = "int64",
+            type = "string",
+          },
+          type = "array",
+        },
+        bucketOptions = {
+          ["$ref"] = "BucketOptions",
+          description = "Describes the bucket boundaries used in the histogram.",
+        },
+        count = {
+          description = "Number of values recorded in this histogram.",
+          format = "int64",
+          type = "string",
+        },
+        outlierStats = {
+          ["$ref"] = "OutlierStats",
+          description = "Statistics on the values recorded in the histogram that fall out of the bucket boundaries.",
+        },
+      },
+      type = "object",
+    },
     DatastoreIODetails = {
       description = "Metadata for a Datastore connector used by the job.",
       id = "DatastoreIODetails",
@@ -2874,6 +2952,10 @@ return {
       description = "Describes any options that have an effect on the debugging of pipelines.",
       id = "DebugOptions",
       properties = {
+        dataSampling = {
+          ["$ref"] = "DataSamplingConfig",
+          description = "Configuration options for sampling elements from a running pipeline.",
+        },
         enableHotKeyLogging = {
           description = "When true, enables the logging of the literal hot key to the user's Cloud Logging.",
           type = "boolean",
@@ -3123,9 +3205,28 @@ return {
           readOnly = true,
           type = "string",
         },
+        streamingMode = {
+          description = "Optional. Specifies the Streaming Engine message processing guarantees. Reduces cost and latency but might result in duplicate messages committed to storage. Designed to run simple mapping streaming ETL jobs at the lowest cost. For example, Change Data Capture (CDC) to BigQuery is a canonical use case. For more information, see [Set the pipeline streaming mode](https://cloud.google.com/dataflow/docs/guides/streaming-modes).",
+          enum = {
+            "STREAMING_MODE_UNSPECIFIED",
+            "STREAMING_MODE_EXACTLY_ONCE",
+            "STREAMING_MODE_AT_LEAST_ONCE",
+          },
+          enumDescriptions = {
+            "Run in the default mode.",
+            "In this mode, message deduplication is performed against persistent state to make sure each message is processed and committed to storage exactly once.",
+            "Message deduplication is not performed. Messages might be processed multiple times, and the results are applied multiple times. Note: Setting this value also enables Streaming Engine and Streaming Engine resource-based billing.",
+          },
+          type = "string",
+        },
         tempStoragePrefix = {
           description = "The prefix of the resources the system should use for temporary storage. The system will append the suffix \"/temp-{JOBNAME} to this resource prefix, where {JOBNAME} is the value of the job_name field. The resulting bucket and object prefix is used as the prefix of the resources used to store temporary data needed during the job execution. NOTE: This will override the value in taskrunner_settings. The supported resource type is: Google Cloud Storage: storage.googleapis.com/{bucket}/{object} bucket.storage.googleapis.com/{object}",
           type = "string",
+        },
+        useStreamingEngineResourceBasedBilling = {
+          description = "Output only. Whether the job uses the Streaming Engine resource-based billing model.",
+          readOnly = true,
+          type = "boolean",
         },
         userAgent = {
           additionalProperties = {
@@ -3324,7 +3425,7 @@ return {
       type = "object",
     },
     FlexTemplateRuntimeEnvironment = {
-      description = "The environment values to be set at runtime for flex template.",
+      description = "The environment values to be set at runtime for flex template. LINT.IfChange",
       id = "FlexTemplateRuntimeEnvironment",
       properties = {
         additionalExperiments = {
@@ -3440,6 +3541,20 @@ return {
         },
         stagingLocation = {
           description = "The Cloud Storage path for staging local files. Must be a valid Cloud Storage URL, beginning with `gs://`.",
+          type = "string",
+        },
+        streamingMode = {
+          description = "Optional. Specifies the Streaming Engine message processing guarantees. Reduces cost and latency but might result in duplicate messages committed to storage. Designed to run simple mapping streaming ETL jobs at the lowest cost. For example, Change Data Capture (CDC) to BigQuery is a canonical use case. For more information, see [Set the pipeline streaming mode](https://cloud.google.com/dataflow/docs/guides/streaming-modes).",
+          enum = {
+            "STREAMING_MODE_UNSPECIFIED",
+            "STREAMING_MODE_EXACTLY_ONCE",
+            "STREAMING_MODE_AT_LEAST_ONCE",
+          },
+          enumDescriptions = {
+            "Run in the default mode.",
+            "In this mode, message deduplication is performed against persistent state to make sure each message is processed and committed to storage exactly once.",
+            "Message deduplication is not performed. Messages might be processed multiple times, and the results are applied multiple times. Note: Setting this value also enables Streaming Engine and Streaming Engine resource-based billing.",
+          },
           type = "string",
         },
         subnetwork = {
@@ -3748,7 +3863,7 @@ return {
           type = "string",
         },
         currentState = {
-          description = "The current state of the job. Jobs are created in the `JOB_STATE_STOPPED` state unless otherwise specified. A job in the `JOB_STATE_RUNNING` state may asynchronously enter a terminal state. After a job has reached a terminal state, no further state updates may be made. This field may be mutated by the Cloud Dataflow service; callers cannot mutate it.",
+          description = "The current state of the job. Jobs are created in the `JOB_STATE_STOPPED` state unless otherwise specified. A job in the `JOB_STATE_RUNNING` state may asynchronously enter a terminal state. After a job has reached a terminal state, no further state updates may be made. This field might be mutated by the Dataflow service; callers cannot mutate it.",
           enum = {
             "JOB_STATE_UNKNOWN",
             "JOB_STATE_STOPPED",
@@ -3795,7 +3910,7 @@ return {
           description = "Deprecated.",
         },
         id = {
-          description = "The unique ID of this job. This field is set by the Cloud Dataflow service when the Job is created, and is immutable for the life of the job.",
+          description = "The unique ID of this job. This field is set by the Dataflow service when the job is created, and is immutable for the life of the job.",
           type = "string",
         },
         jobMetadata = {
@@ -3814,7 +3929,7 @@ return {
           type = "string",
         },
         name = {
-          description = "The user-specified Cloud Dataflow job name. Only one Job with a given name can exist in a project within one region at any given time. Jobs in different regions can have the same name. If a caller attempts to create a Job with the same name as an already-existing Job, the attempt returns the existing Job. The name must match the regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`",
+          description = "The user-specified Dataflow job name. Only one active job with a given name can exist in a project within one region at any given time. Jobs in different regions can have the same name. If a caller attempts to create a job with the same name as an active job that already exists, the attempt returns the existing job. The name must match the regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`",
           type = "string",
         },
         pipelineDescription = {
@@ -3822,7 +3937,7 @@ return {
           description = "Preliminary field: The format of this data may change at any time. A description of the user pipeline and stages through which it is executed. Created by Cloud Dataflow service. Only retrieved with JOB_VIEW_DESCRIPTION or JOB_VIEW_ALL.",
         },
         projectId = {
-          description = "The ID of the Cloud Platform project that the job belongs to.",
+          description = "The ID of the Google Cloud project that the job belongs to.",
           type = "string",
         },
         replaceJobId = {
@@ -3834,7 +3949,7 @@ return {
           type = "string",
         },
         requestedState = {
-          description = "The job's requested state. `UpdateJob` may be used to switch between the `JOB_STATE_STOPPED` and `JOB_STATE_RUNNING` states, by setting requested_state. `UpdateJob` may also be used to directly set a job's requested state to `JOB_STATE_CANCELLED` or `JOB_STATE_DONE`, irrevocably terminating the job if it has not already reached a terminal state.",
+          description = "The job's requested state. Applies to `UpdateJob` requests. Set `requested_state` with `UpdateJob` requests to switch between the states `JOB_STATE_STOPPED` and `JOB_STATE_RUNNING`. You can also use `UpdateJob` requests to change a job's state from `JOB_STATE_RUNNING` to `JOB_STATE_CANCELLED`, `JOB_STATE_DONE`, or `JOB_STATE_DRAINED`. These states irrevocably terminate the job if it hasn't already reached a terminal state. This field has no effect on `CreateJob` requests.",
           enum = {
             "JOB_STATE_UNKNOWN",
             "JOB_STATE_STOPPED",
@@ -3866,6 +3981,15 @@ return {
             "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are interested.",
           },
           type = "string",
+        },
+        runtimeUpdatableParams = {
+          ["$ref"] = "RuntimeUpdatableParams",
+          description = "This field may ONLY be modified at runtime using the projects.jobs.update method to adjust job behavior. This field has no effect when specified at job creation.",
+        },
+        satisfiesPzi = {
+          description = "Output only. Reserved for future use. This field is set only in responses from the server; it is ignored if it is set in any requests.",
+          readOnly = true,
+          type = "boolean",
         },
         satisfiesPzs = {
           description = "Reserved for future use. This field is set only in responses from the server; it is ignored if it is set in any requests.",
@@ -3909,7 +4033,7 @@ return {
           type = "object",
         },
         type = {
-          description = "The type of Cloud Dataflow job.",
+          description = "The type of Dataflow job.",
           enum = {
             "JOB_TYPE_UNKNOWN",
             "JOB_TYPE_BATCH",
@@ -4061,11 +4185,18 @@ return {
           },
           type = "array",
         },
+        userDisplayProperties = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "List of display properties to help UI filter jobs.",
+          type = "object",
+        },
       },
       type = "object",
     },
     JobMetrics = {
-      description = "JobMetrics contains a collection of metrics describing the detailed progress of a Dataflow job. Metrics correspond to user-defined and system-defined metrics in the job. This resource captures only the most recent values of each metric; time-series data can be queried for them (under the same metric names) from Cloud Monitoring.",
+      description = "JobMetrics contains a collection of metrics describing the detailed progress of a Dataflow job. Metrics correspond to user-defined and system-defined metrics in the job. For more information, see [Dataflow job metrics] (https://cloud.google.com/dataflow/docs/guides/using-monitoring-intf). This resource captures only the most recent values of each metric; time-series data can be queried for them (under the same metric names) from Cloud Monitoring.",
       id = "JobMetrics",
       properties = {
         metricTime = {
@@ -4115,6 +4246,7 @@ return {
           type = "string",
         },
         deprecatedPersistentDirectory = {
+          deprecated = true,
           description = "DEPRECATED. The location of the persistent state for this range, as a persistent directory in the worker local filesystem.",
           type = "string",
         },
@@ -4312,6 +4444,28 @@ return {
             ["$ref"] = "WorkItem",
           },
           type = "array",
+        },
+      },
+      type = "object",
+    },
+    Linear = {
+      description = "Linear buckets with the following boundaries for indices in 0 to n-1. - i in [0, n-1]: [start + (i)*width, start + (i+1)*width)",
+      id = "Linear",
+      properties = {
+        numberOfBuckets = {
+          description = "Must be greater than 0.",
+          format = "int32",
+          type = "integer",
+        },
+        start = {
+          description = "Lower bound of the first bucket.",
+          format = "double",
+          type = "number",
+        },
+        width = {
+          description = "Distance between bucket boundaries. Must be greater than 0.",
+          format = "double",
+          type = "number",
         },
       },
       type = "object",
@@ -4529,6 +4683,33 @@ return {
       },
       type = "object",
     },
+    MetricValue = {
+      description = "The value of a metric along with its name and labels.",
+      id = "MetricValue",
+      properties = {
+        metric = {
+          description = "Base name for this metric.",
+          type = "string",
+        },
+        metricLabels = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Optional. Set of metric labels for this metric.",
+          type = "object",
+        },
+        valueHistogram = {
+          ["$ref"] = "DataflowHistogramValue",
+          description = "Histogram value of this metric.",
+        },
+        valueInt64 = {
+          description = "Integer value of this metric.",
+          format = "int64",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     MountedDataDisk = {
       description = "Describes mounted data disk.",
       id = "MountedDataDisk",
@@ -4586,6 +4767,33 @@ return {
         name = {
           description = "Name of the counter.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    OutlierStats = {
+      description = "Statistics for the underflow and overflow bucket.",
+      id = "OutlierStats",
+      properties = {
+        overflowCount = {
+          description = "Number of values that are larger than the upper bound of the largest bucket.",
+          format = "int64",
+          type = "string",
+        },
+        overflowMean = {
+          description = "Mean of values in the overflow bucket.",
+          format = "double",
+          type = "number",
+        },
+        underflowCount = {
+          description = "Number of values that are smaller than the lower bound of the smallest bucket.",
+          format = "int64",
+          type = "string",
+        },
+        underflowMean = {
+          description = "Mean of values in the undeflow bucket.",
+          format = "double",
+          type = "number",
         },
       },
       type = "object",
@@ -4715,9 +4923,28 @@ return {
           description = "Optional. Additional metadata for describing this parameter.",
           type = "object",
         },
+        defaultValue = {
+          description = "Optional. The default values will pre-populate the parameter with the given value from the proto. If default_value is left empty, the parameter will be populated with a default of the relevant type, e.g. false for a boolean.",
+          type = "string",
+        },
+        enumOptions = {
+          description = "Optional. The options shown when ENUM ParameterType is specified.",
+          items = {
+            ["$ref"] = "ParameterMetadataEnumOption",
+          },
+          type = "array",
+        },
+        groupName = {
+          description = "Optional. Specifies a group name for this parameter to be rendered under. Group header text will be rendered exactly as specified in this field. Only considered when parent_name is NOT provided.",
+          type = "string",
+        },
         helpText = {
           description = "Required. The help text to display for the parameter.",
           type = "string",
+        },
+        hiddenUi = {
+          description = "Optional. Whether the parameter should be hidden in the UI.",
+          type = "boolean",
         },
         isOptional = {
           description = "Optional. Whether the parameter is optional. Defaults to false.",
@@ -4746,6 +4973,14 @@ return {
             "PUBSUB_SUBSCRIPTION",
             "BIGQUERY_TABLE",
             "JAVASCRIPT_UDF_FILE",
+            "SERVICE_ACCOUNT",
+            "MACHINE_TYPE",
+            "KMS_KEY_NAME",
+            "WORKER_REGION",
+            "WORKER_ZONE",
+            "BOOLEAN",
+            "ENUM",
+            "NUMBER",
           },
           enumDescriptions = {
             "Default input type.",
@@ -4760,8 +4995,27 @@ return {
             "The parameter specifies a Pub/Sub Subscription.",
             "The parameter specifies a BigQuery table.",
             "The parameter specifies a JavaScript UDF in Cloud Storage.",
+            "The parameter specifies a Service Account email.",
+            "The parameter specifies a Machine Type.",
+            "The parameter specifies a KMS Key name.",
+            "The parameter specifies a Worker Region.",
+            "The parameter specifies a Worker Zone.",
+            "The parameter specifies a boolean input.",
+            "The parameter specifies an enum input.",
+            "The parameter specifies a number input.",
           },
           type = "string",
+        },
+        parentName = {
+          description = "Optional. Specifies the name of the parent parameter. Used in conjunction with 'parent_trigger_values' to make this parameter conditional (will only be rendered conditionally). Should be mappable to a ParameterMetadata.name field.",
+          type = "string",
+        },
+        parentTriggerValues = {
+          description = "Optional. The value(s) of the 'parent_name' parameter which will trigger this parameter to be shown. If left empty, ANY non-empty value in parent_name will trigger this parameter to be shown. Only considered when this parameter is conditional (when 'parent_name' has been provided).",
+          items = {
+            type = "string",
+          },
+          type = "array",
         },
         regexes = {
           description = "Optional. Regexes that the parameter must match.",
@@ -4769,6 +5023,25 @@ return {
             type = "string",
           },
           type = "array",
+        },
+      },
+      type = "object",
+    },
+    ParameterMetadataEnumOption = {
+      description = "ParameterMetadataEnumOption specifies the option shown in the enum form.",
+      id = "ParameterMetadataEnumOption",
+      properties = {
+        description = {
+          description = "Optional. The description to display for the enum option.",
+          type = "string",
+        },
+        label = {
+          description = "Optional. The label to display for the enum option.",
+          type = "string",
+        },
+        value = {
+          description = "Required. The value of the enum option.",
+          type = "string",
         },
       },
       type = "object",
@@ -4811,6 +5084,42 @@ return {
           },
           description = "The value combining function to invoke.",
           type = "object",
+        },
+      },
+      type = "object",
+    },
+    PerStepNamespaceMetrics = {
+      description = "Metrics for a particular unfused step and namespace. A metric is uniquely identified by the `metrics_namespace`, `original_step`, `metric name` and `metric_labels`.",
+      id = "PerStepNamespaceMetrics",
+      properties = {
+        metricValues = {
+          description = "Optional. Metrics that are recorded for this namespace and unfused step.",
+          items = {
+            ["$ref"] = "MetricValue",
+          },
+          type = "array",
+        },
+        metricsNamespace = {
+          description = "The namespace of these metrics on the worker.",
+          type = "string",
+        },
+        originalStep = {
+          description = "The original system name of the unfused step that these metrics are reported from.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    PerWorkerMetrics = {
+      description = "Per worker metrics.",
+      id = "PerWorkerMetrics",
+      properties = {
+        perStepNamespaceMetrics = {
+          description = "Optional. Metrics for a particular unfused step and namespace.",
+          items = {
+            ["$ref"] = "PerStepNamespaceMetrics",
+          },
+          type = "array",
         },
       },
       type = "object",
@@ -4939,6 +5248,10 @@ return {
           description = "Indicates whether the pipeline allows late-arriving data.",
           type = "boolean",
         },
+        dynamicDestinations = {
+          description = "If true, then this location represents dynamic topics.",
+          type = "boolean",
+        },
         idLabel = {
           description = "If set, contains a pubsub label from which to extract record ids. If left empty, record deduplication will be strictly best effort.",
           type = "string",
@@ -4982,28 +5295,6 @@ return {
         topicName = {
           description = "The name of the Pubsub topic.",
           type = "string",
-        },
-      },
-      type = "object",
-    },
-    QueryInfo = {
-      description = "Information about a validated query.",
-      id = "QueryInfo",
-      properties = {
-        queryProperty = {
-          description = "Includes an entry for each satisfied QueryProperty.",
-          items = {
-            enum = {
-              "QUERY_PROPERTY_UNSPECIFIED",
-              "HAS_UNBOUNDED_SOURCE",
-            },
-            enumDescriptions = {
-              "The query property is unknown or unspecified.",
-              "Indicates this query reads from >= 1 unbounded source.",
-            },
-            type = "string",
-          },
-          type = "array",
         },
       },
       type = "object",
@@ -5127,11 +5418,11 @@ return {
       type = "object",
     },
     RuntimeEnvironment = {
-      description = "The environment values to set at runtime.",
+      description = "The environment values to set at runtime. LINT.IfChange",
       id = "RuntimeEnvironment",
       properties = {
         additionalExperiments = {
-          description = "Additional experiment flags for the job, specified with the `--experiments` option.",
+          description = "Optional. Additional experiment flags for the job, specified with the `--experiments` option.",
           items = {
             type = "string",
           },
@@ -5141,19 +5432,24 @@ return {
           additionalProperties = {
             type = "string",
           },
-          description = "Additional user labels to be specified for the job. Keys and values should follow the restrictions specified in the [labeling restrictions](https://cloud.google.com/compute/docs/labeling-resources#restrictions) page. An object containing a list of \"key\": value pairs. Example: { \"name\": \"wrench\", \"mass\": \"1kg\", \"count\": \"3\" }.",
+          description = "Optional. Additional user labels to be specified for the job. Keys and values should follow the restrictions specified in the [labeling restrictions](https://cloud.google.com/compute/docs/labeling-resources#restrictions) page. An object containing a list of \"key\": value pairs. Example: { \"name\": \"wrench\", \"mass\": \"1kg\", \"count\": \"3\" }.",
           type = "object",
         },
         bypassTempDirValidation = {
-          description = "Whether to bypass the safety checks for the job's temporary directory. Use with caution.",
+          description = "Optional. Whether to bypass the safety checks for the job's temporary directory. Use with caution.",
           type = "boolean",
         },
+        diskSizeGb = {
+          description = "Optional. The disk size, in gigabytes, to use on each remote Compute Engine worker instance.",
+          format = "int32",
+          type = "integer",
+        },
         enableStreamingEngine = {
-          description = "Whether to enable Streaming Engine for the job.",
+          description = "Optional. Whether to enable Streaming Engine for the job.",
           type = "boolean",
         },
         ipConfiguration = {
-          description = "Configuration for VM IPs.",
+          description = "Optional. Configuration for VM IPs.",
           enum = {
             "WORKER_IP_UNSPECIFIED",
             "WORKER_IP_PUBLIC",
@@ -5167,49 +5463,63 @@ return {
           type = "string",
         },
         kmsKeyName = {
-          description = "Name for the Cloud KMS key for the job. Key format is: projects//locations//keyRings//cryptoKeys/",
+          description = "Optional. Name for the Cloud KMS key for the job. Key format is: projects//locations//keyRings//cryptoKeys/",
           type = "string",
         },
         machineType = {
-          description = "The machine type to use for the job. Defaults to the value from the template if not specified.",
+          description = "Optional. The machine type to use for the job. Defaults to the value from the template if not specified.",
           type = "string",
         },
         maxWorkers = {
-          description = "The maximum number of Google Compute Engine instances to be made available to your pipeline during execution, from 1 to 1000.",
+          description = "Optional. The maximum number of Google Compute Engine instances to be made available to your pipeline during execution, from 1 to 1000. The default value is 1.",
           format = "int32",
           type = "integer",
         },
         network = {
-          description = "Network to which VMs will be assigned. If empty or unspecified, the service will use the network \"default\".",
+          description = "Optional. Network to which VMs will be assigned. If empty or unspecified, the service will use the network \"default\".",
           type = "string",
         },
         numWorkers = {
-          description = "The initial number of Google Compute Engine instances for the job.",
+          description = "Optional. The initial number of Google Compute Engine instances for the job. The default value is 11.",
           format = "int32",
           type = "integer",
         },
         serviceAccountEmail = {
-          description = "The email address of the service account to run the job as.",
+          description = "Optional. The email address of the service account to run the job as.",
+          type = "string",
+        },
+        streamingMode = {
+          description = "Optional. Specifies the Streaming Engine message processing guarantees. Reduces cost and latency but might result in duplicate messages committed to storage. Designed to run simple mapping streaming ETL jobs at the lowest cost. For example, Change Data Capture (CDC) to BigQuery is a canonical use case. For more information, see [Set the pipeline streaming mode](https://cloud.google.com/dataflow/docs/guides/streaming-modes).",
+          enum = {
+            "STREAMING_MODE_UNSPECIFIED",
+            "STREAMING_MODE_EXACTLY_ONCE",
+            "STREAMING_MODE_AT_LEAST_ONCE",
+          },
+          enumDescriptions = {
+            "Run in the default mode.",
+            "In this mode, message deduplication is performed against persistent state to make sure each message is processed and committed to storage exactly once.",
+            "Message deduplication is not performed. Messages might be processed multiple times, and the results are applied multiple times. Note: Setting this value also enables Streaming Engine and Streaming Engine resource-based billing.",
+          },
           type = "string",
         },
         subnetwork = {
-          description = "Subnetwork to which VMs will be assigned, if desired. You can specify a subnetwork using either a complete URL or an abbreviated path. Expected to be of the form \"https://www.googleapis.com/compute/v1/projects/HOST_PROJECT_ID/regions/REGION/subnetworks/SUBNETWORK\" or \"regions/REGION/subnetworks/SUBNETWORK\". If the subnetwork is located in a Shared VPC network, you must use the complete URL.",
+          description = "Optional. Subnetwork to which VMs will be assigned, if desired. You can specify a subnetwork using either a complete URL or an abbreviated path. Expected to be of the form \"https://www.googleapis.com/compute/v1/projects/HOST_PROJECT_ID/regions/REGION/subnetworks/SUBNETWORK\" or \"regions/REGION/subnetworks/SUBNETWORK\". If the subnetwork is located in a Shared VPC network, you must use the complete URL.",
           type = "string",
         },
         tempLocation = {
-          description = "The Cloud Storage path to use for temporary files. Must be a valid Cloud Storage URL, beginning with `gs://`.",
+          description = "Required. The Cloud Storage path to use for temporary files. Must be a valid Cloud Storage URL, beginning with `gs://`.",
           type = "string",
         },
         workerRegion = {
-          description = "The Compute Engine region (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1\". Mutually exclusive with worker_zone. If neither worker_region nor worker_zone is specified, default to the control plane's region.",
+          description = "Required. The Compute Engine region (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1\". Mutually exclusive with worker_zone. If neither worker_region nor worker_zone is specified, default to the control plane's region.",
           type = "string",
         },
         workerZone = {
-          description = "The Compute Engine zone (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1-a\". Mutually exclusive with worker_region. If neither worker_region nor worker_zone is specified, a zone in the control plane's region is chosen based on available capacity. If both `worker_zone` and `zone` are set, `worker_zone` takes precedence.",
+          description = "Optional. The Compute Engine zone (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. \"us-west1-a\". Mutually exclusive with worker_region. If neither worker_region nor worker_zone is specified, a zone in the control plane's region is chosen based on available capacity. If both `worker_zone` and `zone` are set, `worker_zone` takes precedence.",
           type = "string",
         },
         zone = {
-          description = "The Compute Engine [availability zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones) for launching worker instances to run your pipeline. In the future, worker_zone will take precedence.",
+          description = "Optional. The Compute Engine [availability zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones) for launching worker instances to run your pipeline. In the future, worker_zone will take precedence.",
           type = "string",
         },
       },
@@ -5229,6 +5539,28 @@ return {
         sdkInfo = {
           ["$ref"] = "SDKInfo",
           description = "SDK Info for the template.",
+        },
+      },
+      type = "object",
+    },
+    RuntimeUpdatableParams = {
+      description = "Additional job parameters that can only be updated during runtime using the projects.jobs.update method. These fields have no effect when specified during job creation.",
+      id = "RuntimeUpdatableParams",
+      properties = {
+        maxNumWorkers = {
+          description = "The maximum number of workers to cap autoscaling at. This field is currently only supported for Streaming Engine jobs.",
+          format = "int32",
+          type = "integer",
+        },
+        minNumWorkers = {
+          description = "The minimum number of workers to scale down to. This field is currently only supported for Streaming Engine jobs.",
+          format = "int32",
+          type = "integer",
+        },
+        workerUtilizationHint = {
+          description = "Target worker utilization, compared against the aggregate utilization of the worker pool by autoscaler, to determine upscaling and downscaling when absent other constraints such as backlog. For more information, see [Update an existing pipeline](https://cloud.google.com/dataflow/docs/guides/updating-a-pipeline).",
+          format = "double",
+          type = "number",
         },
       },
       type = "object",
@@ -5255,6 +5587,52 @@ return {
         },
         version = {
           description = "Optional. The SDK version.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    SdkBug = {
+      description = "A bug found in the Dataflow SDK.",
+      id = "SdkBug",
+      properties = {
+        severity = {
+          description = "Output only. How severe the SDK bug is.",
+          enum = {
+            "SEVERITY_UNSPECIFIED",
+            "NOTICE",
+            "WARNING",
+            "SEVERE",
+          },
+          enumDescriptions = {
+            "A bug of unknown severity.",
+            "A minor bug that that may reduce reliability or performance for some jobs. Impact will be minimal or non-existent for most jobs.",
+            "A bug that has some likelihood of causing performance degradation, data loss, or job failures.",
+            "A bug with extremely significant impact. Jobs may fail erroneously, performance may be severely degraded, and data loss may be very likely.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+        type = {
+          description = "Output only. Describes the impact of this SDK bug.",
+          enum = {
+            "TYPE_UNSPECIFIED",
+            "GENERAL",
+            "PERFORMANCE",
+            "DATALOSS",
+          },
+          enumDescriptions = {
+            "Unknown issue with this SDK.",
+            "Catch-all for SDK bugs that don't fit in the below categories.",
+            "Using this version of the SDK may result in degraded performance.",
+            "Using this version of the SDK may cause data loss.",
+          },
+          readOnly = true,
+          type = "string",
+        },
+        uri = {
+          description = "Output only. Link to more information on the bug.",
+          readOnly = true,
           type = "string",
         },
       },
@@ -5290,6 +5668,14 @@ return {
       description = "The version of the SDK used to run the job.",
       id = "SdkVersion",
       properties = {
+        bugs = {
+          description = "Output only. Known bugs found in this SDK version.",
+          items = {
+            ["$ref"] = "SdkBug",
+          },
+          readOnly = true,
+          type = "array",
+        },
         sdkSupportStatus = {
           description = "The support status for this SDK version.",
           enum = {
@@ -5775,6 +6161,7 @@ return {
           type = "string",
         },
         desiredShardSizeBytes = {
+          deprecated = true,
           description = "DEPRECATED in favor of desired_bundle_size_bytes.",
           format = "int64",
           type = "string",
@@ -5823,6 +6210,7 @@ return {
           type = "string",
         },
         shards = {
+          deprecated = true,
           description = "DEPRECATED in favor of bundles.",
           items = {
             ["$ref"] = "SourceSplitShard",
@@ -6299,6 +6687,70 @@ return {
       },
       type = "object",
     },
+    StreamingScalingReport = {
+      description = "Contains per-user worker telemetry used in streaming autoscaling.",
+      id = "StreamingScalingReport",
+      properties = {
+        activeBundleCount = {
+          deprecated = true,
+          format = "int32",
+          type = "integer",
+        },
+        activeThreadCount = {
+          description = "Current acive thread count.",
+          format = "int32",
+          type = "integer",
+        },
+        maximumBundleCount = {
+          description = "Maximum bundle count.",
+          format = "int32",
+          type = "integer",
+        },
+        maximumBytes = {
+          description = "Maximum bytes.",
+          format = "int64",
+          type = "string",
+        },
+        maximumBytesCount = {
+          deprecated = true,
+          format = "int32",
+          type = "integer",
+        },
+        maximumThreadCount = {
+          description = "Maximum thread count limit.",
+          format = "int32",
+          type = "integer",
+        },
+        outstandingBundleCount = {
+          description = "Current outstanding bundle count.",
+          format = "int32",
+          type = "integer",
+        },
+        outstandingBytes = {
+          description = "Current outstanding bytes.",
+          format = "int64",
+          type = "string",
+        },
+        outstandingBytesCount = {
+          deprecated = true,
+          format = "int32",
+          type = "integer",
+        },
+      },
+      type = "object",
+    },
+    StreamingScalingReportResponse = {
+      description = "Contains per-user-worker streaming scaling recommendation from the backend.",
+      id = "StreamingScalingReportResponse",
+      properties = {
+        maximumThreadCount = {
+          description = "Maximum thread count limit;",
+          format = "int32",
+          type = "integer",
+        },
+      },
+      type = "object",
+    },
     StreamingSetupTask = {
       description = "A task which initializes part of a streaming Dataflow job.",
       id = "StreamingSetupTask",
@@ -6511,6 +6963,10 @@ return {
       description = "Metadata describing a template.",
       id = "TemplateMetadata",
       properties = {
+        defaultStreamingMode = {
+          description = "Optional. Indicates the default streaming mode for a streaming template. Only valid if both supports_at_least_once and supports_exactly_once are true. Possible values: UNSPECIFIED, EXACTLY_ONCE and AT_LEAST_ONCE",
+          type = "string",
+        },
         description = {
           description = "Optional. A description of the template.",
           type = "string",
@@ -6525,6 +6981,18 @@ return {
             ["$ref"] = "ParameterMetadata",
           },
           type = "array",
+        },
+        streaming = {
+          description = "Optional. Indicates if the template is streaming or not.",
+          type = "boolean",
+        },
+        supportsAtLeastOnce = {
+          description = "Optional. Indicates if the streaming template supports at least once mode.",
+          type = "boolean",
+        },
+        supportsExactlyOnce = {
+          description = "Optional. Indicates if the streaming template supports exactly once mode.",
+          type = "boolean",
         },
       },
       type = "object",
@@ -6625,21 +7093,6 @@ return {
             type = "string",
           },
           type = "array",
-        },
-      },
-      type = "object",
-    },
-    ValidateResponse = {
-      description = "Response to the validation request.",
-      id = "ValidateResponse",
-      properties = {
-        errorMessage = {
-          description = "Will be empty if validation succeeds.",
-          type = "string",
-        },
-        queryInfo = {
-          ["$ref"] = "QueryInfo",
-          description = "Information about the validated query. Not defined if validation fails.",
         },
       },
       type = "object",
@@ -6826,10 +7279,12 @@ return {
         },
         suggestedStopPoint = {
           ["$ref"] = "ApproximateProgress",
+          deprecated = true,
           description = "DEPRECATED in favor of split_request.",
         },
         suggestedStopPosition = {
           ["$ref"] = "Position",
+          deprecated = true,
           description = "Obsolete, always empty.",
         },
       },
@@ -6862,6 +7317,7 @@ return {
           type = "array",
         },
         metricUpdates = {
+          deprecated = true,
           description = "DEPRECATED in favor of counter_updates.",
           items = {
             ["$ref"] = "MetricUpdate",
@@ -6870,6 +7326,7 @@ return {
         },
         progress = {
           ["$ref"] = "ApproximateProgress",
+          deprecated = true,
           description = "DEPRECATED in favor of reported_progress.",
         },
         reportIndex = {
@@ -6888,6 +7345,7 @@ return {
         },
         sourceFork = {
           ["$ref"] = "SourceFork",
+          deprecated = true,
           description = "DEPRECATED in favor of dynamic_source_split.",
         },
         sourceOperationResponse = {
@@ -7031,12 +7489,24 @@ return {
       description = "WorkerMessage provides information to the backend about a worker.",
       id = "WorkerMessage",
       properties = {
+        dataSamplingReport = {
+          ["$ref"] = "DataSamplingReport",
+          description = "Optional. Contains metrics related to go/dataflow-data-sampling-telemetry.",
+        },
         labels = {
           additionalProperties = {
             type = "string",
           },
           description = "Labels are used to group WorkerMessages. For example, a worker_message about a particular container might have the labels: { \"JOB_ID\": \"2015-04-22\", \"WORKER_ID\": \"wordcount-vm-2015…\" \"CONTAINER_TYPE\": \"worker\", \"CONTAINER_ID\": \"ac1234def\"} Label tags typically correspond to Label enum values. However, for ease of development other strings can be used as tags. LABEL_UNSPECIFIED should not be used here.",
           type = "object",
+        },
+        perWorkerMetrics = {
+          ["$ref"] = "PerWorkerMetrics",
+          description = "System defined metrics for this worker.",
+        },
+        streamingScalingReport = {
+          ["$ref"] = "StreamingScalingReport",
+          description = "Contains per-user worker telemetry used in streaming autoscaling.",
         },
         time = {
           description = "The timestamp of the worker_message.",
@@ -7093,6 +7563,10 @@ return {
       description = "A worker_message response allows the server to pass information to the sender.",
       id = "WorkerMessageResponse",
       properties = {
+        streamingScalingReportResponse = {
+          ["$ref"] = "StreamingScalingReportResponse",
+          description = "Service's streaming scaling response for workers.",
+        },
         workerHealthReportResponse = {
           ["$ref"] = "WorkerHealthReportResponse",
           description = "The service's response to a worker's health report.",

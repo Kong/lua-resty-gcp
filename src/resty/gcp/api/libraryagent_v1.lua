@@ -279,7 +279,7 @@ return {
       },
     },
   },
-  revision = "20230116",
+  revision = "20240423",
   rootUrl = "https://libraryagent.googleapis.com/",
   schemas = {
     GoogleExampleLibraryagentV1Book = {

@@ -12,7 +12,7 @@ return {
   baseUrl = "https://batch.googleapis.com/",
   batchPath = "batch",
   canonicalName = "Batch",
-  description = "An API to manage the running of batch jobs on Google Cloud Platform.",
+  description = "An API to manage the running of Batch resources on Google Cloud Platform.",
   discoveryVersion = "v1",
   documentationLink = "https://cloud.google.com/batch/",
   fullyEncodeReservedExpansion = true,
@@ -201,7 +201,7 @@ return {
                       type = "string",
                     },
                     requestId = {
-                      description = "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+                      description = "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
                       location = "query",
                       type = "string",
                     },
@@ -239,7 +239,7 @@ return {
                       type = "string",
                     },
                     requestId = {
-                      description = "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+                      description = "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
                       location = "query",
                       type = "string",
                     },
@@ -277,37 +277,6 @@ return {
                     "https://www.googleapis.com/auth/cloud-platform",
                   },
                 },
-                getIamPolicy = {
-                  description = "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:getIamPolicy",
-                  httpMethod = "GET",
-                  id = "batch.projects.locations.jobs.getIamPolicy",
-                  parameterOrder = {
-                    "resource",
-                  },
-                  parameters = {
-                    ["options.requestedPolicyVersion"] = {
-                      description = "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-                      format = "int32",
-                      location = "query",
-                      type = "integer",
-                    },
-                    resource = {
-                      description = "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-                      location = "path",
-                      pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
-                      required = true,
-                      type = "string",
-                    },
-                  },
-                  path = "v1/{+resource}:getIamPolicy",
-                  response = {
-                    ["$ref"] = "Policy",
-                  },
-                  scopes = {
-                    "https://www.googleapis.com/auth/cloud-platform",
-                  },
-                },
                 list = {
                   description = "List all Jobs for a project within a region.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/jobs",
@@ -319,6 +288,11 @@ return {
                   parameters = {
                     filter = {
                       description = "List filter.",
+                      location = "query",
+                      type = "string",
+                    },
+                    orderBy = {
+                      description = "Optional. Sort results. Supported are \"name\", \"name desc\", \"create_time\", and \"create_time desc\".",
                       location = "query",
                       type = "string",
                     },
@@ -344,62 +318,6 @@ return {
                   path = "v1/{+parent}/jobs",
                   response = {
                     ["$ref"] = "ListJobsResponse",
-                  },
-                  scopes = {
-                    "https://www.googleapis.com/auth/cloud-platform",
-                  },
-                },
-                setIamPolicy = {
-                  description = "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:setIamPolicy",
-                  httpMethod = "POST",
-                  id = "batch.projects.locations.jobs.setIamPolicy",
-                  parameterOrder = {
-                    "resource",
-                  },
-                  parameters = {
-                    resource = {
-                      description = "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-                      location = "path",
-                      pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
-                      required = true,
-                      type = "string",
-                    },
-                  },
-                  path = "v1/{+resource}:setIamPolicy",
-                  request = {
-                    ["$ref"] = "SetIamPolicyRequest",
-                  },
-                  response = {
-                    ["$ref"] = "Policy",
-                  },
-                  scopes = {
-                    "https://www.googleapis.com/auth/cloud-platform",
-                  },
-                },
-                testIamPermissions = {
-                  description = "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-                  flatPath = "v1/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}:testIamPermissions",
-                  httpMethod = "POST",
-                  id = "batch.projects.locations.jobs.testIamPermissions",
-                  parameterOrder = {
-                    "resource",
-                  },
-                  parameters = {
-                    resource = {
-                      description = "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-                      location = "path",
-                      pattern = "^projects/[^/]+/locations/[^/]+/jobs/[^/]+$",
-                      required = true,
-                      type = "string",
-                    },
-                  },
-                  path = "v1/{+resource}:testIamPermissions",
-                  request = {
-                    ["$ref"] = "TestIamPermissionsRequest",
-                  },
-                  response = {
-                    ["$ref"] = "TestIamPermissionsResponse",
                   },
                   scopes = {
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -564,7 +482,7 @@ return {
                   },
                 },
                 list = {
-                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+                  description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/operations",
                   httpMethod = "GET",
                   id = "batch.projects.locations.operations.list",
@@ -643,7 +561,7 @@ return {
       },
     },
   },
-  revision = "20230105",
+  revision = "20240411",
   rootUrl = "https://batch.googleapis.com/",
   schemas = {
     Accelerator = {
@@ -655,7 +573,12 @@ return {
           format = "int64",
           type = "string",
         },
+        driverVersion = {
+          description = "Optional. The NVIDIA GPU driver version that should be installed for this type. You can define the specific driver version such as \"470.103.01\", following the driver version requirements in https://cloud.google.com/compute/docs/gpus/install-drivers-gpu#minimum-driver. Batch will install the specific accelerator driver if qualified.",
+          type = "string",
+        },
         installGpuDrivers = {
+          deprecated = true,
           description = "Deprecated: please use instances[0].install_gpu_drivers instead.",
           type = "boolean",
         },
@@ -681,12 +604,70 @@ return {
       },
       type = "object",
     },
+    AgentContainer = {
+      description = "Container runnable representation on the agent side.",
+      id = "AgentContainer",
+      properties = {
+        commands = {
+          description = "Overrides the `CMD` specified in the container. If there is an ENTRYPOINT (either in the container image or with the entrypoint field below) then commands are appended as arguments to the ENTRYPOINT.",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+        entrypoint = {
+          description = "Overrides the `ENTRYPOINT` specified in the container.",
+          type = "string",
+        },
+        imageUri = {
+          description = "The URI to pull the container image from.",
+          type = "string",
+        },
+        options = {
+          description = "Arbitrary additional options to include in the \"docker run\" command when running this container, e.g. \"--network host\".",
+          type = "string",
+        },
+        volumes = {
+          description = "Volumes to mount (bind mount) from the host machine files or directories into the container, formatted to match docker run's --volume option, e.g. /foo:/bar, or /foo:/bar:ro",
+          items = {
+            type = "string",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
+    AgentEnvironment = {
+      description = "AgentEnvironment is the Environment representation between Agent and CLH communication. The environment is used in both task level and agent level.",
+      id = "AgentEnvironment",
+      properties = {
+        encryptedVariables = {
+          ["$ref"] = "AgentKMSEnvMap",
+          description = "An encrypted JSON dictionary where the key/value pairs correspond to environment variable names and their values.",
+        },
+        secretVariables = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "A map of environment variable names to Secret Manager secret names. The VM will access the named secrets to set the value of each environment variable.",
+          type = "object",
+        },
+        variables = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "A map of environment variable names to values.",
+          type = "object",
+        },
+      },
+      type = "object",
+    },
     AgentInfo = {
       description = "VM Agent Info.",
       id = "AgentInfo",
       properties = {
         jobId = {
-          description = "The assigned Job ID",
+          description = "Optional. The assigned Job ID",
           type = "string",
         },
         reportTime = {
@@ -724,11 +705,27 @@ return {
       },
       type = "object",
     },
+    AgentKMSEnvMap = {
+      description = "AgentKMSEnvMap contains the encrypted key/value pair to be used in the environment on the Agent side.",
+      id = "AgentKMSEnvMap",
+      properties = {
+        cipherText = {
+          description = "The value of the cipherText response from the `encrypt` method.",
+          type = "string",
+        },
+        keyName = {
+          description = "The name of the KMS key that will be used to decrypt the cipher text.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     AgentMetadata = {
       description = "VM Agent Metadata.",
       id = "AgentMetadata",
       properties = {
         creationTime = {
+          deprecated = true,
           description = "When the VM agent started. Use agent_startup_time instead.",
           format = "google-datetime",
           type = "string",
@@ -772,10 +769,29 @@ return {
       },
       type = "object",
     },
+    AgentScript = {
+      description = "Script runnable representation on the agent side.",
+      id = "AgentScript",
+      properties = {
+        path = {
+          description = "Script file path on the host VM. To specify an interpreter, please add a `#!`(also known as [shebang line](https://en.wikipedia.org/wiki/Shebang_(Unix))) as the first line of the file.(For example, to execute the script using bash, `#!/bin/bash` should be the first line of the file. To execute the script using`Python3`, `#!/usr/bin/env python3` should be the first line of the file.) Otherwise, the file will by default be executed by `/bin/sh`.",
+          type = "string",
+        },
+        text = {
+          description = "Shell script text. To specify an interpreter, please add a `#!\\n` at the beginning of the text.(For example, to execute the script using bash, `#!/bin/bash\\n` should be added. To execute the script using`Python3`, `#!/usr/bin/env python3\\n` should be added.) Otherwise, the script will by default be executed by `/bin/sh`.",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
     AgentTask = {
       description = "TODO(b/182501497) The message needs to be redefined when the Agent API server updates data in storage per the backend design.",
       id = "AgentTask",
       properties = {
+        agentTaskSpec = {
+          ["$ref"] = "AgentTaskSpec",
+          description = "AgentTaskSpec is the taskSpec representation between Agent and CLH communication. This field will replace the TaskSpec field above in future to have a better separation between user-facaing API and internal API.",
+        },
         intendedState = {
           description = "The intended state of the task.",
           enum = {
@@ -799,7 +815,7 @@ return {
         },
         spec = {
           ["$ref"] = "TaskSpec",
-          description = "Task Spec.",
+          description = "Task Spec. This field will be replaced by agent_task_spec below in future.",
         },
         status = {
           ["$ref"] = "TaskStatus",
@@ -807,6 +823,20 @@ return {
         },
         task = {
           description = "Task name.",
+          type = "string",
+        },
+        taskSource = {
+          description = "TaskSource represents the source of the task.",
+          enum = {
+            "TASK_SOURCE_UNSPECIFIED",
+            "BATCH_INTERNAL",
+            "USER",
+          },
+          enumDescriptions = {
+            "Unspecified task source.",
+            "The AgentTask from this source is generated by Batch server. E.g. all the VMActions are from this source. When Batch Agent execute AgentTask from BATCH_INTERNAL, it will log stdout/err with \"batch_agent_logs\" log name.",
+            "The AgentTask from this source is provided by Batch users. When Batch Agent execute AgentTask from USER, it will log stdout/err with \"batch_task_logs\" log name.",
+          },
           type = "string",
         },
       },
@@ -828,6 +858,86 @@ return {
         taskStatus = {
           ["$ref"] = "TaskStatus",
           description = "The status of the Task. If we need agent specific fields we should fork the public TaskStatus into an agent specific one. Or add them below.",
+        },
+      },
+      type = "object",
+    },
+    AgentTaskRunnable = {
+      description = "AgentTaskRunnable is the Runnable representation between Agent and CLH communication.",
+      id = "AgentTaskRunnable",
+      properties = {
+        alwaysRun = {
+          description = "By default, after a Runnable fails, no further Runnable are executed. This flag indicates that this Runnable must be run even if the Task has already failed. This is useful for Runnables that copy output files off of the VM or for debugging. The always_run flag does not override the Task's overall max_run_duration. If the max_run_duration has expired then no further Runnables will execute, not even always_run Runnables.",
+          type = "boolean",
+        },
+        background = {
+          description = "This flag allows a Runnable to continue running in the background while the Task executes subsequent Runnables. This is useful to provide services to other Runnables (or to provide debugging support tools like SSH servers).",
+          type = "boolean",
+        },
+        container = {
+          ["$ref"] = "AgentContainer",
+          description = "Container runnable.",
+        },
+        environment = {
+          ["$ref"] = "AgentEnvironment",
+          description = "Environment variables for this Runnable (overrides variables set for the whole Task or TaskGroup).",
+        },
+        ignoreExitStatus = {
+          description = "Normally, a non-zero exit status causes the Task to fail. This flag allows execution of other Runnables to continue instead.",
+          type = "boolean",
+        },
+        script = {
+          ["$ref"] = "AgentScript",
+          description = "Script runnable.",
+        },
+        timeout = {
+          description = "Timeout for this Runnable.",
+          format = "google-duration",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    AgentTaskSpec = {
+      description = "AgentTaskSpec is the user's TaskSpec representation between Agent and CLH communication.",
+      id = "AgentTaskSpec",
+      properties = {
+        environment = {
+          ["$ref"] = "AgentEnvironment",
+          description = "Environment variables to set before running the Task.",
+        },
+        maxRunDuration = {
+          description = "Maximum duration the task should run. The task will be killed and marked as FAILED if over this limit. The valid value range for max_run_duration in seconds is [0, 315576000000.999999999],",
+          format = "google-duration",
+          type = "string",
+        },
+        runnables = {
+          description = "AgentTaskRunnable is runanbles that will be executed on the agent.",
+          items = {
+            ["$ref"] = "AgentTaskRunnable",
+          },
+          type = "array",
+        },
+        userAccount = {
+          ["$ref"] = "AgentTaskUserAccount",
+          description = "User account on the VM to run the runnables in the agentTaskSpec. If not set, the runnable will be run under root user.",
+        },
+      },
+      type = "object",
+    },
+    AgentTaskUserAccount = {
+      description = "AgentTaskUserAccount contains the information of a POSIX account on the guest os which is used to execute the runnables.",
+      id = "AgentTaskUserAccount",
+      properties = {
+        gid = {
+          description = "gid id an unique identifier of the POSIX account group corresponding to the user account.",
+          format = "int64",
+          type = "string",
+        },
+        uid = {
+          description = "uid is an unique identifier of the POSIX account corresponding to the user account.",
+          format = "int64",
+          type = "string",
         },
       },
       type = "object",
@@ -878,11 +988,22 @@ return {
         },
         network = {
           ["$ref"] = "NetworkPolicy",
-          description = "The network policy.",
+          description = "The network policy. If you define an instance template in the `InstancePolicyOrTemplate` field, Batch will use the network settings in the instance template instead of this field.",
+        },
+        placement = {
+          ["$ref"] = "PlacementPolicy",
+          description = "The placement policy.",
         },
         serviceAccount = {
           ["$ref"] = "ServiceAccount",
-          description = "Service account that VMs will run as.",
+          description = "Defines the service account for Batch-created VMs. If omitted, the [default Compute Engine service account](https://cloud.google.com/compute/docs/access/service-accounts#default_service_account) is used. Must match the service account specified in any used instance template configured in the Batch job. Includes the following fields: * email: The service account's email address. If not set, the default Compute Engine service account is used. * scopes: Additional OAuth scopes to grant the service account, beyond the default cloud-platform scope. (list of strings)",
+        },
+        tags = {
+          description = "Optional. Tags applied to the VM instances. The tags identify valid sources or targets for network firewalls. Each tag must be 1-63 characters long, and comply with [RFC1035](https://www.ietf.org/rfc/rfc1035.txt).",
+          items = {
+            type = "string",
+          },
+          type = "array",
         },
       },
       type = "object",
@@ -905,54 +1026,6 @@ return {
       },
       type = "object",
     },
-    AuditConfig = {
-      description = "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConfig must have one or more AuditLogConfigs. If there are AuditConfigs for both `allServices` and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditLogConfig are exempted. Example Policy with multiple AuditConfigs: { \"audit_configs\": [ { \"service\": \"allServices\", \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:jose@example.com\" ] }, { \"log_type\": \"DATA_WRITE\" }, { \"log_type\": \"ADMIN_READ\" } ] }, { \"service\": \"sampleservice.googleapis.com\", \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\" }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:aliya@example.com\" ] } ] } ] } For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com` from DATA_WRITE logging.",
-      id = "AuditConfig",
-      properties = {
-        auditLogConfigs = {
-          description = "The configuration for logging of each type of permission.",
-          items = {
-            ["$ref"] = "AuditLogConfig",
-          },
-          type = "array",
-        },
-        service = {
-          description = "Specifies a service that will be enabled for audit logging. For example, `storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices` is a special value that covers all services.",
-          type = "string",
-        },
-      },
-      type = "object",
-    },
-    AuditLogConfig = {
-      description = "Provides the configuration for logging a type of permissions. Example: { \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:jose@example.com\" ] }, { \"log_type\": \"DATA_WRITE\" } ] } This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ logging.",
-      id = "AuditLogConfig",
-      properties = {
-        exemptedMembers = {
-          description = "Specifies the identities that do not cause logging for this type of permission. Follows the same format of Binding.members.",
-          items = {
-            type = "string",
-          },
-          type = "array",
-        },
-        logType = {
-          description = "The log type that this config enables.",
-          enum = {
-            "LOG_TYPE_UNSPECIFIED",
-            "ADMIN_READ",
-            "DATA_WRITE",
-            "DATA_READ",
-          },
-          enumDescriptions = {
-            "Default case. Should never be this.",
-            "Admin reads. Example: CloudIAM getIamPolicy",
-            "Data writes. Example: CloudSQL Users create",
-            "Data reads. Example: CloudSQL Users list",
-          },
-          type = "string",
-        },
-      },
-      type = "object",
-    },
     Barrier = {
       description = "Barrier runnable blocks until all tasks in a taskgroup reach it.",
       id = "Barrier",
@@ -964,36 +1037,25 @@ return {
       },
       type = "object",
     },
-    Binding = {
-      description = "Associates `members`, or principals, with a `role`.",
-      id = "Binding",
-      properties = {
-        condition = {
-          ["$ref"] = "Expr",
-          description = "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-        },
-        members = {
-          description = "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. ",
-          items = {
-            type = "string",
-          },
-          type = "array",
-        },
-        role = {
-          description = "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
-          type = "string",
-        },
-      },
-      type = "object",
-    },
     CancelOperationRequest = {
       description = "The request message for Operations.CancelOperation.",
       id = "CancelOperationRequest",
       properties = {},
       type = "object",
     },
+    CloudLoggingOption = {
+      description = "`CloudLoggingOption` contains additional settings for Cloud Logging logs generated by Batch job.",
+      id = "CloudLoggingOption",
+      properties = {
+        useGenericTaskMonitoredResource = {
+          description = "Optional. Set this flag to true to change the [monitored resource type](https://cloud.google.com/monitoring/api/resources) for Cloud Logging logs generated by this Batch job from the [`batch.googleapis.com/Job`](https://cloud.google.com/monitoring/api/resources#tag_batch.googleapis.com/Job) type to the formerly used [`generic_task`](https://cloud.google.com/monitoring/api/resources#tag_generic_task) type.",
+          type = "boolean",
+        },
+      },
+      type = "object",
+    },
     ComputeResource = {
-      description = "Compute resource requirements",
+      description = "Compute resource requirements. ComputeResource defines the amount of resources required for each task. Make sure your tasks have enough resources to successfully run. If you also define the types of resources for a job to use with the [InstancePolicyOrTemplate](https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicyortemplate) field, make sure both fields are compatible with each other.",
       id = "ComputeResource",
       properties = {
         bootDiskMib = {
@@ -1002,12 +1064,12 @@ return {
           type = "string",
         },
         cpuMilli = {
-          description = "The milliCPU count.",
+          description = "The milliCPU count. `cpuMilli` defines the amount of CPU resources per task in milliCPU units. For example, `1000` corresponds to 1 vCPU per task. If undefined, the default value is `2000`. If you also define the VM's machine type using the `machineType` in [InstancePolicy](https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicy) field or inside the `instanceTemplate` in the [InstancePolicyOrTemplate](https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicyortemplate) field, make sure the CPU resources for both fields are compatible with each other and with how many tasks you want to allow to run on the same VM at the same time. For example, if you specify the `n2-standard-2` machine type, which has 2 vCPUs each, you are recommended to set `cpuMilli` no more than `2000`, or you are recommended to run two tasks on the same VM if you set `cpuMilli` to `1000` or less.",
           format = "int64",
           type = "string",
         },
         memoryMib = {
-          description = "Memory in MiB.",
+          description = "Memory in MiB. `memoryMib` defines the amount of memory per task in MiB units. If undefined, the default value is `2000`. If you also define the VM's machine type using the `machineType` in [InstancePolicy](https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicy) field or inside the `instanceTemplate` in the [InstancePolicyOrTemplate](https://cloud.google.com/batch/docs/reference/rest/v1/projects.locations.jobs#instancepolicyortemplate) field, make sure the memory resources for both fields are compatible with each other and with how many tasks you want to allow to run on the same VM at the same time. For example, if you specify the `n2-standard-2` machine type, which has 8 GiB each, you are recommended to set `memoryMib` to no more than `8192`, or you are recommended to run two tasks on the same VM if you set `memoryMib` to `4096` or less.",
           format = "int64",
           type = "string",
         },
@@ -1019,7 +1081,7 @@ return {
       id = "Container",
       properties = {
         blockExternalNetwork = {
-          description = "If set to true, external network access to and from container will be blocked. The container will use the default internal network 'goog-internal'.",
+          description = "If set to true, external network access to and from container will be blocked, containers that are with block_external_network as true can still communicate with each other, network cannot be specified in the `container.options` field.",
           type = "boolean",
         },
         commands = {
@@ -1028,6 +1090,10 @@ return {
             type = "string",
           },
           type = "array",
+        },
+        enableImageStreaming = {
+          description = "Optional. If set to true, this container runnable uses Image streaming. Use Image streaming to allow the runnable to initialize without waiting for the entire container image to download, which can significantly reduce startup time for large container images. When `enableImageStreaming` is set to true, the container runtime is [containerd](https://containerd.io/) instead of Docker. Additionally, this container runnable only supports the following `container` subfields: `imageUri`, `commands[]`, `entrypoint`, and `volumes[]`; any other `container` subfields are ignored. For more information about the requirements and limitations for using Image streaming with Batch, see the [`image-streaming` sample on GitHub](https://github.com/GoogleCloudPlatform/batch-samples/tree/main/api-samples/image-streaming).",
+          type = "boolean",
         },
         entrypoint = {
           description = "Overrides the `ENTRYPOINT` specified in the container.",
@@ -1042,15 +1108,15 @@ return {
           type = "string",
         },
         password = {
-          description = "Optional password for logging in to a docker registry. If password matches `projects/*/secrets/*/versions/*` then Batch will read the password from the Secret Manager;",
+          description = "Required if the container image is from a private Docker registry. The password to login to the Docker registry that contains the image. For security, it is strongly recommended to specify an encrypted password by using a Secret Manager secret: `projects/*/secrets/*/versions/*`. Warning: If you specify the password using plain text, you risk the password being exposed to any users who can view the job or its logs. To avoid this risk, specify a secret that contains the password instead. Learn more about [Secret Manager](https://cloud.google.com/secret-manager/docs/) and [using Secret Manager with Batch](https://cloud.google.com/batch/docs/create-run-job-secret-manager).",
           type = "string",
         },
         username = {
-          description = "Optional username for logging in to a docker registry. If username matches `projects/*/secrets/*/versions/*` then Batch will read the username from the Secret Manager.",
+          description = "Required if the container image is from a private Docker registry. The username to login to the Docker registry that contains the image. You can either specify the username directly by using plain text or specify an encrypted username by using a Secret Manager secret: `projects/*/secrets/*/versions/*`. However, using a secret is recommended for enhanced security. Caution: If you specify the username using plain text, you risk the username being exposed to any users who can view the job or its logs. To avoid this risk, specify a secret that contains the username instead. Learn more about [Secret Manager](https://cloud.google.com/secret-manager/docs/) and [using Secret Manager with Batch](https://cloud.google.com/batch/docs/create-run-job-secret-manager).",
           type = "string",
         },
         volumes = {
-          description = "Volumes to mount (bind mount) from the host machine files or directories into the container, formatted to match docker run's --volume option, e.g. /foo:/bar, or /foo:/bar:ro",
+          description = "Volumes to mount (bind mount) from the host machine files or directories into the container, formatted to match docker run's --volume option, e.g. /foo:/bar, or /foo:/bar:ro If the `TaskSpec.Volumes` field is specified but this field is not, Batch will mount each volume from the host machine to the container with the same mount path by default. In this case, the default mount option for containers will be read-only (ro) for existing persistent disks and read-write (rw) for other volume types, regardless of the original mount options specified in `TaskSpec.Volumes`. If you need different mount settings, you can explicitly configure them in this field.",
           items = {
             type = "string",
           },
@@ -1060,24 +1126,24 @@ return {
       type = "object",
     },
     Disk = {
-      description = "A new persistent disk or a local ssd. A VM can only have one local SSD setting but multiple local SSD partitions. https://cloud.google.com/compute/docs/disks#pdspecs. https://cloud.google.com/compute/docs/disks#localssds.",
+      description = "A new persistent disk or a local ssd. A VM can only have one local SSD setting but multiple local SSD partitions. See https://cloud.google.com/compute/docs/disks#pdspecs and https://cloud.google.com/compute/docs/disks#localssds.",
       id = "Disk",
       properties = {
         diskInterface = {
-          description = "Local SSDs are available through both \"SCSI\" and \"NVMe\" interfaces. If not indicated, \"NVMe\" will be the default one for local ssds. We only support \"SCSI\" for persistent disks now.",
+          description = "Local SSDs are available through both \"SCSI\" and \"NVMe\" interfaces. If not indicated, \"NVMe\" will be the default one for local ssds. This field is ignored for persistent disks as the interface is chosen automatically. See https://cloud.google.com/compute/docs/disks/persistent-disks#choose_an_interface.",
           type = "string",
         },
         image = {
-          description = "Name of a public or custom image used as the data source. For example, the following are all valid URLs: (1) Specify the image by its family name: projects/{project}/global/images/family/{image_family} (2) Specify the image version: projects/{project}/global/images/{image_version} You can also use Batch customized image in short names. The following image values are supported for a boot disk: \"batch-debian\": use Batch Debian images. \"batch-centos\": use Batch CentOS images. \"batch-cos\": use Batch Container-Optimized images.",
+          description = "URL for a VM image to use as the data source for this disk. For example, the following are all valid URLs: * Specify the image by its family name: projects/{project}/global/images/family/{image_family} * Specify the image version: projects/{project}/global/images/{image_version} You can also use Batch customized image in short names. The following image values are supported for a boot disk: * `batch-debian`: use Batch Debian images. * `batch-centos`: use Batch CentOS images. * `batch-cos`: use Batch Container-Optimized images. * `batch-hpc-centos`: use Batch HPC CentOS images. * `batch-hpc-rocky`: use Batch HPC Rocky Linux images.",
           type = "string",
         },
         sizeGb = {
-          description = "Disk size in GB. For persistent disk, this field is ignored if `data_source` is `image` or `snapshot`. For local SSD, size_gb should be a multiple of 375GB, otherwise, the final size will be the next greater multiple of 375 GB. For boot disk, Batch will calculate the boot disk size based on source image and task requirements if you do not speicify the size. If both this field and the boot_disk_mib field in task spec's compute_resource are defined, Batch will only honor this field.",
+          description = "Disk size in GB. **Non-Boot Disk**: If the `type` specifies a persistent disk, this field is ignored if `data_source` is set as `image` or `snapshot`. If the `type` specifies a local SSD, this field should be a multiple of 375 GB, otherwise, the final size will be the next greater multiple of 375 GB. **Boot Disk**: Batch will calculate the boot disk size based on source image and task requirements if you do not speicify the size. If both this field and the `boot_disk_mib` field in task spec's `compute_resource` are defined, Batch will only honor this field. Also, this field should be no smaller than the source disk's size when the `data_source` is set as `snapshot` or `image`. For example, if you set an image as the `data_source` field and the image's default disk size 30 GB, you can only use this field to make the disk larger or equal to 30 GB.",
           format = "int64",
           type = "string",
         },
         snapshot = {
-          description = "Name of a snapshot used as the data source.",
+          description = "Name of a snapshot used as the data source. Snapshot is not supported as boot disk now.",
           type = "string",
         },
         type = {
@@ -1118,29 +1184,6 @@ return {
       },
       type = "object",
     },
-    Expr = {
-      description = "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() < 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' && document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
-      id = "Expr",
-      properties = {
-        description = {
-          description = "Optional. Description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.",
-          type = "string",
-        },
-        expression = {
-          description = "Textual representation of an expression in Common Expression Language syntax.",
-          type = "string",
-        },
-        location = {
-          description = "Optional. String indicating the location of the expression for error reporting, e.g. a file name and a position in the file.",
-          type = "string",
-        },
-        title = {
-          description = "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
-          type = "string",
-        },
-      },
-      type = "object",
-    },
     GCS = {
       description = "Represents a Google Cloud Storage volume.",
       id = "GCS",
@@ -1165,10 +1208,10 @@ return {
         },
         bootDisk = {
           ["$ref"] = "Disk",
-          description = "Book disk to be created and attached to each VM by this InstancePolicy. Boot disk will be deleted when the VM is deleted.",
+          description = "Boot disk to be created and attached to each VM by this InstancePolicy. Boot disk will be deleted when the VM is deleted. Batch API now only supports booting from image.",
         },
         disks = {
-          description = "Non-boot disks to be attached for each VM created by this InstancePolicy. New disks will be deleted when the VM is deleted.",
+          description = "Non-boot disks to be attached for each VM created by this InstancePolicy. New disks will be deleted when the VM is deleted. A non-boot disk is a disk that can be of a device with a file system or a raw storage drive that is not ready for data storage and accessing.",
           items = {
             ["$ref"] = "AttachedDisk",
           },
@@ -1179,7 +1222,7 @@ return {
           type = "string",
         },
         minCpuPlatform = {
-          description = "The minimum CPU platform. See `https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform`. Not yet implemented.",
+          description = "The minimum CPU platform. See https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform.",
           type = "string",
         },
         provisioningModel = {
@@ -1198,15 +1241,19 @@ return {
           },
           type = "string",
         },
+        reservation = {
+          description = "Optional. If specified, VMs will consume only the specified reservation. If not specified (default), VMs will consume any applicable reservation.",
+          type = "string",
+        },
       },
       type = "object",
     },
     InstancePolicyOrTemplate = {
-      description = "Either an InstancePolicy or an instance template.",
+      description = "InstancePolicyOrTemplate lets you define the type of resources to use for this job either with an InstancePolicy or an instance template. If undefined, Batch picks the type of VM to use and doesn't include optional VM resources such as GPUs and extra disks.",
       id = "InstancePolicyOrTemplate",
       properties = {
         installGpuDrivers = {
-          description = "Set this field true if users want Batch to help fetch drivers from a third party location and install them for GPUs specified in policy.accelerators or instance_template on their behalf. Default is false.",
+          description = "Set this field true if users want Batch to help fetch drivers from a third party location and install them for GPUs specified in policy.accelerators or instance_template on their behalf. Default is false. For Container-Optimized Image cases, Batch will install the accelerator driver following milestones of https://cloud.google.com/container-optimized-os/docs/release-notes. For non Container-Optimized Image cases, following https://github.com/GoogleCloudPlatform/compute-gpu-installation/blob/main/linux/install_gpu_driver.py.",
           type = "boolean",
         },
         instanceTemplate = {
@@ -1224,6 +1271,10 @@ return {
       description = "VM instance status.",
       id = "InstanceStatus",
       properties = {
+        bootDisk = {
+          ["$ref"] = "Disk",
+          description = "The VM boot disk.",
+        },
         machineType = {
           description = "The Compute Engine machine type.",
           type = "string",
@@ -1290,7 +1341,7 @@ return {
           type = "array",
         },
         priority = {
-          description = "Priority of the Job. The valid value range is [0, 100). A job with higher priority value is more likely to run earlier if all other requirements are satisfied.",
+          description = "Priority of the Job. The valid value range is [0, 100). Default value is 0. Higher value indicates higher priority. A job with higher priority value is more likely to run earlier if all other requirements are satisfied.",
           format = "int64",
           type = "string",
         },
@@ -1307,7 +1358,7 @@ return {
           type = "array",
         },
         uid = {
-          description = "Output only. A system generated unique ID (in UUID4 format) for the Job.",
+          description = "Output only. A system generated unique ID for the Job.",
           readOnly = true,
           type = "string",
         },
@@ -1329,7 +1380,7 @@ return {
           description = "The attribute requirements of messages to be sent to this Pub/Sub topic. Without this field, no message will be sent.",
         },
         pubsubTopic = {
-          description = "The Pub/Sub topic where notifications like the job state changes will be published. This topic exist in the same project as the job and billings will be charged to this project. If not specified, no Pub/Sub messages will be sent. Topic format: `projects/{project}/topics/{topic}`.",
+          description = "The Pub/Sub topic where notifications like the job state changes will be published. The topic must exist in the same project as the job and billings will be charged to this project. If not specified, no Pub/Sub messages will be sent. Topic format: `projects/{project}/topics/{topic}`.",
           type = "string",
         },
       },
@@ -1356,7 +1407,7 @@ return {
             "DELETION_IN_PROGRESS",
           },
           enumDescriptions = {
-            "",
+            "Job state unspecified.",
             "Job is admitted (validated and persisted) and waiting for resources.",
             "Job is scheduled to run as soon as resource allocation is ready. The resource allocation may happen at a later time but with a high chance to succeed.",
             "Resource allocation has been successful. At least one Task in the Job is RUNNING.",
@@ -1402,7 +1453,7 @@ return {
       id = "LifecyclePolicy",
       properties = {
         action = {
-          description = "Action to execute when ActionCondition is true.",
+          description = "Action to execute when ActionCondition is true. When RETRY_TASK is specified, we will retry failed tasks if we notice any exit code match and fail tasks if no match is found. Likewise, when FAIL_TASK is specified, we will fail tasks if we notice any exit code match and retry tasks if no match is found.",
           enum = {
             "ACTION_UNSPECIFIED",
             "RETRY_TASK",
@@ -1509,7 +1560,7 @@ return {
       type = "object",
     },
     Location = {
-      description = "A resource that represents Google Cloud Platform location.",
+      description = "A resource that represents a Google Cloud location.",
       id = "Location",
       properties = {
         displayName = {
@@ -1546,7 +1597,7 @@ return {
       id = "LocationPolicy",
       properties = {
         allowedLocations = {
-          description = "A list of allowed location names represented by internal URLs. Each location can be a region or a zone. Only one region or multiple zones in one region is supported now. For example, [\"regions/us-central1\"] allow VMs in any zones in region us-central1. [\"zones/us-central1-a\", \"zones/us-central1-c\"] only allow VMs in zones us-central1-a and us-central1-c. All locations end up in different regions would cause errors. For example, [\"regions/us-central1\", \"zones/us-central1-a\", \"zones/us-central1-b\", \"zones/us-west1-a\"] contains 2 regions \"us-central1\" and \"us-west1\". An error is expected in this case.",
+          description = "A list of allowed location names represented by internal URLs. Each location can be a region or a zone. Only one region or multiple zones in one region is supported now. For example, [\"regions/us-central1\"] allow VMs in any zones in region us-central1. [\"zones/us-central1-a\", \"zones/us-central1-c\"] only allow VMs in zones us-central1-a and us-central1-c. Mixing locations from different regions would cause errors. For example, [\"regions/us-central1\", \"zones/us-central1-a\", \"zones/us-central1-b\", \"zones/us-west1-a\"] contains locations from two distinct regions: us-central1 and us-west1. This combination will trigger an error.",
           items = {
             type = "string",
           },
@@ -1559,6 +1610,10 @@ return {
       description = "LogsPolicy describes how outputs from a Job's Tasks (stdout/stderr) will be preserved.",
       id = "LogsPolicy",
       properties = {
+        cloudLoggingOption = {
+          ["$ref"] = "CloudLoggingOption",
+          description = "Optional. Additional settings for Cloud Logging. It will only take effect when the destination of `LogsPolicy` is set to `CLOUD_LOGGING`.",
+        },
         destination = {
           description = "Where logs should be saved.",
           enum = {
@@ -1581,7 +1636,7 @@ return {
       type = "object",
     },
     Message = {
-      description = "Message details. Describe the attribute that a message should have. Without specified message attributes, no message will be sent by default.",
+      description = "Message details. Describe the conditions under which messages will be sent. If no attribute is defined, no message will be sent by default. One message should specify either the job or the task level attributes, but not both. For example, job level: JOB_STATE_CHANGED and/or a specified new_job_state; task level: TASK_STATE_CHANGED and/or a specified new_task_state.",
       id = "Message",
       properties = {
         newJobState = {
@@ -1596,7 +1651,7 @@ return {
             "DELETION_IN_PROGRESS",
           },
           enumDescriptions = {
-            "",
+            "Job state unspecified.",
             "Job is admitted (validated and persisted) and waiting for resources.",
             "Job is scheduled to run as soon as resource allocation is ready. The resource allocation may happen at a later time but with a high chance to succeed.",
             "Resource allocation has been successful. At least one Task in the Job is RUNNING.",
@@ -1615,14 +1670,16 @@ return {
             "RUNNING",
             "FAILED",
             "SUCCEEDED",
+            "UNEXECUTED",
           },
           enumDescriptions = {
-            "unknown state",
+            "Unknown state.",
             "The Task is created and waiting for resources.",
             "The Task is assigned to at least one VM.",
             "The Task is running.",
             "The Task has failed.",
             "The Task has succeeded.",
+            "The Task has not been executed when the Job finishes.",
           },
           type = "string",
         },
@@ -1663,7 +1720,7 @@ return {
       id = "NetworkInterface",
       properties = {
         network = {
-          description = "The URL of an existing network resource. You can specify the network as a full or partial URL. For example, the following are all valid URLs: https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network} projects/{project}/global/networks/{network} global/networks/{network}",
+          description = "The URL of an existing network resource. You can specify the network as a full or partial URL. For example, the following are all valid URLs: * https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network} * projects/{project}/global/networks/{network} * global/networks/{network}",
           type = "string",
         },
         noExternalIpAddress = {
@@ -1671,7 +1728,7 @@ return {
           type = "boolean",
         },
         subnetwork = {
-          description = "The URL of an existing subnetwork resource in the network. You can specify the subnetwork as a full or partial URL. For example, the following are all valid URLs: https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork} projects/{project}/regions/{region}/subnetworks/{subnetwork} regions/{region}/subnetworks/{subnetwork}",
+          description = "The URL of an existing subnetwork resource in the network. You can specify the subnetwork as a full or partial URL. For example, the following are all valid URLs: * https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork} * projects/{project}/regions/{region}/subnetworks/{subnetwork} * regions/{region}/subnetworks/{subnetwork}",
           type = "string",
         },
       },
@@ -1720,7 +1777,7 @@ return {
             description = "Properties of the object. Contains field @type with type URL.",
             type = "any",
           },
-          description = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          description = "The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
           type = "object",
         },
       },
@@ -1770,33 +1827,18 @@ return {
       },
       type = "object",
     },
-    Policy = {
-      description = "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time < timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
-      id = "Policy",
+    PlacementPolicy = {
+      description = "PlacementPolicy describes a group placement policy for the VMs controlled by this AllocationPolicy.",
+      id = "PlacementPolicy",
       properties = {
-        auditConfigs = {
-          description = "Specifies cloud audit logging configuration for this policy.",
-          items = {
-            ["$ref"] = "AuditConfig",
-          },
-          type = "array",
-        },
-        bindings = {
-          description = "Associates a list of `members`, or principals, with a `role`. Optionally, may specify a `condition` that determines how and when the `bindings` are applied. Each of the `bindings` must contain at least one principal. The `bindings` in a `Policy` can refer to up to 1,500 principals; up to 250 of these principals can be Google groups. Each occurrence of a principal counts towards these limits. For example, if the `bindings` grant 50 different roles to `user:alice@example.com`, and not to any other principal, then you can add another 1,450 principals to the `bindings` in the `Policy`.",
-          items = {
-            ["$ref"] = "Binding",
-          },
-          type = "array",
-        },
-        etag = {
-          description = "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy. **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost.",
-          format = "byte",
+        collocation = {
+          description = "UNSPECIFIED vs. COLLOCATED (default UNSPECIFIED). Use COLLOCATED when you want VMs to be located close to each other for low network latency between the VMs. No placement policy will be generated when collocation is UNSPECIFIED.",
           type = "string",
         },
-        version = {
-          description = "Specifies the format of the policy. Valid values are `0`, `1`, and `3`. Requests that specify an invalid value are rejected. Any operation that affects conditional role bindings must specify version `3`. This requirement applies to the following operations: * Getting a policy that includes a conditional role binding * Adding a conditional role binding to a policy * Changing a conditional role binding in a policy * Removing any role binding, with or without a condition, from a policy that includes conditions **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost. If a policy does not include any conditions, operations on that policy may specify any valid version or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-          format = "int32",
-          type = "integer",
+        maxDistance = {
+          description = "When specified, causes the job to fail if more than max_distance logical switches are required between VMs. Batch uses the most compact possible placement of VMs even when max_distance is not specified. An explicit max_distance makes that level of compactness a strict requirement. Not yet implemented",
+          format = "int64",
+          type = "string",
         },
       },
       type = "object",
@@ -1841,6 +1883,10 @@ return {
           },
           type = "array",
         },
+        useBatchMonitoredResource = {
+          description = "If true, the cloud logging for batch agent will use batch.googleapis.com/Job as monitored resource for Batch job related logging.",
+          type = "boolean",
+        },
       },
       type = "object",
     },
@@ -1864,6 +1910,10 @@ return {
           ["$ref"] = "Container",
           description = "Container runnable.",
         },
+        displayName = {
+          description = "Optional. DisplayName is an optional field that can be provided by the caller. If provided, it will be used in logs and other outputs to identify the script, making it easier for users to understand the logs. If not provided the index of the runnable will be used for outputs.",
+          type = "string",
+        },
         environment = {
           ["$ref"] = "Environment",
           description = "Environment variables for this Runnable (overrides variables set for the whole Task or TaskGroup).",
@@ -1871,6 +1921,13 @@ return {
         ignoreExitStatus = {
           description = "Normally, a non-zero exit status causes the Task to fail. This flag allows execution of other Runnables to continue instead.",
           type = "boolean",
+        },
+        labels = {
+          additionalProperties = {
+            type = "string",
+          },
+          description = "Labels for this Runnable.",
+          type = "object",
         },
         script = {
           ["$ref"] = "Script",
@@ -1889,11 +1946,11 @@ return {
       id = "Script",
       properties = {
         path = {
-          description = "Script file path on the host VM.",
+          description = "Script file path on the host VM. To specify an interpreter, please add a `#!`(also known as [shebang line](https://en.wikipedia.org/wiki/Shebang_(Unix))) as the first line of the file.(For example, to execute the script using bash, `#!/bin/bash` should be the first line of the file. To execute the script using`Python3`, `#!/usr/bin/env python3` should be the first line of the file.) Otherwise, the file will by default be executed by `/bin/sh`.",
           type = "string",
         },
         text = {
-          description = "Shell script text.",
+          description = "Shell script text. To specify an interpreter, please add a `#!\\n` at the beginning of the text.(For example, to execute the script using bash, `#!/bin/bash\\n` should be added. To execute the script using`Python3`, `#!/usr/bin/env python3\\n` should be added.) Otherwise, the script will by default be executed by `/bin/sh`.",
           type = "string",
         },
       },
@@ -1904,24 +1961,15 @@ return {
       id = "ServiceAccount",
       properties = {
         email = {
-          description = "Email address of the service account. If not specified, the default Compute Engine service account for the project will be used. If instance template is being used, the service account has to be specified in the instance template and it has to match the email field here.",
+          description = "Email address of the service account.",
           type = "string",
         },
-      },
-      type = "object",
-    },
-    SetIamPolicyRequest = {
-      description = "Request message for `SetIamPolicy` method.",
-      id = "SetIamPolicyRequest",
-      properties = {
-        policy = {
-          ["$ref"] = "Policy",
-          description = "REQUIRED: The complete policy to be applied to the `resource`. The size of the policy is limited to a few 10s of KB. An empty policy is a valid policy but certain Google Cloud services (such as Projects) might reject them.",
-        },
-        updateMask = {
-          description = "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only the fields in the mask will be modified. If no mask is provided, the following default mask is used: `paths: \"bindings, etag\"`",
-          format = "google-fieldmask",
-          type = "string",
+        scopes = {
+          description = "List of scopes to be enabled for this service account.",
+          items = {
+            type = "string",
+          },
+          type = "array",
         },
       },
       type = "object",
@@ -1970,6 +2018,28 @@ return {
           ["$ref"] = "TaskExecution",
           description = "Task Execution",
         },
+        taskState = {
+          description = "Task State",
+          enum = {
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "ASSIGNED",
+            "RUNNING",
+            "FAILED",
+            "SUCCEEDED",
+            "UNEXECUTED",
+          },
+          enumDescriptions = {
+            "Unknown state.",
+            "The Task is created and waiting for resources.",
+            "The Task is assigned to at least one VM.",
+            "The Task is running.",
+            "The Task has failed.",
+            "The Task has succeeded.",
+            "The Task has not been executed when the Job finishes.",
+          },
+          type = "string",
+        },
         type = {
           description = "Type of the event.",
           type = "string",
@@ -2005,7 +2075,7 @@ return {
       type = "object",
     },
     TaskGroup = {
-      description = "A TaskGroup contains one or multiple Tasks that share the same Runnable but with different runtime parameters.",
+      description = "A TaskGroup defines one or more Tasks that all share the same TaskSpec.",
       id = "TaskGroup",
       properties = {
         name = {
@@ -2014,7 +2084,7 @@ return {
           type = "string",
         },
         parallelism = {
-          description = "Max number of tasks that can run in parallel. Default to min(task_count, 1000).",
+          description = "Max number of tasks that can run in parallel. Default to min(task_count, parallel tasks per job limit). See: [Job Limits](https://cloud.google.com/batch/quotas#job_limits). Field parallelism must be 1 if the scheduling_policy is IN_ORDER.",
           format = "int64",
           type = "string",
         },
@@ -2023,11 +2093,29 @@ return {
           type = "boolean",
         },
         requireHostsFile = {
-          description = "When true, Batch will populate a file with a list of all VMs assigned to the TaskGroup and set the BATCH_HOSTS_FILE environment variable to the path of that file. Defaults to false.",
+          description = "When true, Batch will populate a file with a list of all VMs assigned to the TaskGroup and set the BATCH_HOSTS_FILE environment variable to the path of that file. Defaults to false. The host file supports up to 1000 VMs.",
           type = "boolean",
         },
+        runAsNonRoot = {
+          description = "Optional. If not set or set to false, Batch uses the root user to execute runnables. If set to true, Batch runs the runnables using a non-root user. Currently, the non-root user Batch used is generated by OS Login. For more information, see [About OS Login](https://cloud.google.com/compute/docs/oslogin).",
+          type = "boolean",
+        },
+        schedulingPolicy = {
+          description = "Scheduling policy for Tasks in the TaskGroup. The default value is AS_SOON_AS_POSSIBLE.",
+          enum = {
+            "SCHEDULING_POLICY_UNSPECIFIED",
+            "AS_SOON_AS_POSSIBLE",
+            "IN_ORDER",
+          },
+          enumDescriptions = {
+            "Unspecified.",
+            "Run Tasks as soon as resources are available. Tasks might be executed in parallel depending on parallelism and task_count values.",
+            "Run Tasks sequentially with increased task index.",
+          },
+          type = "string",
+        },
         taskCount = {
-          description = "Number of Tasks in the TaskGroup. default is 1",
+          description = "Number of Tasks in the TaskGroup. Default is 1.",
           format = "int64",
           type = "string",
         },
@@ -2037,7 +2125,7 @@ return {
           type = "string",
         },
         taskEnvironments = {
-          description = "An array of environment variable mappings, which are passed to Tasks with matching indices. If task_environments is used then task_count should not be specified in the request (and will be ignored). Task count will be the length of task_environments. Tasks get a BATCH_TASK_INDEX and BATCH_TASK_COUNT environment variable, in addition to any environment variables set in task_environments, specifying the number of Tasks in the Task's parent TaskGroup, and the specific Task's index in the TaskGroup (0 through BATCH_TASK_COUNT - 1). task_environments supports up to 200 entries.",
+          description = "An array of environment variable mappings, which are passed to Tasks with matching indices. If task_environments is used then task_count should not be specified in the request (and will be ignored). Task count will be the length of task_environments. Tasks get a BATCH_TASK_INDEX and BATCH_TASK_COUNT environment variable, in addition to any environment variables set in task_environments, specifying the number of Tasks in the Task's parent TaskGroup, and the specific Task's index in the TaskGroup (0 through BATCH_TASK_COUNT - 1).",
           items = {
             ["$ref"] = "Environment",
           },
@@ -2088,11 +2176,12 @@ return {
           additionalProperties = {
             type = "string",
           },
+          deprecated = true,
           description = "Deprecated: please use environment(non-plural) instead.",
           type = "object",
         },
         lifecyclePolicies = {
-          description = "Lifecycle management schema when any task in a task group is failed. The valid size of lifecycle policies are [0, 10]. For each lifecycle policy, when the condition is met, the action in that policy will execute. If there are multiple policies that the task execution result matches, we use the action from the first matched policy. If task execution result does not meet with any of the defined lifecycle policy, we consider it as the default policy. Default policy means if the exit code is 0, exit task. If task ends with non-zero exit code, retry the task with max_retry_count.",
+          description = "Lifecycle management schema when any task in a task group is failed. Currently we only support one lifecycle policy. When the lifecycle policy condition is met, the action in the policy will execute. If task execution result does not meet with the defined lifecycle policy, we consider it as the default policy. Default policy means if the exit code is 0, exit task. If task ends with non-zero exit code, retry the task with max_retry_count.",
           items = {
             ["$ref"] = "LifecyclePolicy",
           },
@@ -2104,7 +2193,7 @@ return {
           type = "integer",
         },
         maxRunDuration = {
-          description = "Maximum duration the task should run. The task will be killed and marked as FAILED if over this limit.",
+          description = "Maximum duration the task should run. The task will be killed and marked as FAILED if over this limit. The valid value range for max_run_duration in seconds is [0, 315576000000.999999999],",
           format = "google-duration",
           type = "string",
         },
@@ -2138,14 +2227,16 @@ return {
             "RUNNING",
             "FAILED",
             "SUCCEEDED",
+            "UNEXECUTED",
           },
           enumDescriptions = {
-            "unknown state",
+            "Unknown state.",
             "The Task is created and waiting for resources.",
             "The Task is assigned to at least one VM.",
             "The Task is running.",
             "The Task has failed.",
             "The Task has succeeded.",
+            "The Task has not been executed when the Job finishes.",
           },
           type = "string",
         },
@@ -2153,34 +2244,6 @@ return {
           description = "Detailed info about why the state is reached.",
           items = {
             ["$ref"] = "StatusEvent",
-          },
-          type = "array",
-        },
-      },
-      type = "object",
-    },
-    TestIamPermissionsRequest = {
-      description = "Request message for `TestIamPermissions` method.",
-      id = "TestIamPermissionsRequest",
-      properties = {
-        permissions = {
-          description = "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
-          items = {
-            type = "string",
-          },
-          type = "array",
-        },
-      },
-      type = "object",
-    },
-    TestIamPermissionsResponse = {
-      description = "Response message for `TestIamPermissions` method.",
-      id = "TestIamPermissionsResponse",
-      properties = {
-        permissions = {
-          description = "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.",
-          items = {
-            type = "string",
           },
           type = "array",
         },

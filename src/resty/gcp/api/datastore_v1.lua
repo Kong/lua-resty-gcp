@@ -608,7 +608,7 @@ return {
               },
             },
             list = {
-              description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+              description = "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
               flatPath = "v1/projects/{projectsId}/operations",
               httpMethod = "GET",
               id = "datastore.projects.operations.list",
@@ -654,20 +654,28 @@ return {
       },
     },
   },
-  revision = "20230110",
+  revision = "20240420",
   rootUrl = "https://datastore.googleapis.com/",
   schemas = {
     Aggregation = {
-      description = "Defines a aggregation that produces a single result.",
+      description = "Defines an aggregation that produces a single result.",
       id = "Aggregation",
       properties = {
         alias = {
-          description = "Optional. Optional name of the property to store the result of the aggregation. If not provided, Datastore will pick a default name following the format `property_`. For example: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2), COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); ``` becomes: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS property_1, COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS property_2 OVER ( ... ); ``` Requires: * Must be unique across all aggregation aliases. * Conform to entity property name limitations.",
+          description = "Optional. Optional name of the property to store the result of the aggregation. If not provided, Datastore will pick a default name following the format `property_`. For example: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2), COUNT_UP_TO(3) AS count_up_to_3, COUNT(*) OVER ( ... ); ``` becomes: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS property_1, COUNT_UP_TO(3) AS count_up_to_3, COUNT(*) AS property_2 OVER ( ... ); ``` Requires: * Must be unique across all aggregation aliases. * Conform to entity property name limitations.",
           type = "string",
+        },
+        avg = {
+          ["$ref"] = "Avg",
+          description = "Average aggregator.",
         },
         count = {
           ["$ref"] = "Count",
           description = "Count aggregator.",
+        },
+        sum = {
+          ["$ref"] = "Sum",
+          description = "Sum aggregator.",
         },
       },
       type = "object",
@@ -787,6 +795,17 @@ return {
       },
       type = "object",
     },
+    Avg = {
+      description = "Average of the values of the requested property. * Only numeric values will be aggregated. All non-numeric values including `NULL` are skipped. * If the aggregated values contain `NaN`, returns `NaN`. Infinity math follows IEEE-754 standards. * If the aggregated value set is empty, returns `NULL`. * Always returns the result as a double.",
+      id = "Avg",
+      properties = {
+        property = {
+          ["$ref"] = "PropertyReference",
+          description = "The property to aggregate on.",
+        },
+      },
+      type = "object",
+    },
     BeginTransactionRequest = {
       description = "The request for Datastore.BeginTransaction.",
       id = "BeginTransactionRequest",
@@ -843,6 +862,10 @@ return {
           },
           type = "array",
         },
+        singleUseTransaction = {
+          ["$ref"] = "TransactionOptions",
+          description = "Options for beginning a new transaction for this request. The transaction is committed when the request completes. If specified, TransactionOptions.mode must be TransactionOptions.ReadWrite.",
+        },
         transaction = {
           description = "The identifier of the transaction associated with the commit. A transaction identifier is returned by a call to Datastore.BeginTransaction.",
           format = "byte",
@@ -891,10 +914,12 @@ return {
           enum = {
             "OPERATOR_UNSPECIFIED",
             "AND",
+            "OR",
           },
           enumDescriptions = {
             "Unspecified. This value must not be used.",
             "The results are required to satisfy each of the combined filters.",
+            "Documents are required to satisfy at least one of the combined filters.",
           },
           type = "string",
         },
@@ -906,7 +931,7 @@ return {
       id = "Count",
       properties = {
         upTo = {
-          description = "Optional. Optional constraint on the maximum number of entities to count. This provides a way to set an upper bound on the number of entities to scan, limiting latency and cost. Unspecified is interpreted as no bound. If a zero value is provided, a count result of zero should always be expected. High-Level Example: ``` AGGREGATE COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ``` Requires: * Must be non-negative when present.",
+          description = "Optional. Optional constraint on the maximum number of entities to count. This provides a way to set an upper bound on the number of entities to scan, limiting latency, and cost. Unspecified is interpreted as no bound. If a zero value is provided, a count result of zero should always be expected. High-Level Example: ``` AGGREGATE COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ``` Requires: * Must be non-negative when present.",
           format = "int64",
           type = "string",
         },
@@ -920,7 +945,7 @@ return {
       type = "object",
     },
     Entity = {
-      description = "A Datastore data object. An entity is limited to 1 megabyte when stored. That _roughly_ corresponds to a limit of 1 megabyte for the serialized form of this message.",
+      description = "A Datastore data object. Must not exceed 1 MiB - 4 bytes.",
       id = "Entity",
       properties = {
         key = {
@@ -931,7 +956,7 @@ return {
           additionalProperties = {
             ["$ref"] = "Value",
           },
-          description = "The entity's properties. The map's keys are property names. A property name matching regex `__.*__` is reserved. A reserved property name is forbidden in certain documented contexts. The name must not contain more than 500 characters. The name cannot be `\"\"`.",
+          description = "The entity's properties. The map's keys are property names. A property name matching regex `__.*__` is reserved. A reserved property name is forbidden in certain documented contexts. The map keys, represented as UTF-8, must not exceed 1,500 bytes and cannot be empty.",
           type = "object",
         },
       },
@@ -964,6 +989,62 @@ return {
           description = "The version of the entity, a strictly positive number that monotonically increases with changes to the entity. This field is set for `FULL` entity results. For missing entities in `LookupResponse`, this is the version of the snapshot that was used to look up the entity, and it is always set except for eventually consistent reads.",
           format = "int64",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    ExecutionStats = {
+      description = "Execution statistics for the query.",
+      id = "ExecutionStats",
+      properties = {
+        debugStats = {
+          additionalProperties = {
+            description = "Properties of the object.",
+            type = "any",
+          },
+          description = "Debugging statistics from the execution of the query. Note that the debugging stats are subject to change as Firestore evolves. It could include: { \"indexes_entries_scanned\": \"1000\", \"documents_scanned\": \"20\", \"billing_details\" : { \"documents_billable\": \"20\", \"index_entries_billable\": \"1000\", \"min_query_cost\": \"0\" } }",
+          type = "object",
+        },
+        executionDuration = {
+          description = "Total time to execute the query in the backend.",
+          format = "google-duration",
+          type = "string",
+        },
+        readOperations = {
+          description = "Total billable read operations.",
+          format = "int64",
+          type = "string",
+        },
+        resultsReturned = {
+          description = "Total number of results returned, including documents, projections, aggregation results, keys.",
+          format = "int64",
+          type = "string",
+        },
+      },
+      type = "object",
+    },
+    ExplainMetrics = {
+      description = "Explain metrics for the query.",
+      id = "ExplainMetrics",
+      properties = {
+        executionStats = {
+          ["$ref"] = "ExecutionStats",
+          description = "Aggregated stats from the execution of the query. Only present when ExplainOptions.analyze is set to true.",
+        },
+        planSummary = {
+          ["$ref"] = "PlanSummary",
+          description = "Planning phase information for the query.",
+        },
+      },
+      type = "object",
+    },
+    ExplainOptions = {
+      description = "Explain options for the query.",
+      id = "ExplainOptions",
+      properties = {
+        analyze = {
+          description = "Optional. Whether to execute this query. When false (the default), the query will be planned, returning only metrics from the planning stages. When true, the query will be planned and executed, returning the full query results along with both planning and execution stage metrics.",
+          type = "boolean",
         },
       },
       type = "object",
@@ -1686,7 +1767,7 @@ return {
             description = "Properties of the object. Contains field @type with type URL.",
             type = "any",
           },
-          description = "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+          description = "The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
           type = "object",
         },
       },
@@ -1798,6 +1879,10 @@ return {
           },
           type = "array",
         },
+        propertyMask = {
+          ["$ref"] = "PropertyMask",
+          description = "The properties to return. Defaults to returning all properties. If this field is set and an entity has a property not referenced in the mask, it will be absent from LookupResponse.found.entity.properties. The entity's key is always returned.",
+        },
         readOptions = {
           ["$ref"] = "ReadOptions",
           description = "The options for this lookup request.",
@@ -1835,6 +1920,11 @@ return {
           format = "google-datetime",
           type = "string",
         },
+        transaction = {
+          description = "The identifier of the transaction that was started as part of this Lookup request. Set only when ReadOptions.new_transaction was set in LookupRequest.read_options.",
+          format = "byte",
+          type = "string",
+        },
       },
       type = "object",
     },
@@ -1854,6 +1944,10 @@ return {
         insert = {
           ["$ref"] = "Entity",
           description = "The entity to insert. The entity must not already exist. The entity key's final path element may be incomplete.",
+        },
+        propertyMask = {
+          ["$ref"] = "PropertyMask",
+          description = "The properties to write in this mutation. None of the properties in the mask may have a reserved name, except for `__key__`. This field is ignored for `delete`. If the entity already exists, only properties referenced in the mask are updated, others are left untouched. Properties referenced in the mask but not in the entity are deleted.",
         },
         update = {
           ["$ref"] = "Entity",
@@ -1940,6 +2034,24 @@ return {
       },
       type = "object",
     },
+    PlanSummary = {
+      description = "Planning phase information for the query.",
+      id = "PlanSummary",
+      properties = {
+        indexesUsed = {
+          description = "The indexes selected for the query. For example: [ {\"query_scope\": \"Collection\", \"properties\": \"(foo ASC, __name__ ASC)\"}, {\"query_scope\": \"Collection\", \"properties\": \"(bar ASC, __name__ ASC)\"} ]",
+          items = {
+            additionalProperties = {
+              description = "Properties of the object.",
+              type = "any",
+            },
+            type = "object",
+          },
+          type = "array",
+        },
+      },
+      type = "object",
+    },
     Projection = {
       description = "A representation of a property in a projection.",
       id = "Projection",
@@ -1976,10 +2088,10 @@ return {
             "The given `property` is greater than the given `value`. Requires: * That `property` comes first in `order_by`.",
             "The given `property` is greater than or equal to the given `value`. Requires: * That `property` comes first in `order_by`.",
             "The given `property` is equal to the given `value`.",
-            "The given `property` is equal to at least one value in the given array. Requires: * That `value` is a non-empty `ArrayValue` with at most 10 values. * No other `IN` or `NOT_IN` is in the same query.",
+            "The given `property` is equal to at least one value in the given array. Requires: * That `value` is a non-empty `ArrayValue`, subject to disjunction limits. * No `NOT_IN` is in the same query.",
             "The given `property` is not equal to the given `value`. Requires: * No other `NOT_EQUAL` or `NOT_IN` is in the same query. * That `property` comes first in the `order_by`.",
-            "Limit the result set to the given entity and its descendants. Requires: * That `value` is an entity key.",
-            "The value of the `property` is not in the given array. Requires: * That `value` is a non-empty `ArrayValue` with at most 10 values. * No other `IN`, `NOT_IN`, `NOT_EQUAL` is in the same query. * That `field` comes first in the `order_by`.",
+            "Limit the result set to the given entity and its descendants. Requires: * That `value` is an entity key. * All evaluated disjunctions must have the same `HAS_ANCESTOR` filter.",
+            "The value of the `property` is not in the given array. Requires: * That `value` is a non-empty `ArrayValue` with at most 10 values. * No other `OR`, `IN`, `NOT_IN`, `NOT_EQUAL` is in the same query. * That `field` comes first in the `order_by`.",
           },
           type = "string",
         },
@@ -1990,6 +2102,20 @@ return {
         value = {
           ["$ref"] = "Value",
           description = "The value to compare the property to.",
+        },
+      },
+      type = "object",
+    },
+    PropertyMask = {
+      description = "The set of arbitrarily nested property paths used to restrict an operation to only a subset of properties in an entity.",
+      id = "PropertyMask",
+      properties = {
+        paths = {
+          description = "The paths to the properties covered by this mask. A path is a list of property names separated by dots (`.`), for example `foo.bar` means the property `bar` inside the entity property `foo` inside the entity associated with this path. If a property name contains a dot `.` or a backslash `\\`, then that name must be escaped. A path must not be empty, and may not reference a value inside an array value.",
+          items = {
+            type = "string",
+          },
+          type = "array",
         },
       },
       type = "object",
@@ -2024,7 +2150,7 @@ return {
       id = "PropertyReference",
       properties = {
         name = {
-          description = "The name of the property. If name includes \".\"s, it may be interpreted as a property name path.",
+          description = "A reference to a property. Requires: * MUST be a dot-delimited (`.`) string of segments, where each segment conforms to entity property name limitations.",
           type = "string",
         },
       },
@@ -2035,7 +2161,7 @@ return {
       id = "Query",
       properties = {
         distinctOn = {
-          description = "The properties to make distinct. The query results will contain the first result for each distinct combination of values for the given properties (if empty, all results are returned).",
+          description = "The properties to make distinct. The query results will contain the first result for each distinct combination of values for the given properties (if empty, all results are returned). Requires: * If `order` is specified, the set of distinct on properties must appear before the non-distinct on properties in `order`.",
           items = {
             ["$ref"] = "PropertyReference",
           },
@@ -2167,7 +2293,7 @@ return {
       id = "ReadOnly",
       properties = {
         readTime = {
-          description = "Reads entities at the given time. This may not be older than 60 seconds.",
+          description = "Reads entities at the given time. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
           format = "google-datetime",
           type = "string",
         },
@@ -2178,6 +2304,10 @@ return {
       description = "The options shared by read requests.",
       id = "ReadOptions",
       properties = {
+        newTransaction = {
+          ["$ref"] = "TransactionOptions",
+          description = "Options for beginning a new transaction for this request. The new transaction identifier will be returned in the corresponding response as either LookupResponse.transaction or RunQueryResponse.transaction.",
+        },
         readConsistency = {
           description = "The non-transactional read consistency to use.",
           enum = {
@@ -2193,7 +2323,7 @@ return {
           type = "string",
         },
         readTime = {
-          description = "Reads entities as they were at the given time. This may not be older than 270 seconds. This value is only supported for Cloud Firestore in Datastore mode.",
+          description = "Reads entities as they were at the given time. This value is only supported for Cloud Firestore in Datastore mode. This must be a microsecond precision timestamp within the past one hour, or if Point-in-Time Recovery is enabled, can additionally be a whole minute timestamp within the past 7 days.",
           format = "google-datetime",
           type = "string",
         },
@@ -2275,6 +2405,10 @@ return {
           description = "The ID of the database against which to make the request. '(default)' is not allowed; please use empty string '' to refer the default database.",
           type = "string",
         },
+        explainOptions = {
+          ["$ref"] = "ExplainOptions",
+          description = "Optional. Explain options for the query. If set, additional query statistics will be returned. If not, only query results will be returned.",
+        },
         gqlQuery = {
           ["$ref"] = "GqlQuery",
           description = "The GQL query to run. This query must be an aggregation query.",
@@ -2298,9 +2432,18 @@ return {
           ["$ref"] = "AggregationResultBatch",
           description = "A batch of aggregation results. Always present.",
         },
+        explainMetrics = {
+          ["$ref"] = "ExplainMetrics",
+          description = "Query explain metrics. This is only present when the RunAggregationQueryRequest.explain_options is provided, and it is sent only once with the last response in the stream.",
+        },
         query = {
           ["$ref"] = "AggregationQuery",
           description = "The parsed form of the `GqlQuery` from the request, if it was set.",
+        },
+        transaction = {
+          description = "The identifier of the transaction that was started as part of this RunAggregationQuery request. Set only when ReadOptions.new_transaction was set in RunAggregationQueryRequest.read_options.",
+          format = "byte",
+          type = "string",
         },
       },
       type = "object",
@@ -2313,6 +2456,10 @@ return {
           description = "The ID of the database against which to make the request. '(default)' is not allowed; please use empty string '' to refer the default database.",
           type = "string",
         },
+        explainOptions = {
+          ["$ref"] = "ExplainOptions",
+          description = "Optional. Explain options for the query. If set, additional query statistics will be returned. If not, only query results will be returned.",
+        },
         gqlQuery = {
           ["$ref"] = "GqlQuery",
           description = "The GQL query to run. This query must be a non-aggregation query.",
@@ -2320,6 +2467,10 @@ return {
         partitionId = {
           ["$ref"] = "PartitionId",
           description = "Entities are partitioned into subsets, identified by a partition ID. Queries are scoped to a single partition. This partition ID is normalized with the standard default context partition ID.",
+        },
+        propertyMask = {
+          ["$ref"] = "PropertyMask",
+          description = "The properties to return. This field must not be set for a projection query. See LookupRequest.property_mask.",
         },
         query = {
           ["$ref"] = "Query",
@@ -2340,9 +2491,18 @@ return {
           ["$ref"] = "QueryResultBatch",
           description = "A batch of query results (always present).",
         },
+        explainMetrics = {
+          ["$ref"] = "ExplainMetrics",
+          description = "Query explain metrics. This is only present when the RunQueryRequest.explain_options is provided, and it is sent only once with the last response in the stream.",
+        },
         query = {
           ["$ref"] = "Query",
           description = "The parsed form of the `GqlQuery` from the request, if it was set.",
+        },
+        transaction = {
+          description = "The identifier of the transaction that was started as part of this RunQuery request. Set only when ReadOptions.new_transaction was set in RunQueryRequest.read_options.",
+          format = "byte",
+          type = "string",
         },
       },
       type = "object",
@@ -2370,6 +2530,17 @@ return {
         message = {
           description = "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    Sum = {
+      description = "Sum of the values of the requested property. * Only numeric values will be aggregated. All non-numeric values including `NULL` are skipped. * If the aggregated values contain `NaN`, returns `NaN`. Infinity math follows IEEE-754 standards. * If the aggregated value set is empty, returns 0. * Returns a 64-bit integer if all aggregated numbers are integers and the sum result does not overflow. Otherwise, the result is returned as a double. Note that even if all the aggregated values are integers, the result is returned as a double if it cannot fit within a 64-bit signed integer. When this occurs, the returned value will lose precision. * When underflow occurs, floating-point aggregation is non-deterministic. This means that running the same query repeatedly without any changes to the underlying values could produce slightly different results each time. In those cases, values should be stored as integers over floating-point numbers.",
+      id = "Sum",
+      properties = {
+        property = {
+          ["$ref"] = "PropertyReference",
+          description = "The property to aggregate on.",
         },
       },
       type = "object",

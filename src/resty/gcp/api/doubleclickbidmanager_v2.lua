@@ -15,7 +15,6 @@ return {
   description = "DoubleClick Bid Manager API allows users to manage and create campaigns and reports.",
   discoveryVersion = "v1",
   documentationLink = "https://developers.google.com/bid-manager/",
-  fullyEncodeReservedExpansion = true,
   icons = {
     x16 = "http://www.google.com/images/icons/product/search-16.gif",
     x32 = "http://www.google.com/images/icons/product/search-32.gif",
@@ -320,7 +319,7 @@ return {
       },
     },
   },
-  revision = "20230104",
+  revision = "20240415",
   rootUrl = "https://doubleclickbidmanager.googleapis.com/",
   schemas = {
     ChannelGrouping = {
@@ -512,7 +511,7 @@ return {
         },
         pathQueryOptions = {
           ["$ref"] = "PathQueryOptions",
-          description = "Options that contain Path Filters and Custom Channel Groupings.",
+          description = "Options that contain Path Filters and Custom Channel Groupings. This field is deprecated and will sunset on **May 1, 2024**. After sunset, requests using this field will return an error.",
         },
       },
       type = "object",
@@ -562,6 +561,20 @@ return {
             "FULL_PATH",
             "PATH_ATTRIBUTION",
           },
+          enumDeprecated = {
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          },
           enumDescriptions = {
             "Default value when report type is not specified or is unknown in this version.",
             "Standard report.",
@@ -573,8 +586,8 @@ return {
             "YouTube Programmatic Guaranteed report.",
             "Reach report.",
             "Unique Reach Audience report.",
-            "Full Path report.",
-            "Path Attribution report.",
+            "Full Path report. This report type is deprecated and will sunset on **May 1, 2024**. After sunset, requests retrieving, creating, or running reports of this type will return an error.",
+            "Path Attribution report. This report type is deprecated and will sunset on **May 1, 2024**. After sunset, requests retrieving, creating, or running reports of this type will return an error.",
           },
           type = "string",
         },

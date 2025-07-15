@@ -21,6 +21,33 @@ return {
   description = "Schedule queries or transfer external data from SaaS applications to Google BigQuery on a regular basis.",
   discoveryVersion = "v1",
   documentationLink = "https://cloud.google.com/bigquery-transfer/",
+  endpoints = {
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigquerydatatransfer.me-central2.rep.googleapis.com/",
+      location = "me-central2",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigquerydatatransfer.europe-west3.rep.googleapis.com/",
+      location = "europe-west3",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigquerydatatransfer.europe-west9.rep.googleapis.com/",
+      location = "europe-west9",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigquerydatatransfer.us-east4.rep.googleapis.com/",
+      location = "us-east4",
+    },
+    {
+      description = "Regional Endpoint",
+      endpointUrl = "https://bigquerydatatransfer.us-west1.rep.googleapis.com/",
+      location = "us-west1",
+    },
+  },
   fullyEncodeReservedExpansion = true,
   icons = {
     x16 = "http://www.google.com/images/icons/product/search-16.gif",
@@ -123,7 +150,7 @@ return {
           },
           parameters = {
             name = {
-              description = "The name of the project resource in the form: `projects/{project_id}`",
+              description = "Required. The name of the project resource in the form: `projects/{project_id}`",
               location = "path",
               pattern = "^projects/[^/]+$",
               required = true,
@@ -255,7 +282,7 @@ return {
               },
               parameters = {
                 name = {
-                  description = "The name of the project resource in the form: `projects/{project_id}`",
+                  description = "Required. The name of the project resource in the form: `projects/{project_id}`",
                   location = "path",
                   pattern = "^projects/[^/]+/locations/[^/]+$",
                   required = true,
@@ -342,6 +369,35 @@ return {
                 "https://www.googleapis.com/auth/bigquery",
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/cloud-platform.read-only",
+              },
+            },
+            unenrollDataSources = {
+              description = "Unenroll data sources in a user project. This allows users to remove transfer configurations for these data sources. They will no longer appear in the ListDataSources RPC and will also no longer appear in the [BigQuery UI](https://console.cloud.google.com/bigquery). Data transfers configurations of unenrolled data sources will not be scheduled.",
+              flatPath = "v1/projects/{projectsId}/locations/{locationsId}:unenrollDataSources",
+              httpMethod = "POST",
+              id = "bigquerydatatransfer.projects.locations.unenrollDataSources",
+              parameterOrder = {
+                "name",
+              },
+              parameters = {
+                name = {
+                  description = "Required. The name of the project resource in the form: `projects/{project_id}`",
+                  location = "path",
+                  pattern = "^projects/[^/]+/locations/[^/]+$",
+                  required = true,
+                  type = "string",
+                },
+              },
+              path = "v1/{+name}:unenrollDataSources",
+              request = {
+                ["$ref"] = "UnenrollDataSourcesRequest",
+              },
+              response = {
+                ["$ref"] = "Empty",
+              },
+              scopes = {
+                "https://www.googleapis.com/auth/bigquery",
+                "https://www.googleapis.com/auth/cloud-platform",
               },
             },
           },
@@ -469,7 +525,7 @@ return {
                       type = "string",
                     },
                     serviceAccountName = {
-                      description = "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+                      description = "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                       location = "query",
                       type = "string",
                     },
@@ -602,14 +658,14 @@ return {
                       type = "string",
                     },
                     name = {
-                      description = "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
+                      description = "Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
                       location = "path",
                       pattern = "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
                       required = true,
                       type = "string",
                     },
                     serviceAccountName = {
-                      description = "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+                      description = "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                       location = "query",
                       type = "string",
                     },
@@ -637,6 +693,7 @@ return {
                   },
                 },
                 scheduleRuns = {
+                  deprecated = true,
                   description = "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
                   flatPath = "v1/projects/{projectsId}/locations/{locationsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
                   httpMethod = "POST",
@@ -675,7 +732,7 @@ return {
                   },
                   parameters = {
                     parent = {
-                      description = "Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+                      description = "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
                       location = "path",
                       pattern = "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
                       required = true,
@@ -916,7 +973,7 @@ return {
                   type = "string",
                 },
                 serviceAccountName = {
-                  description = "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+                  description = "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                   location = "query",
                   type = "string",
                 },
@@ -1049,14 +1106,14 @@ return {
                   type = "string",
                 },
                 name = {
-                  description = "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
+                  description = "Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
                   location = "path",
                   pattern = "^projects/[^/]+/transferConfigs/[^/]+$",
                   required = true,
                   type = "string",
                 },
                 serviceAccountName = {
-                  description = "Optional service account name. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
+                  description = "Optional service account email. If this field is set, the transfer config will be created with this service account's credentials. It requires that the requesting user calling this API has permissions to act as this service account. Note that not all data sources support service account credentials when creating a transfer config. For the latest list of data sources, read about [using service accounts](https://cloud.google.com/bigquery-transfer/docs/use-service-accounts).",
                   location = "query",
                   type = "string",
                 },
@@ -1084,6 +1141,7 @@ return {
               },
             },
             scheduleRuns = {
+              deprecated = true,
               description = "Creates transfer runs for a time range [start_time, end_time]. For each date - or whatever granularity the data source supports - in the range, one transfer run is created. Note that runs are created per UTC time in the time range. DEPRECATED: use StartManualTransferRuns instead.",
               flatPath = "v1/projects/{projectsId}/transferConfigs/{transferConfigsId}:scheduleRuns",
               httpMethod = "POST",
@@ -1122,7 +1180,7 @@ return {
               },
               parameters = {
                 parent = {
-                  description = "Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+                  description = "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
                   location = "path",
                   pattern = "^projects/[^/]+/transferConfigs/[^/]+$",
                   required = true,
@@ -1340,7 +1398,7 @@ return {
       },
     },
   },
-  revision = "20230107",
+  revision = "20240416",
   rootUrl = "https://bigquerydatatransfer.googleapis.com/",
   schemas = {
     CheckValidCredsRequest = {
@@ -1456,10 +1514,12 @@ return {
           type = "boolean",
         },
         supportsMultipleTransfers = {
+          deprecated = true,
           description = "Deprecated. This field has no effect.",
           type = "boolean",
         },
         transferType = {
+          deprecated = true,
           description = "Deprecated. This field has no effect.",
           enum = {
             "TRANSFER_TYPE_UNSPECIFIED",
@@ -1551,6 +1611,7 @@ return {
             "BOOLEAN",
             "RECORD",
             "PLUS_PAGE",
+            "LIST",
           },
           enumDescriptions = {
             "Type unspecified.",
@@ -1560,6 +1621,7 @@ return {
             "Boolean parameter.",
             "Deprecated. This field has no effect.",
             "Page ID for a Google+ Page.",
+            "List of strings parameter.",
           },
           type = "string",
         },
@@ -1593,6 +1655,17 @@ return {
       description = "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       id = "Empty",
       properties = {},
+      type = "object",
+    },
+    EncryptionConfiguration = {
+      description = "Represents the encryption configuration for a transfer.",
+      id = "EncryptionConfiguration",
+      properties = {
+        kmsKeyName = {
+          description = "The name of the KMS key used for encrypting BigQuery data.",
+          type = "string",
+        },
+      },
       type = "object",
     },
     EnrollDataSourcesRequest = {
@@ -1707,7 +1780,7 @@ return {
       type = "object",
     },
     Location = {
-      description = "A resource that represents Google Cloud Platform location.",
+      description = "A resource that represents a Google Cloud location.",
       id = "Location",
       properties = {
         displayName = {
@@ -1749,12 +1822,12 @@ return {
           type = "boolean",
         },
         endTime = {
-          description = "Defines time to stop scheduling transfer runs. A transfer run cannot be scheduled at or after the end time. The end time can be changed at any moment. The time when a data transfer can be trigerred manually is not limited by this option.",
+          description = "Defines time to stop scheduling transfer runs. A transfer run cannot be scheduled at or after the end time. The end time can be changed at any moment. The time when a data transfer can be triggered manually is not limited by this option.",
           format = "google-datetime",
           type = "string",
         },
         startTime = {
-          description = "Specifies time to start scheduling transfer runs. The first run will be scheduled at or after the start time according to a recurrence pattern defined in the schedule string. The start time can be changed at any moment. The time when a data transfer can be trigerred manually is not limited by this option.",
+          description = "Specifies time to start scheduling transfer runs. The first run will be scheduled at or after the start time according to a recurrence pattern defined in the schedule string. The start time can be changed at any moment. The time when a data transfer can be triggered manually is not limited by this option.",
           format = "google-datetime",
           type = "string",
         },
@@ -1797,13 +1870,13 @@ return {
       id = "StartManualTransferRunsRequest",
       properties = {
         requestedRunTime = {
-          description = "Specific run_time for a transfer run to be started. The requested_run_time must not be in the future.",
+          description = "A run_time timestamp for historical data files or reports that are scheduled to be transferred by the scheduled transfer run. requested_run_time must be a past time and cannot include future time values.",
           format = "google-datetime",
           type = "string",
         },
         requestedTimeRange = {
           ["$ref"] = "TimeRange",
-          description = "Time range for the transfer runs that should be started.",
+          description = "A time_range start and end timestamp for historical data files or reports that are scheduled to be transferred by the scheduled transfer run. requested_time_range must be a past time and cannot include future time values.",
         },
       },
       type = "object",
@@ -1889,7 +1962,7 @@ return {
           type = "string",
         },
         disabled = {
-          description = "Is this config disabled. When set to true, no runs are scheduled for a given transfer.",
+          description = "Is this config disabled. When set to true, no runs will be scheduled for this transfer config.",
           type = "boolean",
         },
         displayName = {
@@ -1900,8 +1973,12 @@ return {
           ["$ref"] = "EmailPreferences",
           description = "Email notifications will be sent according to these preferences to the email address of the user who owns this transfer config.",
         },
+        encryptionConfiguration = {
+          ["$ref"] = "EncryptionConfiguration",
+          description = "The encryption configuration part. Currently, it is only used for the optional KMS key name. The BigQuery service account of your project must be granted permissions to use the key. Read methods will return the key name applied in effect. Write methods will apply the key if it is present, or otherwise try to apply project default keys if it is absent.",
+        },
         name = {
-          description = "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
+          description = "Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
           type = "string",
         },
         nextRunTime = {
@@ -1911,7 +1988,7 @@ return {
           type = "string",
         },
         notificationPubsubTopic = {
-          description = "Pub/Sub topic where notifications will be sent after transfer runs associated with this transfer config finish. The format for specifying a pubsub topic is: `projects/{project}/topics/{topic}`",
+          description = "Pub/Sub topic where notifications will be sent after transfer runs associated with this transfer config finish. The format for specifying a pubsub topic is: `projects/{project_id}/topics/{topic_id}`",
           type = "string",
         },
         ownerInfo = {
@@ -2032,11 +2109,11 @@ return {
           description = "Status of the transfer run.",
         },
         name = {
-          description = "The resource name of the transfer run. Transfer run names have the form `projects/{project_id}/locations/{location}/transferConfigs/{config_id}/runs/{run_id}`. The name is ignored when creating a transfer run.",
+          description = "Identifier. The resource name of the transfer run. Transfer run names have the form `projects/{project_id}/locations/{location}/transferConfigs/{config_id}/runs/{run_id}`. The name is ignored when creating a transfer run.",
           type = "string",
         },
         notificationPubsubTopic = {
-          description = "Output only. Pub/Sub topic where a notification will be sent after this transfer run finishes. The format for specifying a pubsub topic is: `projects/{project}/topics/{topic}`",
+          description = "Output only. Pub/Sub topic where a notification will be sent after this transfer run finishes. The format for specifying a pubsub topic is: `projects/{project_id}/topics/{topic_id}`",
           readOnly = true,
           type = "string",
         },
@@ -2100,6 +2177,20 @@ return {
           description = "Deprecated. Unique ID of the user on whose behalf transfer is done.",
           format = "int64",
           type = "string",
+        },
+      },
+      type = "object",
+    },
+    UnenrollDataSourcesRequest = {
+      description = "A request to unenroll a set of data sources so they are no longer visible in the BigQuery UI's `Transfer` tab.",
+      id = "UnenrollDataSourcesRequest",
+      properties = {
+        dataSourceIds = {
+          description = "Data sources that are unenrolled. It is required to provide at least one data source id.",
+          items = {
+            type = "string",
+          },
+          type = "array",
         },
       },
       type = "object",
