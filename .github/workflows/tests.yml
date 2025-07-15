@@ -22,10 +22,18 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install deps
       run: |
+        apk add --no-cache wget tar make gcc musl-dev openssl-dev curl
         wget https://github.com/libexpat/libexpat/releases/download/R_2_7_0/expat-2.7.0.tar.gz && tar zxvf expat-2.7.0.tar.gz
         cd expat-2.7.0 && ./configure && make && make install
-        /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
-        /usr/local/openresty/luajit/bin/luarocks install lua-resty-aws
+        wget https://luarocks.github.io/luarocks/releases/luarocks-3.12.2.tar.gz
+        tar zxvf luarocks-3.12.2.tar.gz
+        cd luarocks-3.12.2
+        ./configure   --lua-version=5.1   --with-lua-include=/usr/local/openresty/luajit/include/luajit-2.1   --with-lua-lib=/usr/local/openresty/luajit/lib
+        make
+        make install
+        export PATH=/usr/local/bin:$PATH
+        luarocks install lua-resty-jwt
+        luarocks install lua-resty-aws
     - name: Cache
       uses: actions/cache@v4
       with:
@@ -35,7 +43,7 @@ jobs:
 
     - name: Install Busted
       run: |
-        /usr/local/openresty/luajit/bin/luarocks install busted
+        luarocks install busted
 
     - uses: actions/checkout@v2
 
