@@ -174,7 +174,7 @@ describe("access token", function ()
       assert.same("string", type(saToken.token))
       assert.same("number", type(saToken.expireTime))
       assert.same("SA", saToken.authMethod)
-      assert.is_false(wiToken:needsRefresh())
+      assert.is_false(saToken:needsRefresh())
   end)
 
   it("should handle AccessToken:get() concurrency simulation", function()
