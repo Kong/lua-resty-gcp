@@ -2,37 +2,46 @@ local restore = require "spec.helpers"
 
 describe("access token", function ()
   local access_token
+  
+  -- true for real GCP, false for mock
+  local USE_REAL_GCP = false
+  
   setup(function()
-    local http = {
-      new = function()
-        return {
-          counter = 0,
-          close = function() return true end,
-          request_uri = function(self, url, opts)
-            self.counter = self.counter + 1
-            if url == "https://www.googleapis.com/oauth2/v4/token" then
-              return {
-                status = 200,
-                body = [[{"access_token": "test_jwt", "expires_in": 3600}]],
-              }
-            elseif url == "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token" then
-              return {
-                status = 200,
-                body = [[{"access_token": "test_wi", "expires_in": 3600}]],
-              }
-            else
-              error("bad test path provided??? " .. tostring(opts.path))
-            end
-          end,
-        }
-      end,
-    }
 
-    package.loaded["resty.luasocket.http"] = http
+    if not USE_REAL_GCP then
+      local http = {
+        new = function()
+          return {
+            counter = 0,
+            close = function() return true end,
+            request_uri = function(self, url, opts)
+              self.counter = self.counter + 1
+              if url == "https://www.googleapis.com/oauth2/v4/token" then
+                return {
+                  status = 200,
+                  body = [[{"access_token": "test_jwt", "expires_in": 3600}]],
+                }
+              elseif url == "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token" then
+                return {
+                  status = 200,
+                  body = [[{"access_token": "test_wi", "expires_in": 3600}]],
+                }
+              else
+                error("bad test path provided??? " .. tostring(opts.path))
+              end
+            end,
+          }
+        end,
+      }
+
+      package.loaded["resty.luasocket.http"] = http
+    end
   end)
 
   teardown(function()
-    package.loaded["resty.luasocket.http"] = nil
+    if not USE_REAL_GCP then
+      package.loaded["resty.luasocket.http"] = nil
+    end
   end)
 
   before_each(function()
@@ -55,22 +64,144 @@ describe("access token", function ()
 
   it("should create an access token with default auth method", function()
     local gcpToken = access_token()
-    assert.same(gcpToken.token, "test_wi")
+    
+    if USE_REAL_GCP then
+      assert.is_string(gcpToken.token)
+      assert.is_not_nil(gcpToken.token)
+      assert.is_true(#gcpToken.token > 0)
+    else
+      assert.same(gcpToken.token, "test_wi")
+    end
+    
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
   end)
 
   it("should create an access token with legacy auth method order", function()
     local gcpToken = access_token(nil, { auth_method_order = "legacy" })
-    assert.same(gcpToken.token, "test_wi")
+    
+    if USE_REAL_GCP then
+      assert.is_string(gcpToken.token)
+      assert.is_not_nil(gcpToken.token)
+      assert.is_true(#gcpToken.token > 0)
+    else
+      assert.same(gcpToken.token, "test_wi")
+    end
+    
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
   end)
 
   it("should create an access token with adc auth method order", function()
     local gcpToken = access_token(nil, { auth_method_order = "adc" })
-    assert.same(gcpToken.token, "test_jwt")
+    
+    if USE_REAL_GCP then
+      assert.is_string(gcpToken.token)
+      assert.is_not_nil(gcpToken.token)
+      assert.is_true(#gcpToken.token > 0)
+    else
+      assert.same(gcpToken.token, "test_jwt")
+    end
+    
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
   end)
+
+  it("should handle access token error with invalid credentials", function()
+    -- use invalid Service Account JSON
+    local invalidAccount = '{"invalid": "json"}'
+    
+    if USE_REAL_GCP then
+      local ok, result = pcall(access_token, invalidAccount)
+      if ok then
+        assert.is_not_nil(result)
+        assert.same(invalidAccount, result.gcpServiceAccount)
+      else
+        assert.is_string(result)
+        assert.is_true(#result > 0)
+      end
+    else
+      local invalidToken = access_token(invalidAccount)
+      assert.is_not_nil(invalidToken)
+      assert.same(invalidAccount, invalidToken.gcpServiceAccount)
+      assert.is_string(invalidToken.token)
+    end
+  end)
+
+  it("should handle an expired wi access token to refresh", function()
+      -- test WI refresh
+      local wiToken = access_token(nil, {
+          auth_method_order = "legacy"
+      })
+
+      assert.same("string", type(wiToken.token))
+      assert.same("number", type(wiToken.expireTime))
+      assert.same("WI", wiToken.authMethod)
+      assert.is_false(wiToken:needsRefresh())
+
+      wiToken.expireTime = ngx.now() - 100
+      assert.is_true(wiToken:needsRefresh())
+
+      local ok, result = wiToken:get()
+
+      assert.is_true(ok)
+      assert.equals(wiToken, result)
+      assert.same("string", type(wiToken.token))
+      assert.same("number", type(wiToken.expireTime))
+      assert.same("WI", wiToken.authMethod)
+      assert.is_false(wiToken:needsRefresh())
+
+  end)
+
+  it("should handle an expired sa access token to refresh", function()
+      -- test ADC refresh
+      local saToken = access_token(nil, {
+          auth_method_order = "adc"
+      })
+
+      assert.same("string", type(saToken.token))
+      assert.same("number", type(saToken.expireTime))
+      assert.same("SA", saToken.authMethod)
+      assert.is_false(saToken:needsRefresh())
+
+      saToken.expireTime = ngx.now() - 100
+      assert.is_true(saToken:needsRefresh())
+
+      local ok, result = saToken:get()
+
+      assert.is_true(ok)
+      assert.equals(saToken, result)
+      assert.same("string", type(saToken.token))
+      assert.same("number", type(saToken.expireTime))
+      assert.same("SA", saToken.authMethod)
+      assert.is_false(wiToken:needsRefresh())
+  end)
+
+  it("should handle AccessToken:get() concurrency simulation", function()
+    local gcpToken = access_token()
+    
+    gcpToken.expireTime = ngx.now() - 100
+    
+    local results = {}
+    local errors = {}
+    
+    for i = 1, 3 do
+        local ok, result = gcpToken:get()
+        if ok then
+            table.insert(results, result)
+        else
+            table.insert(errors, result)
+        end
+    end
+    
+    assert.equals(3, #results)
+    assert.equals(0, #errors)
+    
+    for i = 1, #results do
+        assert.equals(gcpToken, results[i])
+    end
+    
+    assert.is_false(gcpToken:needsRefresh())
+  end)
+
 end)

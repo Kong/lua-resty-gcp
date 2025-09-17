@@ -1,6 +1,22 @@
 local http = require "resty.luasocket.http"
 local jwt = require "resty.jwt"
 local cjson = require("cjson.safe").new()
+local semaphore = require "ngx.semaphore"
+
+local SEMAPHORE_TIMEOUT = 30 -- semaphore timeout in seconds
+local EXPIRY_WINDOW = 15 -- expiry window in seconds
+
+-- Executes a xpcall but returns hard-errors as Lua 'nil+err' result.
+-- Handles max of 10 return values.
+-- @param f function to execute
+-- @param ... parameters to pass to the function
+local function safe_call(f, ...)
+  local ok, result, err, r3, r4, r5, r6, r7, r8, r9, r10 = xpcall(f, debug.traceback, ...)
+  if ok then
+    return result, err, r3, r4, r5, r6, r7, r8, r9, r10
+  end
+  return nil, result
+end
 
 local function GetJwtToken(serviceAccount)
     local saDecode, err = cjson.decode(serviceAccount)
@@ -142,23 +158,25 @@ function AccessToken:new(gcpServiceAccount, opts)
         self.token = accessToken.access_token
         self.expireTime = ngx.now() + accessToken.expires_in
         self.authMethod = authMethod
+        self.gcpServiceAccount = gcpServiceAccount
     else
         ngx.log(ngx.ERR, "[accesstoken] Unable to get accesstoken")
         error("Failed to authenticate")
         return nil
     end
+
+    self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
     return self
 end
 
 function AccessToken:needsRefresh()
-    return self.expireTime < ngx.now()
+    return self.expireTime < (ngx.now() + self.expireWindow)
 end
 
 function AccessToken:refresh()
     local accessToken
     if (self.authMethod == "SA") then
-        local gcpServiceAccount = os.getenv("GCP_SERVICE_ACCOUNT")
-        accessToken = GetAccessTokenBySA(gcpServiceAccount)
+        accessToken = GetAccessTokenBySA(self.gcpServiceAccount)
     elseif (self.authMethod == "WI") then
         accessToken = GetAccessTokenByWI()
     end
@@ -169,6 +187,38 @@ function AccessToken:refresh()
     end
     return false
 end
+
+function AccessToken:get()
+    while self:needsRefresh() do
+        if self.semaphore then
+            local ok, err = self.semaphore:wait(SEMAPHORE_TIMEOUT)
+            if not ok then
+                ngx.log(ngx.ERR, "[accesstoken] semaphore wait failed: ", tostring(err))
+                return nil, "semaphore wait failed: " .. tostring(err)
+            end
+
+        else
+            local sema, err = semaphore:new()
+            if not sema then
+                ngx.log(ngx.ERR, "[accesstoken] create semaphore failed: ", tostring(err))
+                return nil, "create semaphore failed: " .. tostring(err)
+            end
+            self.semaphore = sema
+
+            local ok, err = safe_call(self.refresh, self)
+            self.semaphore = nil
+            sema:post(sema:count() + 1)
+            
+            if not ok then
+                ngx.log(ngx.ERR, "[accesstoken] refresh access token failed: ", tostring(err))
+                return nil, "refresh access token failed: " .. tostring(err)
+            end
+        end
+
+    end
+    return true, self
+end
+
 
 return setmetatable(
     AccessToken,
