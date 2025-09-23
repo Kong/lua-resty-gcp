@@ -120,7 +120,22 @@ local function GetAccessTokenByWI()
 end
 
 local AccessToken = {}
-AccessToken.__index = AccessToken
+
+function AccessToken.__index(self, key)
+    if key == "token" then
+        if self:needsRefresh() then
+            local ok, err = self:_auto_refresh()
+            if not ok then
+                ngx.log(ngx.ERR, "[accesstoken] auto refresh failed: ", tostring(err))
+                return nil
+            end
+        end
+        return rawget(self, "_token")
+    end
+    
+    return AccessToken[key]
+end
+
 function AccessToken:new(gcpServiceAccount, opts)
     local self = {}
     opts = opts or {}
@@ -155,7 +170,7 @@ function AccessToken:new(gcpServiceAccount, opts)
     end
 
     if (accessToken) then
-        self.token = accessToken.access_token
+        self._token = accessToken.access_token
         self.expireTime = ngx.now() + accessToken.expires_in
         self.authMethod = authMethod
         self.gcpServiceAccount = gcpServiceAccount
@@ -181,17 +196,18 @@ function AccessToken:refresh()
         accessToken = GetAccessTokenByWI()
     end
     if (accessToken) then
-        self.token = accessToken.access_token
+        self._token = accessToken.access_token
         self.expireTime = ngx.now() + accessToken.expires_in
         return true
     end
     return false
 end
 
-function AccessToken:get()
+
+function AccessToken:_auto_refresh()
     while self:needsRefresh() do
-        if self.semaphore then
-            local ok, err = self.semaphore:wait(SEMAPHORE_TIMEOUT)
+        if self._semaphore then
+            local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
             if not ok then
                 ngx.log(ngx.ERR, "[accesstoken] semaphore wait failed: ", tostring(err))
                 return nil, "semaphore wait failed: " .. tostring(err)
@@ -203,10 +219,10 @@ function AccessToken:get()
                 ngx.log(ngx.ERR, "[accesstoken] create semaphore failed: ", tostring(err))
                 return nil, "create semaphore failed: " .. tostring(err)
             end
-            self.semaphore = sema
+            self._semaphore = sema
 
             local ok, err = safe_call(self.refresh, self)
-            self.semaphore = nil
+            self._semaphore = nil
             sema:post(sema:count() + 1)
             
             if not ok then
@@ -218,7 +234,6 @@ function AccessToken:get()
     end
     return true, self
 end
-
 
 return setmetatable(
     AccessToken,
