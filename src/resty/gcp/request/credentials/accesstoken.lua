@@ -204,11 +204,11 @@ function AccessToken:refresh()
             end
             self._semaphore = sema
 
-            local accessToken
+            local accessToken, err
             if (self.authMethod == "SA") then
-                accessToken = GetAccessTokenBySA(self.gcpServiceAccount)
+                accessToken, err = safe_call(GetAccessTokenBySA, self.gcpServiceAccount)
             elseif (self.authMethod == "WI") then
-                accessToken = GetAccessTokenByWI()
+                accessToken, err = safe_call(GetAccessTokenByWI)
             end
             
             if (accessToken) then
@@ -220,8 +220,8 @@ function AccessToken:refresh()
             sema:post(sema:count() + 1)
             
             if not accessToken then
-                ngx.log(ngx.ERR, "[accesstoken] failed to get new access token")
-                return nil, "failed to get new access token"
+                ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(err))
+                return nil, "failed to get new access token: " .. tostring(err)
             end
         end
     end
