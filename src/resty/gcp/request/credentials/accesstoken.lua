@@ -124,7 +124,7 @@ local AccessToken = {}
 function AccessToken.__index(self, key)
     if key == "token" then
         if self:needsRefresh() then
-            local ok, err = self:_auto_refresh()
+            local ok, err = self:refresh()
             if not ok then
                 ngx.log(ngx.ERR, "[accesstoken] auto refresh failed: ", tostring(err))
                 return nil
@@ -189,22 +189,6 @@ function AccessToken:needsRefresh()
 end
 
 function AccessToken:refresh()
-    local accessToken
-    if (self.authMethod == "SA") then
-        accessToken = GetAccessTokenBySA(self.gcpServiceAccount)
-    elseif (self.authMethod == "WI") then
-        accessToken = GetAccessTokenByWI()
-    end
-    if (accessToken) then
-        self._token = accessToken.access_token
-        self.expireTime = ngx.now() + accessToken.expires_in
-        return true
-    end
-    return false
-end
-
-
-function AccessToken:_auto_refresh()
     while self:needsRefresh() do
         if self._semaphore then
             local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
@@ -212,7 +196,6 @@ function AccessToken:_auto_refresh()
                 ngx.log(ngx.ERR, "[accesstoken] semaphore wait failed: ", tostring(err))
                 return nil, "semaphore wait failed: " .. tostring(err)
             end
-
         else
             local sema, err = semaphore:new()
             if not sema then
@@ -221,18 +204,29 @@ function AccessToken:_auto_refresh()
             end
             self._semaphore = sema
 
-            local ok, err = safe_call(self.refresh, self)
+            local accessToken
+            if (self.authMethod == "SA") then
+                accessToken = GetAccessTokenBySA(self.gcpServiceAccount)
+            elseif (self.authMethod == "WI") then
+                accessToken = GetAccessTokenByWI()
+            end
+            
+            if (accessToken) then
+                self._token = accessToken.access_token
+                self.expireTime = ngx.now() + accessToken.expires_in
+            end
+
             self._semaphore = nil
             sema:post(sema:count() + 1)
             
-            if not ok then
-                ngx.log(ngx.ERR, "[accesstoken] refresh access token failed: ", tostring(err))
-                return nil, "refresh access token failed: " .. tostring(err)
+            if not accessToken then
+                ngx.log(ngx.ERR, "[accesstoken] failed to get new access token")
+                return nil, "failed to get new access token"
             end
         end
-
     end
-    return true, self
+
+    return true
 end
 
 return setmetatable(
