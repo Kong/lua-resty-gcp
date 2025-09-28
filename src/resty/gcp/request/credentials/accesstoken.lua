@@ -217,7 +217,7 @@ function AccessToken:refresh()
             end
 
             self._semaphore = nil
-            sema:post(sema:count() + 1)
+            sema:post(math.abs(sema:count()) + 1)
             
             if not accessToken then
                 ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(err))
