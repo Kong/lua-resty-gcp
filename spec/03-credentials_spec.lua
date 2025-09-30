@@ -140,7 +140,6 @@ describe("access token", function ()
     local errors = {}
     
     for i = 1, 3 do
-        -- 直接访问 token 属性，会自动刷新
         local token = gcpToken.token
         if token then
             table.insert(tokens, token)
