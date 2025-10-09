@@ -1,6 +1,22 @@
 local http = require "resty.luasocket.http"
 local jwt = require "resty.jwt"
 local cjson = require("cjson.safe").new()
+local semaphore = require "ngx.semaphore"
+
+local SEMAPHORE_TIMEOUT = 30 -- semaphore timeout in seconds
+local EXPIRY_WINDOW = 15 -- expiry window in seconds
+
+-- Executes a xpcall but returns hard-errors as Lua 'nil+err' result.
+-- Handles max of 10 return values.
+-- @param f function to execute
+-- @param ... parameters to pass to the function
+local function safe_call(f, ...)
+  local ok, result, err, r3, r4, r5, r6, r7, r8, r9, r10 = xpcall(f, debug.traceback, ...)
+  if ok then
+    return result, err, r3, r4, r5, r6, r7, r8, r9, r10
+  end
+  return nil, result
+end
 
 local function GetJwtToken(serviceAccount)
     local saDecode, err = cjson.decode(serviceAccount)
@@ -104,7 +120,22 @@ local function GetAccessTokenByWI()
 end
 
 local AccessToken = {}
-AccessToken.__index = AccessToken
+
+function AccessToken.__index(self, key)
+    if key == "token" then
+        if self:needsRefresh() then
+            local ok, err = self:refresh()
+            if not ok then
+                ngx.log(ngx.ERR, "[accesstoken] auto refresh failed: ", tostring(err))
+                return nil
+            end
+        end
+        return rawget(self, "_token")
+    end
+    
+    return AccessToken[key]
+end
+
 function AccessToken:new(gcpServiceAccount, opts)
     local self = {}
     opts = opts or {}
@@ -139,35 +170,63 @@ function AccessToken:new(gcpServiceAccount, opts)
     end
 
     if (accessToken) then
-        self.token = accessToken.access_token
+        self._token = accessToken.access_token
         self.expireTime = ngx.now() + accessToken.expires_in
         self.authMethod = authMethod
+        self.gcpServiceAccount = gcpServiceAccount
     else
         ngx.log(ngx.ERR, "[accesstoken] Unable to get accesstoken")
         error("Failed to authenticate")
         return nil
     end
+
+    self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
     return self
 end
 
 function AccessToken:needsRefresh()
-    return self.expireTime < ngx.now()
+    return self.expireTime < (ngx.now() + self.expireWindow)
 end
 
 function AccessToken:refresh()
-    local accessToken
-    if (self.authMethod == "SA") then
-        local gcpServiceAccount = os.getenv("GCP_SERVICE_ACCOUNT")
-        accessToken = GetAccessTokenBySA(gcpServiceAccount)
-    elseif (self.authMethod == "WI") then
-        accessToken = GetAccessTokenByWI()
+    while self:needsRefresh() do
+        if self._semaphore then
+            local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
+            if not ok then
+                ngx.log(ngx.ERR, "[accesstoken] semaphore wait failed: ", tostring(err))
+                return nil, "semaphore wait failed: " .. tostring(err)
+            end
+        else
+            local sema, err = semaphore:new()
+            if not sema then
+                ngx.log(ngx.ERR, "[accesstoken] create semaphore failed: ", tostring(err))
+                return nil, "create semaphore failed: " .. tostring(err)
+            end
+            self._semaphore = sema
+
+            local accessToken, err
+            if (self.authMethod == "SA") then
+                accessToken, err = safe_call(GetAccessTokenBySA, self.gcpServiceAccount)
+            elseif (self.authMethod == "WI") then
+                accessToken, err = safe_call(GetAccessTokenByWI)
+            end
+            
+            if (accessToken) then
+                self._token = accessToken.access_token
+                self.expireTime = ngx.now() + accessToken.expires_in
+            end
+
+            self._semaphore = nil
+            sema:post(math.abs(sema:count()) + 1)
+            
+            if not accessToken then
+                ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(err))
+                return nil, "failed to get new access token: " .. tostring(err)
+            end
+        end
     end
-    if (accessToken) then
-        self.token = accessToken.access_token
-        self.expireTime = ngx.now() + accessToken.expires_in
-        return true
-    end
-    return false
+
+    return true
 end
 
 return setmetatable(

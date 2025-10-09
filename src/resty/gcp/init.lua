@@ -71,6 +71,10 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
         requestBody = cjson.encode(requestBody)
     end
 
+    if accesstoken.token == nil or #accesstoken.token == 0 then
+        error("Invalid access token")
+    end
+
     local req = {
         method = apiDetail.httpMethod,
         headers = {
