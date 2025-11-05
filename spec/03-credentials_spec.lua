@@ -37,15 +37,12 @@ describe("access token", function ()
     package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
     local temp_access_token = require "resty.gcp.request.credentials.accesstoken"
     
-    local success, result = pcall(test_function, temp_access_token)
+    -- Execute test function (let test failures propagate naturally)
+    test_function(temp_access_token)
     
+    -- Restore original state
     package.loaded["resty.luasocket.http"] = original_http
     package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
-    
-    if not success then
-      error(result)
-    end
-    return result
   end
 
   -- Default successful responses
