@@ -110,8 +110,9 @@ local function GetAccessTokenByWI()
             },
         }
     )
-    if not res then
-        ngx.log(ngx.DEBUG, "[accesstoken] failed to Access Token ", tostring(err))
+
+    if not res or not res.status or (res.status >= 400) then
+        ngx.log(ngx.ERR , "[accesstoken] failed to Access Token ", tostring(err))
         return
     end
     client:close()
@@ -150,9 +151,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- and add the ADC (Application Default Credentials) option.
     if auth_method_order == "legacy" then
       -- First try via Workload Identity and then via Service Account
-      accessToken, authMethod = GetAccessTokenByWI()
+      accessToken, authMethod = safe_call(GetAccessTokenByWI)
       if not accessToken then
-        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+        accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount)
       end
 
     -- This simulates the official behavior of Application Default Credentials
@@ -160,9 +161,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- for more details.
     -- The implementation is not exactly the same but a similar order of precedence is followed.
     elseif auth_method_order == "adc" then
-      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+      accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount)
       if not accessToken then
-          accessToken, authMethod = GetAccessTokenByWI()
+          accessToken, authMethod = safe_call(GetAccessTokenByWI)
       end
 
     else

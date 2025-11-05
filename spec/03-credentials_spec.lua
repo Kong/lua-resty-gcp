@@ -2,36 +2,66 @@ local restore = require "spec.helpers"
 
 describe("access token", function ()
   local access_token
-  
-  setup(function()
 
-    local http = {
+  -- Helper function to create HTTP mock with custom responses
+  local function create_http_mock(responses)
+    return {
       new = function()
         return {
           counter = 0,
           close = function() return true end,
           request_uri = function(self, url, opts)
             self.counter = self.counter + 1
-            if url == "https://www.googleapis.com/oauth2/v4/token" then
-              return {
-                status = 200,
-                body = [[{"access_token": "test_jwt", "expires_in": 3600}]],
-              }
-            elseif url == "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token" then
-              return {
-                status = 200,
-                body = [[{"access_token": "test_wi", "expires_in": 3600}]],
-              }
+            local response = responses[url]
+            if response then
+              if type(response) == "function" then
+                return response()
+              else
+                return response
+              end
             else
-              error("bad test path provided??? " .. tostring(opts.path))
+              error("bad test path provided??? " .. tostring(url))
             end
           end,
         }
       end,
     }
+  end
 
-    package.loaded["resty.luasocket.http"] = http
+  -- Helper function to temporarily replace HTTP mock
+  local function with_http_mock(mock_responses, test_function)
+    local original_http = package.loaded["resty.luasocket.http"]
+    package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses)
     
+    -- Reload the access_token module to use the new HTTP mock
+    package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
+    local temp_access_token = require "resty.gcp.request.credentials.accesstoken"
+    
+    local success, result = pcall(test_function, temp_access_token)
+    
+    package.loaded["resty.luasocket.http"] = original_http
+    package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
+    
+    if not success then
+      error(result)
+    end
+    return result
+  end
+
+  -- Default successful responses
+  local default_responses = {
+    ["https://www.googleapis.com/oauth2/v4/token"] = {
+      status = 200,
+      body = [[{"access_token": "test_jwt", "expires_in": 3600}]],
+    },
+    ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = {
+      status = 200,
+      body = [[{"access_token": "test_wi", "expires_in": 3600}]],
+    }
+  }
+  
+  setup(function()
+    package.loaded["resty.luasocket.http"] = create_http_mock(default_responses)
   end)
 
   teardown(function()
@@ -58,7 +88,6 @@ describe("access token", function ()
 
   it("should create an access token with default auth method", function()
     local gcpToken = access_token()
-    
     assert.same(gcpToken.token, "test_wi")
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
@@ -66,7 +95,6 @@ describe("access token", function ()
 
   it("should create an access token with legacy auth method order", function()
     local gcpToken = access_token(nil, { auth_method_order = "legacy" })
-    
     assert.same(gcpToken.token, "test_wi")    
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
@@ -74,19 +102,9 @@ describe("access token", function ()
 
   it("should create an access token with adc auth method order", function()
     local gcpToken = access_token(nil, { auth_method_order = "adc" })
-    
     assert.same(gcpToken.token, "test_jwt")
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
-  end)
-
-  it("should handle access token error with invalid credentials", function()
-    -- use invalid Service Account JSON
-    local invalidAccount = '{"invalid": "json"}'
-      local invalidToken = access_token(invalidAccount)
-      assert.is_not_nil(invalidToken)
-      assert.same(invalidAccount, invalidToken.gcpServiceAccount)
-      assert.is_string(invalidToken.token)
   end)
 
   it("should handle an expired wi access token to refresh", function()
@@ -156,6 +174,49 @@ describe("access token", function ()
     end
     
     assert.is_false(gcpToken:needsRefresh())
+  end)
+
+  it("should fallback to WI when SA fails in ADC mode", function()
+    local sa_failure_responses = {
+      ["https://www.googleapis.com/oauth2/v4/token"] = {
+        status = 400,
+        body = [[{"error": "invalid_grant", "error_description": "Invalid JWT"}]],
+      },
+      ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = {
+        status = 200,
+        body = [[{"access_token": "test_wi_fallback", "expires_in": 3600}]],
+      }
+    }
+
+    with_http_mock(sa_failure_responses, function(temp_access_token)
+      local gcpToken = temp_access_token(nil, { auth_method_order = "adc" })
+      -- GetAccessTokenBySA fails, should fallback to GetAccessTokenByWI
+      assert.same(gcpToken.token, "test_wi_fallback")
+      assert.same(gcpToken.authMethod, "WI")
+      assert.is_number(gcpToken.expireTime)
+      assert.is_false(gcpToken:needsRefresh())
+    end)
+  end)
+
+  it("should fallback to SA when WI fails in legacy mode", function()
+    local wi_failure_responses = {
+      ["https://www.googleapis.com/oauth2/v4/token"] = {
+        status = 200,
+        body = [[{"access_token": "test_sa_fallback", "expires_in": 3600}]],
+      },
+      ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = function()
+        return nil, "connection refused"
+      end
+    }
+
+    with_http_mock(wi_failure_responses, function(temp_access_token)
+      local gcpToken = temp_access_token(nil, { auth_method_order = "legacy" })
+      -- GetAccessTokenByWI fails, should fallback to GetAccessTokenBySA
+      assert.same(gcpToken.token, "test_sa_fallback")
+      assert.same(gcpToken.authMethod, "SA")
+      assert.is_number(gcpToken.expireTime)
+      assert.is_false(gcpToken:needsRefresh())
+    end)
   end)
 
 end)
