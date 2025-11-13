@@ -110,8 +110,9 @@ local function GetAccessTokenByWI()
             },
         }
     )
-    if not res then
-        ngx.log(ngx.DEBUG, "[accesstoken] failed to Access Token ", tostring(err))
+
+    if not res or not res.status or (res.status >= 400) then
+        ngx.log(ngx.ERR, "[accesstoken] failed to Access Token ", tostring(err))
         return
     end
     client:close()
@@ -132,7 +133,7 @@ function AccessToken.__index(self, key)
         end
         return rawget(self, "_token")
     end
-    
+
     return AccessToken[key]
 end
 
@@ -142,6 +143,8 @@ function AccessToken:new(gcpServiceAccount, opts)
 
     setmetatable(self, AccessToken)
 
+    self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
+
     local auth_method_order = opts.auth_method_order or "legacy"
     gcpServiceAccount = gcpServiceAccount or os.getenv("GCP_SERVICE_ACCOUNT")
 
@@ -150,9 +153,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- and add the ADC (Application Default Credentials) option.
     if auth_method_order == "legacy" then
       -- First try via Workload Identity and then via Service Account
-      accessToken, authMethod = GetAccessTokenByWI()
+      accessToken, authMethod = safe_call(GetAccessTokenByWI)
       if not accessToken then
-        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+        accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount)
       end
 
     -- This simulates the official behavior of Application Default Credentials
@@ -160,9 +163,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- for more details.
     -- The implementation is not exactly the same but a similar order of precedence is followed.
     elseif auth_method_order == "adc" then
-      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount)
+      accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount)
       if not accessToken then
-          accessToken, authMethod = GetAccessTokenByWI()
+          accessToken, authMethod = safe_call(GetAccessTokenByWI)
       end
 
     else
@@ -171,7 +174,13 @@ function AccessToken:new(gcpServiceAccount, opts)
 
     if (accessToken) then
         self._token = accessToken.access_token
-        self.expireTime = ngx.now() + accessToken.expires_in
+
+        if accessToken.expires_in > self.expireWindow then
+            self.expireTime = ngx.now() + accessToken.expires_in - self.expireWindow
+        else
+            self.expireTime = ngx.now() + accessToken.expires_in
+        end
+
         self.authMethod = authMethod
         self.gcpServiceAccount = gcpServiceAccount
     else
@@ -180,12 +189,11 @@ function AccessToken:new(gcpServiceAccount, opts)
         return nil
     end
 
-    self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
     return self
 end
 
 function AccessToken:needsRefresh()
-    return self.expireTime < (ngx.now() + self.expireWindow)
+    return self.expireTime < ngx.now()
 end
 
 function AccessToken:refresh()
@@ -210,15 +218,19 @@ function AccessToken:refresh()
             elseif (self.authMethod == "WI") then
                 accessToken, err = safe_call(GetAccessTokenByWI)
             end
-            
+
             if (accessToken) then
                 self._token = accessToken.access_token
-                self.expireTime = ngx.now() + accessToken.expires_in
+                if accessToken.expires_in > self.expireWindow then
+                  self.expireTime = ngx.now() + accessToken.expires_in - self.expireWindow
+                else
+                  self.expireTime = ngx.now() + accessToken.expires_in
+                end
             end
 
             self._semaphore = nil
             sema:post(math.abs(sema:count()) + 1)
-            
+
             if not accessToken then
                 ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(err))
                 return nil, "failed to get new access token: " .. tostring(err)
