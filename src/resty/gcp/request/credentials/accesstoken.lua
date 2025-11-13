@@ -112,7 +112,7 @@ local function GetAccessTokenByWI()
     )
 
     if not res or not res.status or (res.status >= 400) then
-        ngx.log(ngx.ERR , "[accesstoken] failed to Access Token ", tostring(err))
+        ngx.log(ngx.ERR, "[accesstoken] failed to Access Token ", tostring(err))
         return
     end
     client:close()
