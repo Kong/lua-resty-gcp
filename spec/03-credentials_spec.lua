@@ -231,7 +231,7 @@ describe("access token", function ()
 
     with_http_mock(sa_responses, function(temp_access_token)
       local gcpToken = temp_access_token(nil, { auth_method_order = "adc" })
-      -- GetAccessTokenBySA fails, should fallback to GetAccessTokenByWI
+      -- Test that tokens with short expiration times (less than expireWindow) are handled correctly
       assert.same(gcpToken.token, "test_sa_token")
       assert.same(gcpToken.authMethod, "SA")
       assert.is_number(gcpToken.expireTime)
