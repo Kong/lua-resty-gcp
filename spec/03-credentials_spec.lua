@@ -216,4 +216,31 @@ describe("access token", function ()
     end)
   end)
 
+  it("can properly handle expire_in values less than expireWindow.", function()
+    local sa_responses = {
+      ["https://www.googleapis.com/oauth2/v4/token"] = {
+        status = 200,
+        -- expires_in 1s is less than the default expireWindow 15s
+        body = [[{"access_token": "test_sa_token", "expires_in": 1}]],
+      },
+      ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = {
+        status = 400,
+        body = [[{"error": "invalid_grant", "error_description": "Invalid JWT"}]],
+      }
+    }
+
+    with_http_mock(sa_responses, function(temp_access_token)
+      local gcpToken = temp_access_token(nil, { auth_method_order = "adc" })
+      -- GetAccessTokenBySA fails, should fallback to GetAccessTokenByWI
+      assert.same(gcpToken.token, "test_sa_token")
+      assert.same(gcpToken.authMethod, "SA")
+      assert.is_number(gcpToken.expireTime)
+      assert.is_false(gcpToken:needsRefresh())
+
+      ngx.sleep(2)
+
+      assert.is_true(gcpToken:needsRefresh())
+    end)
+  end)
+
 end)
