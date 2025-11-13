@@ -216,7 +216,7 @@ describe("access token", function ()
     end)
   end)
 
-  it("can properly handle expire_in values less than expireWindow", function()
+  it("can properly handle expires_in values less than expireWindow", function()
     local sa_responses = {
       ["https://www.googleapis.com/oauth2/v4/token"] = {
         status = 200,
