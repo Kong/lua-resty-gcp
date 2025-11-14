@@ -174,11 +174,11 @@ function AccessToken:new(gcpServiceAccount, opts)
 
     if (accessToken) then
         self._token = accessToken.access_token
-
-        if accessToken.expires_in > self.expireWindow then
-            self.expireTime = ngx.now() + accessToken.expires_in - self.expireWindow
+        local new_token_expires_in = tonumber(accessToken.expires_in)
+        if new_token_expires_in > self.expireWindow then
+            self.expireTime = ngx.now() + new_token_expires_in - self.expireWindow
         else
-            self.expireTime = ngx.now() + accessToken.expires_in
+            self.expireTime = ngx.now() + new_token_expires_in
         end
 
         self.authMethod = authMethod
@@ -221,10 +221,11 @@ function AccessToken:refresh()
 
             if (accessToken) then
                 self._token = accessToken.access_token
-                if accessToken.expires_in > self.expireWindow then
-                  self.expireTime = ngx.now() + accessToken.expires_in - self.expireWindow
+                local new_token_expires_in = tonumber(accessToken.expires_in)
+                if new_token_expires_in > self.expireWindow then
+                  self.expireTime = ngx.now() + new_token_expires_in - self.expireWindow
                 else
-                  self.expireTime = ngx.now() + accessToken.expires_in
+                  self.expireTime = ngx.now() + new_token_expires_in
                 end
             end
 
