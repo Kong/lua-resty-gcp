@@ -79,7 +79,7 @@ local function GetAccessTokenByJwt(jwtToken)
 end
 
 local function GetAccessTokenBySA(serviceAccount)
-    ngx.log(ngx.DEBUG, "[accesstoken] Using Envrionment Service Account to get Access Token")
+    ngx.log(ngx.DEBUG, "[accesstoken] Using Environment Service Account to get Access Token")
 
     if not serviceAccount then
         -- Note: nginx workers do not have access to env vars. initialize in init phase
@@ -112,7 +112,7 @@ local function GetAccessTokenByWI()
     )
 
     if not res or not res.status or (res.status >= 400) then
-        ngx.log(ngx.ERR, "[accesstoken] failed to Access Token ", tostring(err))
+        ngx.log(ngx.ERR, "[accesstoken] failed to get Access Token ", tostring(err))
         return
     end
     client:close()
