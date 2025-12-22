@@ -447,19 +447,6 @@ describe("access token", function ()
     it("should use custom oauth_token_url in JWT aud field", function()
       local custom_oauth_url = "https://custom.googleapis.com/oauth2/v4/token"
       local captured_request_body = nil
-      local custom_responses = {
-        [custom_oauth_url] = function(url, opts)
-          -- Capture the request body to verify JWT contains custom URL in aud field
-          captured_request_body = opts.body
-          return {
-            status = 200,
-            body = [[{"access_token": "test_custom_aud_token", "expires_in": 3600}]],
-          }
-        end,
-        ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = function()
-          return nil, "connection refused"
-        end
-      }
 
       -- We need to modify the HTTP mock to capture request details
       local original_http = package.loaded["resty.luasocket.http"]
