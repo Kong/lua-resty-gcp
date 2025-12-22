@@ -5,6 +5,8 @@ local semaphore = require "ngx.semaphore"
 
 local SEMAPHORE_TIMEOUT = 30 -- semaphore timeout in seconds
 local EXPIRY_WINDOW = 15 -- expiry window in seconds
+local DEFAULT_OAUTH_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token"
+local DEFAULT_METADATA_URL = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
 
 -- Executes a xpcall but returns hard-errors as Lua 'nil+err' result.
 -- Handles max of 10 return values.
@@ -18,7 +20,8 @@ local function safe_call(f, ...)
   return nil, result
 end
 
-local function GetJwtToken(serviceAccount)
+local function GetJwtToken(serviceAccount, oauth_token_url)
+    oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     local saDecode, err = cjson.decode(serviceAccount)
     if type(saDecode) ~= "table" then
         ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, expect JSON: ", tostring(err))
@@ -34,7 +37,7 @@ local function GetJwtToken(serviceAccount)
     local payload = {
         iss = saDecode.client_email,
         sub = saDecode.client_email,
-        aud = "https://www.googleapis.com/oauth2/v4/token",
+        aud = oauth_token_url,
         iat = timeNow,
         exp = timeNow + 3600,
         scope = "https://www.googleapis.com/auth/cloud-platform"
@@ -51,16 +54,16 @@ local function GetJwtToken(serviceAccount)
     return jwt_token
 end
 
-local function GetAccessTokenByJwt(jwtToken)
+local function GetAccessTokenByJwt(jwtToken, oauth_token_url)
+    oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     local client = http.new()
-    local auth_url = "https://www.googleapis.com/oauth2/v4/token"
     local params = {
         grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
         assertion = jwtToken
     }
     local res, err =
         client:request_uri(
-        auth_url,
+        oauth_token_url,
         {
             method = "POST",
             body = cjson.encode(params),
@@ -78,7 +81,8 @@ local function GetAccessTokenByJwt(jwtToken)
     return accessToken
 end
 
-local function GetAccessTokenBySA(serviceAccount)
+local function GetAccessTokenBySA(serviceAccount, oauth_token_url)
+    oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     ngx.log(ngx.DEBUG, "[accesstoken] Using Environment Service Account to get Access Token")
 
     if not serviceAccount then
@@ -88,8 +92,8 @@ local function GetAccessTokenBySA(serviceAccount)
         error("Couldn't find GCP_SERVICE_ACCOUNT env variable")
         return
     end
-    local jwtToken = GetJwtToken(serviceAccount)
-    local res = assert(GetAccessTokenByJwt(jwtToken))
+    local jwtToken = GetJwtToken(serviceAccount, oauth_token_url)
+    local res = assert(GetAccessTokenByJwt(jwtToken, oauth_token_url))
     if res.error then
         ngx.log(ngx.ERR, "[accesstoken] Unable to get access token: ", res.error_description)
         return
@@ -97,13 +101,13 @@ local function GetAccessTokenBySA(serviceAccount)
     return res, "SA"
 end
 
-local function GetAccessTokenByWI()
+local function GetAccessTokenByWI(metadata_url)
+    metadata_url = metadata_url or DEFAULT_METADATA_URL
     ngx.log(ngx.DEBUG, "[accesstoken] Using Workload Identity to get Access Token")
     local client = http.new()
-    local auth_url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
     local res, err =
         client:request_uri(
-        auth_url,
+        metadata_url,
         {
             headers = {
                 ["Metadata-Flavor"] = "Google"
@@ -144,6 +148,8 @@ function AccessToken:new(gcpServiceAccount, opts)
     setmetatable(self, AccessToken)
 
     self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
+    self.oauthTokenUrl = opts.oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
+    self.metadataUrl = opts.metadata_url or DEFAULT_METADATA_URL
 
     local auth_method_order = opts.auth_method_order or "legacy"
     gcpServiceAccount = gcpServiceAccount or os.getenv("GCP_SERVICE_ACCOUNT")
@@ -153,9 +159,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- and add the ADC (Application Default Credentials) option.
     if auth_method_order == "legacy" then
       -- First try via Workload Identity and then via Service Account
-      accessToken, authMethod = safe_call(GetAccessTokenByWI)
+      accessToken, authMethod = safe_call(GetAccessTokenByWI, self.metadataUrl)
       if not accessToken then
-        accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount)
+        accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount, self.oauthTokenUrl)
       end
 
     -- This simulates the official behavior of Application Default Credentials
@@ -163,9 +169,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- for more details.
     -- The implementation is not exactly the same but a similar order of precedence is followed.
     elseif auth_method_order == "adc" then
-      accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount)
+      accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount, self.oauthTokenUrl)
       if not accessToken then
-          accessToken, authMethod = safe_call(GetAccessTokenByWI)
+          accessToken, authMethod = safe_call(GetAccessTokenByWI, self.metadataUrl)
       end
 
     else
@@ -214,9 +220,9 @@ function AccessToken:refresh()
 
             local accessToken, err
             if (self.authMethod == "SA") then
-                accessToken, err = safe_call(GetAccessTokenBySA, self.gcpServiceAccount)
+                accessToken, err = safe_call(GetAccessTokenBySA, self.gcpServiceAccount, self.oauthTokenUrl)
             elseif (self.authMethod == "WI") then
-                accessToken, err = safe_call(GetAccessTokenByWI)
+                accessToken, err = safe_call(GetAccessTokenByWI, self.metadataUrl)
             end
 
             if (accessToken) then
