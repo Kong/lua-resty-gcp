@@ -243,4 +243,267 @@ describe("access token", function ()
     end)
   end)
 
+  -- Tests for custom URL configuration
+  describe("custom URL configuration", function()
+
+    it("should use custom oauth_token_url for Service Account authentication", function()
+      local custom_oauth_url = "https://private.googleapis.com/oauth2/v4/token"
+      local custom_responses = {
+        [custom_oauth_url] = {
+          status = 200,
+          body = [[{"access_token": "test_custom_oauth_token", "expires_in": 3600}]],
+        },
+        ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = function()
+          return nil, "connection refused"
+        end
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token)
+        local gcpToken = temp_access_token(nil, {
+          auth_method_order = "adc",
+          oauth_token_url = custom_oauth_url
+        })
+
+        assert.same(gcpToken.token, "test_custom_oauth_token")
+        assert.same(gcpToken.authMethod, "SA")
+        assert.same(gcpToken.oauthTokenUrl, custom_oauth_url)
+        assert.is_number(gcpToken.expireTime)
+        assert.is_false(gcpToken:needsRefresh())
+      end)
+    end)
+
+    it("should use custom metadata_url for Workload Identity authentication", function()
+      local custom_metadata_url = "http://custom-metadata.internal/token"
+      local custom_responses = {
+        ["https://www.googleapis.com/oauth2/v4/token"] = {
+          status = 400,
+          body = [[{"error": "invalid_grant"}]],
+        },
+        [custom_metadata_url] = {
+          status = 200,
+          body = [[{"access_token": "test_custom_wi_token", "expires_in": 3600}]],
+        }
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token)
+        local gcpToken = temp_access_token(nil, {
+          auth_method_order = "legacy",
+          metadata_url = custom_metadata_url
+        })
+
+        assert.same(gcpToken.token, "test_custom_wi_token")
+        assert.same(gcpToken.authMethod, "WI")
+        assert.same(gcpToken.metadataUrl, custom_metadata_url)
+        assert.is_number(gcpToken.expireTime)
+        assert.is_false(gcpToken:needsRefresh())
+      end)
+    end)
+
+    it("should use both custom oauth_token_url and metadata_url", function()
+      local custom_oauth_url = "https://restricted.googleapis.com/oauth2/v4/token"
+      local custom_metadata_url = "http://private-metadata.internal/token"
+      local custom_responses = {
+        [custom_oauth_url] = {
+          status = 200,
+          body = [[{"access_token": "test_custom_both_token", "expires_in": 3600}]],
+        },
+        [custom_metadata_url] = {
+          status = 200,
+          body = [[{"access_token": "test_custom_wi_both_token", "expires_in": 3600}]],
+        }
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token)
+        -- Test with ADC (SA first)
+        local gcpTokenSA = temp_access_token(nil, {
+          auth_method_order = "adc",
+          oauth_token_url = custom_oauth_url,
+          metadata_url = custom_metadata_url
+        })
+
+        assert.same(gcpTokenSA.token, "test_custom_both_token")
+        assert.same(gcpTokenSA.authMethod, "SA")
+        assert.same(gcpTokenSA.oauthTokenUrl, custom_oauth_url)
+        assert.same(gcpTokenSA.metadataUrl, custom_metadata_url)
+      end)
+
+      with_http_mock(custom_responses, function(temp_access_token)
+        -- Test with legacy (WI first)
+        local gcpTokenWI = temp_access_token(nil, {
+          auth_method_order = "legacy",
+          oauth_token_url = custom_oauth_url,
+          metadata_url = custom_metadata_url
+        })
+
+        assert.same(gcpTokenWI.token, "test_custom_wi_both_token")
+        assert.same(gcpTokenWI.authMethod, "WI")
+        assert.same(gcpTokenWI.oauthTokenUrl, custom_oauth_url)
+        assert.same(gcpTokenWI.metadataUrl, custom_metadata_url)
+      end)
+    end)
+
+    it("should use custom oauth_token_url during SA token refresh", function()
+      local custom_oauth_url = "https://private.googleapis.com/oauth2/v4/token"
+      local refresh_counter = 0
+      local custom_responses = {
+        [custom_oauth_url] = function()
+          refresh_counter = refresh_counter + 1
+          return {
+            status = 200,
+            body = string.format([[{"access_token": "test_refresh_token_%d", "expires_in": 3600}]], refresh_counter),
+          }
+        end,
+        ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = function()
+          return nil, "connection refused"
+        end
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token)
+        local gcpToken = temp_access_token(nil, {
+          auth_method_order = "adc",
+          oauth_token_url = custom_oauth_url
+        })
+
+        -- First token
+        assert.same(gcpToken.token, "test_refresh_token_1")
+        assert.same(gcpToken.authMethod, "SA")
+        assert.equals(1, refresh_counter)
+
+        -- Force refresh
+        gcpToken.expireTime = ngx.now() - 100
+        assert.is_true(gcpToken:needsRefresh())
+
+        -- Access token property to trigger refresh
+        local refreshed_token = gcpToken.token
+        assert.same(refreshed_token, "test_refresh_token_2")
+        assert.equals(2, refresh_counter)
+        assert.is_false(gcpToken:needsRefresh())
+      end)
+    end)
+
+    it("should use custom metadata_url during WI token refresh", function()
+      local custom_metadata_url = "http://custom-metadata.internal/token"
+      local refresh_counter = 0
+      local custom_responses = {
+        ["https://www.googleapis.com/oauth2/v4/token"] = {
+          status = 400,
+          body = [[{"error": "invalid_grant"}]],
+        },
+        [custom_metadata_url] = function()
+          refresh_counter = refresh_counter + 1
+          return {
+            status = 200,
+            body = string.format([[{"access_token": "test_wi_refresh_token_%d", "expires_in": 3600}]], refresh_counter),
+          }
+        end
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token)
+        local gcpToken = temp_access_token(nil, {
+          auth_method_order = "legacy",
+          metadata_url = custom_metadata_url
+        })
+
+        -- First token
+        assert.same(gcpToken.token, "test_wi_refresh_token_1")
+        assert.same(gcpToken.authMethod, "WI")
+        assert.equals(1, refresh_counter)
+
+        -- Force refresh
+        gcpToken.expireTime = ngx.now() - 100
+        assert.is_true(gcpToken:needsRefresh())
+
+        -- Access token property to trigger refresh
+        local refreshed_token = gcpToken.token
+        assert.same(refreshed_token, "test_wi_refresh_token_2")
+        assert.equals(2, refresh_counter)
+        assert.is_false(gcpToken:needsRefresh())
+      end)
+    end)
+
+    it("should maintain backward compatibility with default URLs when no custom URLs provided", function()
+      -- Test that when no custom URLs are provided, default URLs are used
+      local gcpToken = access_token(nil, { auth_method_order = "legacy" })
+
+      assert.same(gcpToken.token, "test_wi")
+      assert.same(gcpToken.oauthTokenUrl, "https://www.googleapis.com/oauth2/v4/token")
+      assert.same(gcpToken.metadataUrl, "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token")
+      assert.is_number(gcpToken.expireTime)
+      assert.is_false(gcpToken:needsRefresh())
+    end)
+
+    it("should use default URL when custom URL is nil", function()
+      local gcpToken = access_token(nil, {
+        auth_method_order = "legacy",
+        oauth_token_url = nil,  -- explicitly set to nil
+        metadata_url = nil      -- explicitly set to nil
+      })
+
+      assert.same(gcpToken.token, "test_wi")
+      assert.same(gcpToken.oauthTokenUrl, "https://www.googleapis.com/oauth2/v4/token")
+      assert.same(gcpToken.metadataUrl, "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token")
+    end)
+
+    it("should use custom oauth_token_url in JWT aud field", function()
+      local custom_oauth_url = "https://custom.googleapis.com/oauth2/v4/token"
+      local captured_request_body = nil
+      local custom_responses = {
+        [custom_oauth_url] = function(url, opts)
+          -- Capture the request body to verify JWT contains custom URL in aud field
+          captured_request_body = opts.body
+          return {
+            status = 200,
+            body = [[{"access_token": "test_custom_aud_token", "expires_in": 3600}]],
+          }
+        end,
+        ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = function()
+          return nil, "connection refused"
+        end
+      }
+
+      -- We need to modify the HTTP mock to capture request details
+      local original_http = package.loaded["resty.luasocket.http"]
+      package.loaded["resty.luasocket.http"] = {
+        new = function()
+          return {
+            close = function() return true end,
+            request_uri = function(self, url, opts)
+              if url == custom_oauth_url then
+                captured_request_body = opts.body
+                return {
+                  status = 200,
+                  body = [[{"access_token": "test_custom_aud_token", "expires_in": 3600}]],
+                }
+              else
+                return nil, "connection refused"
+              end
+            end,
+          }
+        end,
+      }
+
+      package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
+      local temp_access_token = require "resty.gcp.request.credentials.accesstoken"
+
+      local gcpToken = temp_access_token(nil, {
+        auth_method_order = "adc",
+        oauth_token_url = custom_oauth_url
+      })
+
+      assert.same(gcpToken.token, "test_custom_aud_token")
+      assert.is_not_nil(captured_request_body)
+
+      -- Verify the JWT contains the custom URL (it's in the assertion field of the request)
+      local cjson = require("cjson.safe").new()
+      local request_data = cjson.decode(captured_request_body)
+      assert.is_not_nil(request_data)
+      assert.is_not_nil(request_data.assertion)
+
+      -- Restore original state
+      package.loaded["resty.luasocket.http"] = original_http
+      package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
+    end)
+
+  end)
+
 end)
