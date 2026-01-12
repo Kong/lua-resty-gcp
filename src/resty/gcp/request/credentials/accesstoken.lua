@@ -125,21 +125,7 @@ local function GetAccessTokenByWI(metadata_url)
 end
 
 local AccessToken = {}
-
-function AccessToken.__index(self, key)
-    if key == "token" then
-        if self:needsRefresh() then
-            local ok, err = self:refresh()
-            if not ok then
-                ngx.log(ngx.ERR, "[accesstoken] auto refresh failed: ", tostring(err))
-                return nil
-            end
-        end
-        return rawget(self, "_token")
-    end
-
-    return AccessToken[key]
-end
+AccessToken.__index = AccessToken
 
 function AccessToken:new(gcpServiceAccount, opts)
     local self = {}
@@ -179,7 +165,7 @@ function AccessToken:new(gcpServiceAccount, opts)
     end
 
     if (accessToken) then
-        self._token = accessToken.access_token
+        self.token = accessToken.access_token
         local new_token_expires_in = tonumber(accessToken.expires_in)
         if new_token_expires_in > self.expireWindow then
             self.expireTime = ngx.now() + new_token_expires_in - self.expireWindow
@@ -202,50 +188,65 @@ function AccessToken:needsRefresh()
     return self.expireTime < ngx.now()
 end
 
+--- Forces refresh by requesting a new access token regardless of expiry state.
+--- @return boolean ok true on success, false on failure
+--- @return string|nil token_or_err the access token on success, or error message on failure
+--- @return number|nil expireTime the token expiration time on success, or nil on failure
 function AccessToken:refresh()
+    local accessToken, err
+    if (self.authMethod == "SA") then
+        accessToken, err = safe_call(GetAccessTokenBySA, self.gcpServiceAccount, self.oauthTokenUrl)
+    elseif (self.authMethod == "WI") then
+        accessToken, err = safe_call(GetAccessTokenByWI, self.metadataUrl)
+    end
+
+    if (accessToken) then
+        self.token = accessToken.access_token
+        local new_token_expires_in = tonumber(accessToken.expires_in)
+        if new_token_expires_in > self.expireWindow then
+            self.expireTime = ngx.now() + new_token_expires_in - self.expireWindow
+        else
+            self.expireTime = ngx.now() + new_token_expires_in
+        end
+        return true, self.token, self.expireTime
+    end
+
+    return false, err, nil
+end
+
+--- Auto-refresh: only refreshes when the current token is expired (or within expiry window).
+--- @return boolean ok true on success, false on failure
+--- @return string|nil token_or_err the access token on success, or error message on failure
+--- @return number|nil expireTime the token expiration time on success, or nil on failure
+function AccessToken:get()
     while self:needsRefresh() do
         if self._semaphore then
             local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
             if not ok then
                 ngx.log(ngx.ERR, "[accesstoken] semaphore wait failed: ", tostring(err))
-                return nil, "semaphore wait failed: " .. tostring(err)
+                return false, "semaphore wait failed: " .. tostring(err), nil
             end
         else
             local sema, err = semaphore:new()
             if not sema then
                 ngx.log(ngx.ERR, "[accesstoken] create semaphore failed: ", tostring(err))
-                return nil, "create semaphore failed: " .. tostring(err)
+                return false, "create semaphore failed: " .. tostring(err)
             end
             self._semaphore = sema
 
-            local accessToken, err
-            if (self.authMethod == "SA") then
-                accessToken, err = safe_call(GetAccessTokenBySA, self.gcpServiceAccount, self.oauthTokenUrl)
-            elseif (self.authMethod == "WI") then
-                accessToken, err = safe_call(GetAccessTokenByWI, self.metadataUrl)
-            end
-
-            if (accessToken) then
-                self._token = accessToken.access_token
-                local new_token_expires_in = tonumber(accessToken.expires_in)
-                if new_token_expires_in > self.expireWindow then
-                  self.expireTime = ngx.now() + new_token_expires_in - self.expireWindow
-                else
-                  self.expireTime = ngx.now() + new_token_expires_in
-                end
-            end
+            local ok, token_or_err = self:refresh()
 
             self._semaphore = nil
             sema:post(math.abs(sema:count()) + 1)
 
-            if not accessToken then
-                ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(err))
-                return nil, "failed to get new access token: " .. tostring(err)
+            if not ok then
+                ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(token_or_err))
+                return false, "failed to get new access token: " .. tostring(token_or_err)
             end
         end
     end
 
-    return true
+    return true, self.token, self.expireTime
 end
 
 return setmetatable(

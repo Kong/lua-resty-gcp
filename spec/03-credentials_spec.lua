@@ -32,14 +32,14 @@ describe("access token", function ()
   local function with_http_mock(mock_responses, test_function)
     local original_http = package.loaded["resty.luasocket.http"]
     package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses)
-    
+
     -- Reload the access_token module to use the new HTTP mock
     package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
     local temp_access_token = require "resty.gcp.request.credentials.accesstoken"
-    
+
     -- Execute test function (let test failures propagate naturally)
     test_function(temp_access_token)
-    
+
     -- Restore original state
     package.loaded["resty.luasocket.http"] = original_http
     package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
@@ -56,7 +56,7 @@ describe("access token", function ()
       body = [[{"access_token": "test_wi", "expires_in": 3600}]],
     }
   }
-  
+
   setup(function()
     package.loaded["resty.luasocket.http"] = create_http_mock(default_responses)
   end)
@@ -85,21 +85,21 @@ describe("access token", function ()
 
   it("should create an access token with default auth method", function()
     local gcpToken = access_token()
-    assert.same(gcpToken.token, "test_wi")
+    assert.same("test_wi", gcpToken.token)
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
   end)
 
   it("should create an access token with legacy auth method order", function()
     local gcpToken = access_token(nil, { auth_method_order = "legacy" })
-    assert.same(gcpToken.token, "test_wi")    
+    assert.same("test_wi", gcpToken.token)
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
   end)
 
   it("should create an access token with adc auth method order", function()
     local gcpToken = access_token(nil, { auth_method_order = "adc" })
-    assert.same(gcpToken.token, "test_jwt")
+    assert.same("test_jwt", gcpToken.token)
     assert.is_number(gcpToken.expireTime)
     assert.is_boolean(gcpToken:needsRefresh())
   end)
@@ -116,8 +116,13 @@ describe("access token", function ()
       assert.is_false(wiToken:needsRefresh())
 
       wiToken.expireTime = ngx.now() - 100
+      wiToken.token = nil
       assert.is_true(wiToken:needsRefresh())
 
+      local ok, token, expireTime = wiToken:refresh()
+      assert.is_true(ok)
+      assert.same("string", type(token))
+      assert.same("number", type(expireTime))
       assert.same("string", type(wiToken.token))
       assert.same("number", type(wiToken.expireTime))
       assert.same("WI", wiToken.authMethod)
@@ -137,9 +142,13 @@ describe("access token", function ()
       assert.is_false(saToken:needsRefresh())
 
       saToken.expireTime = ngx.now() - 100
+      saToken.token = nil
       assert.is_true(saToken:needsRefresh())
 
-
+      local ok, token, expireTime = saToken:refresh()
+      assert.is_true(ok)
+      assert.same("string", type(token))
+      assert.same("number", type(expireTime))
       assert.same("string", type(saToken.token))
       assert.same("number", type(saToken.expireTime))
       assert.same("SA", saToken.authMethod)
@@ -148,28 +157,32 @@ describe("access token", function ()
 
   it("should handle AccessToken refresh concurrency simulation", function()
     local gcpToken = access_token()
-    
+
     gcpToken.expireTime = ngx.now() - 100
-    
+
     local tokens = {}
+    local expireTimes = {}
     local errors = {}
-    
+
     for i = 1, 3 do
-        local token = gcpToken.token
-        if token then
-            table.insert(tokens, token)
+        local ok, token_or_err, expireTime = gcpToken:get()
+        if ok then
+            table.insert(tokens, token_or_err)
+            table.insert(expireTimes, expireTime)
         else
-            table.insert(errors, "failed to get token")
+            table.insert(errors, token_or_err)
         end
     end
-    
+
     assert.equals(3, #tokens)
+    assert.equals(3, #expireTimes)
     assert.equals(0, #errors)
-    
+
     for i = 1, #tokens do
         assert.equals(tokens[1], tokens[i])
+        assert.same("number", type(expireTimes[i]))
     end
-    
+
     assert.is_false(gcpToken:needsRefresh())
   end)
 
@@ -188,8 +201,8 @@ describe("access token", function ()
     with_http_mock(sa_failure_responses, function(temp_access_token)
       local gcpToken = temp_access_token(nil, { auth_method_order = "adc" })
       -- GetAccessTokenBySA fails, should fallback to GetAccessTokenByWI
-      assert.same(gcpToken.token, "test_wi_fallback")
-      assert.same(gcpToken.authMethod, "WI")
+      assert.same("test_wi_fallback", gcpToken.token)
+      assert.same("WI", gcpToken.authMethod)
       assert.is_number(gcpToken.expireTime)
       assert.is_false(gcpToken:needsRefresh())
     end)
@@ -209,8 +222,8 @@ describe("access token", function ()
     with_http_mock(wi_failure_responses, function(temp_access_token)
       local gcpToken = temp_access_token(nil, { auth_method_order = "legacy" })
       -- GetAccessTokenByWI fails, should fallback to GetAccessTokenBySA
-      assert.same(gcpToken.token, "test_sa_fallback")
-      assert.same(gcpToken.authMethod, "SA")
+      assert.same("test_sa_fallback", gcpToken.token)
+      assert.same("SA", gcpToken.authMethod)
       assert.is_number(gcpToken.expireTime)
       assert.is_false(gcpToken:needsRefresh())
     end)
@@ -232,8 +245,8 @@ describe("access token", function ()
     with_http_mock(sa_responses, function(temp_access_token)
       local gcpToken = temp_access_token(nil, { auth_method_order = "adc" })
       -- Test that tokens with short expiration times (less than expireWindow) are handled correctly
-      assert.same(gcpToken.token, "test_sa_token")
-      assert.same(gcpToken.authMethod, "SA")
+      assert.same("test_sa_token", gcpToken.token)
+      assert.same("SA", gcpToken.authMethod)
       assert.is_number(gcpToken.expireTime)
       assert.is_false(gcpToken:needsRefresh())
 
@@ -264,9 +277,9 @@ describe("access token", function ()
           oauth_token_url = custom_oauth_url
         })
 
-        assert.same(gcpToken.token, "test_custom_oauth_token")
-        assert.same(gcpToken.authMethod, "SA")
-        assert.same(gcpToken.oauthTokenUrl, custom_oauth_url)
+        assert.same("test_custom_oauth_token", gcpToken.token)
+        assert.same("SA", gcpToken.authMethod)
+        assert.same(custom_oauth_url, gcpToken.oauthTokenUrl)
         assert.is_number(gcpToken.expireTime)
         assert.is_false(gcpToken:needsRefresh())
       end)
@@ -291,9 +304,9 @@ describe("access token", function ()
           metadata_url = custom_metadata_url
         })
 
-        assert.same(gcpToken.token, "test_custom_wi_token")
-        assert.same(gcpToken.authMethod, "WI")
-        assert.same(gcpToken.metadataUrl, custom_metadata_url)
+        assert.same("test_custom_wi_token", gcpToken.token)
+        assert.same("WI", gcpToken.authMethod)
+        assert.same(custom_metadata_url, gcpToken.metadataUrl)
         assert.is_number(gcpToken.expireTime)
         assert.is_false(gcpToken:needsRefresh())
       end)
@@ -321,10 +334,10 @@ describe("access token", function ()
           metadata_url = custom_metadata_url
         })
 
-        assert.same(gcpTokenSA.token, "test_custom_both_token")
-        assert.same(gcpTokenSA.authMethod, "SA")
-        assert.same(gcpTokenSA.oauthTokenUrl, custom_oauth_url)
-        assert.same(gcpTokenSA.metadataUrl, custom_metadata_url)
+        assert.same("test_custom_both_token", gcpTokenSA.token)
+        assert.same("SA", gcpTokenSA.authMethod)
+        assert.same(custom_oauth_url, gcpTokenSA.oauthTokenUrl)
+        assert.same(custom_metadata_url, gcpTokenSA.metadataUrl)
       end)
 
       with_http_mock(custom_responses, function(temp_access_token)
@@ -335,10 +348,10 @@ describe("access token", function ()
           metadata_url = custom_metadata_url
         })
 
-        assert.same(gcpTokenWI.token, "test_custom_wi_both_token")
-        assert.same(gcpTokenWI.authMethod, "WI")
-        assert.same(gcpTokenWI.oauthTokenUrl, custom_oauth_url)
-        assert.same(gcpTokenWI.metadataUrl, custom_metadata_url)
+        assert.same("test_custom_wi_both_token", gcpTokenWI.token)
+        assert.same("WI", gcpTokenWI.authMethod)
+        assert.same(custom_oauth_url, gcpTokenWI.oauthTokenUrl)
+        assert.same(custom_metadata_url, gcpTokenWI.metadataUrl)
       end)
     end)
 
@@ -365,8 +378,8 @@ describe("access token", function ()
         })
 
         -- First token
-        assert.same(gcpToken.token, "test_refresh_token_1")
-        assert.same(gcpToken.authMethod, "SA")
+        assert.same("test_refresh_token_1", gcpToken.token)
+        assert.same("SA", gcpToken.authMethod)
         assert.equals(1, refresh_counter)
 
         -- Force refresh
@@ -374,8 +387,10 @@ describe("access token", function ()
         assert.is_true(gcpToken:needsRefresh())
 
         -- Access token property to trigger refresh
-        local refreshed_token = gcpToken.token
-        assert.same(refreshed_token, "test_refresh_token_2")
+        local ok, token, expireTime = gcpToken:refresh()
+        assert.is_true(ok)
+        assert.same("test_refresh_token_2", token)
+        assert.same("number", type(expireTime))
         assert.equals(2, refresh_counter)
         assert.is_false(gcpToken:needsRefresh())
       end)
@@ -405,8 +420,8 @@ describe("access token", function ()
         })
 
         -- First token
-        assert.same(gcpToken.token, "test_wi_refresh_token_1")
-        assert.same(gcpToken.authMethod, "WI")
+        assert.same("test_wi_refresh_token_1", gcpToken.token)
+        assert.same("WI", gcpToken.authMethod)
         assert.equals(1, refresh_counter)
 
         -- Force refresh
@@ -414,8 +429,10 @@ describe("access token", function ()
         assert.is_true(gcpToken:needsRefresh())
 
         -- Access token property to trigger refresh
-        local refreshed_token = gcpToken.token
-        assert.same(refreshed_token, "test_wi_refresh_token_2")
+        local ok, token, expireTime = gcpToken:refresh()
+        assert.is_true(ok)
+        assert.same("test_wi_refresh_token_2", token)
+        assert.same("number", type(expireTime))
         assert.equals(2, refresh_counter)
         assert.is_false(gcpToken:needsRefresh())
       end)
@@ -425,9 +442,9 @@ describe("access token", function ()
       -- Test that when no custom URLs are provided, default URLs are used
       local gcpToken = access_token(nil, { auth_method_order = "legacy" })
 
-      assert.same(gcpToken.token, "test_wi")
-      assert.same(gcpToken.oauthTokenUrl, "https://www.googleapis.com/oauth2/v4/token")
-      assert.same(gcpToken.metadataUrl, "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token")
+      assert.same("test_wi", gcpToken.token)
+      assert.same("https://www.googleapis.com/oauth2/v4/token", gcpToken.oauthTokenUrl)
+      assert.same("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token", gcpToken.metadataUrl)
       assert.is_number(gcpToken.expireTime)
       assert.is_false(gcpToken:needsRefresh())
     end)
@@ -439,9 +456,9 @@ describe("access token", function ()
         metadata_url = nil      -- explicitly set to nil
       })
 
-      assert.same(gcpToken.token, "test_wi")
-      assert.same(gcpToken.oauthTokenUrl, "https://www.googleapis.com/oauth2/v4/token")
-      assert.same(gcpToken.metadataUrl, "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token")
+      assert.same("test_wi", gcpToken.token)
+      assert.same("https://www.googleapis.com/oauth2/v4/token", gcpToken.oauthTokenUrl)
+      assert.same("http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token", gcpToken.metadataUrl)
     end)
 
     it("should use custom oauth_token_url in JWT aud field", function()
@@ -477,7 +494,7 @@ describe("access token", function ()
         oauth_token_url = custom_oauth_url
       })
 
-      assert.same(gcpToken.token, "test_custom_aud_token")
+      assert.same("test_custom_aud_token", gcpToken.token)
       assert.is_not_nil(captured_request_body)
 
       -- Verify the JWT contains the custom URL (it's in the assertion field of the request)
