@@ -116,7 +116,6 @@ describe("access token", function ()
       assert.is_false(wiToken:needsRefresh())
 
       wiToken.expireTime = ngx.now() - 100
-      wiToken.token = nil
       assert.is_true(wiToken:needsRefresh())
 
       local ok, token, expireTime = wiToken:refresh()
@@ -142,7 +141,6 @@ describe("access token", function ()
       assert.is_false(saToken:needsRefresh())
 
       saToken.expireTime = ngx.now() - 100
-      saToken.token = nil
       assert.is_true(saToken:needsRefresh())
 
       local ok, token, expireTime = saToken:refresh()

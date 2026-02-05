@@ -8,31 +8,17 @@ local EXPIRY_WINDOW = 15 -- expiry window in seconds
 local DEFAULT_OAUTH_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token"
 local DEFAULT_METADATA_URL = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
 
--- Executes a xpcall but returns hard-errors as Lua 'nil+err' result.
--- Handles max of 10 return values.
--- @param f function to execute
--- @param ... parameters to pass to the function
-local function safe_call(f, ...)
-  local ok, result, err, r3, r4, r5, r6, r7, r8, r9, r10 = xpcall(f, debug.traceback, ...)
-  if ok then
-    return result, err, r3, r4, r5, r6, r7, r8, r9, r10
-  end
-  return nil, result
-end
-
 local function GetJwtToken(serviceAccount, oauth_token_url)
     oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     local saDecode, err = cjson.decode(serviceAccount)
     if type(saDecode) ~= "table" then
         ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, expect JSON: ", tostring(err))
-        error("Invalid format for GCP Service Account")
-        return
+        return nil, "Invalid format for GCP Service Account"
     end
     local timeNow = os.time()
     if (not (saDecode.client_email and saDecode.private_key and saDecode.private_key_id)) then
         ngx.log(ngx.ERR, "[accesstoken] Invalid GCP_SERVICE_ACCOUNT, missing required field")
-        error("Invalid GCP Service Account")
-        return
+        return nil, "Invalid GCP Service Account"
     end
     local payload = {
         iss = saDecode.client_email,
@@ -43,7 +29,7 @@ local function GetJwtToken(serviceAccount, oauth_token_url)
         scope = "https://www.googleapis.com/auth/cloud-platform"
     }
     local payloadJson = cjson.encode(payload)
-    local jwt_token =
+    local jwt_token, err =
         jwt:sign(
         saDecode.private_key,
         {
@@ -51,6 +37,10 @@ local function GetJwtToken(serviceAccount, oauth_token_url)
             payload = payloadJson
         }
     )
+    if not jwt_token then
+        ngx.log(ngx.ERR, "[accesstoken] Failed to sign JWT: ", tostring(err))
+        return nil, err
+    end
     return jwt_token
 end
 
@@ -72,12 +62,15 @@ local function GetAccessTokenByJwt(jwtToken, oauth_token_url)
     )
     if not res then
         ngx.log(ngx.ERR, "[accesstoken] Unable to get access token")
-        error(err)
-        return
+        return nil, err
     end
 
     client:close()
     local accessToken = cjson.decode(res.body)
+    if accessToken.error then
+        ngx.log(ngx.ERR, "[accesstoken] Unable to get access token: ", accessToken.error_description)
+        return nil, accessToken.error_description
+    end
     return accessToken
 end
 
@@ -89,14 +82,15 @@ local function GetAccessTokenBySA(serviceAccount, oauth_token_url)
         -- Note: nginx workers do not have access to env vars. initialize in init phase
         -- or by the 'config' module.
         ngx.log(ngx.ERR, "[accesstoken] Couldn't find GCP_SERVICE_ACCOUNT env variable")
-        error("Couldn't find GCP_SERVICE_ACCOUNT env variable")
-        return
+        return nil, "Couldn't find GCP_SERVICE_ACCOUNT env variable"
     end
-    local jwtToken = GetJwtToken(serviceAccount, oauth_token_url)
-    local res = assert(GetAccessTokenByJwt(jwtToken, oauth_token_url))
-    if res.error then
-        ngx.log(ngx.ERR, "[accesstoken] Unable to get access token: ", res.error_description)
-        return
+    local jwtToken, err = GetJwtToken(serviceAccount, oauth_token_url)
+    if not jwtToken then
+        return nil, err
+    end
+    local res, err = GetAccessTokenByJwt(jwtToken, oauth_token_url)
+    if not res then
+        return nil, err
     end
     return res, "SA"
 end
@@ -117,16 +111,37 @@ local function GetAccessTokenByWI(metadata_url)
 
     if not res or not res.status or (res.status >= 400) then
         ngx.log(ngx.ERR, "[accesstoken] failed to get Access Token ", tostring(err))
-        return
+        return nil, err or "failed to get Access Token"
     end
     client:close()
     local accessToken = cjson.decode(res.body)
     return accessToken, "WI"
 end
 
+--- AccessToken class for managing GCP access tokens.
+-- @classmod AccessToken
+-- @field token string the current access token
+-- @field expireTime number the token expiration time
+-- @field authMethod string the authentication method used ("SA" or "WI")
+-- @field gcpServiceAccount string|nil the GCP service account JSON
+-- @field expireWindow number the expiry window in seconds
+-- @field oauthTokenUrl string the OAuth token URL
+-- @field metadataUrl string the metadata URL for Workload Identity
 local AccessToken = {}
+
 AccessToken.__index = AccessToken
 
+--- Create a new AccessToken instance and acquire an initial token.
+-- @tparam[opt] string gcpServiceAccount service account JSON string;
+--   if nil, falls back to the `GCP_SERVICE_ACCOUNT` environment variable
+-- @tparam[opt] table opts configuration options
+-- @tparam[opt=15] number opts.expireWindow seconds before expiry to trigger refresh
+-- @tparam[opt] string opts.oauth_token_url OAuth token endpoint URL
+-- @tparam[opt] string opts.metadata_url GCE metadata endpoint URL
+-- @tparam[opt="legacy"] string opts.auth_method_order authentication order:
+--   `"legacy"` tries WI then SA; `"adc"` tries SA then WI
+-- @treturn AccessToken a new AccessToken instance
+-- @return nil, string on failure: nil and an error message
 function AccessToken:new(gcpServiceAccount, opts)
     local self = {}
     opts = opts or {}
@@ -145,9 +160,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- and add the ADC (Application Default Credentials) option.
     if auth_method_order == "legacy" then
       -- First try via Workload Identity and then via Service Account
-      accessToken, authMethod = safe_call(GetAccessTokenByWI, self.metadataUrl)
+      accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl)
       if not accessToken then
-        accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount, self.oauthTokenUrl)
+        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl)
       end
 
     -- This simulates the official behavior of Application Default Credentials
@@ -155,9 +170,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- for more details.
     -- The implementation is not exactly the same but a similar order of precedence is followed.
     elseif auth_method_order == "adc" then
-      accessToken, authMethod = safe_call(GetAccessTokenBySA, gcpServiceAccount, self.oauthTokenUrl)
+      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl)
       if not accessToken then
-          accessToken, authMethod = safe_call(GetAccessTokenByWI, self.metadataUrl)
+          accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl)
       end
 
     else
@@ -177,8 +192,7 @@ function AccessToken:new(gcpServiceAccount, opts)
         self.gcpServiceAccount = gcpServiceAccount
     else
         ngx.log(ngx.ERR, "[accesstoken] Unable to get accesstoken")
-        error("Failed to authenticate")
-        return nil
+        return nil, "Failed to authenticate"
     end
 
     return self
@@ -188,16 +202,16 @@ function AccessToken:needsRefresh()
     return self.expireTime < ngx.now()
 end
 
---- Forces refresh by requesting a new access token regardless of expiry state.
---- @return boolean ok true on success, false on failure
---- @return string|nil token_or_err the access token on success, or error message on failure
---- @return number|nil expireTime the token expiration time on success, or nil on failure
+--- Force refresh by requesting a new access token regardless of expiry state.
+-- @treturn boolean true on success, false on failure
+-- @treturn string the access token on success, or error message on failure
+-- @treturn number the token expiration timestamp on success, or nil on failure
 function AccessToken:refresh()
     local accessToken, err
     if (self.authMethod == "SA") then
-        accessToken, err = safe_call(GetAccessTokenBySA, self.gcpServiceAccount, self.oauthTokenUrl)
+        accessToken, err = GetAccessTokenBySA(self.gcpServiceAccount, self.oauthTokenUrl)
     elseif (self.authMethod == "WI") then
-        accessToken, err = safe_call(GetAccessTokenByWI, self.metadataUrl)
+        accessToken, err = GetAccessTokenByWI(self.metadataUrl)
     end
 
     if (accessToken) then
@@ -214,10 +228,10 @@ function AccessToken:refresh()
     return false, err, nil
 end
 
---- Auto-refresh: only refreshes when the current token is expired (or within expiry window).
---- @return boolean ok true on success, false on failure
---- @return string|nil token_or_err the access token on success, or error message on failure
---- @return number|nil expireTime the token expiration time on success, or nil on failure
+--- Get a valid access token, automatically refreshing when expired.
+-- @treturn boolean true on success, false on failure
+-- @treturn string the access token on success, or error message on failure
+-- @treturn number the token expiration timestamp on success, or nil on failure
 function AccessToken:get()
     while self:needsRefresh() do
         if self._semaphore then
@@ -230,18 +244,18 @@ function AccessToken:get()
             local sema, err = semaphore:new()
             if not sema then
                 ngx.log(ngx.ERR, "[accesstoken] create semaphore failed: ", tostring(err))
-                return false, "create semaphore failed: " .. tostring(err)
+                return false, "create semaphore failed: " .. tostring(err), nil
             end
             self._semaphore = sema
 
-            local ok, token_or_err = self:refresh()
+            local ok, token_or_err, _ = self:refresh()
 
             self._semaphore = nil
             sema:post(math.abs(sema:count()) + 1)
 
             if not ok then
                 ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(token_or_err))
-                return false, "failed to get new access token: " .. tostring(token_or_err)
+                return false, "failed to get new access token: " .. tostring(token_or_err), nil
             end
         end
     end
