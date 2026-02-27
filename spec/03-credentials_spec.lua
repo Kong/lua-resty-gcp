@@ -384,7 +384,6 @@ describe("access token", function ()
         gcpToken.expireTime = ngx.now() - 100
         assert.is_true(gcpToken:needsRefresh())
 
-        -- Access token property to trigger refresh
         local ok, token, expireTime = gcpToken:refresh()
         assert.is_true(ok)
         assert.same("test_refresh_token_2", token)
