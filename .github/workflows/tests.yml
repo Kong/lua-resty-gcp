@@ -32,7 +32,7 @@ jobs:
         make
         make install
         export PATH=/usr/local/bin:$PATH
-        luarocks install lua-resty-jwt
+        luarocks install lua-resty-jwt 0.2.3
         luarocks install lua-resty-aws
     - name: Cache
       uses: actions/cache@v4
