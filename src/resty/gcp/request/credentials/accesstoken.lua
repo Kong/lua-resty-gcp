@@ -225,7 +225,7 @@ function AccessToken:refresh()
         return true, self.token, self.expireTime
     end
 
-    return false, err, nil
+    return nil, err
 end
 
 --- Get a valid access token, automatically refreshing when expired.
@@ -238,13 +238,13 @@ function AccessToken:get()
             local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
             if not ok then
                 ngx.log(ngx.ERR, "[accesstoken] semaphore wait failed: ", tostring(err))
-                return false, "semaphore wait failed: " .. tostring(err), nil
+                return nil, "semaphore wait failed: " .. tostring(err)
             end
         else
             local sema, err = semaphore:new()
             if not sema then
                 ngx.log(ngx.ERR, "[accesstoken] create semaphore failed: ", tostring(err))
-                return false, "create semaphore failed: " .. tostring(err), nil
+                return nil, "create semaphore failed: " .. tostring(err)
             end
             self._semaphore = sema
 
@@ -255,7 +255,7 @@ function AccessToken:get()
 
             if not ok then
                 ngx.log(ngx.ERR, "[accesstoken] failed to get new access token: ", tostring(token_or_err))
-                return false, "failed to get new access token: " .. tostring(token_or_err), nil
+                return nil, "failed to get new access token: " .. tostring(token_or_err)
             end
         end
     end
