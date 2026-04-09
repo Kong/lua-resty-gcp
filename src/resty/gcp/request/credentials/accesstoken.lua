@@ -8,6 +8,42 @@ local EXPIRY_WINDOW = 15 -- expiry window in seconds
 local DEFAULT_OAUTH_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token"
 local DEFAULT_METADATA_URL = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
 
+local function build_proxy_opts(opts)
+    if type(opts) ~= "table" then
+        return nil
+    end
+
+    local proxy_opts = {}
+
+    if opts.http_proxy then
+        proxy_opts.http_proxy = opts.http_proxy
+    end
+
+    if opts.https_proxy then
+        proxy_opts.https_proxy = opts.https_proxy
+    end
+
+    if opts.http_proxy_authorization then
+        proxy_opts.http_proxy_authorization = opts.http_proxy_authorization
+    end
+
+    if opts.https_proxy_authorization then
+        proxy_opts.https_proxy_authorization = opts.https_proxy_authorization
+    end
+
+    if opts.no_proxy then
+        proxy_opts.no_proxy = opts.no_proxy
+    end
+
+    return next(proxy_opts) and proxy_opts or nil
+end
+
+local function apply_proxy_opts(client, proxy_opts)
+    if proxy_opts and client.set_proxy_options then
+        client:set_proxy_options(proxy_opts)
+    end
+end
+
 local function GetJwtToken(serviceAccount, oauth_token_url)
     oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     local saDecode, err = cjson.decode(serviceAccount)
@@ -44,9 +80,10 @@ local function GetJwtToken(serviceAccount, oauth_token_url)
     return jwt_token
 end
 
-local function GetAccessTokenByJwt(jwtToken, oauth_token_url)
+local function GetAccessTokenByJwt(jwtToken, oauth_token_url, proxy_opts)
     oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     local client = http.new()
+    apply_proxy_opts(client, proxy_opts)
     local params = {
         grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
         assertion = jwtToken
@@ -74,7 +111,7 @@ local function GetAccessTokenByJwt(jwtToken, oauth_token_url)
     return accessToken
 end
 
-local function GetAccessTokenBySA(serviceAccount, oauth_token_url)
+local function GetAccessTokenBySA(serviceAccount, oauth_token_url, proxy_opts)
     oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     ngx.log(ngx.DEBUG, "[accesstoken] Using Environment Service Account to get Access Token")
 
@@ -88,17 +125,18 @@ local function GetAccessTokenBySA(serviceAccount, oauth_token_url)
     if not jwtToken then
         return nil, err
     end
-    local res, err = GetAccessTokenByJwt(jwtToken, oauth_token_url)
+    local res, err = GetAccessTokenByJwt(jwtToken, oauth_token_url, proxy_opts)
     if not res then
         return nil, err
     end
     return res, "SA"
 end
 
-local function GetAccessTokenByWI(metadata_url)
+local function GetAccessTokenByWI(metadata_url, proxy_opts)
     metadata_url = metadata_url or DEFAULT_METADATA_URL
     ngx.log(ngx.DEBUG, "[accesstoken] Using Workload Identity to get Access Token")
     local client = http.new()
+    apply_proxy_opts(client, proxy_opts)
     local res, err =
         client:request_uri(
         metadata_url,
@@ -151,6 +189,7 @@ function AccessToken:new(gcpServiceAccount, opts)
     self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
     self.oauthTokenUrl = opts.oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     self.metadataUrl = opts.metadata_url or DEFAULT_METADATA_URL
+    self.proxy_opts = build_proxy_opts(opts)
 
     local auth_method_order = opts.auth_method_order or "legacy"
     gcpServiceAccount = gcpServiceAccount or os.getenv("GCP_SERVICE_ACCOUNT")
@@ -160,9 +199,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- and add the ADC (Application Default Credentials) option.
     if auth_method_order == "legacy" then
       -- First try via Workload Identity and then via Service Account
-      accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl)
+      accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl, self.proxy_opts)
       if not accessToken then
-        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl)
+        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl, self.proxy_opts)
       end
 
     -- This simulates the official behavior of Application Default Credentials
@@ -170,9 +209,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- for more details.
     -- The implementation is not exactly the same but a similar order of precedence is followed.
     elseif auth_method_order == "adc" then
-      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl)
+      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl, self.proxy_opts)
       if not accessToken then
-          accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl)
+          accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl, self.proxy_opts)
       end
 
     else
@@ -209,9 +248,9 @@ end
 function AccessToken:refresh()
     local accessToken, err
     if (self.authMethod == "SA") then
-        accessToken, err = GetAccessTokenBySA(self.gcpServiceAccount, self.oauthTokenUrl)
+        accessToken, err = GetAccessTokenBySA(self.gcpServiceAccount, self.oauthTokenUrl, self.proxy_opts)
     elseif (self.authMethod == "WI") then
-        accessToken, err = GetAccessTokenByWI(self.metadataUrl)
+        accessToken, err = GetAccessTokenByWI(self.metadataUrl, self.proxy_opts)
     end
 
     if (accessToken) then

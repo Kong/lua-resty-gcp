@@ -137,6 +137,13 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
     return path, req
 end
 
+local function apply_proxy_opts(client, accesstoken)
+    local proxy_opts = accesstoken and accesstoken.proxy_opts
+    if proxy_opts and client.set_proxy_options then
+        client:set_proxy_options(proxy_opts)
+    end
+end
+
 local BuildMethods = function(methods)
     local baseUrl = methods.baseUrl
     local services = {}
@@ -150,6 +157,7 @@ local BuildMethods = function(methods)
                     end
                     local path, request = build_request(accesstoken, apiDetail, baseUrl, params, requestBody)
                     local client = http.new()
+                    apply_proxy_opts(client, accesstoken)
                     local res, err = client:request_uri(path, request)
                     if not res then
                         error(err)
