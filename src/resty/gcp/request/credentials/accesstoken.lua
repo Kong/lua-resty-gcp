@@ -7,41 +7,49 @@ local SEMAPHORE_TIMEOUT = 30 -- semaphore timeout in seconds
 local EXPIRY_WINDOW = 15 -- expiry window in seconds
 local DEFAULT_OAUTH_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token"
 local DEFAULT_METADATA_URL = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+local PROXY_OPT_KEYS = {
+    "http_proxy",
+    "https_proxy",
+    "http_proxy_authorization",
+    "https_proxy_authorization",
+    "no_proxy",
+}
 
 local function build_proxy_opts(opts)
     if type(opts) ~= "table" then
         return nil
     end
 
+    local proxy_source = opts
+    if opts.proxy_opts ~= nil then
+        if type(opts.proxy_opts) ~= "table" then
+            return nil, "opts.proxy_opts must be a table"
+        end
+        proxy_source = opts.proxy_opts
+    end
+
     local proxy_opts = {}
-
-    if opts.http_proxy then
-        proxy_opts.http_proxy = opts.http_proxy
-    end
-
-    if opts.https_proxy then
-        proxy_opts.https_proxy = opts.https_proxy
-    end
-
-    if opts.http_proxy_authorization then
-        proxy_opts.http_proxy_authorization = opts.http_proxy_authorization
-    end
-
-    if opts.https_proxy_authorization then
-        proxy_opts.https_proxy_authorization = opts.https_proxy_authorization
-    end
-
-    if opts.no_proxy then
-        proxy_opts.no_proxy = opts.no_proxy
+    for _, key in ipairs(PROXY_OPT_KEYS) do
+        if proxy_source[key] then
+            proxy_opts[key] = proxy_source[key]
+        end
     end
 
     return next(proxy_opts) and proxy_opts or nil
 end
 
 local function apply_proxy_opts(client, proxy_opts)
-    if proxy_opts and client.set_proxy_options then
-        client:set_proxy_options(proxy_opts)
+    if not proxy_opts then
+        return
     end
+
+    if client.set_proxy_options then
+        client:set_proxy_options(proxy_opts)
+        return
+    end
+
+    ngx.log(ngx.WARN,
+        "[accesstoken] proxy_opts were provided but the HTTP client does not support set_proxy_options; requests may bypass the configured proxy")
 end
 
 local function GetJwtToken(serviceAccount, oauth_token_url)
@@ -178,6 +186,17 @@ AccessToken.__index = AccessToken
 -- @tparam[opt] string opts.metadata_url GCE metadata endpoint URL
 -- @tparam[opt="legacy"] string opts.auth_method_order authentication order:
 --   `"legacy"` tries WI then SA; `"adc"` tries SA then WI
+-- @tparam[opt] table opts.proxy_opts proxy options reused for token acquisition and API requests
+-- @tparam[opt] string opts.proxy_opts.http_proxy HTTP proxy URL
+-- @tparam[opt] string opts.proxy_opts.https_proxy HTTPS proxy URL
+-- @tparam[opt] string opts.proxy_opts.http_proxy_authorization HTTP proxy authorization header value
+-- @tparam[opt] string opts.proxy_opts.https_proxy_authorization HTTPS proxy authorization header value
+-- @tparam[opt] string opts.proxy_opts.no_proxy comma-separated hosts that should bypass the proxy
+-- @tparam[opt] string opts.http_proxy compatibility alias for `opts.proxy_opts.http_proxy`
+-- @tparam[opt] string opts.https_proxy compatibility alias for `opts.proxy_opts.https_proxy`
+-- @tparam[opt] string opts.http_proxy_authorization compatibility alias for `opts.proxy_opts.http_proxy_authorization`
+-- @tparam[opt] string opts.https_proxy_authorization compatibility alias for `opts.proxy_opts.https_proxy_authorization`
+-- @tparam[opt] string opts.no_proxy compatibility alias for `opts.proxy_opts.no_proxy`
 -- @treturn AccessToken a new AccessToken instance
 -- @return nil, string on failure: nil and an error message
 function AccessToken:new(gcpServiceAccount, opts)
@@ -189,7 +208,12 @@ function AccessToken:new(gcpServiceAccount, opts)
     self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
     self.oauthTokenUrl = opts.oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     self.metadataUrl = opts.metadata_url or DEFAULT_METADATA_URL
-    self.proxy_opts = build_proxy_opts(opts)
+    local err
+    self.proxy_opts, err = build_proxy_opts(opts)
+    if err then
+        ngx.log(ngx.ERR, "[accesstoken] Invalid proxy_opts specified: ", err)
+        return nil, err
+    end
 
     local auth_method_order = opts.auth_method_order or "legacy"
     gcpServiceAccount = gcpServiceAccount or os.getenv("GCP_SERVICE_ACCOUNT")

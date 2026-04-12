@@ -139,9 +139,17 @@ end
 
 local function apply_proxy_opts(client, accesstoken)
     local proxy_opts = accesstoken and accesstoken.proxy_opts
-    if proxy_opts and client.set_proxy_options then
-        client:set_proxy_options(proxy_opts)
+    if not proxy_opts then
+        return
     end
+
+    if client.set_proxy_options then
+        client:set_proxy_options(proxy_opts)
+        return
+    end
+
+    ngx.log(ngx.WARN,
+        "[resty.gcp] proxy_opts were provided but the HTTP client does not support set_proxy_options; requests may bypass the configured proxy")
 end
 
 local BuildMethods = function(methods)
