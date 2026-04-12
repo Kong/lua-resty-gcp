@@ -2,6 +2,15 @@ local restore = require "spec.helpers"
 
 describe("access token", function ()
   local access_token
+  local original_jwt
+
+  local function create_jwt_mock()
+    return {
+      sign = function(_, _, _)
+        return "test_signed_jwt"
+      end,
+    }
+  end
 
   -- Helper function to create HTTP mock with custom responses
   local function create_http_mock(responses, captured_requests, client_options)
@@ -134,10 +143,13 @@ describe("access token", function ()
   }
 
   setup(function()
+    original_jwt = package.loaded["resty.jwt"]
+    package.loaded["resty.jwt"] = create_jwt_mock()
     package.loaded["resty.luasocket.http"] = create_http_mock(default_responses)
   end)
 
   teardown(function()
+    package.loaded["resty.jwt"] = original_jwt
     package.loaded["resty.luasocket.http"] = nil
   end)
 
