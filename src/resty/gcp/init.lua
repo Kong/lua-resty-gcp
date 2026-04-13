@@ -1,5 +1,8 @@
 local cjson = require("cjson.safe").new()
 local http = require "resty.luasocket.http"
+local util = require "resty.gcp.request.util"
+
+local apply_proxy_opts = util.apply_proxy_opts
 
 
 local lookup_helper = function(self, key) -- signature to match __index meta-method
@@ -137,6 +140,11 @@ local function build_request(accesstoken, apiDetail, baseUrl, params, requestBod
     return path, req
 end
 
+local function apply_proxy_opts_for_accesstoken(client, accesstoken)
+    local proxy_opts = accesstoken and accesstoken.proxy_opts
+    apply_proxy_opts(client, proxy_opts)
+end
+
 local BuildMethods = function(methods)
     local baseUrl = methods.baseUrl
     local services = {}
@@ -150,6 +158,7 @@ local BuildMethods = function(methods)
                     end
                     local path, request = build_request(accesstoken, apiDetail, baseUrl, params, requestBody)
                     local client = http.new()
+                    apply_proxy_opts_for_accesstoken(client, accesstoken)
                     local res, err = client:request_uri(path, request)
                     if not res then
                         error(err)

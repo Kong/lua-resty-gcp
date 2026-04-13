@@ -2,6 +2,10 @@ local http = require "resty.luasocket.http"
 local jwt = require "resty.jwt"
 local cjson = require("cjson.safe").new()
 local semaphore = require "ngx.semaphore"
+local util = require "resty.gcp.request.util"
+
+local build_proxy_opts = util.build_proxy_opts
+local apply_proxy_opts = util.apply_proxy_opts
 
 local SEMAPHORE_TIMEOUT = 30 -- semaphore timeout in seconds
 local EXPIRY_WINDOW = 15 -- expiry window in seconds
@@ -44,9 +48,10 @@ local function GetJwtToken(serviceAccount, oauth_token_url)
     return jwt_token
 end
 
-local function GetAccessTokenByJwt(jwtToken, oauth_token_url)
+local function GetAccessTokenByJwt(jwtToken, oauth_token_url, proxy_opts)
     oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     local client = http.new()
+    apply_proxy_opts(client, proxy_opts)
     local params = {
         grant_type = "urn:ietf:params:oauth:grant-type:jwt-bearer",
         assertion = jwtToken
@@ -74,7 +79,7 @@ local function GetAccessTokenByJwt(jwtToken, oauth_token_url)
     return accessToken
 end
 
-local function GetAccessTokenBySA(serviceAccount, oauth_token_url)
+local function GetAccessTokenBySA(serviceAccount, oauth_token_url, proxy_opts)
     oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     ngx.log(ngx.DEBUG, "[accesstoken] Using Environment Service Account to get Access Token")
 
@@ -88,17 +93,18 @@ local function GetAccessTokenBySA(serviceAccount, oauth_token_url)
     if not jwtToken then
         return nil, err
     end
-    local res, err = GetAccessTokenByJwt(jwtToken, oauth_token_url)
+    local res, err = GetAccessTokenByJwt(jwtToken, oauth_token_url, proxy_opts)
     if not res then
         return nil, err
     end
     return res, "SA"
 end
 
-local function GetAccessTokenByWI(metadata_url)
+local function GetAccessTokenByWI(metadata_url, proxy_opts)
     metadata_url = metadata_url or DEFAULT_METADATA_URL
     ngx.log(ngx.DEBUG, "[accesstoken] Using Workload Identity to get Access Token")
     local client = http.new()
+    apply_proxy_opts(client, proxy_opts)
     local res, err =
         client:request_uri(
         metadata_url,
@@ -140,6 +146,17 @@ AccessToken.__index = AccessToken
 -- @tparam[opt] string opts.metadata_url GCE metadata endpoint URL
 -- @tparam[opt="legacy"] string opts.auth_method_order authentication order:
 --   `"legacy"` tries WI then SA; `"adc"` tries SA then WI
+-- @tparam[opt] table opts.proxy_opts proxy options reused for token acquisition and API requests
+-- @tparam[opt] string opts.proxy_opts.http_proxy HTTP proxy URL
+-- @tparam[opt] string opts.proxy_opts.https_proxy HTTPS proxy URL
+-- @tparam[opt] string opts.proxy_opts.http_proxy_authorization HTTP proxy authorization header value
+-- @tparam[opt] string opts.proxy_opts.https_proxy_authorization HTTPS proxy authorization header value
+-- @tparam[opt] string opts.proxy_opts.no_proxy comma-separated hosts that should bypass the proxy
+-- @tparam[opt] string opts.http_proxy compatibility alias for `opts.proxy_opts.http_proxy`
+-- @tparam[opt] string opts.https_proxy compatibility alias for `opts.proxy_opts.https_proxy`
+-- @tparam[opt] string opts.http_proxy_authorization compatibility alias for `opts.proxy_opts.http_proxy_authorization`
+-- @tparam[opt] string opts.https_proxy_authorization compatibility alias for `opts.proxy_opts.https_proxy_authorization`
+-- @tparam[opt] string opts.no_proxy compatibility alias for `opts.proxy_opts.no_proxy`
 -- @treturn AccessToken a new AccessToken instance
 -- @return nil, string on failure: nil and an error message
 function AccessToken:new(gcpServiceAccount, opts)
@@ -151,6 +168,12 @@ function AccessToken:new(gcpServiceAccount, opts)
     self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
     self.oauthTokenUrl = opts.oauth_token_url or DEFAULT_OAUTH_TOKEN_URL
     self.metadataUrl = opts.metadata_url or DEFAULT_METADATA_URL
+    local err
+    self.proxy_opts, err = build_proxy_opts(opts)
+    if err then
+        ngx.log(ngx.ERR, "[accesstoken] Invalid proxy_opts specified: ", err)
+        return nil, err
+    end
 
     local auth_method_order = opts.auth_method_order or "legacy"
     gcpServiceAccount = gcpServiceAccount or os.getenv("GCP_SERVICE_ACCOUNT")
@@ -160,9 +183,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- and add the ADC (Application Default Credentials) option.
     if auth_method_order == "legacy" then
       -- First try via Workload Identity and then via Service Account
-      accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl)
+      accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl, self.proxy_opts)
       if not accessToken then
-        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl)
+        accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl, self.proxy_opts)
       end
 
     -- This simulates the official behavior of Application Default Credentials
@@ -170,9 +193,9 @@ function AccessToken:new(gcpServiceAccount, opts)
     -- for more details.
     -- The implementation is not exactly the same but a similar order of precedence is followed.
     elseif auth_method_order == "adc" then
-      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl)
+      accessToken, authMethod = GetAccessTokenBySA(gcpServiceAccount, self.oauthTokenUrl, self.proxy_opts)
       if not accessToken then
-          accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl)
+          accessToken, authMethod = GetAccessTokenByWI(self.metadataUrl, self.proxy_opts)
       end
 
     else
@@ -209,9 +232,9 @@ end
 function AccessToken:refresh()
     local accessToken, err
     if (self.authMethod == "SA") then
-        accessToken, err = GetAccessTokenBySA(self.gcpServiceAccount, self.oauthTokenUrl)
+        accessToken, err = GetAccessTokenBySA(self.gcpServiceAccount, self.oauthTokenUrl, self.proxy_opts)
     elseif (self.authMethod == "WI") then
-        accessToken, err = GetAccessTokenByWI(self.metadataUrl)
+        accessToken, err = GetAccessTokenByWI(self.metadataUrl, self.proxy_opts)
     end
 
     if (accessToken) then

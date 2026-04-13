@@ -2,16 +2,34 @@ local restore = require "spec.helpers"
 
 describe("access token", function ()
   local access_token
+  local original_jwt
+
+  local function create_jwt_mock()
+    return {
+      sign = function(_, _, _)
+        return "test_signed_jwt"
+      end,
+    }
+  end
 
   -- Helper function to create HTTP mock with custom responses
-  local function create_http_mock(responses)
+  local function create_http_mock(responses, captured_requests, client_options)
+    client_options = client_options or {}
+
     return {
       new = function()
-        return {
+        local client = {
           counter = 0,
           close = function() return true end,
           request_uri = function(self, url, opts)
             self.counter = self.counter + 1
+            if captured_requests then
+              captured_requests[#captured_requests + 1] = {
+                url = url,
+                opts = opts,
+                proxy_opts = self.proxy_opts,
+              }
+            end
             local response = responses[url]
             if response then
               if type(response) == "function" then
@@ -24,25 +42,92 @@ describe("access token", function ()
             end
           end,
         }
+
+        if client_options.supports_proxy_options ~= false then
+          client.set_proxy_options = function(self, proxy_opts)
+            self.proxy_opts = proxy_opts
+          end
+        end
+
+        return client
       end,
     }
   end
 
   -- Helper function to temporarily replace HTTP mock
-  local function with_http_mock(mock_responses, test_function)
+  local function with_http_mock(mock_responses, test_function, client_options)
     local original_http = package.loaded["resty.luasocket.http"]
-    package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses)
+    local captured_requests = {}
+    package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses, captured_requests, client_options)
 
     -- Reload the access_token module to use the new HTTP mock
     package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
     local temp_access_token = require "resty.gcp.request.credentials.accesstoken"
 
     -- Execute test function (let test failures propagate naturally)
-    test_function(temp_access_token)
+    local ok, err = pcall(test_function, temp_access_token, captured_requests)
 
     -- Restore original state
     package.loaded["resty.luasocket.http"] = original_http
     package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
+
+    if not ok then
+      error(err, 0)
+    end
+  end
+
+  local function with_gcp_http_mock(mock_responses, test_function, client_options)
+    local original_http = package.loaded["resty.luasocket.http"]
+    local original_gcp = package.loaded["resty.gcp"]
+    local captured_requests = {}
+    package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses, captured_requests, client_options)
+
+    package.loaded["resty.gcp"] = nil
+    local temp_gcp = require "resty.gcp"
+
+    local ok, err = pcall(test_function, temp_gcp, captured_requests)
+
+    package.loaded["resty.luasocket.http"] = original_http
+    package.loaded["resty.gcp"] = original_gcp
+
+    if not ok then
+      error(err, 0)
+    end
+  end
+
+  local function with_ngx_log_spy(test_function)
+    local original_log = ngx.log
+    local log_entries = {}
+
+    ngx.log = function(level, ...)
+      local parts = {}
+      for i = 1, select("#", ...) do
+        parts[i] = tostring(select(i, ...))
+      end
+
+      log_entries[#log_entries + 1] = {
+        level = level,
+        message = table.concat(parts),
+      }
+    end
+
+    local ok, err = pcall(test_function, log_entries)
+    ngx.log = original_log
+
+    if not ok then
+      error(err, 0)
+    end
+  end
+
+  local function assert_has_proxy_warning(log_entries)
+    for _, entry in ipairs(log_entries) do
+      if entry.level == ngx.WARN and
+         string.find(entry.message, "HTTP client does not support set_proxy_options", 1, true) then
+        return
+      end
+    end
+
+    error("expected a proxy warning log entry", 0)
   end
 
   -- Default successful responses
@@ -58,10 +143,13 @@ describe("access token", function ()
   }
 
   setup(function()
+    original_jwt = package.loaded["resty.jwt"]
+    package.loaded["resty.jwt"] = create_jwt_mock()
     package.loaded["resty.luasocket.http"] = create_http_mock(default_responses)
   end)
 
   teardown(function()
+    package.loaded["resty.jwt"] = original_jwt
     package.loaded["resty.luasocket.http"] = nil
   end)
 
@@ -256,6 +344,13 @@ describe("access token", function ()
 
   -- Tests for custom URL configuration
   describe("custom URL configuration", function()
+    local expected_proxy_opts = {
+      http_proxy = "http://http-proxy.internal:3128",
+      https_proxy = "http://https-proxy.internal:8443",
+      http_proxy_authorization = "Basic dGVzdDpodHRw",
+      https_proxy_authorization = "Basic dGVzdDpodHRwcw==",
+      no_proxy = "metadata.google.internal",
+    }
 
     it("should use custom oauth_token_url for Service Account authentication", function()
       local custom_oauth_url = "https://private.googleapis.com/oauth2/v4/token"
@@ -503,6 +598,191 @@ describe("access token", function ()
       -- Restore original state
       package.loaded["resty.luasocket.http"] = original_http
       package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
+    end)
+
+    it("should apply proxy options to Service Account token requests", function()
+      local custom_oauth_url = "https://private.googleapis.com/oauth2/v4/token"
+      local custom_responses = {
+        [custom_oauth_url] = {
+          status = 200,
+          body = [[{"access_token": "test_proxy_sa_token", "expires_in": 3600}]],
+        },
+        ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = function()
+          return nil, "connection refused"
+        end,
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token, captured_requests)
+        local gcpToken = temp_access_token(nil, {
+          auth_method_order = "adc",
+          oauth_token_url = custom_oauth_url,
+          http_proxy = expected_proxy_opts.http_proxy,
+          https_proxy = expected_proxy_opts.https_proxy,
+          http_proxy_authorization = expected_proxy_opts.http_proxy_authorization,
+          https_proxy_authorization = expected_proxy_opts.https_proxy_authorization,
+          no_proxy = expected_proxy_opts.no_proxy,
+        })
+
+        assert.same("test_proxy_sa_token", gcpToken.token)
+        assert.same(expected_proxy_opts, gcpToken.proxy_opts)
+        assert.same(custom_oauth_url, captured_requests[1].url)
+        assert.same(expected_proxy_opts, captured_requests[1].proxy_opts)
+      end)
+    end)
+
+    it("should accept proxy options from opts.proxy_opts", function()
+      local custom_oauth_url = "https://private.googleapis.com/oauth2/v4/token"
+      local custom_responses = {
+        [custom_oauth_url] = {
+          status = 200,
+          body = [[{"access_token": "test_nested_proxy_sa_token", "expires_in": 3600}]],
+        },
+        ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = function()
+          return nil, "connection refused"
+        end,
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token, captured_requests)
+        local gcpToken = temp_access_token(nil, {
+          auth_method_order = "adc",
+          oauth_token_url = custom_oauth_url,
+          proxy_opts = expected_proxy_opts,
+        })
+
+        assert.same("test_nested_proxy_sa_token", gcpToken.token)
+        assert.same(expected_proxy_opts, gcpToken.proxy_opts)
+        assert.same(custom_oauth_url, captured_requests[1].url)
+        assert.same(expected_proxy_opts, captured_requests[1].proxy_opts)
+      end)
+    end)
+
+    it("should reject non-table proxy_opts", function()
+      local gcpToken, err = access_token(nil, {
+        auth_method_order = "legacy",
+        proxy_opts = "http://proxy.internal:3128",
+      })
+
+      assert.is_nil(gcpToken)
+      assert.same("opts.proxy_opts must be a table", err)
+    end)
+
+    it("should apply proxy options to Workload Identity token requests", function()
+      local custom_metadata_url = "http://custom-metadata.internal/token"
+      local custom_responses = {
+        [custom_metadata_url] = {
+          status = 200,
+          body = [[{"access_token": "test_proxy_wi_token", "expires_in": 3600}]],
+        },
+      }
+
+      with_http_mock(custom_responses, function(temp_access_token, captured_requests)
+        local gcpToken = temp_access_token(nil, {
+          auth_method_order = "legacy",
+          metadata_url = custom_metadata_url,
+          http_proxy = expected_proxy_opts.http_proxy,
+          https_proxy = expected_proxy_opts.https_proxy,
+          http_proxy_authorization = expected_proxy_opts.http_proxy_authorization,
+          https_proxy_authorization = expected_proxy_opts.https_proxy_authorization,
+          no_proxy = expected_proxy_opts.no_proxy,
+        })
+
+        assert.same("test_proxy_wi_token", gcpToken.token)
+        assert.same(expected_proxy_opts, gcpToken.proxy_opts)
+        assert.same(custom_metadata_url, captured_requests[1].url)
+        assert.same(expected_proxy_opts, captured_requests[1].proxy_opts)
+      end)
+    end)
+
+    it("should warn when proxy options cannot be applied to token requests", function()
+      local custom_metadata_url = "http://custom-metadata.internal/token"
+      local custom_responses = {
+        [custom_metadata_url] = {
+          status = 200,
+          body = [[{"access_token": "test_proxy_warning_wi_token", "expires_in": 3600}]],
+        },
+      }
+
+      with_ngx_log_spy(function(log_entries)
+        with_http_mock(custom_responses, function(temp_access_token, captured_requests)
+          local gcpToken = temp_access_token(nil, {
+            auth_method_order = "legacy",
+            metadata_url = custom_metadata_url,
+            proxy_opts = expected_proxy_opts,
+          })
+
+          assert.same("test_proxy_warning_wi_token", gcpToken.token)
+          assert.same(custom_metadata_url, captured_requests[1].url)
+          assert.is_nil(captured_requests[1].proxy_opts)
+        end, {
+          supports_proxy_options = false,
+        })
+
+        assert_has_proxy_warning(log_entries)
+      end)
+    end)
+
+    it("should apply access token proxy options to GCP API requests", function()
+      local request_url = "https://secretmanager.googleapis.com/v1/projects/project-last-hope/secrets/db-password/versions/latest:access"
+      local responses = {
+        [request_url] = {
+          status = 200,
+          headers = {
+            ["Content-Type"] = "application/json",
+          },
+          body = [[{"payload":{"data":"c2VjcmV0"}}]],
+        },
+      }
+
+      with_gcp_http_mock(responses, function(temp_gcp, captured_requests)
+        local gcp = temp_gcp()
+        local response = gcp.secretmanager_v1.versions.access({
+          token = "test_token",
+          proxy_opts = expected_proxy_opts,
+        }, {
+          projectsId = "project-last-hope",
+          secretsId = "db-password",
+          versionsId = "latest",
+        })
+
+        assert.same("c2VjcmV0", response.payload.data)
+        assert.same(request_url, captured_requests[1].url)
+        assert.same(expected_proxy_opts, captured_requests[1].proxy_opts)
+      end)
+    end)
+
+    it("should warn when proxy options cannot be applied to GCP API requests", function()
+      local request_url = "https://secretmanager.googleapis.com/v1/projects/project-last-hope/secrets/db-password/versions/latest:access"
+      local responses = {
+        [request_url] = {
+          status = 200,
+          headers = {
+            ["Content-Type"] = "application/json",
+          },
+          body = [[{"payload":{"data":"c2VjcmV0"}}]],
+        },
+      }
+
+      with_ngx_log_spy(function(log_entries)
+        with_gcp_http_mock(responses, function(temp_gcp, captured_requests)
+          local gcp = temp_gcp()
+          local response = gcp.secretmanager_v1.versions.access({
+            token = "test_token",
+            proxy_opts = expected_proxy_opts,
+          }, {
+            projectsId = "project-last-hope",
+            secretsId = "db-password",
+            versionsId = "latest",
+          })
+
+          assert.same("c2VjcmV0", response.payload.data)
+          assert.same(request_url, captured_requests[1].url)
+          assert.is_nil(captured_requests[1].proxy_opts)
+        end, {
+          supports_proxy_options = false,
+        })
+
+        assert_has_proxy_warning(log_entries)
+      end)
     end)
 
   end)

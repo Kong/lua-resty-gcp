@@ -62,6 +62,9 @@ files["kong/plugins/ldap-auth/*.lua"] = {
 
 files["spec/**/*.lua"] = {
     std = "ngx_lua+busted",
+    globals = {
+        "ngx.log",
+    },
 }
 
 files["**/*_test.lua"] = {
