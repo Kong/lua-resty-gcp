@@ -74,7 +74,8 @@ local token = AccessToken:new(nil, {
 ```
 
 The individual keys (`http_proxy`, `https_proxy`, etc.) may also be provided at the
-top level of `opts` for convenience.
+top level of `opts` as a convenience shorthand. If both `opts.proxy_opts` and flat
+keys are present, `opts.proxy_opts` takes precedence and the flat keys are ignored.
 
 ## TLS and certificate failures
 
