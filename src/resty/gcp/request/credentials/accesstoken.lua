@@ -2,55 +2,15 @@ local http = require "resty.luasocket.http"
 local jwt = require "resty.jwt"
 local cjson = require("cjson.safe").new()
 local semaphore = require "ngx.semaphore"
+local util = require "resty.gcp.request.util"
+
+local build_proxy_opts = util.build_proxy_opts
+local apply_proxy_opts = util.apply_proxy_opts
 
 local SEMAPHORE_TIMEOUT = 30 -- semaphore timeout in seconds
 local EXPIRY_WINDOW = 15 -- expiry window in seconds
 local DEFAULT_OAUTH_TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token"
 local DEFAULT_METADATA_URL = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
-local PROXY_OPT_KEYS = {
-    "http_proxy",
-    "https_proxy",
-    "http_proxy_authorization",
-    "https_proxy_authorization",
-    "no_proxy",
-}
-
-local function build_proxy_opts(opts)
-    if type(opts) ~= "table" then
-        return nil
-    end
-
-    local proxy_source = opts
-    if opts.proxy_opts ~= nil then
-        if type(opts.proxy_opts) ~= "table" then
-            return nil, "opts.proxy_opts must be a table"
-        end
-        proxy_source = opts.proxy_opts
-    end
-
-    local proxy_opts = {}
-    for _, key in ipairs(PROXY_OPT_KEYS) do
-        if proxy_source[key] then
-            proxy_opts[key] = proxy_source[key]
-        end
-    end
-
-    return next(proxy_opts) and proxy_opts or nil
-end
-
-local function apply_proxy_opts(client, proxy_opts)
-    if not proxy_opts then
-        return
-    end
-
-    if client.set_proxy_options then
-        client:set_proxy_options(proxy_opts)
-        return
-    end
-
-    ngx.log(ngx.WARN,
-        "[accesstoken] proxy_opts were provided but the HTTP client does not support set_proxy_options; requests may bypass the configured proxy")
-end
 
 local function GetJwtToken(serviceAccount, oauth_token_url)
     oauth_token_url = oauth_token_url or DEFAULT_OAUTH_TOKEN_URL

@@ -54,6 +54,28 @@ print("The secret is: " .. base64.decode(response.payload.data))
 
 ```
 
+## Proxy Configuration
+
+The library supports routing all outbound HTTP requests (both token acquisition and
+GCP API calls) through a proxy. Pass a `proxy_opts` table inside the `opts`
+argument when creating an `AccessToken`:
+
+``` lua
+local AccessToken = require "resty.gcp.request.credentials.accesstoken"
+local token = AccessToken:new(nil, {
+    proxy_opts = {
+        http_proxy          = "http://proxy.example.com:3128",
+        https_proxy         = "http://proxy.example.com:3129",
+        http_proxy_authorization  = "Basic dXNlcjpwYXNz",
+        https_proxy_authorization = "Basic dXNlcjpwYXNz",
+        no_proxy            = "localhost,127.0.0.1",
+    },
+})
+```
+
+The individual keys (`http_proxy`, `https_proxy`, etc.) may also be provided at the
+top level of `opts` for convenience.
+
 ## TLS and certificate failures
 
 The http client defaults to tls name verification. For this to work, the CA store must be set.

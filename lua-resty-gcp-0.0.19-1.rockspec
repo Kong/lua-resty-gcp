@@ -274,6 +274,7 @@ build = {
     ["resty.gcp.init"] = "src/resty/gcp/init.lua",
     ["resty.gcp.request.credentials.accesstoken"] = "src/resty/gcp/request/credentials/accesstoken.lua",
     ["resty.gcp.request.discovery"] = "src/resty/gcp/request/discovery.lua",
+    ["resty.gcp.request.util"] = "src/resty/gcp/request/util.lua",
 
 --END-MARKER--
    }
