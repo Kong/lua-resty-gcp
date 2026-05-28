@@ -1,134 +1,135 @@
 local restore = require "spec.helpers"
+local fmt = string.format
+
+local function create_jwt_mock()
+  return {
+    sign = function(_, _, _)
+      return "test_signed_jwt"
+    end,
+  }
+end
+
+local function with_ngx_log_spy(test_function)
+  local original_log = ngx.log
+  local log_entries = {}
+
+  ngx.log = function(level, ...)
+    local parts = {}
+    for i = 1, select("#", ...) do
+      parts[i] = tostring(select(i, ...))
+    end
+
+    log_entries[#log_entries + 1] = {
+      level = level,
+      message = table.concat(parts),
+    }
+  end
+
+  local ok, err = pcall(test_function, log_entries)
+  ngx.log = original_log
+
+  if not ok then
+    error(err, 0)
+  end
+end
+
+local function assert_has_proxy_warning(log_entries)
+  for _, entry in ipairs(log_entries) do
+    if entry.level == ngx.WARN and
+        string.find(entry.message, "HTTP client does not support set_proxy_options", 1, true) then
+      return
+    end
+  end
+
+  error("expected a proxy warning log entry", 0)
+end
+
+-- Helper function to create HTTP mock with custom responses
+local function create_http_mock(responses, captured_requests, client_options)
+  client_options = client_options or {}
+
+  return {
+    new = function()
+      local client = {
+        counter = 0,
+        close = function() return true end,
+        request_uri = function(self, url, opts)
+          self.counter = self.counter + 1
+          if captured_requests then
+            captured_requests[#captured_requests + 1] = {
+              url = url,
+              opts = opts,
+              proxy_opts = self.proxy_opts,
+            }
+          end
+          local response = responses[url]
+          if response then
+            if type(response) == "function" then
+              return response()
+            else
+              return response
+            end
+          else
+            error("bad test path provided??? " .. tostring(url))
+          end
+        end,
+      }
+
+      if client_options.supports_proxy_options ~= false then
+        client.set_proxy_options = function(self, proxy_opts)
+          self.proxy_opts = proxy_opts
+        end
+      end
+
+      return client
+    end,
+  }
+end
+
+-- Helper function to temporarily replace HTTP mock
+local function with_http_mock(mock_responses, test_function, client_options, auth_class)
+  local original_http = package.loaded["resty.luasocket.http"]
+  local captured_requests = {}
+  package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses, captured_requests, client_options)
+
+  -- Reload the access_token module to use the new HTTP mock
+  package.loaded["resty.gcp.request.credentials." .. (auth_class or "accesstoken")] = nil
+  local temp_auth_class = require("resty.gcp.request.credentials." .. (auth_class or "accesstoken"))
+
+  -- Execute test function (let test failures propagate naturally)
+  local ok, err = pcall(test_function, temp_auth_class, captured_requests)
+
+  -- Restore original state
+  package.loaded["resty.luasocket.http"] = original_http
+  package.loaded["resty.gcp.request.credentials." .. (auth_class or "accesstoken")] = nil
+
+  if not ok then
+    error(err, 0)
+  end
+end
+
+local function with_gcp_http_mock(mock_responses, test_function, client_options)
+  local original_http = package.loaded["resty.luasocket.http"]
+  local original_gcp = package.loaded["resty.gcp"]
+  local captured_requests = {}
+  package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses, captured_requests, client_options)
+
+  package.loaded["resty.gcp"] = nil
+  local temp_gcp = require "resty.gcp"
+
+  local ok, err = pcall(test_function, temp_gcp, captured_requests)
+
+  package.loaded["resty.luasocket.http"] = original_http
+  package.loaded["resty.gcp"] = original_gcp
+
+  if not ok then
+    error(err, 0)
+  end
+end
 
 describe("access token", function ()
   local access_token
   local original_jwt
-
-  local function create_jwt_mock()
-    return {
-      sign = function(_, _, _)
-        return "test_signed_jwt"
-      end,
-    }
-  end
-
-  -- Helper function to create HTTP mock with custom responses
-  local function create_http_mock(responses, captured_requests, client_options)
-    client_options = client_options or {}
-
-    return {
-      new = function()
-        local client = {
-          counter = 0,
-          close = function() return true end,
-          request_uri = function(self, url, opts)
-            self.counter = self.counter + 1
-            if captured_requests then
-              captured_requests[#captured_requests + 1] = {
-                url = url,
-                opts = opts,
-                proxy_opts = self.proxy_opts,
-              }
-            end
-            local response = responses[url]
-            if response then
-              if type(response) == "function" then
-                return response()
-              else
-                return response
-              end
-            else
-              error("bad test path provided??? " .. tostring(url))
-            end
-          end,
-        }
-
-        if client_options.supports_proxy_options ~= false then
-          client.set_proxy_options = function(self, proxy_opts)
-            self.proxy_opts = proxy_opts
-          end
-        end
-
-        return client
-      end,
-    }
-  end
-
-  -- Helper function to temporarily replace HTTP mock
-  local function with_http_mock(mock_responses, test_function, client_options)
-    local original_http = package.loaded["resty.luasocket.http"]
-    local captured_requests = {}
-    package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses, captured_requests, client_options)
-
-    -- Reload the access_token module to use the new HTTP mock
-    package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
-    local temp_access_token = require "resty.gcp.request.credentials.accesstoken"
-
-    -- Execute test function (let test failures propagate naturally)
-    local ok, err = pcall(test_function, temp_access_token, captured_requests)
-
-    -- Restore original state
-    package.loaded["resty.luasocket.http"] = original_http
-    package.loaded["resty.gcp.request.credentials.accesstoken"] = nil
-
-    if not ok then
-      error(err, 0)
-    end
-  end
-
-  local function with_gcp_http_mock(mock_responses, test_function, client_options)
-    local original_http = package.loaded["resty.luasocket.http"]
-    local original_gcp = package.loaded["resty.gcp"]
-    local captured_requests = {}
-    package.loaded["resty.luasocket.http"] = create_http_mock(mock_responses, captured_requests, client_options)
-
-    package.loaded["resty.gcp"] = nil
-    local temp_gcp = require "resty.gcp"
-
-    local ok, err = pcall(test_function, temp_gcp, captured_requests)
-
-    package.loaded["resty.luasocket.http"] = original_http
-    package.loaded["resty.gcp"] = original_gcp
-
-    if not ok then
-      error(err, 0)
-    end
-  end
-
-  local function with_ngx_log_spy(test_function)
-    local original_log = ngx.log
-    local log_entries = {}
-
-    ngx.log = function(level, ...)
-      local parts = {}
-      for i = 1, select("#", ...) do
-        parts[i] = tostring(select(i, ...))
-      end
-
-      log_entries[#log_entries + 1] = {
-        level = level,
-        message = table.concat(parts),
-      }
-    end
-
-    local ok, err = pcall(test_function, log_entries)
-    ngx.log = original_log
-
-    if not ok then
-      error(err, 0)
-    end
-  end
-
-  local function assert_has_proxy_warning(log_entries)
-    for _, entry in ipairs(log_entries) do
-      if entry.level == ngx.WARN and
-         string.find(entry.message, "HTTP client does not support set_proxy_options", 1, true) then
-        return
-      end
-    end
-
-    error("expected a proxy warning log entry", 0)
-  end
 
   -- Default successful responses
   local default_responses = {
@@ -787,4 +788,298 @@ describe("access token", function ()
 
   end)
 
+end)
+
+describe("workload identity federation", function ()
+  local original_jwt
+
+  -- Default successful responses
+  local default_responses = {
+    ["https://www.googleapis.com/oauth2/v4/token"] = {
+      status = 200,
+      body = [[{"access_token": "test_jwt", "expires_in": 3600}]],
+    },
+    ["http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"] = {
+      status = 200,
+      body = [[{"access_token": "test_wi", "expires_in": 3600}]],
+    }
+  }
+
+  setup(function()
+    original_jwt = package.loaded["resty.jwt"]
+    package.loaded["resty.jwt"] = create_jwt_mock()
+    package.loaded["resty.luasocket.http"] = create_http_mock(default_responses)
+  end)
+
+  teardown(function()
+    package.loaded["resty.jwt"] = original_jwt
+    package.loaded["resty.luasocket.http"] = nil
+  end)
+
+  before_each(function()
+    restore()
+    -- generated by https://dinochiesa.github.io/jwt/
+    restore.setenv("GCP_SERVICE_ACCOUNT", [[
+      { "type": "service_account",
+        "project_id": "test-project",
+        "private_key_id": "test-private-key-id",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDkelwQ7F8RiA+R\noBGAwimZ7e8F5eBqJK9apaBHKf0jbg2a1Rmuvbar/jq0Jv1/A9+y3bGp0JdMk4WB\nvVsC7qFveEUrP/2pxhPNFJWrQ/9ors1rnIIAL7+n8AWXHqn/Y+3r92QYRN7YaIGL\nO8TqWdI9wIL0wzC4JwHFnIg4BYD2J6ioDjJj70LdsBF5/EQnu5P/QaAbGkGy8oQH\nklGkoQLo58vv8fUu9SyW59WJHm/718Uq6zaPpq6T7lMbboFk8reVCmL4iAfyYeSK\ndaO+ZT5ZKSvdIyKl6dIfjiaxkJAo5zE+BRG7fX6AZNxGHKL1/zYUyP2yWysbhFUI\nG25v7dsBAgMBAAECggEAB+zTnTWpvYiv64/3E3WIrmFxsU1uOZhQqc8Fbnp/IJe8\napK6O5Syjag5no6cq+d1PrXQaBDHcr1KO/wWuFURLfXoxk2HrbgkbzBn2aM37Ihl\nsTYiT0HYvslFVF7YrDZp5g20f+ABr9V+Ktd1puBbOc+f60ALBFQ8DD/3/KN6O++G\n8b5WSTrpVFn5pvEgLjeFMs7XFocs9KbFXnKm4RTAv8dGqp6kWR2ChmDN3mdJe57o\nYOciSIsUiTOf1WmolUSVsfXwYG5ZYlljLIWckYbG3S5dKd+DalavD+hmyQHlhROx\njxcGJ3DKht5I2f34hEFOxh42W8Cxehe9EY7aUwiW/QKBgQD5SDMH7qK5P8RxfvJR\nmD0caKKVKDSoPz/Ggs8uRQBxdFg40WH0gvTTQSSW/aeFHHRahAf73/a6FaHVfma5\nEOYkBFf+BiSKS4eje8vKc/m5RSJqFt3zIyhI0bDTVo384jwOr6MHYZukS2khvxLQ\nmBE94QFCdyae8GOolmTc8+hizQKBgQDqoqH7kzQ0yfJEzPn/sqKY/263AoVCiIjR\nQfrRMgDtvTGwWr+HhsUuwFfPkX/+5nBlPVaxq9h8uYQImmm6p2vEhOKq831FqQSY\nLKvPMjmzT6FAuF7iqxa9dlp5dR22VIYuqI5wcJSEr89rGnhhMUULjVaOjjlkaWED\nr8zveUWhBQKBgFwVWIx4kXGe5aELRNXxR7nDyTMSDAmOe6+HyKKN6LEASkqKxgV9\njpSu/qYsAwK/1RdOqGhZfhmVPhfQPn/khy8Mz7hNapgPeIZih5A8sSXILQNFeS2E\ncjAcDZaz5XVh2M+P/8gNPWI+XRKTM48MbWoPQNjdjM2vfRDcpVudWd2NAoGAKmoh\ny/9tNYm4ANXo718UY4HxOqX6/u79hI5fz8cxQcisncuZyd8D8BKXDQ+pSqPPd42i\nCVYeOVWz13ZKXJJ9ObYn321KnPgTu4p/uGHE6nQfmzp49JKm9rLZYhFYwKgA5ZhU\nv2CqiF3bqenMDw3ABHmVRwnQuCUQg4EZE8UhYB0CgYA0dDwc5Xmqw9bwojU0TDgH\nxQ+nSj4+XBAPjonciYm9gYoLi7o3NMMXvhMKOygl5U+IS28DdG/RlphNiqoKotGR\n90IwEEZQP5ERnpKg/I3onWJGILaMfwAhhHQ8bv77Bz2KDQoyiqQjDk0CeClXeGe5\nPBbLw1ric2VEsSZMNFZLLQ==\n-----END PRIVATE KEY-----\n",
+        "client_email": "test@konghq.com"
+      }]])
+  end)
+
+  after_each(function()
+      restore()
+      package.loaded["resty.gcp.request.credentials.workload_identity_federation"] = nil
+  end)
+
+  -- You would be given this when you set up the Federation Identity pool in GCP
+  local federation_json = {
+    universe_domain = "googleapis.com",
+    ["type"] = "external_account",
+    audience = "//iam.googleapis.com/projects/123456789123/locations/global/workloadIdentityPools/aws/providers/aws-from-gcp",
+    subject_token_type = "urn:ietf:params:aws:token-type:aws4_request",
+    token_url = "http://sts.googleapis.com/v1/token",
+    credential_source = {
+      environment_id = "aws1",
+      region_url = "http://169.254.169.254/latest/meta-data/placement/availability-zone",
+      url = "http://169.254.169.254/latest/meta-data/iam/security-credentials",
+      regional_cred_verification_url = "https://sts.{region}.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15",
+    }
+  }
+
+  -- Provide the request coordinates to GCP IAM
+  local signing_req = {
+    host = "sts.eu-west-1.amazonaws.com",
+    method = "POST",
+    path = "/",
+      headers = {
+        ["host"] = "sts.eu-west-1.amazonaws.com",
+        ["x-goog-cloud-target-resource"] = federation_json.audience
+      },
+    query = "Action=GetCallerIdentity&Version=2011-06-15",
+    protocol = "http"
+  }
+
+  -- Here is where you would authenticate a new lua-resty-aws class instance and use it
+  -- to SIGN the STS request above (that GCP will subsequently make to verify the caller).
+  local fake_signature = {
+    headers = {
+      ["Authorization"] = "AWS4-HMAC-SHA256 Credential=ASIAABCDEFABCDEF/20260501/eu-west-1/sts/aws4_request, SignedHeaders=host;x-amz-date;x-amz-security-token;x-goog-cloud-target-resource, Signature=0123456789ABCDEF",
+      ["Host"] = "sts.eu-west-1.amazonaws.com",
+      ["X-Amz-Date"] = "20260501T000000Z",
+      ["X-Amz-Security-Token"] = "FAKE_SECURITY_TOKEN",
+    }
+  }
+
+  -- We instead create a fake-signed subject token, that the mock server will receive
+  -- and expect specific responses.
+  local subject_token = {
+    method = signing_req.method,
+    url = fmt("http://%s%s?%s", signing_req.host, signing_req.path, signing_req.query),
+    headers = {
+      { key = "x-goog-cloud-target-resource", value = signing_req.headers["x-goog-cloud-target-resource"] },
+      { key = "Authorization", value = fake_signature.headers["Authorization"] },
+      { key = "X-Amz-Date", value = fake_signature.headers["X-Amz-Date"] },
+      { key = "Host", value = fake_signature.headers["Host"] },
+      { key = "X-Amz-Security-Token", value = fake_signature.headers["X-Amz-Security-Token"] },
+    }
+  }
+
+  it("should exchange a token via Workload Identity Federation NO IMPERSONATION", function()
+    local wif_success_no_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+    }
+
+    with_http_mock(wif_success_no_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_nil(err)
+      assert.is_not_nil(wif)
+      assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION", wif.token)
+      assert.is_number(wif.expireTime)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("should exchange a token via Workload Identity Federation WITH IMPERSONATION", function()
+    local wif_success_with_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+      ["http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"] = {
+        status = 200,
+        body = [[{"accessToken": "GCP_BEARER_WITH_IMPERSONATION", "expireTime": "2024-06-01T00:00:00Z"}]],
+      },
+    }
+
+    with_http_mock(wif_success_with_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = "http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_nil(err)
+      assert.is_not_nil(wif)
+      assert.equal("GCP_BEARER_WITH_IMPERSONATION", wif.token)
+      assert.is_number(wif.expireTime)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("bad token response status code WITHOUT IMPERSONATION", function()
+    local wif_without_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 403,
+        body = [[{"errorDetail": "Permission denied"}]],
+      },
+    }
+
+    with_http_mock(wif_without_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_not_nil(err)
+      assert.is_nil(wif)
+
+      assert.equal([[failed to acquire federated access token: failed to exchange subject token for GCP access token: HTTP 403: {"errorDetail": "Permission denied"}]], err)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("bad token response status code WITH IMPERSONATION", function()
+    local wif_with_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+      ["http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"] = {
+        status = 403,
+        body = [[{"errorDetail": "Permission denied when impersonating"}]],
+      },
+    }
+
+    with_http_mock(wif_with_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = "http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_not_nil(err)
+      assert.is_nil(wif)
+
+      assert.equal([[failed to acquire federated access token: failed to impersonate service account: HTTP 403: {"errorDetail": "Permission denied when impersonating"}]], err)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("empty response WITHOUT IMPERSONATION", function()
+    local wif_without_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = "",
+      },
+    }
+
+    with_http_mock(wif_without_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_not_nil(err)
+      assert.is_nil(wif)
+
+      assert.equal([[failed to acquire federated access token: failed to decode token exchange response: Expected value but found T_END at character 1]], err)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("empty response WITH IMPERSONATION", function()
+    local wif_with_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+      ["http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"] = {
+        status = 200,
+        body = "",
+      },
+    }
+
+    with_http_mock(wif_with_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = "http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_not_nil(err)
+      assert.is_nil(wif)
+
+      assert.equal([[failed to acquire federated access token: failed to decode service account impersonation response: Expected value but found T_END at character 1]], err)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("no access token WITHOUT IMPERSONATION", function()
+    local wif_without_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = "{}",
+      },
+    }
+
+    with_http_mock(wif_without_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_not_nil(err)
+      assert.is_nil(wif)
+
+      assert.equal([[failed to acquire federated access token: no access_token field in token exchange response]], err)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("no access token WITH IMPERSONATION", function()
+    local wif_with_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+      ["http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"] = {
+        status = 200,
+        body = "{}",
+      },
+    }
+
+    with_http_mock(wif_with_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = "http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"
+      local wif, err = temp_auth_class(federation_json, subject_token, nil)
+
+      assert.is_not_nil(err)
+      assert.is_nil(wif)
+
+      assert.equal([[failed to acquire federated access token: no accessToken field in service account impersonation response]], err)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("should load package if GOOGLE_APPLICATION_CREDENTIALS is set to auth JSON file", function()
+    local temp_file = os.tmpname()
+    local file = io.open(temp_file, "w")
+    file:write([[{
+      "universe_domain": "googleapis.com",
+      "type": "external_account",
+      "etcetera": true
+    }]])
+    file:close()
+
+    restore.setenv("GOOGLE_APPLICATION_CREDENTIALS", temp_file)
+    local ok, class = pcall(require, "resty.gcp.request.credentials.workload_identity_federation")
+
+    assert.is_truthy(ok)
+    assert.is_not_nil(class)
+  end)
+
+  it("should fail to load package if GOOGLE_APPLICATION_CREDENTIALS is set to a non-existent file", function()
+    local temp_file = os.tmpname()
+    os.remove(temp_file)  -- Ensure the file does not exist
+
+    restore.setenv("GOOGLE_APPLICATION_CREDENTIALS", temp_file)
+    local ok, err = pcall(require, "resty.gcp.request.credentials.workload_identity_federation")
+
+    assert.is_false(ok)
+    assert.is_string(err)
+    assert.matches(".*failed to open file defined by GOOGLE_APPLICATION_CREDENTIALS.*No such file or directory.*", err)
+  end)
 end)
