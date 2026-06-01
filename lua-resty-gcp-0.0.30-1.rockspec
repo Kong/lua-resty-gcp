@@ -14,6 +14,7 @@ description = {
 dependencies = {
   "lua-resty-jwt == 0.2.3",
   "lua-resty-luasocket ~> 1",
+  "luatz == 0.4-1",
 }
 build = {
   type = "builtin",
