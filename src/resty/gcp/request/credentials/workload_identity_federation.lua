@@ -61,13 +61,12 @@ local function do_sourcesystem_to_gcp_exchange(auth_conf, subject_token, proxy_o
         return nil, "failed to exchange subject token for GCP access token: HTTP " .. res.status .. ": " .. (res.body or "NONE")
     end
 
-    local body, err = cjson.decode(res.body)
-    if not body then
-        return nil, "failed to decode token exchange response: " .. (err or "NONE")
-    end
-
-    if not body then
+    if not res.body or res.body == "" then
         return nil, "empty token exchange response body"
+    end
+    local body, err = cjson.decode(res.body)
+    if err then
+        return nil, "failed to decode token exchange response: " .. err
     end
 
     if not body.access_token then
