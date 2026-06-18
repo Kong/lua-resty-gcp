@@ -24,19 +24,19 @@ jobs:
 
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
 
     # Optional step to run on only changed files
     - name: Get changed files
       id: changed-files
-      uses: kong/changed-files@4edd678ac3f81e2dc578756871e4d00c19191daf
+      uses: Kong/changed-files@cd69b79ca4e2a1198064c5e6564cce68920df311 # main
       with:
         files: |
           **.lua
 
     - name: Lua Check
       if: steps.changed-files.outputs.any_changed == 'true'
-      uses: Kong/public-shared-actions/code-check-actions/lua-lint@ac8939f0382827fbb43ce4e0028066a5ea4db01d # 4.1.2
+      uses: Kong/public-shared-actions/code-check-actions/lua-lint@916a6f6221b7eab6f5ae53d061274d588c965ae6 # 5.0.2
       with:
         additional_args: '--no-default-config --config .luacheckrc'
         files: ${{ steps.changed-files.outputs.all_changed_files }}
