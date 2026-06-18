@@ -24,4 +24,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - uses: Kong/public-shared-actions/security-actions/semgrep@1c412fcf497b6b8ae6cc3313389aa8756de68eac # 5.0.1
+      - name: Pin Semgrep Python constraints
+        run: echo 'setuptools<81' > "$RUNNER_TEMP/semgrep-constraints.txt"
+      - uses: Kong/public-shared-actions/security-actions/semgrep@a92df3beb1e69e27d86be56346488f15fecaf0de # 5.0.2
+        env:
+          PIP_CONSTRAINT: ${{ runner.temp }}/semgrep-constraints.txt
