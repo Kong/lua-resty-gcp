@@ -48,8 +48,9 @@ end
 -- The date format follows RFC3339
 -- YYYY-MM-DDTHH:MI:SSZ
 -- 1985-04-12T23:20:50Z
--- (except for fractions of a second to avoid precision errors)
+-- (fractions of a second are stripped as they are irrelevant here)
 local function aip_date_to_timestamp(date)
+	date = date:gsub("%.[0-9]+Z$", "Z")
     local year, month, day, hour, min, sec = date:match("^(%d%d%d%d)%-(%d%d)%-(%d%d)T(%d%d):(%d%d):(%d%d)Z$")
     if not year then
 		return nil, "date param: '" .. date .. "' does not match expected format: YYYY-MM-DDTHH:MI:SSZ"
