@@ -8,21 +8,28 @@ jobs:
 
     strategy:
       matrix:
-        openresty_version:
-          - 1.17.8.2
-          - 1.19.9.1
+        include:
+          - openresty_version: 1.17.8.2
+            openresty_image: openresty/openresty:1.17.8.2-5-focal
+          - openresty_version: 1.19.9.1
+            openresty_image: openresty/openresty:1.19.9.1-14-jammy
+          - openresty_version: 1.27.1.2
+            openresty_image: openresty/openresty:1.27.1.2-5-jammy
+          - openresty_version: 1.29.2.5
+            openresty_image: openresty/openresty:1.29.2.5-1-jammy
 
     runs-on: ubuntu-latest
     container:
-      image: openresty/openresty:${{ matrix.openresty_version }}-alpine-fat
+      image: ${{ matrix.openresty_image }}
       # --init runs tinit as PID 1 and prevents the 'WARNING: killing the child process' spam from the test suite
       options: --init
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
     - name: Install deps
       run: |
-        apk add --no-cache wget tar make gcc musl-dev openssl-dev curl
+        apt-get update
+        apt-get install -y --no-install-recommends wget tar make gcc libc6-dev libssl-dev curl ca-certificates
         wget https://github.com/libexpat/libexpat/releases/download/R_2_7_0/expat-2.7.0.tar.gz && tar zxvf expat-2.7.0.tar.gz
         cd expat-2.7.0 && ./configure && make && make install
         wget https://luarocks.github.io/luarocks/releases/luarocks-3.12.2.tar.gz
@@ -35,7 +42,7 @@ jobs:
         luarocks install lua-resty-jwt 0.2.3
         luarocks install lua-resty-aws
     - name: Cache
-      uses: actions/cache@v4
+      uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
       with:
         path: |
           ~/.cache
@@ -45,7 +52,7 @@ jobs:
       run: |
         luarocks install busted
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
     - name: Run tests
       run: |
