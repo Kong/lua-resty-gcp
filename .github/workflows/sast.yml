@@ -23,7 +23,7 @@ jobs:
     if: (github.actor != 'dependabot[bot]')
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
       - name: Pin Semgrep Python constraints
         run: echo 'setuptools<81' > "$RUNNER_TEMP/semgrep-constraints.txt"
       - uses: Kong/public-shared-actions/security-actions/semgrep@a92df3beb1e69e27d86be56346488f15fecaf0de # 5.0.2
