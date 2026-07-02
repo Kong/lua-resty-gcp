@@ -13,6 +13,10 @@ jobs:
             openresty_image: openresty/openresty:1.17.8.2-5-focal
           - openresty_version: 1.19.9.1
             openresty_image: openresty/openresty:1.19.9.1-14-jammy
+          - openresty_version: 1.27.1.2
+            openresty_image: openresty/openresty:1.27.1.2-5-jammy
+          - openresty_version: 1.29.2.5
+            openresty_image: openresty/openresty:1.29.2.5-1-jammy
 
     runs-on: ubuntu-latest
     container:
