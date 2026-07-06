@@ -3,3 +3,7 @@
 /lua_modules
 /.luarocks
 *.rock
+expat-*.tar.gz
+expat-*/
+luarocks-*/
+luarocks-*.tar.gz
