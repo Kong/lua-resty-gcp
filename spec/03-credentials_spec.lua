@@ -985,7 +985,7 @@ describe("workload identity federation", function ()
       assert.is_not_nil(err)
       assert.is_nil(wif)
 
-      assert.equal([[failed to acquire federated access token: failed to decode token exchange response: Expected value but found T_END at character 1]], err)
+      assert.equal([[failed to acquire federated access token: empty token exchange response body]], err)
     end, nil, "workload_identity_federation")
   end)
 
