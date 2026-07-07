@@ -149,7 +149,7 @@ end
 
 
 --- Create a new Workload_Identity_Federation instance and acquire an initial token.
--- @tparam[opt] string|table federation_json Workload Identity Federation JSON string;
+-- @tparam[opt] string|table federation_json Workload Identity Federation JSON string or Lua table;
 --   if nil, falls back to the `GOOGLE_APPLICATION_CREDENTIALS` environment variable
 -- @tparam[opt] string|table subject_token subject token for Workload Identity Federation
 -- @tparam[opt] table opts configuration options
