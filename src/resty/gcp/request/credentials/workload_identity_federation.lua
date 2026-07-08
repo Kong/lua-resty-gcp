@@ -178,6 +178,10 @@ function Workload_Identity_Federation:new(federation_json, subject_token, opts)
         return nil, err
     end
 
+    if opts.subject_token_refresh_function and type(opts.subject_token_refresh_function) == "function" then
+        self.subject_token_refresh_function = opts.subject_token_refresh_function
+    end
+
     self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
     self.federation_json = GOOGLE_ACF_FILE_CONTENT or federation_json or "{}"
 
@@ -190,22 +194,37 @@ function Workload_Identity_Federation:new(federation_json, subject_token, opts)
         end
     end
 
-    if type(subject_token) == "table" then
-        subject_token = cjson.encode(subject_token)
-    end
+    if subject_token and subject_token ~= ngx.null then
+        if type(subject_token) == "table" then
+            subject_token = cjson.encode(subject_token)
+        end
 
-    local token_data, err = do_sourcesystem_to_gcp_identity(self.federation_json, subject_token, self.proxy_opts)
-    if not token_data then
-        ngx.log(ngx.ERR, "[workload_identity_federation] failed to acquire access token: ", tostring(err))
-        return nil, "failed to acquire federated access token: " .. tostring(err)
-    end
+        local token_data, err = do_sourcesystem_to_gcp_identity(self.federation_json, subject_token, self.proxy_opts)
+        if not token_data then
+            ngx.log(ngx.ERR, "[workload_identity_federation] failed to acquire access token: ", tostring(err))
+            return nil, "failed to acquire federated access token: " .. tostring(err)
+        end
 
-    self.token = token_data.access_token
+        self.token = token_data.access_token
 
-    if token_data.expires_in > self.expireWindow then
-        self.expireTime = ngx.now() + token_data.expires_in - self.expireWindow
+        if token_data.expires_in > self.expireWindow then
+            self.expireTime = ngx.now() + token_data.expires_in - self.expireWindow
+        else
+            self.expireTime = ngx.now() + token_data.expires_in
+        end
+
+    elseif self.subject_token_refresh_function then
+        -- We weren't passed an "initial" subject token, so call the refresh function
+        -- to bootstrap the class
+        local ok, err = self:refresh()
+        if not ok then
+            ngx.log(ngx.ERR, "[workload_identity_federation] failed to refresh token during initialization: ", tostring(err))
+            return nil, "failed to refresh token during initialization: " .. tostring(err)
+        end
+
     else
-        self.expireTime = ngx.now() + token_data.expires_in
+        ngx.log(ngx.ERR, "[workload_identity_federation] no subject token provided and no subject token refresh function defined")
+        return nil, "no subject token provided and no subject token refresh function defined"
     end
 
     return self
@@ -220,6 +239,33 @@ end
 -- @treturn string the access token on success, or error message on failure
 -- @treturn number the token expiration timestamp on success, or nil on failure
 function Workload_Identity_Federation:refresh()
+    if self.subject_token_refresh_function then
+        local new_subject_token, err = self:subject_token_refresh_function()
+        if not new_subject_token then
+            return false, "failed to refresh subject token: " .. (err or "unknown error"), nil
+        end
+
+        if type(new_subject_token) == "table" then
+            new_subject_token = cjson.encode(new_subject_token)
+        end
+
+        local token_data, err = do_sourcesystem_to_gcp_identity(self.federation_json, new_subject_token, self.proxy_opts)
+        if not token_data then
+            ngx.log(ngx.ERR, "[workload_identity_federation] failed to acquire access token: ", tostring(err))
+            return false, "failed to acquire federated access token: " .. tostring(err), nil
+        end
+
+        self.token = token_data.access_token
+
+        if token_data.expires_in > self.expireWindow then
+            self.expireTime = ngx.now() + token_data.expires_in - self.expireWindow
+        else
+            self.expireTime = ngx.now() + token_data.expires_in
+        end
+
+        return true, self.token, self.expireTime
+    end
+
     error("a signed subject_token can only be used once - create a new instance of Workload_Identity_Federation to refresh the token")
 end
 

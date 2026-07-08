@@ -81,7 +81,9 @@ To pass in the "Google Application Credentials" JSON, you can either:
 * Pass the JSON directly into the constructor (as a string, or as a table)
 * Set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` that points to a file on the local filesystem
 
-In this example, we pass the JSON as a table straight to the constructor:
+**You also might need to pass a function to get a new "subject token" when it expires due to e.g. signature expiry.**
+
+In this example, we pass the JSON and the function as a table directly to the constructor:
 
 ``` lua
 
@@ -103,45 +105,45 @@ local federation_json = {
   service_account_impersonation_url = "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/resty-gcp-access-service-account@sample-account.iam.gserviceaccount.com:generateAccessToken",
 }
 
--- Make a subject token that lets GCP call AWS STS for your credentials,
--- and then **sign it** (for AWS with the Instance/Pod IAM Role, in this example).
--- Use the signed headers as the subject token table.
-local signing_req = {
-  host = "sts.eu-west-1.amazonaws.com",
-  method = "POST",
-  path = "/",
+-- Make a refresh function using e.g. resty AWS
+local subject_token_refresh_function = function(self)
+  -- Make a subject token that lets GCP call AWS STS for your credentials,
+  -- and then **sign it** (for AWS with the Instance/Pod IAM Role, in this example).
+  -- Use the signed headers as the subject token table.
+  local signing_req = {
+    host = "sts.eu-west-1.amazonaws.com",
+    method = "POST",
+    path = "/",
+      headers = {
+        ["host"] = "sts.eu-west-1.amazonaws.com",
+        ["x-goog-cloud-target-resource"] = federation_json.audience
+      },
+    query = "Action=GetCallerIdentity&Version=2011-06-15",
+    protocol = "https"
+  }
+
+  local signature, err = require("resty.aws.request.sign")({}, signing_req)
+
+  local subject_token = {
+    method = req.method,
+    url = fmt("https://%s%s?%s", req.host, req.path, req.query),
     headers = {
-      ["host"] = "sts.eu-west-1.amazonaws.com",
-      ["x-goog-cloud-target-resource"] = federation_json.audience
-    },
-  query = "Action=GetCallerIdentity&Version=2011-06-15",
-  protocol = "https"
-}
-
-local signature, err = require("resty.aws.request.sign")({}, signing_req)
-
-local subject_token = {
-  method = req.method,
-  url = fmt("https://%s%s?%s", req.host, req.path, req.query),
-  headers = {
-    { key = "x-goog-cloud-target-resource", value = req.headers["x-goog-cloud-target-resource"] },
-    { key = "Authorization", value = signature.headers["Authorization"] },
-    { key = "X-Amz-Date", value = signature.headers["X-Amz-Date"] },
-    { key = "Host", value = signature.headers["Host"] },
-    { key = "X-Amz-Security-Token", value = signature.headers["X-Amz-Security-Token"] },
-   }
-}
+      { key = "x-goog-cloud-target-resource", value = req.headers["x-goog-cloud-target-resource"] },
+      { key = "Authorization", value = signature.headers["Authorization"] },
+      { key = "X-Amz-Date", value = signature.headers["X-Amz-Date"] },
+      { key = "Host", value = signature.headers["Host"] },
+      { key = "X-Amz-Security-Token", value = signature.headers["X-Amz-Security-Token"] },
+    }
+  }
+end
 
 -- Send it to GCP, who will check it with AWS,
 -- and then produce you a Bearer token for accessing GCP services.
-local gcpToken = WIF(federation_json, subject_token)
+local gcpToken, expiry = WIF(federation_json,
+                      subject_token,
+                      { subject_token_refresh_function = subject_token_refresh_function })
 
 ```
-
-**⚠️ It is important to note that as above, the `subject_token` construction (and any authentication / signatures with the source system)
-must be entirely handled by the caller.**
-
-**This includes caching, expiry, and rotation (by calling `.new()` again) with a refreshed `subject_token`**.
 
 ## Proxy Configuration
 

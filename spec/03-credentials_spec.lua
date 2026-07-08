@@ -1,5 +1,19 @@
 local restore = require "spec.helpers"
-local fmt = string.format
+local cjson   = require "cjson.safe"
+local fmt     = string.format
+
+local function deep_copy_table(value)
+  if type(value) ~= "table" then
+    return value
+  end
+
+  local copy = {}
+  for k, v in pairs(value) do
+    copy[deep_copy_table(k)] = deep_copy_table(v)
+  end
+
+  return copy
+end
 
 local function create_jwt_mock()
   return {
@@ -1081,5 +1095,142 @@ describe("workload identity federation", function ()
     assert.is_false(ok)
     assert.is_string(err)
     assert.matches(".*failed to open file defined by GOOGLE_APPLICATION_CREDENTIALS.*No such file or directory.*", err)
+  end)
+
+  it("should refresh token with a subject_token_refresh_function", function()
+    local wif_success_no_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+      ["http://sts.googleapis.com/v1/refreshedtoken"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION_REFRESHED", "expires_in": 200}]],
+      },
+    }
+
+    local new_subject_token = deep_copy_table(subject_token)
+    new_subject_token.headers = {
+      { key = "x-goog-cloud-target-resource", value = signing_req.headers["x-goog-cloud-target-resource"] },
+      { key = "Authorization", value = "AWS4-HMAC-SHA256 NewCredential" },
+      { key = "X-Amz-Date", value = "20260501T000000Z" },
+      { key = "Host", value = signing_req.headers["Host"] },
+      { key = "X-Amz-Security-Token", value = "NEW_FAKE_SECURITY_TOKEN" },
+    }
+
+    local federation_json = deep_copy_table(federation_json)
+
+    with_http_mock(wif_success_no_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local wif, err = temp_auth_class(federation_json, subject_token, { subject_token_refresh_function = function(self)
+        -- Simulate signing a new subject token
+        return cjson.encode(new_subject_token)
+      end })
+
+      assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION", wif.token)
+
+      -- Forcefully override the token URL, to prove that :refresh()
+      -- has produced a different (exchanged) token the second time.
+      wif.federation_json.token_url = "http://sts.googleapis.com/v1/refreshedtoken"
+      local ok, _ = wif:refresh()
+
+      assert.is_true(ok)
+      assert.is_not_nil(wif)
+      assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION_REFRESHED", wif.token)
+      assert.is_number(wif.expireTime)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("should refresh token with a subject_token_refresh_function and no 'initial' subject token", function()
+    local wif_success_no_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION_FIRST_REFRESH", "expires_in": 200}]],
+      },
+    }
+
+    local new_subject_token = deep_copy_table(subject_token)
+    new_subject_token.headers = {
+      { key = "x-goog-cloud-target-resource", value = signing_req.headers["x-goog-cloud-target-resource"] },
+      { key = "Authorization", value = "AWS4-HMAC-SHA256 NewCredential" },
+      { key = "X-Amz-Date", value = "20260501T000000Z" },
+      { key = "Host", value = signing_req.headers["Host"] },
+      { key = "X-Amz-Security-Token", value = "NEW_FAKE_SECURITY_TOKEN" },
+    }
+
+    local federation_json = deep_copy_table(federation_json)
+
+    with_http_mock(wif_success_no_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local wif, err = temp_auth_class(federation_json, nil, { subject_token_refresh_function = function(self)
+        -- Simulate signing a new subject token
+        return cjson.encode(new_subject_token)
+      end })
+
+      assert.is_not_nil(wif)
+      assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION_FIRST_REFRESH", wif.token)
+      assert.is_number(wif.expireTime)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("should return error on subject_token_refresh_function failure", function()
+    local wif_success_no_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+      ["http://sts.googleapis.com/v1/refreshedtoken"] = {
+        status = 401,
+        body = [[{"error": "unauthorized"}]],
+      },
+    }
+
+    local new_subject_token = deep_copy_table(subject_token)
+    new_subject_token.headers = {
+      { key = "x-goog-cloud-target-resource", value = signing_req.headers["x-goog-cloud-target-resource"] },
+      { key = "Authorization", value = "AWS4-HMAC-SHA256 NewCredential" },
+      { key = "X-Amz-Date", value = "20260501T000000Z" },
+      { key = "Host", value = signing_req.headers["Host"] },
+      { key = "X-Amz-Security-Token", value = "NEW_FAKE_SECURITY_TOKEN" },
+    }
+
+    local federation_json = deep_copy_table(federation_json)
+
+    with_http_mock(wif_success_no_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local wif, err = temp_auth_class(federation_json, subject_token, { subject_token_refresh_function = function(self)
+        -- Simulate signing a new subject token
+        return cjson.encode(new_subject_token)
+      end })
+
+      assert.is_nil(err)
+      assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION", wif.token)
+
+      -- Forcefully override the token URL, to prove that :refresh()
+      -- has produced a different (exchanged) token the second time.
+      wif.federation_json.token_url = "http://sts.googleapis.com/v1/refreshedtoken"
+      local ok, _ = wif:refresh()
+
+      assert.is_false(ok)
+      assert.is_not_nil(wif)
+      assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION", wif.token)
+      assert.is_number(wif.expireTime)
+    end, nil, "workload_identity_federation")
+  end)
+
+  it("should throw error when no subject token or refresh function is passed in", function()
+    local wif_success_no_impersonation = {
+      ["http://sts.googleapis.com/v1/token"] = {
+        status = 200,
+        body = [[{"access_token": "GCP_BEARER_WITHOUT_IMPERSONATION", "expires_in": 200}]],
+      },
+    }
+
+    with_http_mock(wif_success_no_impersonation, function(temp_auth_class)
+      federation_json.service_account_impersonation_url = nil
+      local _, err = temp_auth_class(federation_json, nil, nil)
+
+      assert.equal("no subject token provided and no subject token refresh function defined", err)
+    end, nil, "workload_identity_federation")
   end)
 end)
