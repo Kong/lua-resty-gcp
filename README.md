@@ -135,6 +135,8 @@ local subject_token_refresh_function = function(self)
       { key = "X-Amz-Security-Token", value = signature.headers["X-Amz-Security-Token"] },
     }
   }
+
+  return subject_token
 end
 
 -- Send it to GCP, who will check it with AWS,
