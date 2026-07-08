@@ -1127,6 +1127,7 @@ describe("workload identity federation", function ()
         return cjson.encode(new_subject_token)
       end })
 
+      assert.is_nil(err)
       assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION", wif.token)
 
       -- Forcefully override the token URL, to prove that :refresh()
@@ -1167,6 +1168,7 @@ describe("workload identity federation", function ()
         return cjson.encode(new_subject_token)
       end })
 
+      assert.is_nil(err)
       assert.is_not_nil(wif)
       assert.equal("GCP_BEARER_WITHOUT_IMPERSONATION_FIRST_REFRESH", wif.token)
       assert.is_number(wif.expireTime)
