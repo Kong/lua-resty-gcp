@@ -34,6 +34,12 @@ Workload_Identity_Federation.__index = Workload_Identity_Federation
 
 
 local function do_sourcesystem_to_gcp_exchange(auth_conf, subject_token, proxy_opts)
+    -- Handle specific cases
+    if auth_conf.subject_token_type == "urn:ietf:params:aws:token-type:aws4_request" then
+        -- Force a double-encode of the subject token
+        subject_token = urlencode(subject_token)
+    end
+
     local params = {
         "grant_type="           .. GRANT_TYPE_ENC,
         "audience="             .. urlencode(auth_conf.audience),
@@ -42,12 +48,6 @@ local function do_sourcesystem_to_gcp_exchange(auth_conf, subject_token, proxy_o
         "subject_token_type="   .. urlencode(auth_conf.subject_token_type),
         "subject_token="        .. urlencode(subject_token),
     }
-
-    -- Handle specific cases
-    if auth_conf.subject_token_type == "urn:ietf:params:aws:token-type:aws4_request" then
-        -- Force a double-encode of the subject token
-        params.subject_token = urlencode(params.subject_token)
-    end
 
     local payload = table_concat(params, "&")
 
