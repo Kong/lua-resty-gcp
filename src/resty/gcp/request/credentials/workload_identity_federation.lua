@@ -185,7 +185,7 @@ function Workload_Identity_Federation:new(federation_json, subject_token, opts)
     end
 
     self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
-    self.federation_json = GOOGLE_ACF_FILE_CONTENT or federation_json
+    self.federation_json = federation_json or GOOGLE_ACF_FILE_CONTENT  -- prefer the 'user override' (per endpoint) over the 'sdk default'
 
     if not self.federation_json then
         ngx.log(ngx.ERR, "[workload_identity_federation] no federation JSON provided and no GOOGLE_APPLICATION_CREDENTIALS file found")
