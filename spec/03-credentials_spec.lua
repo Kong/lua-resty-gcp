@@ -1091,7 +1091,7 @@ describe("workload identity federation", function ()
 
     restore.setenv("GOOGLE_APPLICATION_CREDENTIALS", temp_file)
     local wif = require("resty.gcp.request.credentials.workload_identity_federation")  -- no args
-    cls, err = wif:new()
+    local cls, err = wif:new()
 
     assert.is_nil(cls)
     assert.is_string(err)

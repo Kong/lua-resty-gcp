@@ -3,6 +3,7 @@ local cjson = require("cjson.safe")
 local util = require "resty.gcp.request.util"
 local table_concat = table.concat
 local urlencode = ngx.escape_uri
+local semaphore = require "ngx.semaphore"
 
 local build_proxy_opts = util.build_proxy_opts
 local apply_proxy_opts = util.apply_proxy_opts
