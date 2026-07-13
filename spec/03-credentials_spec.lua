@@ -1085,16 +1085,17 @@ describe("workload identity federation", function ()
     assert.is_not_nil(class)
   end)
 
-  it("should fail to load package if GOOGLE_APPLICATION_CREDENTIALS is set to a non-existent file", function()
+  it("should not instantiate WIF class when GOOGLE_APPLICATION_CREDENTIALS is set to a non-existent file", function()
     local temp_file = os.tmpname()
     os.remove(temp_file)  -- Ensure the file does not exist
 
     restore.setenv("GOOGLE_APPLICATION_CREDENTIALS", temp_file)
-    local ok, err = pcall(require, "resty.gcp.request.credentials.workload_identity_federation")
+    local wif = require("resty.gcp.request.credentials.workload_identity_federation")  -- no args
+    cls, err = wif:new()
 
-    assert.is_false(ok)
+    assert.is_nil(cls)
     assert.is_string(err)
-    assert.matches(".*failed to open file defined by GOOGLE_APPLICATION_CREDENTIALS.*No such file or directory.*", err)
+    assert.matches(".*no federation JSON provided and no GOOGLE_APPLICATION_CREDENTIALS file found.*", err)
   end)
 
   it("should refresh token with a subject_token_refresh_function", function()

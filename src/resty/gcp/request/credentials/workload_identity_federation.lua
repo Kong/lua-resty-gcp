@@ -12,18 +12,21 @@ local GRANT_TYPE_ENC = urlencode("urn:ietf:params:oauth:grant-type:token-exchang
 local SCOPE_ENC = urlencode("https://www.googleapis.com/auth/cloud-platform")
 local REQUESTED_TOKEN_TYPE_ENC = urlencode("urn:ietf:params:oauth:token-type:access_token")
 
+local SEMAPHORE_TIMEOUT = 30 -- semaphore timeout in seconds
 local EXPIRY_WINDOW = 15 -- expiry window in seconds
 
 local GOOGLE_APPLICATION_CREDENTIALS_FILE = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 local GOOGLE_ACF_FILE_CONTENT
-if GOOGLE_APPLICATION_CREDENTIALS_FILE then
-    local file, err = io.open(GOOGLE_APPLICATION_CREDENTIALS_FILE, "r")
-    if not file then
-        error("[workload_identity_federation] failed to open file defined by GOOGLE_APPLICATION_CREDENTIALS environment variable: " .. tostring(err))
+do
+    if GOOGLE_APPLICATION_CREDENTIALS_FILE then
+        local file, err = io.open(GOOGLE_APPLICATION_CREDENTIALS_FILE, "r")
+        if file then
+            GOOGLE_ACF_FILE_CONTENT = file:read("*a")
+            file:close()
+        else
+            ngx.log(ngx.ERR, "[workload_identity_federation] failed to open GOOGLE_APPLICATION_CREDENTIALS file: ", tostring(err))
+        end
     end
-
-    GOOGLE_ACF_FILE_CONTENT = file:read("*a")
-    file:close()
 end
 
 --- Workload_Identity_Federation class for managing GCP access tokens from another account.
@@ -146,10 +149,12 @@ end
 
 
 --- Create a new Workload_Identity_Federation instance and acquire an initial token.
--- @tparam[opt] string|table federation_json Workload Identity Federation JSON string or Lua table;
---   if nil, falls back to the `GOOGLE_APPLICATION_CREDENTIALS` environment variable
--- @tparam[opt] string|table subject_token subject token for Workload Identity Federation
--- @tparam[opt] table opts configuration options
+-- @tparam[opt] string|table|nil federation_json Workload Identity Federation JSON string or Lua table;
+--   if nil, falls back to the file pointed to by the `GOOGLE_APPLICATION_CREDENTIALS` environment variable
+-- @tparam[opt] string|table|nil subject_token subject token for Workload Identity Federation
+--   if nil, you must provide an opts.subject_token_refresh_function to acquire a new subject token when needed
+-- @tparam[opt] table opts configuration options; all opts can be nil
+-- @tparam[opt] function opts.subject_token_refresh_function function that returns a new subject token when called
 -- @tparam[opt=15] number opts.expireWindow seconds before expiry to trigger refresh
 -- @tparam[opt] table opts.proxy_opts proxy options reused for token acquisition and API requests
 -- @tparam[opt] string opts.proxy_opts.http_proxy HTTP proxy URL
@@ -180,7 +185,12 @@ function Workload_Identity_Federation:new(federation_json, subject_token, opts)
     end
 
     self.expireWindow = opts.expireWindow or EXPIRY_WINDOW
-    self.federation_json = GOOGLE_ACF_FILE_CONTENT or federation_json or "{}"
+    self.federation_json = GOOGLE_ACF_FILE_CONTENT or federation_json
+
+    if not self.federation_json then
+        ngx.log(ngx.ERR, "[workload_identity_federation] no federation JSON provided and no GOOGLE_APPLICATION_CREDENTIALS file found")
+        return nil, "no federation JSON provided and no GOOGLE_APPLICATION_CREDENTIALS file found"
+    end
 
     if type(self.federation_json) == "string" then
         self.federation_json, err = cjson.decode(self.federation_json)
@@ -271,6 +281,33 @@ end
 -- @treturn string the access token on success, or error message on failure
 -- @treturn number the token expiration timestamp on success, or nil on failure
 function Workload_Identity_Federation:get()
+    while self:needsRefresh() do
+        if self._semaphore then
+            local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
+            if not ok then
+                ngx.log(ngx.ERR, "[workload_identity_federation] semaphore wait failed: ", tostring(err))
+                return nil, "semaphore wait failed: " .. tostring(err)
+            end
+        else
+            local sema, err = semaphore:new()
+            if not sema then
+                ngx.log(ngx.ERR, "[workload_identity_federation] create semaphore failed: ", tostring(err))
+                return nil, "create semaphore failed: " .. tostring(err)
+            end
+            self._semaphore = sema
+
+            local ok, token_or_err, _ = self:refresh()
+
+            self._semaphore = nil
+            sema:post(math.abs(sema:count()) + 1)
+
+            if not ok then
+                ngx.log(ngx.ERR, "[workload_identity_federation] failed to get new access token: ", tostring(token_or_err))
+                return nil, "failed to get new access token: " .. tostring(token_or_err)
+            end
+        end
+    end
+
     return true, self.token, self.expireTime
 end
 
