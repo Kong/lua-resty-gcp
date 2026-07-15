@@ -282,29 +282,31 @@ end
 -- @treturn string the access token on success, or error message on failure
 -- @treturn number the token expiration timestamp on success, or nil on failure
 function Workload_Identity_Federation:get()
-    while self:needsRefresh() do
-        if self._semaphore then
-            local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
-            if not ok then
-                ngx.log(ngx.ERR, "[workload_identity_federation] semaphore wait failed: ", tostring(err))
-                return nil, "semaphore wait failed: " .. tostring(err)
-            end
-        else
-            local sema, err = semaphore:new()
-            if not sema then
-                ngx.log(ngx.ERR, "[workload_identity_federation] create semaphore failed: ", tostring(err))
-                return nil, "create semaphore failed: " .. tostring(err)
-            end
-            self._semaphore = sema
+    if self.subject_token_refresh_function and type(self.subject_token_refresh_function) == "function" then
+        while self:needsRefresh() do
+            if self._semaphore then
+                local ok, err = self._semaphore:wait(SEMAPHORE_TIMEOUT)
+                if not ok then
+                    ngx.log(ngx.ERR, "[workload_identity_federation] semaphore wait failed: ", tostring(err))
+                    return nil, "semaphore wait failed: " .. tostring(err)
+                end
+            else
+                local sema, err = semaphore:new()
+                if not sema then
+                    ngx.log(ngx.ERR, "[workload_identity_federation] create semaphore failed: ", tostring(err))
+                    return nil, "create semaphore failed: " .. tostring(err)
+                end
+                self._semaphore = sema
 
-            local ok, token_or_err, _ = self:refresh()
+                local ok, token_or_err, _ = self:refresh()
 
-            self._semaphore = nil
-            sema:post(math.abs(sema:count()) + 1)
+                self._semaphore = nil
+                sema:post(math.abs(sema:count()) + 1)
 
-            if not ok then
-                ngx.log(ngx.ERR, "[workload_identity_federation] failed to get new access token: ", tostring(token_or_err))
-                return nil, "failed to get new access token: " .. tostring(token_or_err)
+                if not ok then
+                    ngx.log(ngx.ERR, "[workload_identity_federation] failed to get new access token: ", tostring(token_or_err))
+                    return nil, "failed to get new access token: " .. tostring(token_or_err)
+                end
             end
         end
     end
