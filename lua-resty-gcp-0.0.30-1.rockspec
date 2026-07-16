@@ -1,8 +1,8 @@
 package = "lua-resty-gcp"
-version = "0.0.20-1"
+version = "0.0.30-1"
 source = {
    url = "git+https://github.com/Kong/lua-resty-gcp",
-   tag = "0.0.20"
+   tag = "0.0.30"
 }
 description = {
   summary = "GCP SDK for OpenResty",
@@ -14,6 +14,7 @@ description = {
 dependencies = {
   "lua-resty-jwt == 0.2.3",
   "lua-resty-luasocket ~> 1",
+  "luatz == 0.4-1",
 }
 build = {
   type = "builtin",
@@ -273,6 +274,7 @@ build = {
     ["resty.gcp.api.youtube_v3"] = "src/resty/gcp/api/youtube_v3.lua",
     ["resty.gcp.init"] = "src/resty/gcp/init.lua",
     ["resty.gcp.request.credentials.accesstoken"] = "src/resty/gcp/request/credentials/accesstoken.lua",
+    ["resty.gcp.request.credentials.workload_identity_federation"] = "src/resty/gcp/request/credentials/workload_identity_federation.lua",
     ["resty.gcp.request.discovery"] = "src/resty/gcp/request/discovery.lua",
     ["resty.gcp.request.util"] = "src/resty/gcp/request/util.lua",
 

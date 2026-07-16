@@ -54,6 +54,99 @@ print("The secret is: " .. base64.decode(response.payload.data))
 
 ```
 
+## Authentication Mechanisms
+
+These are the supported authentication methods, and how to use each one:
+
+### Service Account JSON / Auth JSON / Workload Identity
+
+To use a static service-account JSON, or directly use an assigned Workload Identity, simply launch
+a new instance of the `accesstoken` class, and then **call it** to retrieve the current Bearer token
+as a string":
+
+``` lua
+
+local AccessToken = require "resty.gcp.request.credentials.accesstoken"
+local gcpToken = AccessToken()  -- returns an auth token table
+
+```
+
+### Workload Identity Federation
+
+To authenticate using a [Workload Identity Federation](http://docs.cloud.google.com/iam/docs/authenticate-with-auth-libraries)
+auth JSON, you should use the `workload_identity_federation` class.
+
+To pass in the "Google Application Credentials" JSON, you can either:
+
+* Pass the JSON directly into the constructor (as a string, or as a table)
+* Set the environment variable `GOOGLE_APPLICATION_CREDENTIALS` that points to a file on the local filesystem
+
+**You also might need to pass a function to get a new "subject token" when it expires due to e.g. signature expiry.**
+
+In this example, we pass the JSON and the function as a table directly to the constructor:
+
+``` lua
+
+local WIF = require "resty.gcp.request.credentials.workload_identity_federation"
+
+-- You would be given this when you set up the Federation Identity pool in GCP
+local federation_json = {
+  universe_domain = "googleapis.com",
+  ["type"] = "external_account",
+  audience = "//iam.googleapis.com/projects/123456789123/locations/global/workloadIdentityPools/aws/providers/aws-from-gcp",
+  subject_token_type = "urn:ietf:params:aws:token-type:aws4_request",
+  token_url = "https://sts.googleapis.com/v1/token",
+  credential_source = {
+    environment_id = "aws1",
+    region_url = "http://169.254.169.254/latest/meta-data/placement/availability-zone",
+    url = "http://169.254.169.254/latest/meta-data/iam/security-credentials",
+    regional_cred_verification_url = "https://sts.{region}.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15",
+  },
+  service_account_impersonation_url = "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/resty-gcp-access-service-account@sample-account.iam.gserviceaccount.com:generateAccessToken",
+}
+
+-- Make a refresh function using e.g. resty AWS
+local subject_token_refresh_function = function(self)
+  -- Make a subject token that lets GCP call AWS STS for your credentials,
+  -- and then **sign it** (for AWS with the Instance/Pod IAM Role, in this example).
+  -- Use the signed headers as the subject token table.
+  local signing_req = {
+    host = "sts.eu-west-1.amazonaws.com",
+    method = "POST",
+    path = "/",
+      headers = {
+        ["host"] = "sts.eu-west-1.amazonaws.com",
+        ["x-goog-cloud-target-resource"] = federation_json.audience
+      },
+    query = "Action=GetCallerIdentity&Version=2011-06-15",
+    protocol = "https"
+  }
+
+  local signature, err = require("resty.aws.request.sign")({}, signing_req)
+
+  local subject_token = {
+    method = req.method,
+    url = fmt("https://%s%s?%s", req.host, req.path, req.query),
+    headers = {
+      { key = "x-goog-cloud-target-resource", value = req.headers["x-goog-cloud-target-resource"] },
+      { key = "Authorization", value = signature.headers["Authorization"] },
+      { key = "X-Amz-Date", value = signature.headers["X-Amz-Date"] },
+      { key = "Host", value = signature.headers["Host"] },
+      { key = "X-Amz-Security-Token", value = signature.headers["X-Amz-Security-Token"] },
+    }
+  }
+
+  return subject_token
+end
+
+-- Send it to GCP, who will check it with AWS,
+-- and then produce you a Bearer token for accessing GCP services.
+local gcpToken, expiry = WIF(federation_json,
+                      subject_token,
+                      { subject_token_refresh_function = subject_token_refresh_function })
+
+```
+
 ## Proxy Configuration
 
 The library supports routing all outbound HTTP requests (both token acquisition and
