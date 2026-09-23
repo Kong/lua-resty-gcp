@@ -64,8 +64,61 @@ local function aip_date_to_timestamp(date)
     return timetable:timestamp()
 end
 
+
+local function is_valid_url(value)
+  if type(value) ~= "string" or value == "" then
+    return false
+  end
+
+  local scheme, host = value:match("^(%a[%w+.-]*)://([^/?#]+)")
+  return scheme ~= nil and scheme ~= "" and host ~= nil and host ~= ""
+end
+
+
+-- Validates a decoded GCP Workload Identity Federation JSON table.
+--
+-- @param {table} auth_json the decoded gcp_workload_identity_federation_auth_json
+-- @return {string|nil} error message, or nil if the JSON is valid
+local function validate_gcp_wif_aws_auth_json(auth_json)
+  if type(auth_json) ~= "table" then
+    return "GCP Workload Identity Federation auth JSON must be a JSON object"
+  end
+
+  if type(auth_json.audience) ~= "string" or auth_json.audience == "" then
+    return "GCP Workload Identity Federation auth JSON is missing required field 'audience'"
+  end
+
+  if type(auth_json.subject_token_type) ~= "string" or auth_json.subject_token_type == "" then
+    return "GCP Workload Identity Federation auth JSON is missing required field 'subject_token_type'"
+  end
+
+  if not is_valid_url(auth_json.token_url) then
+    return "GCP Workload Identity Federation auth JSON field 'token_url' is missing or not a valid URL"
+  end
+
+  local credential_source = auth_json.credential_source
+  if type(credential_source) ~= "table" then
+    return "GCP Workload Identity Federation auth JSON is missing required field 'credential_source'"
+  end
+
+  if not is_valid_url(credential_source.region_url) then
+    return "GCP Workload Identity Federation auth JSON field 'credential_source.region_url' is missing or not a valid URL"
+  end
+
+  if not is_valid_url(credential_source.url) then
+    return "GCP Workload Identity Federation auth JSON field 'credential_source.url' is missing or not a valid URL"
+  end
+
+  if not is_valid_url(credential_source.regional_cred_verification_url) then
+    return "GCP Workload Identity Federation auth JSON field 'credential_source.regional_cred_verification_url' is missing or not a valid URL"
+  end
+
+  return nil
+end
+
 return {
     build_proxy_opts = build_proxy_opts,
     apply_proxy_opts = apply_proxy_opts,
     aip_date_to_timestamp = aip_date_to_timestamp,
+    validate_gcp_wif_aws_auth_json = validate_gcp_wif_aws_auth_json,
 }

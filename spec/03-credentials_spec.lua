@@ -1,5 +1,6 @@
 local restore = require "spec.helpers"
 local cjson   = require "cjson.safe"
+local util    = require "resty.gcp.request.util"
 local fmt     = string.format
 
 local function deep_copy_table(value)
@@ -1235,5 +1236,142 @@ describe("workload identity federation", function ()
 
       assert.equal("no subject token provided and no subject token refresh function defined", err)
     end, nil, "workload_identity_federation")
+  end)
+
+  describe("auth JSON validation (util.validate_gcp_wif_aws_auth_json)", function()
+    local validate_gcp_wif_aws_auth_json = util.validate_gcp_wif_aws_auth_json
+
+    it("accepts a well-formed federation JSON", function()
+      local valid_federation_json = deep_copy_table(federation_json)
+      local err = validate_gcp_wif_aws_auth_json(valid_federation_json)
+      assert.is_nil(err)
+    end)
+
+    it("rejects a non-table value", function()
+      assert.matches("must be a JSON object", validate_gcp_wif_aws_auth_json(nil))
+      assert.matches("must be a JSON object", validate_gcp_wif_aws_auth_json("not a table"))
+      assert.matches("must be a JSON object", validate_gcp_wif_aws_auth_json(123))
+    end)
+
+    it("rejects a missing or empty 'audience'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.audience = nil
+      assert.matches("audience", validate_gcp_wif_aws_auth_json(bad))
+
+      bad.audience = ""
+      assert.matches("audience", validate_gcp_wif_aws_auth_json(bad))
+    end)
+
+    it("rejects a missing or empty 'subject_token_type'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.subject_token_type = nil
+      assert.matches("subject_token_type", validate_gcp_wif_aws_auth_json(bad))
+
+      bad.subject_token_type = ""
+      assert.matches("subject_token_type", validate_gcp_wif_aws_auth_json(bad))
+    end)
+
+    it("rejects a missing or invalid 'token_url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.token_url = nil
+      assert.matches("token_url", validate_gcp_wif_aws_auth_json(bad))
+
+      bad.token_url = "not-a-url"
+      assert.matches("token_url", validate_gcp_wif_aws_auth_json(bad))
+    end)
+
+    it("rejects a missing or non-table 'credential_source'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.credential_source = nil
+      assert.matches("credential_source", validate_gcp_wif_aws_auth_json(bad))
+
+      bad.credential_source = "not a table"
+      assert.matches("credential_source", validate_gcp_wif_aws_auth_json(bad))
+    end)
+
+    it("rejects a missing or invalid 'credential_source.region_url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.credential_source.region_url = nil
+      assert.matches("credential_source.region_url", validate_gcp_wif_aws_auth_json(bad))
+
+      bad.credential_source.region_url = "not-a-url"
+      assert.matches("credential_source.region_url", validate_gcp_wif_aws_auth_json(bad))
+    end)
+
+    it("rejects a missing or invalid 'credential_source.url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.credential_source.url = nil
+      assert.matches("credential_source.url", validate_gcp_wif_aws_auth_json(bad))
+
+      bad.credential_source.url = "not-a-url"
+      assert.matches("credential_source.url", validate_gcp_wif_aws_auth_json(bad))
+    end)
+
+    it("rejects a missing or invalid 'credential_source.regional_cred_verification_url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.credential_source.regional_cred_verification_url = nil
+      assert.matches("credential_source.regional_cred_verification_url", validate_gcp_wif_aws_auth_json(bad))
+
+      bad.credential_source.regional_cred_verification_url = "not-a-url"
+      assert.matches("credential_source.regional_cred_verification_url", validate_gcp_wif_aws_auth_json(bad))
+    end)
+  end)
+
+  describe("federation JSON validation on :new()", function()
+    it("rejects an invalid federation JSON before attempting a token exchange", function()
+      local invalid_federation_json = deep_copy_table(federation_json)
+      invalid_federation_json.audience = nil
+
+      local wif = require("resty.gcp.request.credentials.workload_identity_federation")
+      local cls, err = wif:new(invalid_federation_json, subject_token, nil)
+
+      assert.is_nil(cls)
+      assert.is_string(err)
+      assert.matches("audience", err)
+    end)
+
+    it("rejects a federation JSON with an invalid credential_source before attempting a token exchange", function()
+      local invalid_federation_json = deep_copy_table(federation_json)
+      invalid_federation_json.credential_source.url = "not-a-url"
+
+      local wif = require("resty.gcp.request.credentials.workload_identity_federation")
+      local cls, err = wif:new(invalid_federation_json, subject_token, nil)
+
+      assert.is_nil(cls)
+      assert.is_string(err)
+      assert.matches("credential_source.url", err)
+    end)
+
+    it("still validates and decodes a federation JSON passed as a string", function()
+      local wif_success_no_impersonation = {
+        ["http://sts.googleapis.com/v1/token"] = {
+          status = 200,
+          body = [[{"access_token": "GCP_BEARER_FROM_STRING_JSON", "expires_in": 200}]],
+        },
+      }
+
+      local string_federation_json = deep_copy_table(federation_json)
+      string_federation_json.service_account_impersonation_url = nil
+
+      with_http_mock(wif_success_no_impersonation, function(temp_auth_class)
+        local wif, err = temp_auth_class(cjson.encode(string_federation_json), subject_token, nil)
+
+        assert.is_nil(err)
+        assert.is_not_nil(wif)
+        assert.equal("GCP_BEARER_FROM_STRING_JSON", wif.token)
+      end, nil, "workload_identity_federation")
+    end)
+
+    it("rejects an invalid federation JSON passed as a string", function()
+      local invalid_federation_json = deep_copy_table(federation_json)
+      invalid_federation_json.audience = nil
+
+      local wif = require("resty.gcp.request.credentials.workload_identity_federation")
+      local cls, err = wif:new(cjson.encode(invalid_federation_json), subject_token, nil)
+
+      assert.is_nil(cls)
+      assert.is_string(err)
+      assert.matches("audience", err)
+    end)
   end)
 end)
