@@ -23,4 +23,6 @@ RUN wget https://luarocks.org/manifests/daurnimator/luatz-0.4-1.src.rock && \
     luarocks install luatz-0.4-1.src.rock && \
     luarocks install busted
 
+USER 1001
+
 CMD [ "busted", "-v" ]
