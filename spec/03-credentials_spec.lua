@@ -1315,6 +1315,40 @@ describe("workload identity federation", function ()
       bad.credential_source.regional_cred_verification_url = "not-a-url"
       assert.matches("credential_source.regional_cred_verification_url", validate_gcp_wif_aws_auth_json(bad))
     end)
+
+    it("accepts a missing 'service_account_impersonation_url'", function()
+      local valid_federation_json = deep_copy_table(federation_json)
+      valid_federation_json.service_account_impersonation_url = nil
+      assert.is_nil(validate_gcp_wif_aws_auth_json(valid_federation_json))
+    end)
+
+    it("accepts a JSON-decoded null 'service_account_impersonation_url'", function()
+      local valid_federation_json = deep_copy_table(federation_json)
+      valid_federation_json.service_account_impersonation_url = nil
+      local encoded = cjson.encode(valid_federation_json)
+      encoded = encoded:gsub("^{", [[{"service_account_impersonation_url":null,]])
+      local decoded = cjson.decode(encoded)
+      assert.is_nil(validate_gcp_wif_aws_auth_json(decoded))
+    end)
+
+    it("accepts a valid 'service_account_impersonation_url'", function()
+      local valid_federation_json = deep_copy_table(federation_json)
+      valid_federation_json.service_account_impersonation_url =
+        "http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"
+      assert.is_nil(validate_gcp_wif_aws_auth_json(valid_federation_json))
+    end)
+
+    it("rejects an invalid 'service_account_impersonation_url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.service_account_impersonation_url = "not-a-url"
+      assert.matches("service_account_impersonation_url", validate_gcp_wif_aws_auth_json(bad))
+    end)
+
+    it("rejects a non-string 'service_account_impersonation_url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.service_account_impersonation_url = 12345
+      assert.matches("service_account_impersonation_url", validate_gcp_wif_aws_auth_json(bad))
+    end)
   end)
 
   describe("federation JSON validation on :new()", function()

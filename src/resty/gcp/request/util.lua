@@ -1,4 +1,5 @@
 local luatz = require("luatz")
+local cjson = require("cjson")
 
 local PROXY_OPT_KEYS = {
     "http_proxy",
@@ -65,6 +66,13 @@ local function aip_date_to_timestamp(date)
 end
 
 
+local function is_null(value)
+  return value == nil
+           or value == ngx.null
+           or value == cjson.null
+end
+
+
 local function is_valid_url(value)
   if type(value) ~= "string" or value == "" then
     return false
@@ -111,6 +119,10 @@ local function validate_gcp_wif_aws_auth_json(auth_json)
 
   if not is_valid_url(credential_source.regional_cred_verification_url) then
     return "GCP Workload Identity Federation auth JSON field 'credential_source.regional_cred_verification_url' is missing or not a valid URL"
+  end
+
+  if not is_null(auth_json.service_account_impersonation_url) and not is_valid_url(auth_json.service_account_impersonation_url) then
+    return "GCP Workload Identity Federation auth JSON field 'service_account_impersonation_url' is not a valid URL"
   end
 
   return nil
