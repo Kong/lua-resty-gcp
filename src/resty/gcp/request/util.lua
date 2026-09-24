@@ -64,8 +64,63 @@ local function aip_date_to_timestamp(date)
     return timetable:timestamp()
 end
 
+
+-- Checks whether value is a syntactically valid absolute URL (scheme://host).
+-- Anything that isn't a string (including nil, ngx.null and cjson.null) is
+-- simply "not a valid URL" -- callers decide whether that's an error.
+local function is_valid_url(value)
+  if type(value) ~= "string" then
+    return false
+  end
+
+  local scheme, host = value:match("^(%a[%w+.-]*)://([^/?#]+)")
+  return scheme ~= nil and host ~= nil
+end
+
+
+-- Validates a decoded GCP Workload Identity Federation JSON table.
+--
+-- @param {table} auth_json the decoded gcp_workload_identity_federation_auth_json
+-- @treturn boolean true if the JSON is valid, false otherwise
+-- @treturn string nil on success, or an error message on failure
+local function validate_gcp_wif_auth_json(auth_json)
+  if type(auth_json) ~= "table" then
+    return false, "GCP Workload Identity Federation auth JSON must be a JSON object"
+  end
+
+  if type(auth_json.audience) ~= "string" or auth_json.audience == "" then
+    return false, "GCP Workload Identity Federation auth JSON is missing required field 'audience'"
+  end
+
+  if type(auth_json.subject_token_type) ~= "string" or auth_json.subject_token_type == "" then
+    return false, "GCP Workload Identity Federation auth JSON is missing required field 'subject_token_type'"
+  end
+
+  if not is_valid_url(auth_json.token_url) then
+    return false, "GCP Workload Identity Federation auth JSON field 'token_url' is missing or not a valid URL"
+  end
+
+  local credential_source = auth_json.credential_source
+  if type(credential_source) ~= "table" then
+    return false, "GCP Workload Identity Federation auth JSON is missing required field 'credential_source'"
+  end
+
+  if type(credential_source.environment_id) ~= "string" or credential_source.environment_id == "" then
+    return false, "GCP Workload Identity Federation auth JSON is missing required field 'credential_source.environment_id'"
+  end
+
+  -- optional: only validated when present as a string
+  if type(auth_json.service_account_impersonation_url) == "string"
+      and not is_valid_url(auth_json.service_account_impersonation_url) then
+    return false, "GCP Workload Identity Federation auth JSON field 'service_account_impersonation_url' is not a valid URL"
+  end
+
+  return true
+end
+
 return {
     build_proxy_opts = build_proxy_opts,
     apply_proxy_opts = apply_proxy_opts,
     aip_date_to_timestamp = aip_date_to_timestamp,
+    validate_gcp_wif_auth_json = validate_gcp_wif_auth_json,
 }

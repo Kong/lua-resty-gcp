@@ -24,11 +24,19 @@ luarocks make
 The test will go through:
 1. Test if GCP services imported
 2. Test getting Access Token (Will need to set environment variable GCP_SERVICE_ACCOUNT)
-3. Test using GCP services (Will need to change thew service and param in spec/01-test_spec.lua)
+3. Test using GCP services (Will need to change the service and param in spec/01-test_spec.lua)
 
 ```
 busted
 ```
+
+**Or for a much easier test routine:**
+
+```sh
+./scripts/test-local.sh
+```
+
+Requires Docker daemon running (and able to mount `pwd` as a volume).
 
 ## Using the SDK
 
