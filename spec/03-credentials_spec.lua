@@ -1238,88 +1238,115 @@ describe("workload identity federation", function ()
     end, nil, "workload_identity_federation")
   end)
 
-  describe("auth JSON validation (util.validate_gcp_wif_aws_auth_json)", function()
-    local validate_gcp_wif_aws_auth_json = util.validate_gcp_wif_aws_auth_json
+  describe("auth JSON validation (util.validate_gcp_wif_auth_json)", function()
+    local validate_gcp_wif_auth_json = util.validate_gcp_wif_auth_json
 
     it("accepts a well-formed federation JSON", function()
       local valid_federation_json = deep_copy_table(federation_json)
-      local err = validate_gcp_wif_aws_auth_json(valid_federation_json)
+      local ok, err = validate_gcp_wif_auth_json(valid_federation_json)
+      assert.is_true(ok)
       assert.is_nil(err)
     end)
 
     it("rejects a non-table value", function()
-      assert.matches("must be a JSON object", validate_gcp_wif_aws_auth_json(nil))
-      assert.matches("must be a JSON object", validate_gcp_wif_aws_auth_json("not a table"))
-      assert.matches("must be a JSON object", validate_gcp_wif_aws_auth_json(123))
+      local ok, err = validate_gcp_wif_auth_json(nil)
+      assert.is_false(ok)
+      assert.matches("must be a JSON object", err)
+
+      ok, err = validate_gcp_wif_auth_json("not a table")
+      assert.is_false(ok)
+      assert.matches("must be a JSON object", err)
+
+      ok, err = validate_gcp_wif_auth_json(123)
+      assert.is_false(ok)
+      assert.matches("must be a JSON object", err)
     end)
 
     it("rejects a missing or empty 'audience'", function()
       local bad = deep_copy_table(federation_json)
       bad.audience = nil
-      assert.matches("audience", validate_gcp_wif_aws_auth_json(bad))
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("audience", err)
 
       bad.audience = ""
-      assert.matches("audience", validate_gcp_wif_aws_auth_json(bad))
+      ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("audience", err)
     end)
 
     it("rejects a missing or empty 'subject_token_type'", function()
       local bad = deep_copy_table(federation_json)
       bad.subject_token_type = nil
-      assert.matches("subject_token_type", validate_gcp_wif_aws_auth_json(bad))
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("subject_token_type", err)
 
       bad.subject_token_type = ""
-      assert.matches("subject_token_type", validate_gcp_wif_aws_auth_json(bad))
+      ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("subject_token_type", err)
     end)
 
-    it("rejects a missing or invalid 'token_url'", function()
+    it("rejects a missing 'token_url'", function()
       local bad = deep_copy_table(federation_json)
       bad.token_url = nil
-      assert.matches("token_url", validate_gcp_wif_aws_auth_json(bad))
-
-      bad.token_url = "not-a-url"
-      assert.matches("token_url", validate_gcp_wif_aws_auth_json(bad))
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("token_url", err)
     end)
 
-    it("rejects a missing or non-table 'credential_source'", function()
+    it("rejects an invalid 'token_url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.token_url = "not-a-url"
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("token_url", err)
+    end)
+
+    it("rejects a non-string 'token_url'", function()
+      local bad = deep_copy_table(federation_json)
+      bad.token_url = 12345
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("token_url", err)
+    end)
+
+    it("rejects a missing 'credential_source'", function()
       local bad = deep_copy_table(federation_json)
       bad.credential_source = nil
-      assert.matches("credential_source", validate_gcp_wif_aws_auth_json(bad))
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("credential_source", err)
+    end)
 
+    it("rejects a non-table 'credential_source'", function()
+      local bad = deep_copy_table(federation_json)
       bad.credential_source = "not a table"
-      assert.matches("credential_source", validate_gcp_wif_aws_auth_json(bad))
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("credential_source", err)
     end)
 
-    it("rejects a missing or invalid 'credential_source.region_url'", function()
+    it("rejects a missing or empty 'credential_source.environment_id'", function()
       local bad = deep_copy_table(federation_json)
-      bad.credential_source.region_url = nil
-      assert.matches("credential_source.region_url", validate_gcp_wif_aws_auth_json(bad))
+      bad.credential_source.environment_id = nil
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("credential_source.environment_id", err)
 
-      bad.credential_source.region_url = "not-a-url"
-      assert.matches("credential_source.region_url", validate_gcp_wif_aws_auth_json(bad))
-    end)
-
-    it("rejects a missing or invalid 'credential_source.url'", function()
-      local bad = deep_copy_table(federation_json)
-      bad.credential_source.url = nil
-      assert.matches("credential_source.url", validate_gcp_wif_aws_auth_json(bad))
-
-      bad.credential_source.url = "not-a-url"
-      assert.matches("credential_source.url", validate_gcp_wif_aws_auth_json(bad))
-    end)
-
-    it("rejects a missing or invalid 'credential_source.regional_cred_verification_url'", function()
-      local bad = deep_copy_table(federation_json)
-      bad.credential_source.regional_cred_verification_url = nil
-      assert.matches("credential_source.regional_cred_verification_url", validate_gcp_wif_aws_auth_json(bad))
-
-      bad.credential_source.regional_cred_verification_url = "not-a-url"
-      assert.matches("credential_source.regional_cred_verification_url", validate_gcp_wif_aws_auth_json(bad))
+      bad.credential_source.environment_id = ""
+      ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("credential_source.environment_id", err)
     end)
 
     it("accepts a missing 'service_account_impersonation_url'", function()
       local valid_federation_json = deep_copy_table(federation_json)
       valid_federation_json.service_account_impersonation_url = nil
-      assert.is_nil(validate_gcp_wif_aws_auth_json(valid_federation_json))
+      local ok, err = validate_gcp_wif_auth_json(valid_federation_json)
+      assert.is_true(ok)
+      assert.is_nil(err)
     end)
 
     it("accepts a JSON-decoded null 'service_account_impersonation_url'", function()
@@ -1328,26 +1355,34 @@ describe("workload identity federation", function ()
       local encoded = cjson.encode(valid_federation_json)
       encoded = encoded:gsub("^{", [[{"service_account_impersonation_url":null,]])
       local decoded = cjson.decode(encoded)
-      assert.is_nil(validate_gcp_wif_aws_auth_json(decoded))
+      local ok, err = validate_gcp_wif_auth_json(decoded)
+      assert.is_true(ok)
+      assert.is_nil(err)
     end)
 
     it("accepts a valid 'service_account_impersonation_url'", function()
       local valid_federation_json = deep_copy_table(federation_json)
       valid_federation_json.service_account_impersonation_url =
         "http://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/my-service-account@gcp-sample-project.iam.gserviceaccount.com:generateAccessToken"
-      assert.is_nil(validate_gcp_wif_aws_auth_json(valid_federation_json))
+      local ok, err = validate_gcp_wif_auth_json(valid_federation_json)
+      assert.is_true(ok)
+      assert.is_nil(err)
     end)
 
-    it("rejects an invalid 'service_account_impersonation_url'", function()
+    it("rejects an invalid (but present) 'service_account_impersonation_url'", function()
       local bad = deep_copy_table(federation_json)
       bad.service_account_impersonation_url = "not-a-url"
-      assert.matches("service_account_impersonation_url", validate_gcp_wif_aws_auth_json(bad))
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_false(ok)
+      assert.matches("service_account_impersonation_url", err)
     end)
 
-    it("rejects a non-string 'service_account_impersonation_url'", function()
+    it("ignores a non-string 'service_account_impersonation_url' since it is optional", function()
       local bad = deep_copy_table(federation_json)
       bad.service_account_impersonation_url = 12345
-      assert.matches("service_account_impersonation_url", validate_gcp_wif_aws_auth_json(bad))
+      local ok, err = validate_gcp_wif_auth_json(bad)
+      assert.is_true(ok)
+      assert.is_nil(err)
     end)
   end)
 
@@ -1364,16 +1399,16 @@ describe("workload identity federation", function ()
       assert.matches("audience", err)
     end)
 
-    it("rejects a federation JSON with an invalid credential_source before attempting a token exchange", function()
+    it("rejects a federation JSON missing credential_source.environment_id before attempting a token exchange", function()
       local invalid_federation_json = deep_copy_table(federation_json)
-      invalid_federation_json.credential_source.url = "not-a-url"
+      invalid_federation_json.credential_source.environment_id = nil
 
       local wif = require("resty.gcp.request.credentials.workload_identity_federation")
       local cls, err = wif:new(invalid_federation_json, subject_token, nil)
 
       assert.is_nil(cls)
       assert.is_string(err)
-      assert.matches("credential_source.url", err)
+      assert.matches("credential_source.environment_id", err)
     end)
 
     it("still validates and decodes a federation JSON passed as a string", function()

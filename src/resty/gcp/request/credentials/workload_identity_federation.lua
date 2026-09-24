@@ -204,8 +204,8 @@ function Workload_Identity_Federation:new(federation_json, subject_token, opts)
 
     -- This is past already parsing the JSON, so that the reading-in from
     -- environment JSON file doesn't crash the worker with nil reference.
-    err = util.validate_gcp_wif_aws_auth_json(self.federation_json)
-    if err then
+    local ok, err = util.validate_gcp_wif_auth_json(self.federation_json)
+    if not ok then
         ngx.log(ngx.ERR, "[workload_identity_federation] Invalid Google Workload Application Auth JSON: ", err)
         return nil, err
     end
