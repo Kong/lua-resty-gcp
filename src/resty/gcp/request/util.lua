@@ -102,11 +102,7 @@ local function validate_gcp_wif_auth_json(auth_json)
 
   local credential_source = auth_json.credential_source
   if type(credential_source) ~= "table" then
-    return false, "GCP Workload Identity Federation auth JSON is missing required field 'credential_source'"
-  end
-
-  if type(credential_source.environment_id) ~= "string" or credential_source.environment_id == "" then
-    return false, "GCP Workload Identity Federation auth JSON is missing required field 'credential_source.environment_id'"
+    return false, "GCP Workload Identity Federation auth JSON is missing required object 'credential_source'"
   end
 
   -- optional: only validated when present as a string
