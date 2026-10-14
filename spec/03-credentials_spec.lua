@@ -1328,17 +1328,12 @@ describe("workload identity federation", function ()
       assert.matches("credential_source", err)
     end)
 
-    it("rejects a missing or empty 'credential_source.environment_id'", function()
-      local bad = deep_copy_table(federation_json)
-      bad.credential_source.environment_id = nil
-      local ok, err = validate_gcp_wif_auth_json(bad)
-      assert.is_false(ok)
-      assert.matches("credential_source.environment_id", err)
-
-      bad.credential_source.environment_id = ""
-      ok, err = validate_gcp_wif_auth_json(bad)
-      assert.is_false(ok)
-      assert.matches("credential_source.environment_id", err)
+    it("accepts a missing 'credential_source.environment_id' (non-AWS sources)", function()
+      local valid = deep_copy_table(federation_json)
+      valid.credential_source.environment_id = nil
+      local ok, err = validate_gcp_wif_auth_json(valid)
+      assert.is_true(ok)
+      assert.is_nil(err)
     end)
 
     it("accepts a missing 'service_account_impersonation_url'", function()
@@ -1399,16 +1394,16 @@ describe("workload identity federation", function ()
       assert.matches("audience", err)
     end)
 
-    it("rejects a federation JSON missing credential_source.environment_id before attempting a token exchange", function()
+    it("rejects a federation JSON missing credential_source before attempting a token exchange", function()
       local invalid_federation_json = deep_copy_table(federation_json)
-      invalid_federation_json.credential_source.environment_id = nil
+      invalid_federation_json.credential_source = nil
 
       local wif = require("resty.gcp.request.credentials.workload_identity_federation")
       local cls, err = wif:new(invalid_federation_json, subject_token, nil)
 
       assert.is_nil(cls)
       assert.is_string(err)
-      assert.matches("credential_source.environment_id", err)
+      assert.matches("credential_source", err)
     end)
 
     it("still validates and decodes a federation JSON passed as a string", function()
