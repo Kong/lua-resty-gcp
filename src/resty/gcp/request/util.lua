@@ -65,6 +65,12 @@ local function aip_date_to_timestamp(date)
 end
 
 
+-- Checks whether value is absent: nil, or a JSON null (ngx.null == cjson.null).
+local function is_null(value)
+  return value == nil or value == ngx.null
+end
+
+
 -- Checks whether value is a syntactically valid absolute URL (scheme://host).
 -- Anything that isn't a string (including nil, ngx.null and cjson.null) is
 -- simply "not a valid URL" -- callers decide whether that's an error.
@@ -105,8 +111,8 @@ local function validate_gcp_wif_auth_json(auth_json)
     return false, "GCP Workload Identity Federation auth JSON is missing required object 'credential_source'"
   end
 
-  -- optional: only validated when present as a string
-  if type(auth_json.service_account_impersonation_url) == "string"
+  -- optional: may be absent or null, but anything else must be a valid URL
+  if not is_null(auth_json.service_account_impersonation_url)
       and not is_valid_url(auth_json.service_account_impersonation_url) then
     return false, "GCP Workload Identity Federation auth JSON field 'service_account_impersonation_url' is not a valid URL"
   end
@@ -118,5 +124,6 @@ return {
     build_proxy_opts = build_proxy_opts,
     apply_proxy_opts = apply_proxy_opts,
     aip_date_to_timestamp = aip_date_to_timestamp,
+    is_null = is_null,
     validate_gcp_wif_auth_json = validate_gcp_wif_auth_json,
 }

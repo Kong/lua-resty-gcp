@@ -1372,13 +1372,15 @@ describe("workload identity federation", function ()
       assert.matches("service_account_impersonation_url", err)
     end)
 
-    it("ignores a non-string 'service_account_impersonation_url' since it is optional", function()
-      local bad = deep_copy_table(federation_json)
-      bad.service_account_impersonation_url = 12345
-      local ok, err = validate_gcp_wif_auth_json(bad)
-      assert.is_true(ok)
-      assert.is_nil(err)
-    end)
+    for _, value in ipairs({ 12345, true, false, {}, "" }) do
+      it("rejects a non-URL 'service_account_impersonation_url' " .. cjson.encode(value), function()
+        local bad = deep_copy_table(federation_json)
+        bad.service_account_impersonation_url = value
+        local ok, err = validate_gcp_wif_auth_json(bad)
+        assert.is_false(ok)
+        assert.matches("service_account_impersonation_url", err)
+      end)
+    end
   end)
 
   describe("federation JSON validation on :new()", function()

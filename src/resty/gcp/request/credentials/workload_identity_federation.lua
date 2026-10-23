@@ -96,7 +96,7 @@ local function do_sourcesystem_to_gcp_identity(auth_conf, subject_token, proxy_o
 
     local impersonation_url = auth_conf.service_account_impersonation_url
 
-    if impersonation_url then
+    if not util.is_null(impersonation_url) then
         local httpc = http.new()
         apply_proxy_opts(httpc, proxy_opts)
         local res, err = httpc:request_uri(impersonation_url, {
