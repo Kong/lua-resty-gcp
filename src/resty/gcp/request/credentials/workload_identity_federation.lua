@@ -96,7 +96,7 @@ local function do_sourcesystem_to_gcp_identity(auth_conf, subject_token, proxy_o
 
     local impersonation_url = auth_conf.service_account_impersonation_url
 
-    if impersonation_url then
+    if not util.is_null(impersonation_url) then
         local httpc = http.new()
         apply_proxy_opts(httpc, proxy_opts)
         local res, err = httpc:request_uri(impersonation_url, {
@@ -200,6 +200,14 @@ function Workload_Identity_Federation:new(federation_json, subject_token, opts)
             ngx.log(ngx.ERR, "[workload_identity_federation] failed to decode federation auth JSON: ", tostring(err))
             return nil, "failed to decode federation auth JSON: " .. tostring(err)
         end
+    end
+
+    -- This is past already parsing the JSON, so that the reading-in from
+    -- environment JSON file doesn't crash the worker with nil reference.
+    local ok, err = util.validate_gcp_wif_auth_json(self.federation_json)
+    if not ok then
+        ngx.log(ngx.ERR, "[workload_identity_federation] Invalid Google Workload Application Auth JSON: ", err)
+        return nil, err
     end
 
     if subject_token and subject_token ~= ngx.null then
